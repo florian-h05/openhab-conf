@@ -49,7 +49,7 @@ function generateState(currentRoom) {
   }
   events.postUpdate(Item_stateText, Output_stateText);
   events.postUpdate(Item_StateNum, Output_stateNum);
-  logger.info(([Item_stateText,' is: ',Output_stateText].join('')));
+  //logger.info(([Item_stateText,' is: ',Output_stateText].join('')));
 }
 
 
