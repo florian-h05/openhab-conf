@@ -57,5 +57,5 @@ function generateState(currentRoom) {
 var room_list = ['room_1', 'room_2', 'room_3'];
 for (var room_index in room_list) {
   room = room_list[room_index];
-  setState(room);
+  generateState(room);
 }
