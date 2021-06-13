@@ -56,13 +56,14 @@ This file collects a part of openHAB specific calls and features.
 
 /* persistence (javadoc: https://www.openhab.org/javadoc/latest/org/openhab/core/persistence/extensions/persistenceextensions) */
   var PersistenceExtension = Java.type("org.openhab.core.persistence.extensions.PersistenceExtensions");
+  // "persistenceservice" examples: "rrd4j"
   // last update
-    var lastUpdate = PersistenceExtension.lastUpdate(ir.getItem("itemName"));
+    var lastUpdate = PersistenceExtension.lastUpdate(ir.getItem("itemName"), "persistenceservice");
   // previous state
     // don't skip equal values
-    var previousState = PersistenceExtension.previousState(ir.getItem("itemName"), false).state;
+    var previousState = PersistenceExtension.previousState(ir.getItem("itemName"), false, "persistenceservice").state;
     // skip equal values
-    var previousState = PersistenceExtension.previousState(ir.getItem("itemName"), true).state;
+    var previousState = PersistenceExtension.previousState(ir.getItem("itemName"), true, "persistenceservice").state;
 
 
 /* ZonedDateTime (javadoc: https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/ZonedDateTime.html?is-external=true) */
