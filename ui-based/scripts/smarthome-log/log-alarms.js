@@ -1,6 +1,6 @@
 /*
 This script logs alarms to the InfluxDB smarthome log.
-Configure it in line 29.
+Configure it in line 27.
 */
 
 var itemName
@@ -13,7 +13,7 @@ var Exec = Java.type("org.openhab.core.model.script.actions.Exec");
 var Duration = Java.type("java.time.Duration");
 
 function logAlarm(itemName) {
-  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false).state;
+  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false, "rrd4j").state;
   var actualState = itemRegistry.getItem(itemName).getState();
   //logger.info(itemName + ' previous state is: ' + previousState);
   //logger.info(itemName + ' actual state is: ' + actualState);
