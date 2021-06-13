@@ -15,7 +15,7 @@ var Duration = Java.type("java.time.Duration");
 function logShading(deviceName) {
   itemName = deviceName;
   itemName += '_BeschStat';
-  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false).state;
+  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false, "rrd4j").state;
   var actualState = itemRegistry.getItem(itemName).getState();
   //logger.info(itemName + ' previous state is: ' + previousState);
   //logger.info(itemName + ' actual state is: ' + actualState);
