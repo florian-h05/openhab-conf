@@ -1,6 +1,6 @@
 /*
 This script logs knx shading to the InfluxDB smarthome log.
-Configure it in line 29.
+Configure it in line 33.
 */
 
 var deviceName, itemName
