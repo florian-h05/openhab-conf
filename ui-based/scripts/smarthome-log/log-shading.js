@@ -3,7 +3,7 @@ This script logs knx shading to the InfluxDB smarthome log.
 Configure it in line 29.
 */
 
-var deviceName
+var deviceName, itemName
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
 var PersistenceExtension = Java.type("org.openhab.core.persistence.extensions.PersistenceExtensions");
@@ -13,8 +13,8 @@ var Exec = Java.type("org.openhab.core.model.script.actions.Exec");
 var Duration = Java.type("java.time.Duration");
 
 function logShading(deviceName) {
-  var itemName = deviceName
-  var itemName =+ '_BeschStat'
+  itemName = deviceName;
+  itemName += '_BeschStat';
   var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false).state;
   var actualState = itemRegistry.getItem(itemName).getState();
   //logger.info(itemName + ' previous state is: ' + previousState);
