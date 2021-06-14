@@ -1,0 +1,29 @@
+name: CI Javascript
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    paths:
+      - '**.js'
+      - '.github/workflows/CI_Javascript.yml'
+  pull_request:
+    paths:
+      - '**.js'
+      - '.github/workflows/CI_Javascript.yml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/standard-action@v1
+        with:
+          # optionally select a different eslint formatter for the log output, default 'stylish'
+          # formatter: tap
+
+          # limit the files to lint, default '**/*.js'
+          # files: src/*.js
+          annotate: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
