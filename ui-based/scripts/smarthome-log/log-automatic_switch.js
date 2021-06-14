@@ -1,9 +1,9 @@
 /*
 This script logs knx automatic enable/disable to the InfluxDB smarthome log.
-Configure it in line 32.
+No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
 */
 
-var roomName, itemName
+var roomName, itemName;
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
 var PersistenceExtension = Java.type("org.openhab.core.persistence.extensions.PersistenceExtensions");
@@ -13,23 +13,18 @@ var Exec = Java.type("org.openhab.core.model.script.actions.Exec");
 var Duration = Java.type("java.time.Duration");
 
 function logAutomatic(itemName) {
-  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false, "rrd4j").state;
   var actualState = itemRegistry.getItem(itemName).getState();
-  //logger.info(itemName + ' previous state is: ' + previousState);
   //logger.info(itemName + ' actual state is: ' + actualState);
   roomName = itemName.split("_")[0];
-  if ((previousState == OFF) && (actualState == ON)) {
-    Exec.executeCommandLine(Duration.ofSeconds(30), "/usr/bin/python3","/etc/openhab/scripts/openhab-log-influxdb.py","-t knx","-d " + roomName,"-l Automatik deaktiviert.");
-    logger.info('logged ' + roomName + ' automatic off to the smarthome-log');
-  }
-  if ((previousState == ON) && (actualState == OFF)) {
-    Exec.executeCommandLine(Duration.ofSeconds(30), "/usr/bin/python3","/etc/openhab/scripts/openhab-log-influxdb.py","-t knx","-d " + roomName,"-l Automatik aktiviert.");
-    logger.info('logged ' + roomName + ' automatic on to the smarthome-log');
-  }
+  // check the state and log
+    if (actualState == ON) {
+      Exec.executeCommandLine(Duration.ofSeconds(30), "/usr/bin/python3","/etc/openhab/scripts/openhab-log-influxdb.py","-t knx","-d " + roomName,"-l Automatik deaktiviert.");
+      //logger.info('logged ' + roomName + ' automatic off to the smarthome-log');
+    }
+    if (actualState == OFF) {
+      Exec.executeCommandLine(Duration.ofSeconds(30), "/usr/bin/python3","/etc/openhab/scripts/openhab-log-influxdb.py","-t knx","-d " + roomName,"-l Automatik aktiviert.");
+      //logger.info('logged ' + roomName + ' automatic on to the smarthome-log');
+    }
 }
 
-// insert your automatic enable/disable item's names into the list
-var item_list = ['room1_AutoAus', 'room2_AutoAus', 'room3_AutAus'];
-for (var index in item_list) {
-  logAutomatic(item_list[index]);
-}
+logAutomatic(this.triggeringItem);
