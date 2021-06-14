@@ -7,9 +7,6 @@ The "Unique ID" of this script should be: "log-automatic_switch-script".
 var roomName, itemName;
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
-var PersistenceExtension = Java.type("org.openhab.core.persistence.extensions.PersistenceExtensions");
-var ZonedDateTime = Java.type("java.time.ZonedDateTime");
-var now = ZonedDateTime.now();
 var Exec = Java.type("org.openhab.core.model.script.actions.Exec");
 var Duration = Java.type("java.time.Duration");
 
