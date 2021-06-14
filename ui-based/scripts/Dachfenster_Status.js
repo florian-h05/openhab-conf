@@ -1,6 +1,6 @@
 /*
 This script creates the windows' states out of the three contacts.
-Configure it in line 57.
+Configure it in line 56.
 It requires the following items (<room_1> should be replaced):
   "<room_1>_Fenster_zu"         as input
   "<room_1>_Fenster_klLueftung" as input
@@ -9,53 +9,51 @@ It requires the following items (<room_1> should be replaced):
   "<room_1>_Fenster_Status_num" as numeric output
 */
 
-var currentRoom, room, Item_zu, Item_klLueftung, Item_grLueftung, Item_stateText, Item_StateNum, State_zu, State_klLueftung, State_grLueftung, Output_stateText, Output_stateNum;
+var OutputStateText, OutputStateNum
 
-var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
+var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 
-function generateState(currentRoom) {
+function generateState (currentRoom) {
   // set the itemnames of the contacts
-  Item_zu = currentRoom;
-  Item_klLueftung = currentRoom;
-  Item_grLueftung = currentRoom;
-  Item_zu += '_Fenster_zu';
-  Item_klLueftung += '_Fenster_klLueftung';
-  Item_grLueftung += '_Fenster_grLueftung';
+  var ItemZu = currentRoom
+  var ItemKlLueftung = currentRoom
+  var ItemGrLueftung = currentRoom
+  ItemZu += '_Fenster_zu'
+  ItemKlLueftung += '_Fenster_klLueftung'
+  ItemGrLueftung += '_Fenster_grLueftung'
   // set the itemnames of the output items
-  Item_stateText = currentRoom;
-  Item_StateNum = currentRoom;
-  Item_stateText += '_Fenster_Status';
-  Item_StateNum += '_Fenster_Status_num';
+  var ItemStateText = currentRoom
+  var ItemStateNum = currentRoom
+  ItemStateText += '_Fenster_Status'
+  ItemStateNum += '_Fenster_Status_num'
   // retrieve the contact states from openHAB
-  State_zu = itemRegistry.getItem(Item_zu).getState();
-  State_klLueftung = itemRegistry.getItem(Item_klLueftung).getState();
-  State_grLueftung = itemRegistry.getItem(Item_grLueftung).getState();
+  var StateZu = itemRegistry.getItem(ItemZu).getState().toString()
+  var StateKlLueftung = itemRegistry.getItem(ItemKlLueftung).getState().toString()
+  var StateGrLueftung = itemRegistry.getItem(ItemGrLueftung).getState().toString()
   // checks for the different states.
-  if (State_zu == 'OPEN' && State_klLueftung == 'OPEN' && State_grLueftung == 'OPEN') { //geschlossen
-    Output_stateText = 'geschlossen';
-    Output_stateNum = 1;
-  } else if (State_zu == 'CLOSED' && State_klLueftung == 'OPEN' && State_grLueftung == 'OPEN') { //kleine Lüftung
-    Output_stateText = 'kleine Lüftung';
-    Output_stateNum = 0.6;
-  } else if (State_zu == 'CLOSED' && State_klLueftung == 'CLOSED' && State_grLueftung == 'OPEN') { //große Lüftung
-    Output_stateText = 'große Lüftung';
-    Output_stateNum = 0.3;
-  } else if (State_zu == 'CLOSED' && State_klLueftung == 'CLOSED' && State_grLueftung == 'CLOSED') { //ganz geöffnet
-    Output_stateText = 'ganz geöffnet';
-    Output_stateNum = 0;
+  if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // geschlossen
+    OutputStateText = 'geschlossen'
+    OutputStateNum = 1
+  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // kleine Lüftung
+    OutputStateText = 'kleine Lüftung'
+    OutputStateNum = 0.6
+  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN') { // große Lüftung
+    OutputStateText = 'große Lüftung'
+    OutputStateNum = 0.3
+  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // ganz geöffnet
+    OutputStateText = 'ganz geöffnet'
+    OutputStateNum = 0
   } else {
-    Output_stateText = 'Fehler!';
-    Output_stateNum = 0;
+    OutputStateText = 'Fehler!'
+    OutputStateNum = 0
   }
-  events.postUpdate(Item_stateText, Output_stateText);
-  events.postUpdate(Item_StateNum, Output_stateNum);
-  //logger.info(([Item_stateText,' is: ',Output_stateText].join('')));
+  events.postUpdate(ItemStateText, OutputStateText)
+  events.postUpdate(ItemStateNum, OutputStateNum)
+  // logger.info(([ItemStateText,' is: ', OutputStateText].join('')))
 }
 
-
 // insert your room names into the list
-var room_list = ['room_1', 'room_2', 'room_3'];
-for (var room_index in room_list) {
-  room = room_list[room_index];
-  generateState(room);
+var roomList = ['room_1', 'room_2', 'room_3']
+for (var roomIndex in roomList) {
+  generateState(roomList[roomIndex])
 }
