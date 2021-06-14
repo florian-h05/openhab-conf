@@ -4,12 +4,12 @@ This script has to be in the rule.
 The main script's function could also be build here, but I wanted to seperate the main script from the rule for better code reuse.
 */
 
-var FrameworkUtil = Java.type("org.osgi.framework.FrameworkUtil");
-var _bundle = FrameworkUtil.getBundle(scriptExtension.class);
-var bundle_context = _bundle.getBundleContext();
-var classname = "org.openhab.core.automation.RuleManager";
-var RuleManager_Ref = bundle_context.getServiceReference(classname);
-var RuleManager = bundle_context.getService(RuleManager_Ref);
+var FrameworkUtil = Java.type('org.osgi.framework.FrameworkUtil')
+var _bundle = FrameworkUtil.getBundle(scriptExtension.class)
+var bundleContext = _bundle.getBundleContext()
+var classname = 'org.openhab.core.automation.RuleManager'
+var RuleManagerRef = bundleContext.getServiceReference(classname)
+var RuleManager = bundleContext.getService(RuleManagerRef)
 // call with passed data
 var map = new java.util.HashMap();
 map.put("triggeringItem", event.itemName);
