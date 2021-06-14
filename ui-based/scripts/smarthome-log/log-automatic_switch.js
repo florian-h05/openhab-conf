@@ -1,6 +1,7 @@
 /*
 This script logs knx automatic enable/disable to the InfluxDB smarthome log.
 No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
+The "Unique ID" of this script should be: "log-automatic_switch-script".
 */
 
 var roomName, itemName;
