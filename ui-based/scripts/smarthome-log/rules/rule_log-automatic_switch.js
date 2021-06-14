@@ -13,4 +13,4 @@ var RuleManager = bundle_context.getService(RuleManager_Ref);
 // call with passed data
 var map = new java.util.HashMap();
 map.put("triggeringItem", event.itemName);
-RuleManager.runNow("smarthome-log_AutoAus-Script", true, map); // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)
+RuleManager.runNow("log-automatic_switch-script", true, map); // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)
