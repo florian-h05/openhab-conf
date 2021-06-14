@@ -1,30 +1,20 @@
 /*
 This script logs alarms to the InfluxDB smarthome log.
-Configure it in line 29.
+No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
+The "Unique ID" of this script should be: "log-alarms-script".
 */
 
-var itemName
+var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
+var Exec = Java.type('org.openhab.core.model.script.actions.Exec')
+var Duration = Java.type('java.time.Duration')
 
-var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
-var PersistenceExtension = Java.type("org.openhab.core.persistence.extensions.PersistenceExtensions");
-var ZonedDateTime = Java.type("java.time.ZonedDateTime");
-var now = ZonedDateTime.now();
-var Exec = Java.type("org.openhab.core.model.script.actions.Exec");
-var Duration = Java.type("java.time.Duration");
-
-function logAlarm(itemName) {
-  var previousState = PersistenceExtension.previousState(ir.getItem(itemName), false).state;
-  var actualState = itemRegistry.getItem(itemName).getState();
-  //logger.info(itemName + ' previous state is: ' + previousState);
-  //logger.info(itemName + ' actual state is: ' + actualState);
-  if ((previousState == CLOSED) && (actualState == OPEN)) {
-    Exec.executeCommandLine(Duration.ofSeconds(30), "/usr/bin/python3","/etc/openhab/scripts/openhab-log-influxdb.py","-t knx","-d system-wide","-l " + itemName + " ausgelöst!");
-    //logger.info('logged ' + itemName + ' to the smarthome-log');
+function logAlarm (itemName) {
+  var actualState = itemRegistry.getItem(itemName).getState()
+  // logger.info(itemName + ' actual state is: ' + actualState)
+  if (actualState === OPEN) {
+    Exec.executeCommandLine(Duration.ofSeconds(30), '/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d system-wide', '-l ' + itemName + ' ausgelöst!')
+    // logger.info('logged ' + itemName + ' to the smarthome-log')
   }
 }
 
-// insert your alarm item's names into the list
-var alarm_list = ['alarm1', 'alarm2', 'alarm3'];
-for (var index in alarm_list) {
-  logAlarm(alarm_list[index]);
-}
+logAlarm(this.triggeringItem)
