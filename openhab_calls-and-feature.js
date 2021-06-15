@@ -55,6 +55,12 @@ var results = Exec.executeCommandLine(Duration.ofSeconds(20), 'echo','hello')
 var actualState = itemRegistry.getItem('itemName').getState()
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
+/* myopenHAB Notification */
+var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
+NotificationAction.sendNotification('email', 'message') // to a single myopenHAB user identified by e-mail
+NotificationAction.sendBroadcastNotification('message') // to all myopenHAB users
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* persistence (javadoc: https://www.openhab.org/javadoc/latest/org/openhab/core/persistence/extensions/persistenceextensions) */
 var PersistenceExtension = Java.type('org.openhab.core.persistence.extensions.PersistenceExtensions')
 // "persistenceservice" examples: "rrd4j"
