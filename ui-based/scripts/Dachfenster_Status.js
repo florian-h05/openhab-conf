@@ -15,17 +15,12 @@ var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' 
 
 function generateState (currentRoom) {
   // set the itemnames of the contacts
-  var ItemZu = currentRoom
-  var ItemKlLueftung = currentRoom
-  var ItemGrLueftung = currentRoom
-  ItemZu += '_Fenster_zu'
-  ItemKlLueftung += '_Fenster_klLueftung'
-  ItemGrLueftung += '_Fenster_grLueftung'
+  var ItemZu = currentRoom + '_Fenster_zu'
+  var ItemKlLueftung = currentRoom + '_Fenster_klLueftung'
+  var ItemGrLueftung = currentRoom + '_Fenster_grLueftung'
   // set the itemnames of the output items
-  var ItemStateText = currentRoom
-  var ItemStateNum = currentRoom
-  ItemStateText += '_Fenster_Status'
-  ItemStateNum += '_Fenster_Status_num'
+  var ItemStateText = currentRoom + '_Fenster_Status'
+  var ItemStateNum = currentRoom + '_Fenster_Status_num'
   // retrieve the contact states from openHAB
   var StateZu = itemRegistry.getItem(ItemZu).getState().toString()
   var StateKlLueftung = itemRegistry.getItem(ItemKlLueftung).getState().toString()
