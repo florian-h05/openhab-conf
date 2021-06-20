@@ -51,6 +51,27 @@ var Duration = Java.type('java.time.Duration')
 var results = Exec.executeCommandLine(Duration.ofSeconds(20), 'echo','hello')
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
+/* get group members */
+
+var groupMembers // is an array
+// Get the members of a group. Call it with the group item's name.
+function getGroupMembers (groupName) {
+  var membersString = new String(ir.getItem(groupName).members)
+  var membersSplit = membersString.split(' (')
+  var firstMember = membersSplit[0].split('[')
+  groupMembers = [firstMember[1]]
+  // remove the first element
+  membersSplit.splice(0, 1)
+  // remove the last element
+  membersSplit.splice(-1, 1)
+  // iterate over the rest of membersSplit and add to groupMembers
+  for (var index in membersSplit) {
+    var nMember = membersSplit[index].split('), ')
+    groupMembers.push(nMember[1])
+  }
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* get item state */
 var actualState = itemRegistry.getItem('itemName').getState()
 
