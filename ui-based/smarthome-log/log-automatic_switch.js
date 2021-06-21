@@ -1,7 +1,7 @@
 /*
 This script logs knx automatic enable/disable to the InfluxDB smarthome log.
 No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
-Requires items to start with the roomname before an _. Example: livingRoom_automatic-disable
+Requires items to start with the roomname before _. Example: livingRoom_automatic-disable
 The "Unique ID" of this script should be: "log-automatic_switch-script".
 */
 
