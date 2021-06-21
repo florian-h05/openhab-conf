@@ -1,6 +1,7 @@
 /*
 This script logs knx shading to the InfluxDB smarthome log.
-No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
+Configure the suffix of the shading state item in line 15. 
+This script gets "this.triggeringItem" from the rule that calls the script.
 The "Unique ID" of this script should be: "log-shading-script".
 */
 

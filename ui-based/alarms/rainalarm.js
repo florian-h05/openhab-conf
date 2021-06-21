@@ -9,7 +9,7 @@ The "Unique ID" of this script should be: "rainalarm-script".
 Requires items to start with the roomname before '_'.
 How it works: it is called by a script in a rule with the following parameters: 
   - this.mode (values: 'onAlarm' & 'onChange')
-  - this.triggeringItem (value: when script called onChange the name of the item that changed).
+  - this.triggeringItem (value: when script called onChange the name of the item that changed)
 */
 
 // used global by several functions
