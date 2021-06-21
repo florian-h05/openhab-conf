@@ -1,10 +1,15 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
-Configure the names of your weather items in lines 17 + 18 and wind tresholds in lines 20 + 21.
+Configuration: 
+ - Names of weather items in lines 17 + 18 and wind tresholds in lines 20 + 21.
+ - Names of roofwindow items in lines 43-45.
+ - Exclusive string in roofwindow itemnames in lines 106 + 118.
+ - Groupname of the group of the main contacts that should be processed in line 103.
 The "Unique ID" of this script should be: "rainalarm-script".
+Requires items to start with the roomname before '_'.
 How it works: it is called by a script in a rule with the following parameters: 
-  - mode (values: 'onAlarm' & 'onChange')
-  - triggeringItem (value: when script called onChange the name of the item that changed).
+  - this.mode (values: 'onAlarm' & 'onChange')
+  - this.triggeringItem (value: when script called onChange the name of the item that changed).
 */
 
 // used global by several functions
