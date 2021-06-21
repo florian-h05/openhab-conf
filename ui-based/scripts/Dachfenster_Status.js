@@ -2,11 +2,11 @@
 This script creates the windows' states out of the three contacts.
 Configure it in line 56.
 It requires the following items (<room_1> should be replaced):
-  "<room_1>_Fenster_zu"         as input
-  "<room_1>_Fenster_klLueftung" as input
-  "<room_1>_Fenster_grLueftung" as input
-  "<room_1>_Fenster_Status"     as textual output
-  "<room_1>_Fenster_Status_num" as numeric output
+  "<room_1>_Dachfenster_zu"         as input
+  "<room_1>_Dachfenster_klLueftung" as input
+  "<room_1>_Dachfenster_grLueftung" as input
+  "<room_1>_Dachfenster_Status"     as textual output
+  "<room_1>_Dachfenster_Status_num" as numeric output
 */
 
 var OutputStateText, OutputStateNum
@@ -15,9 +15,9 @@ var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' 
 
 function generateState (currentRoom) {
   // set the itemnames of the contacts
-  var ItemZu = currentRoom + '_Fenster_zu'
-  var ItemKlLueftung = currentRoom + '_Fenster_klLueftung'
-  var ItemGrLueftung = currentRoom + '_Fenster_grLueftung'
+  var ItemZu = currentRoom + '_Dachfenster_zu'
+  var ItemKlLueftung = currentRoom + '_Dachfenster_klLueftung'
+  var ItemGrLueftung = currentRoom + '_Dachfenster_grLueftung'
   // set the itemnames of the output items
   var ItemStateText = currentRoom + '_Fenster_Status'
   var ItemStateNum = currentRoom + '_Fenster_Status_num'
