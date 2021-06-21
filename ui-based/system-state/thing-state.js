@@ -12,8 +12,7 @@ var groupMembers // is an array
 var knxIpBridge = 'KNX_IP_Gateway_state'
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
-var ThingUID = Java.type("org.openhab.core.thing.ThingUID");
-var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
+var ThingUID = Java.type('org.openhab.core.thing.ThingUID')
 
 // Get the members of a group. Call it with the group item's name.
 function getGroupMembers (groupName) {
@@ -48,9 +47,9 @@ function updateThingStatus (thingName, itemName) {
 // KNX Things
 getGroupMembers('KNXState')
 // remove KNX IP bridge from array
-for (var i = 0; i < groupMembers.length; i++) { 
-  if (groupMembers[i] === knxIpBridge) { 
-    groupMembers.splice(i, 1); 
+for (var i = 0; i < groupMembers.length; i++) {
+  if (groupMembers[i] === knxIpBridge) {
+    groupMembers.splice(i, 1)
   }
 }
 updateThingStatus('knx:ip:bridge', knxIpBridge)

@@ -1,6 +1,6 @@
 /*
 This script converts KNX contact states to the statex for the HomeKit item.
-Requires: 
+Requires:
  - All items to convert in one group and with the same suffix.
  - The HK item in the scheme: main item without suffix + 'HK'. Example: room_window_closed & room_windowHK
 Configuration:

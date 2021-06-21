@@ -19,4 +19,4 @@ if (event.itemName === 'Regenalarm') {
   map.put('triggeringItem', event.itemName)
 }
 
-RuleManager.runNow("rainalarm-script", true, map); // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)
+RuleManager.runNow("rainalarm-script", true, map) // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)
