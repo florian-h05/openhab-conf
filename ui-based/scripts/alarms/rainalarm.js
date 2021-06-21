@@ -1,6 +1,10 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
-Configure the names of your weather items in lines 11 + 12
+Configure the names of your weather items in lines 17 + 18 and wind tresholds in lines 20 + 21.
+The "Unique ID" of this script should be: "rainalarm-script".
+How it works: it is called by a script in a rule with the following parameters: 
+  - mode (values: 'onAlarm' & 'onChange')
+  - triggeringItem (value: when script called onChange the name of the item that changed).
 */
 
 // used global by several functions
@@ -8,6 +12,8 @@ var messageText, groupMembers
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
+
+// set your itemnames
 var rain = itemRegistry.getItem('Regenalarm').getState().toString()
 var wind = itemRegistry.getItem('Windgeschwindigkeit').getState()
 // configuration of windspeed limits
@@ -42,10 +48,10 @@ function RoofwindowAlarm (currentRoom) {
   // logger.info('checking roofwindow: ' + ItemGrLueftung + ' state: ' + StateGrLueftung)
   if (rain === 'OPEN') { // active alarm === OPEN
     // checks for the different states.
-    if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN' && wind > klStufe) { // kleine Lüftung
+    if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN' && wind >= klStufe) { // kleine Lüftung
       messageText = 'kleine Lüftung'
       Notification(currentRoom + ' Dachfenster')
-    } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN' && wind > grStufe) { // große Lüftung
+    } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN' && wind >= grStufe) { // große Lüftung
       messageText = 'große Lüftung'
       Notification(currentRoom + ' Dachfenster')
     } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // ganz geöffnet
