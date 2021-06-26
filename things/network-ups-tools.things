@@ -1,0 +1,10 @@
+// Eaton 3S 700 @ Synology NAS
+Thing networkupstools:ups:ups1 "USV" [ device="ups", host="diskstation", username="user", password="secret", refresh=30 ] {
+    Channels:
+        Number:Dimensionless : upsLoadCurrent "Load on UPS (%)" [networkupstools="ups.load", unit="%"]
+        String : upsStatus "Status of the UPS" [networkupstools="ups.status"]
+        Number:ElectricPotential : outputVoltageCurrent "Output voltage (V)" [networkupstools="output.voltage", unit="V"]
+        // battery data
+        Number:Dimensionless : batteryCharge "Battery charge (%)" [networkupstools="battery.charge", unit="%"]
+        Number:Time : batteryRuntime "Battery runtime (seconds" [networkupstools="battery.type", unit="s"]
+      }
