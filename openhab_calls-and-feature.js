@@ -51,25 +51,16 @@ var Duration = Java.type('java.time.Duration')
 var results = Exec.executeCommandLine(Duration.ofSeconds(20), 'echo','hello')
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
-/* get group members */
+/* Get the members of a group. Using the library /automation/lib/javascript/community/groupUtils.js from this repo. */
+// import the library
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+var GroupUtils = new GroupUtils()
+// get only direct members
+var groupMembers = GroupUtils.getMembers(groupName)
+// get all members
+var groupMembers = GroupUtils.getAllMembers(groupName)
 
-var groupMembers // is an array
-// Get the members of a group. Call it with the group item's name.
-function getGroupMembers (groupName) {
-  var membersString = new String(ir.getItem(groupName).members)
-  var membersSplit = membersString.split(' (')
-  var firstMember = membersSplit[0].split('[')
-  groupMembers = [firstMember[1]]
-  // remove the first element
-  membersSplit.splice(0, 1)
-  // remove the last element
-  membersSplit.splice(-1, 1)
-  // iterate over the rest of membersSplit and add to groupMembers
-  for (var index in membersSplit) {
-    var nMember = membersSplit[index].split('), ')
-    groupMembers.push(nMember[1])
-  }
-}
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* get item state */

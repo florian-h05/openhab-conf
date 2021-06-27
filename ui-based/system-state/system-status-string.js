@@ -5,31 +5,16 @@ The "Unique ID" of this script should be: "system-status-string-script".
 */
 
 // used global
-var groupMembers // is an array
 var knx = false, yamaha = false // are used as boolean, indicate whether at least one thins is offline
 var statusString = '' // contains the generated text
 
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 
-// Get the members of a group. Call it with the group item's name.
-function getGroupMembers (groupName) {
-  var membersString = new String(ir.getItem(groupName).members)
-  var membersSplit = membersString.split(' (')
-  var firstMember = membersSplit[0].split('[')
-  groupMembers = [firstMember[1]]
-  // remove the first element
-  membersSplit.splice(0, 1)
-  // remove the last element
-  membersSplit.splice(-1, 1)
-  // iterate over the rest of membersSplit and add to groupMembers
-  for (var index in membersSplit) {
-    var nMember = membersSplit[index].split('), ')
-    groupMembers.push(nMember[1])
-  }
-}
-
 // KNX Things
-getGroupMembers('KNXState')
+var groupMembers = GroupUtils.getMembers('KNXState')
 for (var index in groupMembers) {
   var status = itemRegistry.getItem(groupMembers[index]).getState().toString()
   if (status != 'ONLINE') {
@@ -38,7 +23,7 @@ for (var index in groupMembers) {
 }
 
 // Yamaha Things
-getGroupMembers('YamahaState')
+var groupMembers = GroupUtils.getMembers('YamahaState')
 for (var index in groupMembers) {
   var status = itemRegistry.getItem(groupMembers[index]).getState().toString()
   if (status != 'ONLINE') {
@@ -59,7 +44,3 @@ if (yamaha === true) {
 }
 // post string to openHAB item
 events.postUpdate('Systemstatus', statusString)
-
-// logger.info('KNX offline: ' + knx)
-// logger.info('Yamaha offline: ' + yamaha)
-// logger.info('Systemstatus: ' + statusString)

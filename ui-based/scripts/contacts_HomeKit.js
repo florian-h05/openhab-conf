@@ -8,9 +8,9 @@ Configuration:
  - Groupname in line 50.
 */
 
-// used global
-var groupMembers
-
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 
 function convertState (ItemName, ItemSuffix) {
@@ -30,25 +30,9 @@ function convertState (ItemName, ItemSuffix) {
   }
 }
 
-// Get the members of a group. Call it with the group item's name.
-function getGroupMembers (groupName) {
-  var membersString = new String(ir.getItem(groupName).members)
-  var membersSplit = membersString.split(' (')
-  var firstMember = membersSplit[0].split('[')
-  groupMembers = [firstMember[1]]
-  // remove the first element
-  membersSplit.splice(0, 1)
-  // remove the last element
-  membersSplit.splice(-1, 1)
-  // iterate over the rest of membersSplit and add to groupMembers
-  for (var index in membersSplit) {
-    var nMember = membersSplit[index].split('), ')
-    groupMembers.push(nMember[1])
-  }
-}
-
-getGroupMembers('KontakteHK')
+var groupMembers = GroupUtils.getMembers('KontakteHK')
 for (var index in groupMembers) {
   // configure the main items' suffix.
   convertState(groupMembers[index], '_zu')
 }
+

@@ -1,37 +1,22 @@
 /*
 This script sends a thing's state to an openHAB item.
-Configuration of the KNX IP router itemname in line 12.
+Configuration of the KNX IP router itemname in line 10.
 How it works: gets the members of the KNXState and YamahaState groups and extracts the name of the thing.
   Then it iterates over all things and sends the state to openHAB items.
 Items must be named in the following scheme: type"_"devicename"_state". Example: "KNX_Wetterstation_state"
 */
 
-// used global
-var groupMembers // is an array
 // KNX IP bridge state item name
 var knxIpBridge = 'KNX_IP_Gateway_state'
 
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
-var ThingUID = Java.type('org.openhab.core.thing.ThingUID')
+var ThingUID = Java.type("org.openhab.core.thing.ThingUID");
+var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
 
-// Get the members of a group. Call it with the group item's name.
-function getGroupMembers (groupName) {
-  var membersString = new String(ir.getItem(groupName).members)
-  var membersSplit = membersString.split(' (')
-  var firstMember = membersSplit[0].split('[')
-  groupMembers = [firstMember[1]]
-  // remove the first element
-  membersSplit.splice(0, 1)
-  // remove the last element
-  membersSplit.splice(-1, 1)
-  // iterate over the rest of membersSplit and add to groupMembers
-  for (var index in membersSplit) {
-    var nMember = membersSplit[index].split('), ')
-    groupMembers.push(nMember[1])
-  }
-}
-
-// update the thing status item in openHAB and call Notification()
+// update the thing status item in openHAB
 function updateThingStatus (thingName, itemName) {
   // get the state of the thing
   var thingStatus = new String(things.get(new ThingUID(thingName)).status)
@@ -45,7 +30,7 @@ function updateThingStatus (thingName, itemName) {
 }
 
 // KNX Things
-getGroupMembers('KNXState')
+var groupMembers = GroupUtils.getMembers('KNXState')
 // remove KNX IP bridge from array
 for (var i = 0; i < groupMembers.length; i++) {
   if (groupMembers[i] === knxIpBridge) {
@@ -60,7 +45,7 @@ for (var index in groupMembers) {
 }
 
 // Yamaha Things
-getGroupMembers('YamahaState')
+groupMembers = GroupUtils.getMembers('YamahaState')
 for (var index in groupMembers) {
   var name = groupMembers[index].replace('Yamaha_', '')
   name = name.replace('_state', '')
