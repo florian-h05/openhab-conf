@@ -2,15 +2,14 @@
 This script contains the logic for the rainalarms and sends the notifications.
 Configuration:
  - Names of items in lines 17-19 and treshold in line 15.
- - Names of roofwindow items in lines 42-44.
- - Exclusive string in roofwindow itemnames in lines 105-107 + 110-116.
+ - Names of roofwindow items in lines 106-117. String in roofwindow itemnames in line 135.
 The "Unique ID" of this script should be: "heatalarm-script".
 */
 
-// configuration of heatalarm, first value is minutes, converts to milliseconds
-var klLueftungTime = 25 * 60 * 1000
-var grLueftungTime = 20 * 60 * 1000
-var openTime = 15 * 60 * 1000
+// configuration of heatalarm
+var klLueftungTime = '2m'
+var grLueftungTime = '20m'
+var openTime = '15m'
 // Temperature treshold, positive values mean inside temp to outside. Example: 2 means at least 2 degress higher temp on the outside.
 var tempTreshold = 2
 // configuration of the itemnames
@@ -34,10 +33,12 @@ var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationActi
 
 // send the notification
 function NotificationWarning (itemLabel) {
+  // logger.info('Sending notification: ' + itemLabel + ' schließen, zu warm zum Lüften!')
   NotificationAction.sendBroadcastNotification(itemLabel + ' schließen, zu warm zum Lüften!')
   // NotificationAction.sendNotification('e-mail', itemLabel + ' schließen, zu warm zum Lüften!')
 }
 function NotificationAlarm (itemLabel) {
+  // logger.info('Sending notification: ' + 'Hitzealarm: ' + itemLabel + ' schließen, zu warm zum Lüften!')
   NotificationAction.sendBroadcastNotification('Hitzealarm: ' + itemLabel + ' schließen, zu warm zum Lüften!')
   // NotificationAction.sendNotification('e-mail', 'Hitzealarm: ' + itemLabel + ' schließen, zu warm zum Lüften!')
 }
@@ -68,12 +69,11 @@ function StartWarning (contactItem, timerTime) {
   var heatLevel = itemRegistry.getItem(heatLevelItem).getState().toString()
   var itemLabel = itemRegistry.getItem(contactItem).getLabel()
   var diff = TemperatureDifference(contactItem)
-  // logger.info(contactItem + ' temp treshold: ' + diff)
   if ((heatLevel >= 1) && (diff === true)) {
     // Function generator for the timerOver actions.
     function timerOver (contactItem, itemLabel) {
       return function () {
-        // logger.info('The timer is over. Contact item is: '+ contactItem)
+        logger.info('The timer is over. Contact item is: '+ contactItem)
         var contactState = itemRegistry.getItem(contactItem).getState().toString()
         var heatLevel = itemRegistry.getItem(heatLevelItem).getState().toString()
         var diff = TemperatureDifference(contactItem)
@@ -88,11 +88,12 @@ function StartWarning (contactItem, timerTime) {
       }
     }
     // Create the Timer
+    // logger.info('Creating timer "' + contactItem + '" time: ' + timerTime)
     this.tm.check(contactItem,
                  timerTime,
                  timerOver(contactItem, itemLabel),
                  false,
-                 function () { logger.info('Timer for ' + contactItem + ' already exists, skipping!') })
+                 function () { logger.info('Timer for "' + contactItem + '" already exists, skipping!') })
   }
 }
 
@@ -121,7 +122,6 @@ function RoofwindowAlarm (item) {
 function SingleContact (contactItem) {
   // retrieve the contact state from openHAB
   var StateSingle = itemRegistry.getItem(contactItem).getState().toString()
-  // logger.info('checking single contact: item: ' + contactItem + ' state: ' + StateSingle)
   if (StateSingle === 'CLOSED') {
     StartWarning(contactItem, openTime)
   } else if (StateSingle === 'OPEN') {
@@ -141,4 +141,3 @@ for (var index in groupMembers) {
     SingleContact(groupMembers[index])
   }
 }
-
