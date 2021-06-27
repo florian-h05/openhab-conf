@@ -1,5 +1,5 @@
 // Eaton 3S 700 @ Synology NAS
-Thing networkupstools:ups:ups1 "USV" [ device="ups", host="diskstation", username="user", password="secret", refresh=30 ] {
+Thing networkupstools:ups:ups1 "USV" [ device="ups", host="diskstation", username="upsmon", password="secret", refresh=30 ] {
     Channels:
         Number:Dimensionless : upsLoadCurrent "Load on UPS (%)" [networkupstools="ups.load", unit="%"]
         String : upsStatus "Status of the UPS" [networkupstools="ups.status"]
