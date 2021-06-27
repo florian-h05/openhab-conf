@@ -24,6 +24,25 @@ function timerOver () {
 this.myTimer = ScriptExecution.createTimer(now.plusSeconds(10), timerOver);
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
+/* createTimer with TimerMgr library (https://github.com/rkoshak/openhab-rules-tools/tree/main/timer_mgr)
+   and use a function generator to pass values */
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/timerMgr.js')
+// Only create a new manager if one doesn't already exist or else it will be wiped out each time the rule runs
+this.tm = (this.tm === undefined) ? new TimerMgr() : this.tm
+
+// function generator
+function timerOver (value1, value2) {
+  return function () {
+    // stuff to do with value1 & value2
+  }
+}
+
+// create the timer (skip when this timer already exists)
+// tm.check(key, when, function, reschedule, flapping_function)
+tm.check('timer1', 15m, timerOver(value1, value2), false, function () { logger.info('Timer already exists, skipping!') })
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* Call another rule */
 var FrameworkUtil = Java.type('org.osgi.framework.FrameworkUtil')
 var _bundle = FrameworkUtil.getBundle(scriptExtension.class)
