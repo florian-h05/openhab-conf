@@ -1,6 +1,7 @@
 /*
 Get the members of a group as an array of their names.
 Tested to work with openHAB 3.0.2
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 /*
