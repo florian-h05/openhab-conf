@@ -13,7 +13,7 @@ var heatLevel = itemRegistry.getItem('Hitze_Stufe').getState()
 var frostLevel = itemRegistry.getItem('Frost_Stufe').getState()
 
 if (contacts === 'CLOSED') {
-  if (rain === 'CLOSED') {
+  if (rain === 'OPEN') {
     statusString = statusString + 'Regen! '
   }
   if (heatLevel === 4) {
