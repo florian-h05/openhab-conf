@@ -1,6 +1,6 @@
 /*
 This script generates a alarm status overview string.
-Configuration of itemnames in lines 10-13.
+Configuration of itemnames in lines 10-13 + 33.
 The "Unique ID" of this script should be: "alarm-status-string-script".
 */
 
