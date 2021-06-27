@@ -1,7 +1,7 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
 Configuration:
- - Names of items in lines 17-19 and treshold in line 15.
+ - Names of items in lines 16-19 and treshold in line 15.
  - Names of roofwindow items in lines 106-117. String in roofwindow itemnames in line 135.
 The "Unique ID" of this script should be: "heatalarm-script".
 */
