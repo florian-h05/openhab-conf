@@ -1,0 +1,101 @@
+uid: alarmClock
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item alarm clock switch
+      label: Alarm clock switch
+      name: item_switch
+      required: true
+      type: TEXT
+    - context: item
+      description: Item alarm clock (main) time
+      label: Main time
+      name: item_time1
+      required: true
+      type: TEXT
+    - context: item
+      description: Item alarm clock secondary time
+      label: Secondary time
+      name: item_time2
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 4, 2021, 6:17:02 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -35px
+          left: 16px
+          flex-direction: row
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=(props.item_time2) ? items[props.item_time1].state + ' | ' + items[props.item_time2].state : items[props.item_time1].state"
+              style:
+                font-size: 18px
+                font-weight: 300
+                margin-left: 0px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -90px
+          left: 16px
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: oh-toggle
+            config:
+              item: =props.item_switch
