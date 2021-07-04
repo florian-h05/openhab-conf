@@ -30,8 +30,12 @@ props:
       name: item_time2
       required: false
       type: TEXT
+    - description: Page which will be opened as popup.
+      label: Page ID
+      name: page
+      required: false
   parameterGroups: []
-timestamp: Jul 4, 2021, 6:17:02 PM
+timestamp: Jul 4, 2021, 6:55:04 PM
 component: f7-card
 config:
   style:
@@ -45,6 +49,8 @@ config:
     margin-left: 5px
     margin-right: 5px
 slots:
+  default:
+    - component: oh-link
   content:
     - component: f7-block
       config:
@@ -99,3 +105,13 @@ slots:
           - component: oh-toggle
             config:
               item: =props.item_switch
+    - component: oh-link
+      config:
+        action: popup
+        actionModal: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 110px
+          width: 100%
