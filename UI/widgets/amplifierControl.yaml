@@ -42,7 +42,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 5, 2021, 7:01:58 PM
+timestamp: Jul 5, 2021, 10:46:40 PM
 component: f7-card
 config:
   style:
@@ -60,83 +60,76 @@ slots:
       config:
         style:
           position: absolute
-          top: -4px
-          left: 16px
+          top: -5px
           flex-direction: row
+          width: 80%
+        class:
+          - text-align-left
       slots:
         default:
           - component: Label
             config:
               text: "=props.header ? props.header : 'Set Properties'"
               style:
-                size: 17px
                 font-size: 22px
-                font-weight: 600
-                margin-left: 0px
                 margin-top: 0px
+                font-weight: 400
     - null
-    - component: oh-toggle
+    - component: oh-button
       config:
-        color: blue
-        item: =props.item_power
+        visible: "items[props.item_power].state === 'ON' ? true : false"
+        round: false
+        large: false
+        iconF7: hifispeaker
+        iconColor: "=items[props.item_power].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: toggle
+        actionItem: =props.item_power
+        actionCommand: OFF
+        actionCommandAlt: ON
         style:
           position: absolute
-          top: 20px
-          right: 16px
-    - component: f7-icon
+          top: 15x
+          right: 10px
+    - component: oh-button
       config:
-        f7: power
-        size: 22px
-        style:
-          position: absolute
-          top: 25px
-          right: 80px
-    - component: oh-toggle
-      config:
-        visible: "=props.item_mute ? true : false"
-        color: red
-        item: =props.item_mute
+        visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
+        round: false
+        large: false
+        iconF7: speaker_slash
+        iconColor: "=items[props.item_mute].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: toggle
+        actionItem: =props.item_mute
+        actionCommand: OFF
+        actionCommandAlt: ON
         style:
           position: absolute
           top: 60px
-          right: 16px
-    - component: f7-icon
-      config:
-        visible: "=props.item_mute ? true : false"
-        f7: speaker_slash
-        size: 22px
-        style:
-          position: absolute
-          top: 65px
-          right: 80px
+          right: 10px
     - component: oh-slider
       config:
-        visible: "=props.item_volume ? true : false"
-        scale: true
-        step: 2
-        scaleSteps: 4
-        unit: dB
+        visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"
+        item: =props.item_volume
         min: -80
         max: -20
-        item: =props.item_volume
+        scale: true
+        scaleSteps: 6
         style:
           position: absolute
           top: 100px
-          right: 16px
+          left: 20px
           width: 90%
-    - component: f7-icon
-      config:
-        visible: "=props.item_input ? true : false"
-        f7: square_list
-        size: 22px
-        style:
-          position: absolute
-          top: 65px
-          left: 16px
+          --f7-range-bar-size: 6px
+          --f7-range-bar-border-radius: 8px
+          --f7-range-knob-size: 16px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
     - component: oh-button
       config:
-        visible: "=props.item_input ? true : false"
-        text: =items[props.item_input].state
+        visible: "=props.item_input ? items[props.item_power].state === 'ON' ? true : false : false"
+        round: false
+        large: false
+        text: "='Eingang: ' + items[props.item_input].state"
         action: options
         actionItem: =props.item_input
         item: =props.item_input
@@ -144,5 +137,24 @@ slots:
         vertical: false
         style:
           position: absolute
-          top: 62px
-          left: 30px
+          top: 60px
+          left: 10px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 75px
+          flex-direction: row
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: Label
+            config:
+              visible: "=items[props.item_power].state === 'OFF' ? true : false"
+              text: Bitte anschalten!
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
