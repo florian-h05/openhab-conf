@@ -1,0 +1,148 @@
+uid: amplifierControl
+tags: []
+props:
+  parameters:
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for power
+      label: Power
+      name: item_power
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for volume
+      label: Volume
+      name: item_volume
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for Mute
+      label: Mute
+      name: item_mute
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for Input
+      label: Input
+      name: item_input
+      required: false
+      type: TEXT
+    - description: Input actions
+      label: Input actions
+      name: inputActions
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 5, 2021, 7:01:58 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -4px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Properties'"
+              style:
+                size: 17px
+                font-size: 22px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+    - null
+    - component: oh-toggle
+      config:
+        color: blue
+        item: =props.item_power
+        style:
+          position: absolute
+          top: 20px
+          right: 16px
+    - component: f7-icon
+      config:
+        f7: power
+        size: 22px
+        style:
+          position: absolute
+          top: 25px
+          right: 80px
+    - component: oh-toggle
+      config:
+        visible: "=props.item_mute ? true : false"
+        color: red
+        item: =props.item_mute
+        style:
+          position: absolute
+          top: 60px
+          right: 16px
+    - component: f7-icon
+      config:
+        visible: "=props.item_mute ? true : false"
+        f7: speaker_slash
+        size: 22px
+        style:
+          position: absolute
+          top: 65px
+          right: 80px
+    - component: oh-slider
+      config:
+        visible: "=props.item_volume ? true : false"
+        scale: true
+        step: 2
+        scaleSteps: 4
+        unit: dB
+        min: -80
+        max: -20
+        item: =props.item_volume
+        style:
+          position: absolute
+          top: 100px
+          right: 16px
+          width: 90%
+    - component: f7-icon
+      config:
+        visible: "=props.item_input ? true : false"
+        f7: square_list
+        size: 22px
+        style:
+          position: absolute
+          top: 65px
+          left: 16px
+    - component: oh-button
+      config:
+        visible: "=props.item_input ? true : false"
+        text: =items[props.item_input].state
+        action: options
+        actionItem: =props.item_input
+        item: =props.item_input
+        actionOptions: =props.inputActions
+        vertical: false
+        style:
+          position: absolute
+          top: 62px
+          left: 30px
