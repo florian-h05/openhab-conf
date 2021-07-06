@@ -1,0 +1,218 @@
+uid: amplifierPlayback
+tags: []
+props:
+  parameters:
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for power
+      label: Power
+      name: item_power
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for title
+      label: Title
+      name: item_title
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for album
+      label: Album
+      name: item_album
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for artist
+      label: Artist
+      name: item_artist
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for playback control
+      label: Playback control
+      name: item_playback
+      required: true
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 6, 2021, 8:53:23 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          flex-direction: row
+          width: 80%
+        class:
+          - text-align-left
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =props.header
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
+    - component: f7-block
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        style:
+          position: absolute
+          top: 78px
+          right: 10px
+          flex-direction: row
+          width: 95%
+        class:
+          - text-align-right
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =items[props.item_title].state
+              style:
+                color: "#dd4124"
+                font-size: 16px
+                margin-top: 0px
+                font-weight: 400
+    - component: f7-block
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        style:
+          position: absolute
+          top: 25px
+          right: 10px
+          flex-direction: row
+          width: 65%
+        class:
+          - text-align-right
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =items[props.item_artist].state
+              style:
+                font-size: 13px
+                margin-top: 0px
+                font-weight: 300
+    - component: f7-block
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        style:
+          position: absolute
+          top: 120px
+          right: 10px
+          flex-direction: row
+          width: 60%
+        class:
+          - text-align-right
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =items[props.item_album].state
+              style:
+                font-size: 12px
+                margin-top: 0px
+                font-weight: 200
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 75px
+          flex-direction: row
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: Label
+            config:
+              visible: "=items[props.item_power].state === 'OFF' ? true : false"
+              text: Bitte anschalten!
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
+    - null
+    - component: oh-button
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        round: true
+        large: false
+        iconF7: lessthan_circle
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: command
+        actionItem: =props.item_playback
+        actionCommand: Previous
+        style:
+          position: absolute
+          top: 100px
+          left: 10px
+    - component: oh-button
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? true : false : false"
+        round: true
+        large: false
+        iconF7: pause_circle
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: command
+        actionItem: =props.item_playback
+        actionCommand: Pause
+        style:
+          position: absolute
+          top: 100px
+          left: 50px
+    - component: oh-button
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? false : true : false"
+        round: true
+        large: false
+        iconF7: play_circle
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: command
+        actionItem: =props.item_playback
+        actionCommand: Play
+        style:
+          position: absolute
+          top: 100px
+          left: 50px
+    - component: oh-button
+      config:
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        round: true
+        large: false
+        iconF7: greaterthan_circle
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: command
+        actionItem: =props.item_playback
+        actionCommand: Next
+        style:
+          position: absolute
+          top: 100px
+          left: 90px

@@ -1,0 +1,161 @@
+uid: amplifierControl
+tags: []
+props:
+  parameters:
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for power
+      label: Power
+      name: item_power
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for volume
+      label: Volume
+      name: item_volume
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for Mute
+      label: Mute
+      name: item_mute
+      required: false
+      type: TEXT
+    - context: item
+      description: Item for Input
+      label: Input
+      name: item_input
+      required: false
+      type: TEXT
+    - description: Input actions
+      label: Input actions
+      name: inputActions
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 5, 2021, 10:58:44 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 150px
+    min-width: 200px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          flex-direction: row
+          width: 80%
+        class:
+          - text-align-left
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Properties'"
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
+    - null
+    - component: oh-button
+      config:
+        visible: "items[props.item_power].state === 'ON' ? true : false"
+        round: false
+        large: false
+        iconF7: hifispeaker
+        iconColor: "=items[props.item_power].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: toggle
+        actionItem: =props.item_power
+        actionCommand: OFF
+        actionCommandAlt: ON
+        style:
+          position: absolute
+          top: 15x
+          right: 10px
+    - component: oh-button
+      config:
+        visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
+        round: false
+        large: false
+        iconF7: speaker_slash
+        iconColor: "=items[props.item_mute].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 28px
+        action: toggle
+        actionItem: =props.item_mute
+        actionCommand: OFF
+        actionCommandAlt: ON
+        style:
+          position: absolute
+          top: 60px
+          right: 10px
+    - component: oh-slider
+      config:
+        visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"
+        item: =props.item_volume
+        min: -80
+        max: -20
+        scale: true
+        scaleSteps: 6
+        style:
+          position: absolute
+          top: 100px
+          left: 20px
+          width: 88%
+          --f7-range-bar-size: 6px
+          --f7-range-bar-border-radius: 8px
+          --f7-range-knob-size: 16px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+    - component: oh-button
+      config:
+        visible: "=props.item_input ? items[props.item_power].state === 'ON' ? true : false : false"
+        round: false
+        large: false
+        text: "='Eingang: ' + items[props.item_input].state"
+        action: options
+        actionItem: =props.item_input
+        item: =props.item_input
+        actionOptions: =props.inputActions
+        vertical: false
+        style:
+          position: absolute
+          top: 60px
+          left: 10px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 75px
+          flex-direction: row
+          width: 100%
+        class:
+          - text-align-center
+      slots:
+        default:
+          - component: Label
+            config:
+              visible: "=items[props.item_power].state === 'OFF' ? true : false"
+              text: Bitte anschalten!
+              style:
+                font-size: 22px
+                margin-top: 0px
+                font-weight: 400
