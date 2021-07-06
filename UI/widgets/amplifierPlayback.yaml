@@ -43,7 +43,7 @@ props:
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Jul 6, 2021, 7:07:01 PM
+timestamp: Jul 6, 2021, 8:53:23 PM
 component: f7-card
 config:
   style:
@@ -173,7 +173,7 @@ slots:
           left: 10px
     - component: oh-button
       config:
-        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Pause' ? false : true : false"
+        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? true : false : false"
         round: true
         large: false
         iconF7: pause_circle
