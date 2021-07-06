@@ -42,7 +42,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 5, 2021, 10:46:40 PM
+timestamp: Jul 5, 2021, 10:58:44 PM
 component: f7-card
 config:
   style:
@@ -52,6 +52,7 @@ config:
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 150px
+    min-width: 200px
     margin-left: 5px
     margin-right: 5px
 slots:
@@ -119,7 +120,7 @@ slots:
           position: absolute
           top: 100px
           left: 20px
-          width: 90%
+          width: 88%
           --f7-range-bar-size: 6px
           --f7-range-bar-border-radius: 8px
           --f7-range-knob-size: 16px
