@@ -42,7 +42,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 5, 2021, 10:58:44 PM
+timestamp: Jul 8, 2021, 9:37:11 PM
 component: f7-card
 config:
   style:
@@ -120,7 +120,7 @@ slots:
           position: absolute
           top: 100px
           left: 20px
-          width: 88%
+          width: calc(100% - 40px)
           --f7-range-bar-size: 6px
           --f7-range-bar-border-radius: 8px
           --f7-range-knob-size: 16px
