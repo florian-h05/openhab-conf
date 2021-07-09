@@ -117,6 +117,7 @@ slots:
           position: absolute
           top: 10px
           right: 10px
+          height: 34px
           background: transparent
     - component: oh-button
       config:
@@ -130,6 +131,7 @@ slots:
           position: absolute
           top: 43.5px
           right: 12px
+          height: 30px
           background: transparent
     - component: oh-button
       config:
@@ -143,6 +145,7 @@ slots:
           position: absolute
           top: 72px
           right: 10px
+          height: 34px
           background: transparent
     - component: oh-slider
       config:
