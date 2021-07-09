@@ -1,0 +1,173 @@
+uid: Shutter
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify or arrow_up_arrow_down
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Shutter item to control
+      label: Shutter item
+      name: item
+      required: false
+      type: TEXT
+    - context: item
+      description: Shading state item
+      label: Shading state item
+      name: itemShading
+      required: false
+      type: TEXT
+    - description: Display a slider or not
+      label: Slider enable/disable
+      name: sliderOption
+      required: false
+      type: BOOLEAN
+  parameterGroups: []
+timestamp: Jul 9, 2021, 2:09:02 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 120px
+    margin-left: 5px
+    margin-right: 5px
+    minWidth: 250px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: =props.icon
+              size: 18
+              style:
+                margin-right: 10px
+              visible: "=props.icon ? true : false"
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -12px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Props'"
+              style:
+                font-size: 17px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -28px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].state + '% - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].state + '%'"
+              style:
+                font-size: 12px
+                margin-left: 0px
+                margin-top: 0px
+    - component: oh-button
+      config:
+        iconF7: arrow_up_circle
+        iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+        iconSize: 34
+        action: command
+        actionItem: =props.item
+        actionCommand: UP
+        style:
+          position: absolute
+          top: 10px
+          right: 10px
+          height: 34px
+          background: transparent
+    - component: oh-button
+      config:
+        iconColor: red
+        iconF7: stop_circle
+        iconSize: 30
+        action: command
+        actionItem: =props.item
+        actionCommand: STOP
+        style:
+          position: absolute
+          top: 43.5px
+          right: 12px
+          height: 30px
+          background: transparent
+    - component: oh-button
+      config:
+        iconF7: arrow_down_circle
+        iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+        iconSize: 34
+        action: command
+        actionItem: =props.item
+        actionCommand: DOWN
+        style:
+          position: absolute
+          top: 72px
+          right: 10px
+          height: 34px
+          background: transparent
+    - component: oh-slider
+      config:
+        visible: "=props.sliderOption == true ? true : false"
+        releaseOnly: true
+        item: =props.item
+        min: 0
+        max: 100
+        scale: true
+        scaleSteps: 5
+        style:
+          position: absolute
+          top: 76px
+          left: 20px
+          width: calc(100% - 85px)
+          --f7-range-bar-size: 6px
+          --f7-range-bar-border-radius: 8px
+          --f7-range-knob-size: 16px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3

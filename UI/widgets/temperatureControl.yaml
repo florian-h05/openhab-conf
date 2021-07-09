@@ -54,7 +54,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 6, 2021, 9:42:38 PM
+timestamp: Jul 6, 2021, 10:30:08 PM
 component: f7-card
 config:
   style:
@@ -173,30 +173,30 @@ slots:
         visible: "=props.set_temp_item ? true : false"
         iconColor: red
         iconF7: arrow_up_circle
-        iconSize: 35
+        iconSize: 34
         action: command
         actionItem: =props.set_temp_item
         actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) + 0.5
         style:
           position: absolute
-          top: 12px
+          top: 10px
           right: 10px
-          height: 35px
+          height: 34px
           background: transparent
     - component: oh-button
       config:
         visible: "=props.set_temp_item ? true : false"
         iconColor: red
         iconF7: arrow_down_circle
-        iconSize: 35
+        iconSize: 34
         action: command
         actionItem: =props.set_temp_item
         actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) - 0.5
         style:
           position: absolute
-          top: 74px
+          top: 72px
           right: 10px
-          height: 35px
+          height: 34px
           background: transparent
     - component: Label
       config:

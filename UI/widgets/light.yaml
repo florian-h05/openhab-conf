@@ -1,0 +1,113 @@
+uid: Light
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+    - description: rgba or HEX
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item to control light
+      label: Item
+      name: item
+      required: false
+      type: TEXT
+    - description: Display a slider or not
+      label: Slider enable/disable
+      name: sliderOption
+      required: false
+      type: BOOLEAN
+  parameterGroups: []
+timestamp: Jul 9, 2021, 5:14:27 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 120px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: =props.icon
+              size: 18
+              style:
+                margin-right: 10px
+              visible: "=props.icon ? true : false"
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -15px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Props'"
+              style:
+                font-size: 17px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+    - component: oh-slider
+      config:
+        visible: "=props.sliderOption == true ? true : false"
+        releaseOnly: true
+        item: =props.item
+        min: 0
+        max: 100
+        style:
+          position: absolute
+          bottom: -75px
+          left: 20px
+          width: calc(100% - 40px)
+          --f7-range-bar-size: 8px
+          --f7-range-bar-border-radius: 8px
+          --f7-range-knob-size: 20px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+    - component: oh-toggle
+      config:
+        item: =props.item
+        style:
+          position: absolute
+          top: 15px
+          right: 20px
