@@ -12,7 +12,7 @@ props:
       name: header
       required: false
       type: TEXT
-    - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify
+    - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify or arrow_up_arrow_down
       label: Icon
       name: icon
       required: false
@@ -28,13 +28,19 @@ props:
       name: item
       required: false
       type: TEXT
+    - context: item
+      description: Shading state item
+      label: Shading state item
+      name: itemShading
+      required: false
+      type: TEXT
     - description: Display a slider or not
       label: Slider enable/disable
       name: sliderOption
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 8, 2021, 11:09:48 PM
+timestamp: Jul 9, 2021, 1:41:08 PM
 component: f7-card
 config:
   style:
@@ -46,7 +52,7 @@ config:
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    minWidth: 150px
+    minWidth: 250px
 slots:
   content:
     - component: f7-block
@@ -100,15 +106,15 @@ slots:
         default:
           - component: Label
             config:
-              text: "=Number(items[props.item].state) === 0 ? 'Geöffnet' : Number(items[props.item].state) === 100 ? 'Geschlossen' : items[props.item].state + '%'"
+              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].state + '% - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].state + '%'"
               style:
                 font-size: 12px
                 margin-left: 0px
                 margin-top: 0px
     - component: oh-button
       config:
-        iconColor: red
         iconF7: arrow_up_circle
+        iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
         iconSize: 34
         action: command
         actionItem: =props.item
@@ -135,8 +141,8 @@ slots:
           background: transparent
     - component: oh-button
       config:
-        iconColor: red
         iconF7: arrow_down_circle
+        iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
         iconSize: 34
         action: command
         actionItem: =props.item
