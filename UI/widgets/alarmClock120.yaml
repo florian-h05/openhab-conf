@@ -35,7 +35,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 9, 2021, 2:51:08 PM
+timestamp: Jul 9, 2021, 3:50:19 PM
 component: f7-card
 config:
   style:
@@ -110,6 +110,6 @@ slots:
         style:
           position: absolute
           left: 0px
-          top: 0px
+          bottom: 35px
           height: 110px
           width: 100%
