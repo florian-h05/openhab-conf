@@ -40,7 +40,7 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 9, 2021, 1:41:08 PM
+timestamp: Jul 9, 2021, 2:09:02 PM
 component: f7-card
 config:
   style:
@@ -99,7 +99,7 @@ slots:
       config:
         style:
           position: absolute
-          bottom: -33px
+          bottom: -28px
           left: 16px
           flex-direction: row
       slots:
@@ -170,4 +170,4 @@ slots:
           --f7-range-bar-size: 6px
           --f7-range-bar-border-radius: 8px
           --f7-range-knob-size: 16px
-          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
