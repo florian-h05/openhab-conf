@@ -43,7 +43,7 @@ props:
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Jul 6, 2021, 8:53:23 PM
+timestamp: Jul 10, 2021, 12:15:51 PM
 component: f7-card
 config:
   style:
@@ -74,7 +74,7 @@ slots:
               style:
                 font-size: 22px
                 margin-top: 0px
-                font-weight: 400
+                font-weight: 600
     - component: f7-block
       config:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
@@ -171,6 +171,7 @@ slots:
           position: absolute
           top: 100px
           left: 10px
+          height: 28px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? true : false : false"
@@ -186,6 +187,7 @@ slots:
           position: absolute
           top: 100px
           left: 50px
+          height: 28px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? false : true : false"
@@ -201,6 +203,7 @@ slots:
           position: absolute
           top: 100px
           left: 50px
+          height: 28px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
@@ -216,3 +219,4 @@ slots:
           position: absolute
           top: 100px
           left: 90px
+          height: 28px
