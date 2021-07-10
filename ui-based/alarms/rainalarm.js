@@ -35,6 +35,7 @@ function RoofwindowAlarm (item) {
   // remove the suffix
   item = item.replace('_zu', '')
   item = item.replace('_klLueftung', '')
+  item = item.replace('_grLueftung', '')
   // retrieve the contact states from openHAB
   var StateZu = itemRegistry.getItem(item + '_zu').getState().toString()
   var StateKlLueftung = itemRegistry.getItem(item + '_klLueftung').getState().toString()
