@@ -39,7 +39,7 @@ props:
       required: true
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 9, 2021, 11:45:02 PM
+timestamp: Jul 10, 2021, 12:00:12 PM
 component: f7-card
 config:
   style:
@@ -69,6 +69,7 @@ slots:
               f7: =props.icon
               size: 18
               style:
+                height: 18px
                 margin-right: 10px
               visible: "=props.icon ? true : false"
           - component: Label
@@ -109,7 +110,7 @@ slots:
               visible: "=props.type == true ? true: false"
               text: =items[props.item].state
               style:
-                color: "=items[props.item].state === 'geschlossen' ? 'green' : items[props.item].state === 'kleine Lüftung' ? 'yellow' : items[props.item].state === 'große Lüftung' ? 'orange' : 'red'"
+                color: "=items[props.item].state === 'geschlossen' ? 'green' : items[props.item].state === 'kleine Lüftung' ? themeOptions.dark === 'dark' ? '#FFEB3B' : '#FBC02D' : items[props.item].state === 'große Lüftung' ? themeOptions.dark === 'dark' ? '#FF9800' : '#F57C00' : 'red'"
                 font-size: 24px
                 margin-left: 0px
                 margin-top: 0px
