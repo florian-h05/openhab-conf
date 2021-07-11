@@ -1,0 +1,318 @@
+uid: roomCard
+description: room card with background image & state overview
+author: Copyright (c) 2021 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - description: Title to display in upper right corner
+      label: Header
+      name: text_header
+      required: false
+      type: TEXT
+    - description: web address of background image
+      label: Background image
+      name: image
+      required: false
+      type: TEXT
+    - description: HEX, rgba or name, e.g. white or black
+      label: Background color
+      name: bgcolor
+      required: true
+      type: TEXT
+    - description: decimal, e.g. 0.6
+      label: Background opacity
+      name: bgopacity
+      required: true
+      type: TEXT
+    - description: icon & text color, e.g. black or white
+      label: Icon & text color
+      name: color
+      required: true
+      type: TEXT
+    - description: Page which will be navigated to
+      label: Page ID
+      name: page
+      required: false
+    - context: item
+      description: item/group for light(s)
+      label: Light(s) item
+      name: light
+      required: false
+      type: TEXT
+    - context: item
+      description: Group:Number:COUNT(ON) item for numbers of lights on
+      label: Number of lights on
+      name: lights_number
+      required: false
+      type: TEXT
+    - context: item
+      description: item for windows(s)
+      label: Window(s) item
+      name: window
+      required: false
+      type: TEXT
+    - context: item
+      description: Group:Number:COUNT(CLOSED) item for numbers of windows open
+      label: Number of windows open
+      name: windows_number
+      required: false
+      type: TEXT
+    - context: item
+      description: item for temperature
+      label: Temperature item
+      name: temp
+      required: false
+      type: TEXT
+    - context: item
+      description: item for set temperature
+      label: Set temperature item
+      name: settemp
+      required: false
+      type: TEXT
+    - context: item
+      description: item for blinds
+      label: Blind(s) item
+      name: blinds
+      required: false
+      type: TEXT
+    - context: item
+      description: item for blinds
+      label: Blind 2 item
+      name: blinds2
+      required: false
+      type: TEXT
+    - context: item
+      description: item for speaker(s)
+      label: Speaker(s) item
+      name: speaker
+      required: false
+      type: TEXT
+    - context: item
+      description: item for heating state
+      label: Heating state item
+      name: heating
+      required: false
+      type: TEXT
+    - context: item
+      description: item for cooling state
+      label: Cooling state item
+      name: cooling
+      required: false
+      type: TEXT
+    - context: item
+      description: item for humidity
+      label: Humidity item
+      name: humidity
+      required: false
+      type: TEXT
+    - context: item
+      description: item for illuminance
+      label: Illuminance item
+      name: illuminance
+      required: false
+      type: TEXT
+    - context: item
+      description: item for door state(s)
+      label: Door state(s)
+      name: door_state
+      required: false
+      type: TEXT
+    - context: item
+      description: item for door lock(s)
+      label: Door lock(s)
+      name: door_lock
+      required: false
+      type: TEXT
+timestamp: Jul 11, 2021, 11:25:24 AM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-image: ='url(' + props.image + ')'
+    background-size: cover
+    background-position: center
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        visible: "=props.text_header ? true : false"
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          background: =props.bgcolor
+          opacity: =props.bgopacity
+          border-radius: 7px
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =props.text_header
+              style:
+                color: =props.color
+                font-size: 20px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -95px
+          left: 16px
+          background: =props.bgcolor
+          opacity: =props.bgopacity
+          border-radius: 7px
+      slots:
+        default:
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.light ? true : false"
+              text: "=(items[props.light].state == 'ON') ? items[props.lights_number].state : ''"
+              textColor: =props.color
+              iconColor: =props.color
+              iconF7: "=items[props.light].state == 'ON' ? 'lightbulb_fill' : 'lightbulb_slash'"
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.door_state ? true : false"
+            slots:
+              media:
+                - component: oh-icon
+                  config:
+                    icon: "=items[props.door_state].state === 'OPEN' ? 'door-closed' : 'door-open'"
+                    iconSize: 24
+                    style:
+                      height: 24px
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.window ? true : false"
+              text: "=(items[props.window].state == 'CLOSED') ? items[props.windows_number].state : ''"
+              textColor: =props.color
+            slots:
+              media:
+                - component: oh-icon
+                  config:
+                    icon: "=items[props.window].state === 'OPEN' ? 'window-closed' : 'window-open'"
+                    iconSize: 24
+                    style:
+                      height: 24px
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.door_lock ? true : false"
+              text: "=items[props.door_lock].state === 'ON' ? '' : ''"
+              iconColor: =props.color
+              iconF7: "=items[props.door_lock].state === 'ON' ? 'lock_open' : 'lock'"
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.blinds ? true : false"
+              text: "=props.blinds2 ? items[props.blinds].state + ' | ' + items[props.blinds2].displayState : items[props.blinds].displayState"
+              textColor: =props.color
+              iconColor: =props.color
+              iconF7: arrow_up_arrow_down
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.speaker ? true : false"
+              iconColor: =props.color
+              iconF7: "=items[props.speaker].state === 'ON' ? 'speaker_3_fill' : 'speaker_slash'"
+              iconSize: 18
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -65px
+          left: 16px
+          background: =props.bgcolor
+          opacity: =props.bgopacity
+          border-radius: 7px
+      slots:
+        default:
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.temp ? true : false"
+              text: "=(items[props.temp].displayState) +  (props.settemp ? ' (' + items[props.settemp].displayState + ')' : '')"
+              textColor: =props.color
+              iconColor: =props.color
+              iconF7: thermometer
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: =items[props.heating].state === 'ON'
+              iconColor: =props.color
+              iconF7: flame
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: =items[props.cooling].state === 'ON'
+              iconColor: =props.color
+              iconF7: circle_grid_hex
+              iconSize: 18
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -35px
+          left: 16px
+          background: =props.bgcolor
+          opacity: =props.bgopacity
+          border-radius: 7px
+      slots:
+        default:
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.humidity ? true : false"
+              text: =items[props.humidity].displayState
+              textColor: =props.color
+              iconColor: =props.color
+              iconF7: drop
+              iconSize: 18
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.illuminance ? true : false"
+              text: =items[props.illuminance].displayState
+              textColor: =props.color
+              iconColor: =props.color
+              iconF7: sun_min
+              iconSize: 18
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: navigate
+        actionPage: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 175px
+          width: 100%
