@@ -123,7 +123,7 @@ props:
       name: door_lock
       required: false
       type: TEXT
-timestamp: Jul 11, 2021, 11:25:24 AM
+timestamp: Jul 11, 2021, 2:59:42 PM
 component: f7-card
 config:
   style:
@@ -135,7 +135,7 @@ config:
     background-image: ='url(' + props.image + ')'
     background-size: cover
     background-position: center
-    height: 150px
+    height: 130px
     margin-left: 5px
     margin-right: 5px
 slots:
@@ -165,7 +165,7 @@ slots:
       config:
         style:
           position: absolute
-          bottom: -95px
+          bottom: -75px
           left: 16px
           background: =props.bgcolor
           opacity: =props.bgopacity
@@ -200,7 +200,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
               visible: "=props.window ? true : false"
-              text: "=(items[props.window].state == 'CLOSED') ? items[props.windows_number].state : ''"
+              text: "=(items[props.window].state == 'CLOSED') ? (props.windows_number ? items[props.windows_number].state : '') : ''"
               textColor: =props.color
             slots:
               media:
@@ -241,7 +241,7 @@ slots:
       config:
         style:
           position: absolute
-          bottom: -65px
+          bottom: -45px
           left: 16px
           background: =props.bgcolor
           opacity: =props.bgopacity
@@ -278,7 +278,7 @@ slots:
       config:
         style:
           position: absolute
-          bottom: -35px
+          bottom: -15px
           left: 16px
           background: =props.bgcolor
           opacity: =props.bgopacity
@@ -314,5 +314,5 @@ slots:
           position: absolute
           left: 0px
           top: 0px
-          height: 175px
+          height: 125px
           width: 100%
