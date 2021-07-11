@@ -177,7 +177,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
               visible: "=props.light ? true : false"
-              text: "=(items[props.light].state == 'ON') ? items[props.lights_number].state : ''"
+              text: "=props.lights_number ? ((items[props.light].state == 'ON') ? items[props.lights_number].state : '') : ''"
               textColor: =props.color
               iconColor: =props.color
               iconF7: "=items[props.light].state == 'ON' ? 'lightbulb_fill' : 'lightbulb_slash'"
