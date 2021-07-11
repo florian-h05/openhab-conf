@@ -1,4 +1,6 @@
 uid: Contact
+description: display state of a window or door textual and with icon
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -34,12 +36,12 @@ props:
       required: true
       type: TEXT
     - description: ON, if type is roofwindow, else OFF
-      label: Type
-      name: type
+      label: Special type - Roofwindow
+      name: roofwindow
       required: true
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 10, 2021, 12:00:12 PM
+timestamp: Jul 11, 2021, 4:33:18 PM
 component: f7-card
 config:
   style:
@@ -107,7 +109,7 @@ slots:
         default:
           - component: Label
             config:
-              visible: "=props.type == true ? true: false"
+              visible: "=props.roofwindow == true ? true: false"
               text: =items[props.item].state
               style:
                 color: "=items[props.item].state === 'geschlossen' ? 'green' : items[props.item].state === 'kleine Lüftung' ? themeOptions.dark === 'dark' ? '#FFEB3B' : '#FBC02D' : items[props.item].state === 'große Lüftung' ? themeOptions.dark === 'dark' ? '#FF9800' : '#F57C00' : 'red'"
@@ -116,7 +118,7 @@ slots:
                 margin-top: 0px
           - component: Label
             config:
-              visible: "=props.type == false ? true: false"
+              visible: "=props.roofwindow == false ? true: false"
               text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : 'geöffnet'"
               style:
                 color: "=items[props.item].state === 'OPEN' ? 'green' : 'red'"
@@ -125,7 +127,7 @@ slots:
                 margin-top: 0px
     - component: oh-icon
       config:
-        visible: "=props.type == true ? true: false"
+        visible: "=props.roofwindow == true ? true: false"
         icon: "=items[props.item].state === 'geschlossen' ? 'window-closed' : 'window-open'"
         width: 80x
         item: =props.item
@@ -135,7 +137,7 @@ slots:
           right: 5px
     - component: oh-icon
       config:
-        visible: "=props.type == false ? true: false"
+        visible: "=props.roofwindow == false ? true: false"
         icon: "=items[props.item].state === 'OPEN' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
         width: 80x
         item: =props.item
