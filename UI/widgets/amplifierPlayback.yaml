@@ -1,4 +1,6 @@
 uid: amplifierPlayback
+description: control playback and display playback information of an amplifier
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -43,7 +45,7 @@ props:
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Jul 10, 2021, 12:15:51 PM
+timestamp: Jul 11, 2021, 1:12:20 PM
 component: f7-card
 config:
   style:
@@ -63,7 +65,7 @@ slots:
           position: absolute
           top: -5px
           flex-direction: row
-          width: 80%
+          width: 50%
         class:
           - text-align-left
       slots:
@@ -80,12 +82,11 @@ slots:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 78px
-          right: 10px
+          top: 62px
           flex-direction: row
-          width: 95%
+          width: 100%
         class:
-          - text-align-right
+          - text-align-left
       slots:
         default:
           - component: Label
@@ -93,7 +94,7 @@ slots:
               text: =items[props.item_title].state
               style:
                 color: "#dd4124"
-                font-size: 16px
+                font-size: 15px
                 margin-top: 0px
                 font-weight: 400
     - component: f7-block
@@ -101,12 +102,11 @@ slots:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 25px
-          right: 10px
+          top: 92px
           flex-direction: row
-          width: 65%
+          width: 100%
         class:
-          - text-align-right
+          - text-align-left
       slots:
         default:
           - component: Label
@@ -121,21 +121,20 @@ slots:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 120px
-          right: 10px
+          top: 128px
           flex-direction: row
-          width: 60%
+          width: 100%
         class:
-          - text-align-right
+          - text-align-left
       slots:
         default:
           - component: Label
             config:
               text: =items[props.item_album].state
               style:
-                font-size: 12px
+                font-size: 11px
                 margin-top: 0px
-                font-weight: 200
+                font-weight: 300
     - component: f7-block
       config:
         style:
@@ -163,15 +162,15 @@ slots:
         large: false
         iconF7: lessthan_circle
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 28px
+        iconSize: 30px
         action: command
         actionItem: =props.item_playback
         actionCommand: Previous
         style:
           position: absolute
-          top: 100px
-          left: 10px
-          height: 28px
+          top: 15px
+          right: 80px
+          height: 30px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? true : false : false"
@@ -179,15 +178,15 @@ slots:
         large: false
         iconF7: pause_circle
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 28px
+        iconSize: 30px
         action: command
         actionItem: =props.item_playback
         actionCommand: Pause
         style:
           position: absolute
-          top: 100px
-          left: 50px
-          height: 28px
+          top: 15px
+          right: 45px
+          height: 30px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? false : true : false"
@@ -195,15 +194,15 @@ slots:
         large: false
         iconF7: play_circle
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 28px
+        iconSize: 30px
         action: command
         actionItem: =props.item_playback
         actionCommand: Play
         style:
           position: absolute
-          top: 100px
-          left: 50px
-          height: 28px
+          top: 15px
+          right: 45px
+          height: 30px
     - component: oh-button
       config:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
@@ -211,12 +210,12 @@ slots:
         large: false
         iconF7: greaterthan_circle
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 28px
+        iconSize: 30px
         action: command
         actionItem: =props.item_playback
         actionCommand: Next
         style:
           position: absolute
-          top: 100px
-          left: 90px
-          height: 28px
+          top: 15px
+          right: 10px
+          height: 30px
