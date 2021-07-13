@@ -1,0 +1,256 @@
+uid: weatherForecast
+description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/30
+author: User "Integer" - "Mike P"
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: HEX, rgba or name, e.g. white or black
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - description: Full URL to background image
+      label: Backgroundimage
+      name: bgimage
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 13, 2021, 10:25:10 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-image: "=props.bgimage ? 'url(' + props.bgimage + ')': ''"
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: cloud_sun
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 60px
+          left: 16px
+          width: 100%
+      slots:
+        default:
+          - component: f7-row
+            config:
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: Heute
+                          style:
+                            font-weight: 400
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =dayjs().add(1,'day').startOf('day').format('dd')
+                          style:
+                            font-weight: 400
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =dayjs().add(2,'day').startOf('day').format('dd')
+                          style:
+                            font-weight: 400
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =dayjs().add(3,'day').startOf('day').format('dd')
+                          style:
+                            font-weight: 400
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =dayjs().add(4,'day').startOf('day').format('dd')
+                          style:
+                            font-weight: 400
+                            margin-bottom: 8px
+          - component: f7-row
+            config:
+              style:
+                margin-top: 0px
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: "=(items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '01d') ? 'sun_max' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '01n') ? 'moon_stars' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '02d') ? 'cloud_sun' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '02n') ? 'cloud_moon' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '03d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '03n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '04d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '04n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '09d') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '09n') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '10d') ? 'cloud_sun_rain' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '10n') ? 'cloud_moon_rain' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '11d') ? 'cloud_sun_bolt' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '11n') ? 'cloud_moon_bolt' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '13d') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '13n') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '50d') ? 'cloud_fog' : (items.OneCallAPIweatherandforecast_ForecastToday_Iconid.state === '50n') ? 'cloud_fog' : '?'"
+                          size: 30
+                          style:
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: "=(items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '01d') ? 'sun_max' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '01n') ? 'moon_stars' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '02d') ? 'cloud_sun' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '02n') ? 'cloud_moon' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '03d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '03n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '04d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '04n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '09d') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '09n') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '10d') ? 'cloud_sun_rain' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '10n') ? 'cloud_moon_rain' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '11d') ? 'cloud_sun_bolt' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '11n') ? 'cloud_moon_bolt' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '13d') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '13n') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '50d') ? 'cloud_fog' : (items.OneCallAPIweatherandforecast_ForecastTomorrow_Iconid.state === '50n') ? 'cloud_fog' : '?'"
+                          size: 30
+                          style:
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: "=(items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '01d') ? 'sun_max' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '01n') ? 'moon_stars' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '02d') ? 'cloud_sun' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '02n') ? 'cloud_moon' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '03d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '03n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '04d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '04n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '09d') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '09n') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '10d') ? 'cloud_sun_rain' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '10n') ? 'cloud_moon_rain' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '11d') ? 'cloud_sun_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '11n') ? 'cloud_moon_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '13d') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '13n') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '50d') ? 'cloud_fog' : (items.OneCallAPIweatherandforecast_ForecastDay2_Iconid.state === '50n') ? 'cloud_fog' : '?'"
+                          size: 30
+                          style:
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: "=(items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '01d') ? 'sun_max' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '01n') ? 'moon_stars' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '02d') ? 'cloud_sun' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '02n') ? 'cloud_moon' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '03d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '03n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '04d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '04n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '09d') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '09n') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '10d') ? 'cloud_sun_rain' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '10n') ? 'cloud_moon_rain' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '11d') ? 'cloud_sun_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '11n') ? 'cloud_moon_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '13d') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '13n') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '50d') ? 'cloud_fog' : (items.OneCallAPIweatherandforecast_ForecastDay3_Iconid.state === '50n') ? 'cloud_fog' : '?'"
+                          size: 30
+                          style:
+                            margin-bottom: 8px
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: "=(items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '01d') ? 'sun_max' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '01n') ? 'moon_stars' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '02d') ? 'cloud_sun' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '02n') ? 'cloud_moon' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '03d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '03n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '04d') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '04n') ? 'cloud' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '09d') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '09n') ? 'cloud_heavyrain' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '10d') ? 'cloud_sun_rain' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '10n') ? 'cloud_moon_rain' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '11d') ? 'cloud_sun_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '11n') ? 'cloud_moon_bolt' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '13d') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '13n') ? 'cloud_snow' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '50d') ? 'cloud_fog' : (items.OneCallAPIweatherandforecast_ForecastDay4_Iconid.state === '50n') ? 'cloud_fog' : '?'"
+                          size: 30
+                          style:
+                            margin-bottom: 8px
+          - component: f7-row
+            config:
+              style:
+                margin-top: 0px
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Math.round(items.OneCallAPIweatherandforecast_ForecastToday_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastToday_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Math.round(items.OneCallAPIweatherandforecast_ForecastTomorrow_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastTomorrow_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Math.round(items.OneCallAPIweatherandforecast_ForecastDay2_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastDay2_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Math.round(items.OneCallAPIweatherandforecast_ForecastDay3_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastDay3_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
+                - component: f7-col
+                  config:
+                    style:
+                      background: rgba(233, 196, 106, 0)
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Math.round(items.OneCallAPIweatherandforecast_ForecastDay4_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastDay4_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
