@@ -1,0 +1,7 @@
+Group NINA "NINA Warn-System" <error>
+
+Group NINA_WetterWarnung "Nina Wetter-Warnungen" <error> 
+String NINA_WetterWarn1 "[%s]" <error> (NINA_WetterWarnung)
+String NINA_WetterWarn2 "[%s]" <error> (NINA_WetterWarnung)
+String NINA_WetterWarn3 "[%s]" <error> (NINA_WetterWarnung)
+String NINA_WetterWarn4 "[%s]" <error> (NINA_WetterWarnung)
