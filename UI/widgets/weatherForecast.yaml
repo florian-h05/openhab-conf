@@ -1,6 +1,7 @@
 uid: weatherForecast
 description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/30
 author: User "Integer" - "Mike P"
+changes: only style changes
 tags: []
 props:
   parameters:
@@ -20,7 +21,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 13, 2021, 10:25:10 PM
+timestamp: Jul 14, 2021, 12:21:49 PM
 component: f7-card
 config:
   style:
@@ -62,7 +63,7 @@ slots:
       config:
         style:
           position: absolute
-          top: 60px
+          top: 55px
           left: 16px
           width: 100%
       slots:
