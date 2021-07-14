@@ -1,0 +1,26 @@
+// this naming scheme required for the alarm clock script/rule and the widgets
+// room: bedroom
+    Group gBedroom_alarm1           "Bedroom alarm 1"   <time>
+        Switch Bedroom_alarm1       "Alarm on/off"      <time>      (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_MON   "Monday"            <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_TUE   "Tuesday"           <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_WED   "Wednesday"         <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_THU   "Thursday"          <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_FRI   "Friday"            <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_SAT   "Saturday"          <switch>    (gBedroom_alarm1, PersistRestore)
+        Switch Bedroom_alarm1_SUN   "Sunday"            <switch>    (gBedroom_alarm1, PersistRestore)
+        String Bedroom_alarm1_Time  "%s"                <time>      (gBedroom_alarm1, PersistRestore)
+        Number Bedroom_alarm1_H     "Hour [%d]"         <time>      (gBedroom_alarm1, PersistRestore)
+        Number Bedroom_alarm1_M     "Minute [%d]"       <time>      (gBedroom_alarm1, PersistRestore)
+    Group gBedroom_alarm2           "Bedroom alarm 1"   <time>
+        Switch Bedroom_alarm2       "Alarm on/off"      <time>      (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_MON   "Monday"            <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_TUE   "Tuesday"           <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_WED   "Wednesday"         <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_THU   "Thursday"          <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_FRI   "Friday"            <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_SAT   "Saturday"          <switch>    (gBedroom_alarm2, PersistRestore)
+        Switch Bedroom_alarm2_SUN   "Sunday"            <switch>    (gBedroom_alarm2, PersistRestore)
+        String Bedroom_alarm2_Time  "%s"                <time>      (gBedroom_alarm2, PersistRestore)
+        Number Bedroom_alarm2_H     "Hour [%d]"         <time>      (gBedroom_alarm2, PersistRestore)
+        Number Bedroom_alarm2_M     "Minute [%d]"       <time>      (gBedroom_alarm2, PersistRestore)
