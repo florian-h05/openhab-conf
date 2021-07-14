@@ -59,7 +59,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: timer
+              f7: clock
               size: 18
               style:
                 margin-right: 10px
