@@ -1,4 +1,6 @@
 uid: alarmClock
+description: display the time of an alarm clock and turn it on/off
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
