@@ -1,4 +1,6 @@
 uid: alarmClock_Settings
+description: control openHAB alarm clocks with on/off, time setting and day setting
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
