@@ -1,4 +1,8 @@
-uid: Light
+uid: LightOutlet
+description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
+originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
+changes: added option to hide slider
+changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -12,7 +16,7 @@ props:
       name: header
       required: false
       type: TEXT
-    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb
+    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb or divide_circle
       label: Icon
       name: icon
       required: false
