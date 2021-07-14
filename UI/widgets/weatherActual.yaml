@@ -1,4 +1,8 @@
 uid: weatherActual
+description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
+originalAuthor: User "Integer" - "Mike P"
+changes: style changes, added weather warnings
+changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -17,13 +21,13 @@ props:
       name: page
       required: false
     - context: item
-      description: Item of Outsidetemp
+      description: Item of outside Temperature
       label: Outsidetemperature
       name: item_temp
       required: false
       type: TEXT
     - context: item
-      description: Item of Outsidehumidity
+      description: Item of outside Humidity
       label: Humidity
       name: item_hum
       required: false
