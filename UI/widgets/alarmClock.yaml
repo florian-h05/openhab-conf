@@ -1,10 +1,17 @@
-uid: alarmClock120
+uid: alarmClock
+description: display the time of an alarm clock and turn it on/off
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
     - description: Small title on top of the card
       label: Title
       name: title
+      required: false
+      type: TEXT
+    - description: Header big sized
+      label: Header
+      name: header
       required: false
       type: TEXT
     - description: HEX or rgba
@@ -35,7 +42,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 9, 2021, 3:50:19 PM
+timestamp: Jul 14, 2021, 4:43:00 PM
 component: f7-card
 config:
   style:
@@ -57,36 +64,36 @@ slots:
           top: -5px
           left: 16px
           flex-direction: row
-          width: 100%
-        class:
-          - text-align-center
+          display: flex
       slots:
         default:
+          - component: f7-icon
+            config:
+              f7: timer
+              size: 18
+              style:
+                margin-right: 10px
           - component: Label
             config:
               text: "=props.title ? props.title : ''"
               style:
-                font-size: 22px
+                font-size: 12px
                 margin-top: 0px
-                font-weight: 400
     - component: f7-block
       config:
         style:
           position: absolute
-          bottom: -22px
+          bottom: -15px
           left: 16px
           flex-direction: row
-          width: 100%
-        class:
-          - text-align-center
       slots:
         default:
           - component: Label
             config:
-              text: "=(props.item_time2) ? items[props.item_time1].state + ' | ' + items[props.item_time2].state : items[props.item_time1].state"
+              text: "=props.header ? props.header : 'Set Props'"
               style:
-                font-size: 18px
-                font-weight: 300
+                font-size: 17px
+                font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
     - component: f7-block
@@ -99,9 +106,14 @@ slots:
           - text-align-center
       slots:
         default:
-          - component: oh-toggle
+          - component: Label
             config:
-              item: =props.item_switch
+              text: "=(props.item_time2) ? items[props.item_time1].state + ' | ' + items[props.item_time2].state : items[props.item_time1].state"
+              style:
+                font-size: 24px
+                font-weight: 300
+                margin-left: 0px
+                margin-top: 0px
   default:
     - component: oh-link
       config:
@@ -110,6 +122,13 @@ slots:
         style:
           position: absolute
           left: 0px
-          bottom: 35px
-          height: 110px
+          top: 40px
+          height: 80px
           width: 100%
+    - component: oh-toggle
+      config:
+        item: =props.item_switch
+        style:
+          position: absolute
+          top: 15px
+          right: 20px
