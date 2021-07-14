@@ -1,4 +1,6 @@
 uid: amplifierControl
+description: control power, mute, volume and input of an amplifier
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
