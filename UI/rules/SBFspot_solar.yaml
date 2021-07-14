@@ -1,0 +1,24 @@
+triggers:
+  - id: "1"
+    configuration:
+      cronExpression: 0 0/5 5-22 * * ? *
+    type: timer.GenericCronTrigger
+  - id: "2"
+    configuration:
+      itemName: pv_refresh
+      previousState: OFF
+      state: ON
+    type: core.ItemStateChangeTrigger
+conditions: []
+actions:
+  - id: "3"
+    configuration:
+      considerConditions: "false"
+      ruleUIDs:
+        - SBFspot_solar-script
+    type: core.RunRuleAction
+  - id: "4"
+    configuration:
+      itemName: pv_refresh
+      state: OFF
+    type: core.ItemStateUpdateAction
