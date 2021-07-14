@@ -5,6 +5,7 @@ It requires:
   - NINA script: /etc/openhab/scripts/NINA_Warn.bash
   - NINA_WetterWarn<n> items, n is between 1 and 4.
 The "Unique ID" of this script should be: "NINA_warnings"
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
@@ -27,7 +28,7 @@ for(var i = 0; (i < weather.length) && (i < 4); i++) {
   var n = i+1
   var b = text.search('WARNUNG')
   if ( b != -1 ) {
-    text = text.replace('Amtliche UNWETTERWARNUNG vor ', '')
+    text = text.replace('Amtliche ', '')
     events.postUpdate('NINA_WetterWarn' + n, text)
   }
 }
