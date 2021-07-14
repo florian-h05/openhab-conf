@@ -1,4 +1,4 @@
-// this naming scheme required for the alarm clock script/rule and the widgets
+// this naming is scheme required for the alarm clock script/rule and the widgets
 // room: bedroom
     Group gBedroom_alarm1           "Bedroom alarm 1"   <time>
         Switch Bedroom_alarm1       "Alarm on/off"      <time>      (gBedroom_alarm1, PersistRestore)
