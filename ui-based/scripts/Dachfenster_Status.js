@@ -7,6 +7,7 @@ It requires the following items (<room_1> should be replaced):
   "<room_1>_Dachfenster_grLueftung" as input
   "<room_1>_Dachfenster_Status"     as textual output
   "<room_1>_Dachfenster_Status_num" as numeric output
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var OutputStateText, OutputStateNum

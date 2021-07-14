@@ -2,6 +2,7 @@
 This script calls the rainalarm script with the needed parameters.
 This script has to be in the rule.
 The main script's function could also be build here, but I wanted to seperate for better code reuse.
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var FrameworkUtil = Java.type('org.osgi.framework.FrameworkUtil')
@@ -22,4 +23,4 @@ if (typeof event !== 'undefined') {
   }
 }
 
-RuleManager.runNow("rainalarm-script", true, map) // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)
+RuleManager.runNow('rainalarm-script', true, map) // second argument is whether to consider the conditions, third is a Map<String, Object> (a way to pass data)

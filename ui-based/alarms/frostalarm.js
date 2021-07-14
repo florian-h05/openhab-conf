@@ -1,9 +1,10 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
 Configuration:
- - Names of items in lines 16-18 and treshold in line 14.
- - Names of roofwindow items in lines 106-117. String in roofwindow itemnames in line 135.
+ - Names of items in lines 17-19 and treshold in line 15.
+ - Names of roofwindow items in lines 107-118. String in roofwindow itemnames in line 136.
 The "Unique ID" of this script should be: "heatalarm-script".
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 // configuration of heatalarm
@@ -83,17 +84,17 @@ function StartWarning (contactItem, timerTime) {
             NotificationAlarm(itemLabel)
           } else if (frostLevel >= 1) {
             NotificationWarning(itemLabel)
+          }
         }
-      }
       }
     }
     // Create the Timer
     logger.info('Creating timer "' + contactItem + '" time: ' + timerTime)
     this.tm.check(contactItem,
-                 timerTime,
-                 timerOver(contactItem, itemLabel),
-                 false,
-                 function () { logger.info('Timer for "' + contactItem + '" already exists, skipping!') })
+      timerTime,
+      timerOver(contactItem, itemLabel),
+      false,
+      function () { logger.info('Timer for "' + contactItem + '" already exists, skipping!') })
   }
 }
 

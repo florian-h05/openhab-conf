@@ -1,7 +1,8 @@
 /*
 This script generates a alarm status overview string.
-Configuration of itemnames in lines 10-13 + 33.
+Configuration of itemnames in lines 11-14 + 34.
 The "Unique ID" of this script should be: "alarm-status-string-script".
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)

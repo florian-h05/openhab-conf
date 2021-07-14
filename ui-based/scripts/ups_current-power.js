@@ -1,7 +1,8 @@
 /*
 This script calculates the current output power of the ups by using the maximal power and the current load.
-Configuration of itemnames in lines 10 + 15.
+Configuration of itemnames in lines 11 + 16.
 The "Unique ID" should be: "ups_current-power-script".
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)

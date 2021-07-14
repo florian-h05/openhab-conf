@@ -1,18 +1,19 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
-Configuration: 
- - Names of weather items in lines 21 + 22 and wind tresholds in lines 24 + 25.
- - Names of roofwindow items in lines 36-42.
- - Exclusive string in roofwindow itemnames in lines 73 + 86.
- - Groupname of the group of the main contacts that should be processed in line 103.
+Configuration:
+ - Names of weather items in lines 22 + 23 and wind tresholds in lines 25 + 26.
+ - Names of roofwindow items in lines 37-43.
+ - Exclusive string in roofwindow itemnames in lines 74 + 87.
+ - Groupname of the group of the main contacts that should be processed in line 104.
 The "Unique ID" of this script should be: "rainalarm-script".
-How it works: it is called by a script in a rule with the following parameters: 
+How it works: it is called by a script in a rule with the following parameters:
   - this.mode (values: 'onChange', else check all contacts (like 'onAlarm'))
   - this.triggeringItem (value: when script called onChange the name of the item that changed)
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
-this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
-load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF
+load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js')
 var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
@@ -71,7 +72,7 @@ function SingleContact (contactItem) {
 if (this.mode === 'onChange') {
   // check whether itemname contains 'Dachfenster'
   logger.info('mode is: onChange')
-  var b = this.triggeringItem.search('Dachfenster') 
+  var b = this.triggeringItem.search('Dachfenster')
   if ((b != -1) && (this.triggeringItem !== 'Treppenhaus_Dachfenster_zu')) {
     // logger.info('checking roofindow: ' + this.triggeringItem)
     RoofwindowAlarm(this.triggeringItem)
@@ -84,8 +85,8 @@ if (this.mode === 'onChange') {
   var groupMembers = GroupUtils.getMembers('KontakteAufZu')
   for (var index in groupMembers) {
     // check whether itemname contains 'Dachfenster'
-    var b = groupMembers[index].search('Dachfenster') 
-    if ((b != -1) && (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) {
+    var c = groupMembers[index].search('Dachfenster')
+    if ((c != -1) && (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) {
       // logger.info('checking roofindow: ' + groupMembers[index])
       RoofwindowAlarm(groupMembers[index])
     } else {

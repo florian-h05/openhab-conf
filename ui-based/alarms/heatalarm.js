@@ -1,9 +1,10 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
 Configuration:
- - Names of items in lines 17-19 and treshold in line 15.
- - Names of roofwindow items in lines 106-123. String in roofwindow itemnames in line 145.
+ - Names of items in lines 18-20 and treshold in line 16.
+ - Names of roofwindow items in lines 107-124. String in roofwindow itemnames in line 146.
 The "Unique ID" of this script should be: "heatalarm-script".
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 // configuration of heatalarm
@@ -81,8 +82,8 @@ function StartWarning (contactItem, timerDuration) {
             NotificationAlarm(itemLabel)
           } else if (heatLevel >= 1) {
             NotificationWarning(itemLabel)
+          }
         }
-      }
       }
     }
     // Generate the timer time, if heatLevel is not 4 (alarm) then add time
@@ -96,7 +97,7 @@ function StartWarning (contactItem, timerDuration) {
       logger.info('Timer for "' + contactItem + '" already exists, skipping!')
     } else {
       this.tm.check(contactItem, timerTime, timerOver(contactItem, itemLabel, heatLevelItem))
-    } 
+    }
   }
 }
 
@@ -118,7 +119,7 @@ function RoofwindowAlarm (item) {
   } else if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // kleine Lüftung
     StartWarning(item + '_zu', klLueftungTime)
   } else if (StateZu === 'OPEN') { // ganz geschlossen
-    if ( this.tm.hasTimer(item + '_zu') ) {
+    if (this.tm.hasTimer(item + '_zu')) {
       logger.info('Cancelling timer for "' + item + '_zu", contact closed.')
       this.tm.cancel(item + '_zu')
     }
@@ -132,7 +133,7 @@ function SingleContact (contactItem) {
   if (StateSingle === 'CLOSED') {
     StartWarning(contactItem, openTime)
   } else if (StateSingle === 'OPEN') {
-    if ( this.tm.hasTimer(contactItem) ) {
+    if (this.tm.hasTimer(contactItem)) {
       logger.info('Cancelling timer for "' + contactItem + '", contact closed.')
       this.tm.cancel(contactItem)
     }
@@ -142,7 +143,7 @@ function SingleContact (contactItem) {
 var groupMembers = GroupUtils.getMembers(contactGroup)
 for (var index in groupMembers) {
   // check whether itemname contains 'Dachfenster'
-  var b = groupMembers[index].search('Dachfenster') 
+  var b = groupMembers[index].search('Dachfenster')
   if (b != -1) {
     // logger.info('checking roofindow: ' + groupMembers[index])
     RoofwindowAlarm(groupMembers[index])
