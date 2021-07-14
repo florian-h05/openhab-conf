@@ -32,7 +32,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 14, 2021, 4:09:29 PM
+timestamp: Jul 14, 2021, 4:29:24 PM
 component: f7-card
 config:
   style:
@@ -82,7 +82,7 @@ slots:
             config:
               text: "=props.header ? props.header : 'Set Props'"
               style:
-                font-size: 17px
+                font-size: 16px
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
@@ -92,7 +92,7 @@ slots:
           position: absolute
           top: 116.5px
           left: 0px
-          width: calc(100% - 55px)
+          width: calc(100% - 65px)
       slots:
         default:
           - component: f7-row
@@ -118,7 +118,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -134,7 +134,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -150,7 +150,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -166,7 +166,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
           - component: f7-row
             config:
               class:
@@ -188,7 +188,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -204,7 +204,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -220,7 +220,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
     - component: f7-block
       config:
         visible: "=props.item_alarm2 ? true : false"
@@ -228,7 +228,7 @@ slots:
           position: absolute
           top: 216.5px
           left: 0px
-          width: calc(100% - 55px)
+          width: calc(100% - 65px)
       slots:
         default:
           - component: f7-row
@@ -254,7 +254,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -270,7 +270,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -286,7 +286,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -302,7 +302,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
           - component: f7-row
             config:
               class:
@@ -324,7 +324,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -340,7 +340,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
                 - component: f7-col
                   config: {}
                   slots:
@@ -356,7 +356,7 @@ slots:
                           style:
                             font-weight: 400
                             margin-bottom: 6px
-                            font-size: 17px
+                            font-size: 16px
   default:
     - component: oh-toggle
       config:
