@@ -3,17 +3,18 @@ This script sends a thing's state to an openHAB item.
 Configuration of the KNX IP router itemname in line 10.
 How it works: gets the members of the KNXState and YamahaState groups and extracts the name of the thing.
   Then it iterates over all things and sends the state to openHAB items.
-Items must be named in the following scheme: type"_"devicename"_state". Example: "KNX_Wetterstation_state"
+Items must be named in the following scheme: type"_"devicename"_state". Example: "KNX_Wetterstation_state".
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 // KNX IP bridge state item name
 var knxIpBridge = 'KNX_IP_Gateway_state'
 
-this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
-load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF
+load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js')
 var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
-var ThingUID = Java.type("org.openhab.core.thing.ThingUID");
+var ThingUID = Java.type('org.openhab.core.thing.ThingUID')
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
 
 // update the thing status item in openHAB
