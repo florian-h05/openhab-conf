@@ -1,0 +1,440 @@
+uid: alarmClock_Settings
+description: control openHAB alarm clocks with on/off, time setting and day setting
+author: Copyright (c) 2021 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      description: Item alarm clock switch, representing alarm a
+      label: Alarm 1 switch
+      name: item_alarm1
+      required: true
+      type: TEXT
+    - context: item
+      description: Item alarm clock switch, representing alarm b
+      label: Alarm 2 switch
+      name: item_alarm2
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 15, 2021, 8:49:06 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: "=props.item_alarm2 ? '300px' : '200px'"
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: clock
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -15px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Props'"
+              style:
+                font-size: 16px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 116.5px
+          left: 0px
+          width: calc(100% - 80px)
+      slots:
+        default:
+          - component: f7-row
+            config:
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      margin-bottom: 10px
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_MON'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Mo
+                          textColor: "=items[props.item_alarm1 + '_MON'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_TUE'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Di
+                          textColor: "=items[props.item_alarm1 + '_TUE'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_WED'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Mi
+                          textColor: "=items[props.item_alarm1 + '_WED'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_THU'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Do
+                          textColor: "=items[props.item_alarm1 + '_THU'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+          - component: f7-row
+            config:
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_FRI'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Fr
+                          textColor: "=items[props.item_alarm1 + '_FRI'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_SAT'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Sa
+                          textColor: "=items[props.item_alarm1 + '_SAT'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm1 + '_SUN'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: So
+                          textColor: "=items[props.item_alarm1 + '_SUN'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+    - component: f7-block
+      config:
+        visible: "=props.item_alarm2 ? true : false"
+        style:
+          position: absolute
+          top: 216.5px
+          left: 0px
+          width: calc(100% - 80px)
+      slots:
+        default:
+          - component: f7-row
+            config:
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      margin-bottom: 10px
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_MON'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Mo
+                          textColor: "=items[props.item_alarm2 + '_MON'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_TUE'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Di
+                          textColor: "=items[props.item_alarm2 + '_TUE'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_WED'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Mi
+                          textColor: "=items[props.item_alarm2 + '_WED'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_THU'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Do
+                          textColor: "=items[props.item_alarm2 + '_THU'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+          - component: f7-row
+            config:
+              class:
+                - text-align-center
+            slots:
+              default:
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_FRI'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Fr
+                          textColor: "=items[props.item_alarm2 + '_FRI'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_SAT'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: Sa
+                          textColor: "=items[props.item_alarm2 + '_SAT'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+                - component: f7-col
+                  config: {}
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: toggle
+                          actionItem: =props.item_alarm2 + '_SUN'
+                          actionCommand: OFF
+                          actionCommandAlt: ON
+                          text: So
+                          textColor: "=items[props.item_alarm2 + '_SUN'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+                          style:
+                            font-weight: 400
+                            margin-bottom: 6px
+                            font-size: 16px
+  default:
+    - component: oh-toggle
+      config:
+        item: =props.item_alarm1
+        style:
+          position: absolute
+          top: 10px
+          right: 15px
+    - component: oh-stepper
+      config:
+        item: =props.item_alarm1 + '_H'
+        min: 0
+        max: 23
+        step: 1
+        buttonsOnly: true
+        style:
+          position: absolute
+          top: 90px
+          right: 15px
+          height: 30px
+          background: transparent
+    - component: oh-stepper
+      config:
+        item: =props.item_alarm1 + '_M'
+        min: 0
+        max: 55
+        step: 5
+        buttonsOnly: true
+        style:
+          position: absolute
+          top: 150px
+          right: 15px
+          height: 30px
+          background: transparent
+    - component: Label
+      config:
+        text: =items[props.item_alarm1 + '_Time'].state
+        style:
+          color: "=items[props.item_alarm1].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+          font-size: 24px
+          position: absolute
+          right: 24px
+          top: 118px
+    - component: oh-stepper
+      config:
+        item: =props.item_alarm2 + '_H'
+        min: 0
+        max: 23
+        step: 1
+        buttonsOnly: true
+        visible: "=props.item_alarm2 ? true : false"
+        style:
+          position: absolute
+          top: 190px
+          right: 15px
+          height: 30px
+          background: transparent
+    - component: oh-stepper
+      config:
+        item: =props.item_alarm2 + '_M'
+        min: 0
+        max: 55
+        step: 5
+        buttonsOnly: true
+        visible: "=props.item_alarm2 ? true : false"
+        style:
+          position: absolute
+          top: 250px
+          right: 15px
+          height: 30px
+          background: transparent
+    - component: Label
+      config:
+        visible: "=props.item_alarm2 ? true : false"
+        text: =items[props.item_alarm2 + '_Time'].state
+        style:
+          color: "=items[props.item_alarm1].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+          font-size: 24px
+          position: absolute
+          right: 24px
+          top: 218px
