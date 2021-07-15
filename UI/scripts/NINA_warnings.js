@@ -13,14 +13,8 @@ var Exec = Java.type('org.openhab.core.model.script.actions.Exec')
 var Duration = Java.type('java.time.Duration')
 
 var weather = Exec.executeCommandLine(Duration.ofSeconds(10), 'bash', '/etc/openhab/scripts/NINA_Warn.bash', '-w')
-logger.info('Response from NINA_Warn.bash: ' + weather)
+//logger.info('Response from NINA_Warn.bash: ' + weather)
 weather = weather.split(/\r?\n/)
-
-// reset all items to None. (for the actualWeather widget)
-for (var i = 0; i < 4; i++) {
-  var n = i+1
-  events.postUpdate('NINA_WetterWarn' + n, 'None.')
-}
 
 // post warnings to the items
 for (var i = 0; (i < weather.length) && (i < 4); i++) {
@@ -30,5 +24,7 @@ for (var i = 0; (i < weather.length) && (i < 4); i++) {
   if (b != -1) {
     text = text.replace('Amtliche ', '')
     events.postUpdate('NINA_WetterWarn' + n, text)
+  } else {
+    events.postUpdate('NINA_WetterWarn' + n, 'None.')
   }
 }
