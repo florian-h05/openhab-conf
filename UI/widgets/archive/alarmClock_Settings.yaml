@@ -32,7 +32,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 14, 2021, 4:29:24 PM
+timestamp: Jul 14, 2021, 5:41:08 PM
 component: f7-card
 config:
   style:
@@ -372,7 +372,7 @@ slots:
         iconSize: 30
         action: command
         actionItem: =props.item_alarm1 + '_H'
-        actionCommand: =Number(items[props.item_alarm1 + '_H'].state) + 1
+        actionCommand: "=Number(items[props.item_alarm1 + '_H'].state) == 23 ? 23 : Number(items[props.item_alarm1 + '_H'].state) + 1"
         style:
           position: absolute
           top: 90px
@@ -399,7 +399,7 @@ slots:
         iconSize: 30
         action: command
         actionItem: =props.item_alarm1 + '_M'
-        actionCommand: =Number(items[props.item_alarm1 + '_M'].state) + 5
+        actionCommand: "=Number(items[props.item_alarm1 + '_M'].state) == 55 ? 55 : Number(items[props.item_alarm1 + '_M'].state) + 5"
         style:
           position: absolute
           top: 90px
@@ -436,7 +436,7 @@ slots:
         iconSize: 30
         action: command
         actionItem: =props.item_alarm2 + '_H'
-        actionCommand: =Number(items[props.item_alarm2 + '_H'].state) + 1
+        actionCommand: "=Number(items[props.item_alarm2 + '_H'].state) == 23 ? 23 : Number(items[props.item_alarm2 + '_H'].state) + 1"
         style:
           position: absolute
           top: 190px
@@ -465,7 +465,7 @@ slots:
         iconSize: 30
         action: command
         actionItem: =props.item_alarm2 + '_M'
-        actionCommand: =Number(items[props.item_alarm2 + '_M'].state) + 5
+        actionCommand: "=Number(items[props.item_alarm2 + '_M'].state) == 55 ? 55 : Number(items[props.item_alarm2 + '_M'].state) + 5"
         style:
           position: absolute
           top: 190px
