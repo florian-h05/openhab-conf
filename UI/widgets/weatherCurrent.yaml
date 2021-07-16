@@ -1,0 +1,246 @@
+uid: weatherCurrent
+description: shows current weather data, requires items from Astro - Sun_Elevation, Sunrise_Time, Sunset_Starttime
+source: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
+originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
+changes: style changes, added weather warnings, added sunrise/sunset time
+changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: HEX or rgba
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - description: Page ID of page to be opened
+      label: page
+      name: page
+      required: false
+    - context: item
+      description: Item of outside Temperature
+      label: Outsidetemperature
+      name: item_temp
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of outside Humidity
+      label: Humidity
+      name: item_hum
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of Rain
+      label: Rain
+      name: item_rain
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of Strikes
+      label: Strike Count
+      name: item_strike
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of Illuminance
+      label: Illuminance
+      name: item_ill
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of Wind
+      label: Wind
+      name: item_wind
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of Wind Direction
+      label: Wind Dir
+      name: item_wind_dir
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of weather warning 1
+      label: Warning 1
+      name: item_warn1
+      required: false
+      type: TEXT
+    - context: item
+      description: Item of weather warning 2
+      label: Warning 2
+      name: item_warn2
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 14, 2021, 12:22:08 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 150px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: sun_max
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 55px
+          left: 16px
+          width: 100%
+      slots:
+        default:
+          - component: f7-chip
+            config:
+              iconF7: thermometer
+              text: =items[props.item_temp].displayState
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_hum ? true : false"
+              iconF7: drop
+              text: =items[props.item_hum].displayState
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_ill ? true : false"
+              iconF7: sun_min
+              text: =items[props.item_ill].displayState
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_rain ? true: false"
+              iconF7: cloud_drizzle
+              text: =items[props.item_rain].displayState
+              textColor: "=items[props.item_rain].state === 'OPEN' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=items[props.item_rain].state === 'OPEN' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_strike ? true : false"
+              iconF7: bolt
+              text: =items[props.item_strike].state
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_wind ? true : false"
+              iconF7: wind
+              text: =items[props.item_wind].displayState
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_wind_dir ? true : false"
+              iconF7: compass
+              text: =items[props.item_wind_dir].state
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              iconF7: "=Number(items.Sun_Elevation.state) <= 0 ? 'sunrise' : 'sunset'"
+              text: "=Number(items.Sun_Elevation.state) <= 0 ? items.Sunrise_Time.displayState : items.Sunset_Starttime.displayState"
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_warn1 ? (items[props.item_warn1].state != 'None.' ? true : false) : false"
+              iconF7: bolt
+              text: =items[props.item_warn1].state
+              textColor: red
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: red
+              iconSize: 20
+          - component: f7-chip
+            config:
+              visible: "=props.item_warn2 ? (items[props.item_warn2].state != 'None.' ? true : false) : false"
+              iconF7: bolt
+              text: =items[props.item_warn2].state
+              textColor: red
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: red
+              iconSize: 20
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: navigate
+        actionPage: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 150px
+          width: 100%
