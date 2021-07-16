@@ -1,7 +1,8 @@
-uid: weatherActual
-description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
+uid: weatherCurrent
+description: shows current weather data, requires items from Astro - Sun_Elevation, Sunrise_Time, Sunset_Starttime
+source: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
 originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
-changes: style changes, added weather warnings
+changes: style changes, added weather warnings, added sunrise/sunset time
 changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -75,7 +76,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 13, 2021, 4:22:24 PM
+timestamp: Jul 14, 2021, 12:22:08 PM
 component: f7-card
 config:
   style:
@@ -116,7 +117,7 @@ slots:
       config:
         style:
           position: absolute
-          top: 60px
+          top: 55px
           left: 16px
           width: 100%
       slots:
@@ -192,6 +193,16 @@ slots:
               visible: "=props.item_wind_dir ? true : false"
               iconF7: compass
               text: =items[props.item_wind_dir].state
+              style:
+                margin-bottom: 10px
+                font-size: 16px
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconSize: 20
+          - component: f7-chip
+            config:
+              iconF7: "=Number(items.Sun_Elevation.state) <= 0 ? 'sunrise' : 'sunset'"
+              text: "=Number(items.Sun_Elevation.state) <= 0 ? items.Sunrise_Time.displayState : items.Sunset_Starttime.displayState"
               style:
                 margin-bottom: 10px
                 font-size: 16px
