@@ -20,6 +20,10 @@ props:
       name: bgimage
       required: false
       type: TEXT
+    - description: Page ID of page to be opened
+      label: page
+      name: page
+      required: false
   parameterGroups: []
 timestamp: Jul 14, 2021, 12:21:49 PM
 component: f7-card
@@ -255,3 +259,14 @@ slots:
                       - component: Label
                         config:
                           text: =Math.round(items.OneCallAPIweatherandforecast_ForecastDay4_Mintemperature.state.split(' ')[0] * 1) / 1 + '° / ' + Math.round(items.OneCallAPIweatherandforecast_ForecastDay4_Maxtemperature.state.split(' ')[0] * 1) / 1 + '°'
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: navigate
+        actionPage: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 150px
+          width: 100%
