@@ -1,7 +1,7 @@
 uid: LightOutlet
 description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
 originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
-changes: added option to hide slider
+changes: added option to hide slider, to show number of items on and total items, to open popup
 changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -27,18 +27,32 @@ props:
       required: false
       type: TEXT
     - context: item
-      description: Item to control light
-      label: Item
+      description: Item to control light, groups also work
+      label: Light item
       name: item
+      required: true
+      type: TEXT
+    - context: item
+      description: Item with number of lights on
+      label: Lights on
+      name: item_counter
       required: false
       type: TEXT
+    - description: Number of total lights (in room, house, ...)
+      label: Lights total number
+      name: lights_total
+      required: false
     - description: Display a slider or not
       label: Slider enable/disable
       name: sliderOption
       required: false
       type: BOOLEAN
+    - description: Page that pops up on page of the left 35%
+      label: Popup page
+      name: page
+      required: false
   parameterGroups: []
-timestamp: Jul 9, 2021, 5:14:27 PM
+timestamp: Jul 16, 2021, 3:37:21 PM
 component: f7-card
 config:
   style:
@@ -86,7 +100,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=props.header ? props.header : 'Set Props'"
+              text: "=props.item_counter ? props.header + ' - ' + items[props.item_counter].state + ' von ' + props.lights_total + ' an': props.header ? props.header : 'Set Props'"
               style:
                 font-size: 17px
                 font-weight: 600
@@ -115,3 +129,14 @@ slots:
           position: absolute
           top: 15px
           right: 20px
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: popup
+        actionModal: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 120px
+          width: calc(100% - 75px)
