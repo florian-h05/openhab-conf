@@ -44,7 +44,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 10, 2021, 12:14:38 PM
+timestamp: Jul 18, 2021, 9:11:09 PM
 component: f7-card
 config:
   style:
@@ -94,7 +94,7 @@ slots:
           position: absolute
           top: 15x
           right: 10px
-          height: 30px
+          height: 34px
     - component: oh-button
       config:
         visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
@@ -111,7 +111,7 @@ slots:
           position: absolute
           top: 60px
           right: 10px
-          height: 30px
+          height: 34px
     - component: oh-slider
       config:
         visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"

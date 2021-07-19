@@ -41,7 +41,7 @@ props:
       required: true
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 11, 2021, 4:33:18 PM
+timestamp: Jul 18, 2021, 9:13:49 PM
 component: f7-card
 config:
   style:
@@ -135,6 +135,7 @@ slots:
           position: absolute
           top: 5px
           right: 5px
+          height: 145px
     - component: oh-icon
       config:
         visible: "=props.roofwindow == false ? true: false"
@@ -145,3 +146,4 @@ slots:
           position: absolute
           top: 5px
           right: 5px
+          height: 145px

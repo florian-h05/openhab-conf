@@ -59,7 +59,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 9, 2021, 10:50:08 AM
+timestamp: Jul 18, 2021, 9:27:47 PM
 component: f7-card
 config:
   style:
@@ -186,7 +186,7 @@ slots:
           position: absolute
           top: 10px
           right: 10px
-          height: 34px
+          height: 36px
           background: transparent
     - component: oh-button
       config:
@@ -201,7 +201,7 @@ slots:
           position: absolute
           top: 72px
           right: 10px
-          height: 34px
+          height: 36px
           background: transparent
     - component: Label
       config:
@@ -252,7 +252,7 @@ slots:
           right: "=props.set_temp_item ? '55px' : '0px' "
           top: 0px
           height: 120px
-          width: "=props.set_temp_item ? '60%' : '100%'"
+          width: "=props.set_temp_item ? (props.page ? 'calc(65% - 55px)' : 'calc(100% - 55px)') : (props.page ? '65%' : '100%')"
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
