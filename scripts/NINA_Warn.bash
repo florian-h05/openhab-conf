@@ -29,11 +29,11 @@ categorizeWarnings() {
   for item in "${response[@]}"; do
     provider=$(jq '.payload.data.provider' <<< "$item" | sed 's/"//g')
     headline=$(jq '.payload.data.headline' <<< "$item" | sed 's/"//g')
-    if [ ${provider} = "DWD" ]; then
+    if [ "${provider}" = "DWD" ]; then
       weather[${#weather[@]}]=${headline}
-    elif [ ${provider} = "LHP" ]; then
+    elif [ "${provider}" = "LHP" ]; then
       flood[${#flood[@]}]=${headline}
-    elif [ ${provider} = "MOWAS" ]; then
+    elif [ "${provider}" = "MOWAS" ]; then
       if [[ ${headline} = *Corona* ]]; then
         corona[${#corona[@]}]=${headline}
       else
@@ -45,7 +45,7 @@ categorizeWarnings() {
 
 listWeather() {
   for i in "${weather[@]}"; do
-    echo ${i}
+    echo "${i}"
   done
   if [ ${#weather[@]} = 0 ]; then
     echo 'None.'
@@ -54,7 +54,7 @@ listWeather() {
 
 listFlood() {
   for i in "${flood[@]}"; do
-    echo ${i}
+    echo "${i}"
   done
   if [ ${#flood[@]} = 0 ]; then
     echo 'None.'
@@ -63,7 +63,7 @@ listFlood() {
 
 listCivilProtection() {
   for i in "${civilProtection[@]}"; do
-    echo ${i}
+    echo "${i}"
   done
   if [ ${#civilProtection[@]} = 0 ]; then
     echo 'None.'
@@ -72,7 +72,7 @@ listCivilProtection() {
 
 listCorona() {
   for i in "${corona[@]}"; do
-    echo ${i}
+    echo "${i}"
   done
   if [ ${#corona[@]} = 0 ]; then
     echo 'None.'
