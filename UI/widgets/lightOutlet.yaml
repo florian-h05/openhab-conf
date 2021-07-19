@@ -52,7 +52,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 16, 2021, 3:37:21 PM
+timestamp: Jul 16, 2021, 3:49:25 PM
 component: f7-card
 config:
   style:
@@ -132,8 +132,8 @@ slots:
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
-        action: popup
-        actionModal: ='page:' + props.page
+        action: navigate
+        actionPage: ='page:' + props.page
         style:
           position: absolute
           left: 0px
