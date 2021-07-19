@@ -1,4 +1,6 @@
 uid: Shutter
+description: control a shutter with buttons and optional slider, display the position and the state of the autmatic shading
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -39,8 +41,12 @@ props:
       name: sliderOption
       required: false
       type: BOOLEAN
+    - description: Page that pops up on page of the left 35%
+      label: Popup page
+      name: page
+      required: false
   parameterGroups: []
-timestamp: Jul 18, 2021, 9:14:24 PM
+timestamp: Jul 19, 2021, 10:36:37 PM
 component: f7-card
 config:
   style:
@@ -106,7 +112,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].state + '% - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].state + '%'"
+              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
               style:
                 font-size: 12px
                 margin-left: 0px
@@ -171,3 +177,14 @@ slots:
           --f7-range-bar-border-radius: 8px
           --f7-range-knob-size: 16px
           --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: navigate
+        actionPage: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 120px
+          width: calc(100% - 55px)
