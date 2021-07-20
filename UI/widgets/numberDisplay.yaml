@@ -1,0 +1,137 @@
+uid: numberDisplay
+description: display the state of any number with trendline and analyzer
+author: Copyright (c) 2021 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: Icon on top of the card (only f7 icons (without f7:)), e.g. thermometer
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+    - description: in rgba() or HEX or empty
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+    - context: item
+      label: Current value
+      name: item_value
+      required: true
+      type: TEXT
+    - description: Page that is opened by a click on the left 35%
+      label: Popup page
+      name: page
+      required: false
+  parameterGroups: []
+timestamp: Jul 20, 2021, 5:15:25 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    height: 120px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: =props.icon
+              size: 18
+              style:
+                margin-right: 10px
+              visible: "=props.icon ? true : false"
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -20px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state"
+              style:
+                font-size: 22px
+                font-weight: 400
+                margin-left: 0px
+                margin-top: 0px
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: 15px
+          left: 15px
+          width: 100%
+          height: 120px
+      slots:
+        default:
+          - component: oh-trend
+            config:
+              trendSampling: 60
+              trendItem: =props.item_value
+              trendGradient:
+                - "#1976d2"
+                - "#0288d1"
+                - "#00796b"
+                - "#388e3c"
+              style:
+                --f7-theme-color-bg-color: transparent
+                background: var(--f7-theme-color-bg-color)
+                filter: opacity(30%)
+                position: absolute
+                width: 100%
+                height: 100%
+                top: 0px
+                left: 0px
+                z-index: 1
+    - component: oh-link
+      config:
+        actionAnalyzerChartType: day
+        action: analyzer
+        actionAnalyzerItems: =[props.item_value]
+        actionAnalyzerCoordSystem: time
+        style:
+          position: absolute
+          right: 0px
+          top: 0px
+          height: 120px
+          width: "=props.page ? '65%' : '100%'"
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: navigate
+        actionPage: ='page:' + props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 120px
+          width: 35%
