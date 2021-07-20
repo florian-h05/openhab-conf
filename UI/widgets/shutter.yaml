@@ -58,7 +58,7 @@ config:
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    minWidth: 250px
+    minWidth: 200px
 slots:
   content:
     - component: f7-block

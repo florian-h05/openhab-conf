@@ -173,7 +173,7 @@ slots:
           height: 34px
     - component: oh-button
       config:
-        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? true : false : false"
+        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state !== 'Pause' ? true : false : false"
         round: true
         large: false
         iconF7: pause_circle
@@ -189,7 +189,7 @@ slots:
           height: 34px
     - component: oh-button
       config:
-        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Play' ? false : true : false"
+        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Pause' ? true : false : false"
         round: true
         large: false
         iconF7: play_circle

@@ -33,12 +33,12 @@ props:
     - description: State icon in the right corner of the card (only openHAB icons)
       label: State icon
       name: stateIcon
-      required: true
+      required: false
       type: TEXT
     - description: ON, if type is roofwindow, else OFF
       label: Special type - Roofwindow
       name: roofwindow
-      required: true
+      required: false
       type: BOOLEAN
   parameterGroups: []
 timestamp: Jul 18, 2021, 9:13:49 PM
@@ -133,7 +133,7 @@ slots:
         item: =props.item
         style:
           position: absolute
-          top: 5px
+          top: -30px
           right: 5px
           height: 145px
     - component: oh-icon
@@ -144,6 +144,6 @@ slots:
         item: =props.item
         style:
           position: absolute
-          top: 5px
+          top: -30px
           right: 5px
           height: 145px
