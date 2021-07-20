@@ -109,7 +109,7 @@ slots:
         default:
           - component: Label
             config:
-              visible: "=props.roofwindow == true ? true: false"
+              visible: "=props.roofwindow == true ? true : false"
               text: =items[props.item].state
               style:
                 color: "=items[props.item].state === 'geschlossen' ? 'green' : items[props.item].state === 'kleine Lüftung' ? themeOptions.dark === 'dark' ? '#FFEB3B' : '#FBC02D' : items[props.item].state === 'große Lüftung' ? themeOptions.dark === 'dark' ? '#FF9800' : '#F57C00' : 'red'"
@@ -118,7 +118,7 @@ slots:
                 margin-top: 0px
           - component: Label
             config:
-              visible: "=props.roofwindow == false ? true: false"
+              visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
               text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : 'geöffnet'"
               style:
                 color: "=items[props.item].state === 'OPEN' ? 'green' : 'red'"
@@ -127,7 +127,7 @@ slots:
                 margin-top: 0px
     - component: oh-icon
       config:
-        visible: "=props.roofwindow == true ? true: false"
+        visible: "=props.roofwindow == true ? true : false"
         icon: "=items[props.item].state === 'geschlossen' ? 'window-closed' : 'window-open'"
         width: 80x
         item: =props.item
@@ -138,7 +138,7 @@ slots:
           height: 145px
     - component: oh-icon
       config:
-        visible: "=props.roofwindow == false ? true: false"
+        visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
         icon: "=items[props.item].state === 'OPEN' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
         width: 80x
         item: =props.item
