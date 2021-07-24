@@ -19,8 +19,9 @@ var string1Power, string1Voltage, string1Amperage
 var string2Power, string2Voltage, string2Amperage
 
 var check1 = output.search('Done.') // simple error check
+var check2 = output.search('SBFspot') // another simple error check
 
-if (check1 !== -1) {
+if ((check1 !== -1) && (check2 !== -1)) {
   // check for the given keywords
   for (var index in results) {
     var text = results[index]
@@ -62,6 +63,18 @@ if (check1 !== -1) {
   events.postUpdate('pv_string2_voltage', string2Voltage)
   events.postUpdate('pv_string2_amperage', string2Amperage)
   events.postUpdate('pv_lastRefresh', new DateTimeType())
+  logger.info('Data pull from SBFspot completed.')
+} else {
+  // post numbers to openHAB items
+  events.postUpdate('pv_EToday', 0)
+  events.postUpdate('pv_Power', 0)
+  events.postUpdate('pv_string1_power', 0)
+  events.postUpdate('pv_string1_voltage', 0)
+  events.postUpdate('pv_string1_amperage', 0)
+  events.postUpdate('pv_string2_power', 0)
+  events.postUpdate('pv_string2_voltage', 0)
+  events.postUpdate('pv_string2_amperage', 0)
+  logger.error('Data pull from SBFspot failed. Output:\n ' + output)
 }
 
 /*
