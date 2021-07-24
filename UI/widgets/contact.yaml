@@ -35,13 +35,23 @@ props:
       name: stateIcon
       required: false
       type: TEXT
+    - context: item
+      description: Group:Number:COUNT(CLOSED) item for numbers of contacts open
+      label: Number of contacts open
+      name: contacts_open
+      required: false
+      type: TEXT
+    - description: Number of total contacts (in room, house, ...)
+      label: Contacts total number
+      name: contacts_total
+      required: false
     - description: ON, if type is roofwindow, else OFF
       label: Special type - Roofwindow
       name: roofwindow
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jul 18, 2021, 9:13:49 PM
+timestamp: Jul 20, 2021, 11:21:27 PM
 component: f7-card
 config:
   style:
@@ -119,7 +129,7 @@ slots:
           - component: Label
             config:
               visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
-              text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : 'geöffnet'"
+              text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : (props.contacts_open ? (props.contacts_total ? (items[props.contacts_open].state + ' von ' + props.contacts_total + ' geöffnet') : items[props.contacts_open].state + ' geöffnet') : 'geöffnet')"
               style:
                 color: "=items[props.item].state === 'OPEN' ? 'green' : 'red'"
                 font-size: 24px
