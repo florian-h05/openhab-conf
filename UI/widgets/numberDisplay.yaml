@@ -1,5 +1,5 @@
-uid: numberDisplay
-description: display the state of any number with trendline and analyzer
+uid: value
+description: Display any value. For numbers with trendline and analyzer.
 author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -24,12 +24,17 @@ props:
       name: item_value
       required: true
       type: TEXT
-    - description: Page that is opened by a click on the left 35%
+    - description: Display trendline and enable analyzer, only for number items
+      label: Trendline & Analyzer
+      name: trendAnalyze
+      required: false
+      type: BOOLEAN
+    - description: Page that pops up on page of the left 35%
       label: Popup page
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 20, 2021, 5:15:25 PM
+timestamp: Aug 2, 2021, 1:39:27 AM
 component: f7-card
 config:
   style:
@@ -95,6 +100,7 @@ slots:
         default:
           - component: oh-trend
             config:
+              visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
               trendSampling: 60
               trendItem: =props.item_value
               trendGradient:
@@ -114,6 +120,7 @@ slots:
                 z-index: 1
     - component: oh-link
       config:
+        visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
         actionAnalyzerChartType: day
         action: analyzer
         actionAnalyzerItems: =[props.item_value]
@@ -134,4 +141,4 @@ slots:
           left: 0px
           top: 0px
           height: 120px
-          width: 35%
+          width: "=props.trendAnalyze == true ? '35%' : '100%'"
