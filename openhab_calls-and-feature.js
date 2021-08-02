@@ -5,8 +5,8 @@ This file collects a part of openHAB specific calls and features.
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* logging */
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
-logger.info((['message: ', variable].join('')))
-logger.error((['error message: ', variable].join('')))
+logger.info('message: ' + var)
+logger.error('error message: ' + var)
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* createTimer */
@@ -84,6 +84,12 @@ var groupMembers = GroupUtils.getAllMembers(groupName)
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* get item state */
 var actualState = itemRegistry.getItem('itemName').getState()
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------- */
+/* HTTP action */
+var HTTP = Java.type('org.openhab.core.model.script.actions.HTTP')
+// documentation: https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/http#sendHttpGetRequest(java.lang.String)
+var response = HTTP.sendHttpGetRequest(url)
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* myopenHAB Notification */
