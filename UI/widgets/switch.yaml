@@ -1,4 +1,4 @@
-uid: LightOutlet
+uid: Switch
 description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
 originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
 changes: added option to hide slider, to show number of items on and total items, to open popup
@@ -16,7 +16,7 @@ props:
       name: header
       required: false
       type: TEXT
-    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb or divide_circle
+    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb, power or divide_circle
       label: Icon
       name: icon
       required: false
@@ -27,20 +27,20 @@ props:
       required: false
       type: TEXT
     - context: item
-      description: Item to control light, groups also work
-      label: Light item
+      description: Item to control, groups also work
+      label: Control item
       name: item
       required: true
       type: TEXT
     - context: item
-      description: Item with number of lights on
-      label: Lights on
+      description: Item with number of devices on
+      label: Devices on
       name: item_counter
       required: false
       type: TEXT
-    - description: Number of total lights (in room, house, ...)
-      label: Lights total number
-      name: lights_total
+    - description: Number of total devices (in room, house, ...)
+      label: Devices total number
+      name: items_total
       required: false
     - description: Display a slider or not
       label: Slider enable/disable
@@ -105,7 +105,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=props.item_counter ? props.header + ' - ' + items[props.item_counter].state + ' von ' + props.lights_total + ' an': props.header ? props.header : 'Set Props'"
+              text: "=props.item_counter ? props.header + ' - ' + items[props.item_counter].state + ' von ' + props.items_total + ' an': props.header ? props.header : 'Set Props'"
               style:
                 font-size: 17px
                 font-weight: 600
