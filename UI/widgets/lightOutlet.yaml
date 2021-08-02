@@ -47,12 +47,17 @@ props:
       name: sliderOption
       required: false
       type: BOOLEAN
-    - description: Page that pops up on page of the left 35%
-      label: Popup page
+    - description: Page or group that pops up
+      label: Popup page / group
       name: page
       required: false
+    - description: Action to perform on click, e.g. group. Default to navigate.
+      label: Action
+      name: action
+      required: false
+      type: TEXT
   parameterGroups: []
-timestamp: Jul 16, 2021, 3:49:25 PM
+timestamp: Jul 19, 2021, 11:06:07 PM
 component: f7-card
 config:
   style:
@@ -132,8 +137,9 @@ slots:
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
-        action: navigate
+        action: "=props.action ? props.action : 'navigate'"
         actionPage: ='page:' + props.page
+        actionGroupPopupItem: =props.page
         style:
           position: absolute
           left: 0px

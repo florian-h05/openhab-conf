@@ -1,5 +1,5 @@
 uid: Contact
-description: display state of a window or door textual and with icon
+description: display state of a window or door textual and with icon, open a popup
 author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -50,8 +50,17 @@ props:
       name: roofwindow
       required: false
       type: BOOLEAN
+    - description: Page or group that pops up
+      label: Popup page / group
+      name: page
+      required: false
+    - description: Action to perform on click, e.g. group. Default to navigate.
+      label: Action
+      name: action
+      required: false
+      type: TEXT
   parameterGroups: []
-timestamp: Jul 20, 2021, 11:21:27 PM
+timestamp: Jul 24, 2021, 1:19:53 PM
 component: f7-card
 config:
   style:
@@ -157,3 +166,15 @@ slots:
           top: -30px
           right: 5px
           height: 145px
+    - component: oh-link
+      config:
+        visible: "=props.page ? true : false"
+        action: "=props.action ? props.action : 'navigate'"
+        actionPage: ='page:' + props.page
+        actionGroupPopupItem: =props.page
+        style:
+          position: absolute
+          left: 0px
+          top: 0px
+          height: 120px
+          width: 100%
