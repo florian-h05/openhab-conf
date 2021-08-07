@@ -14,6 +14,11 @@ props:
       name: icon
       required: false
       type: TEXT
+    - description: Big icon in the right corner of the card (only openHAB icons)
+      label: Big icon
+      name: bigIcon
+      required: false
+      type: TEXT
     - description: in rgba() or HEX or empty
       label: Background Color
       name: bgcolor
@@ -45,7 +50,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 2, 2021, 1:39:27 AM
+timestamp: Aug 7, 2021, 4:51:18 PM
 component: f7-card
 config:
   style:
@@ -129,6 +134,16 @@ slots:
                 top: 0px
                 left: 0px
                 z-index: 1
+    - component: oh-icon
+      config:
+        visible: "=props.bigIcon ? true : false"
+        icon: =props.bigIcon
+        width: 80x
+        style:
+          position: absolute
+          top: -30px
+          right: 15px
+          height: 145px
     - component: oh-link
       config:
         visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
