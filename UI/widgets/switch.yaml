@@ -143,7 +143,7 @@ slots:
         visible: "=props.bigIcon ? true : false"
         icon: =props.bigIcon
         item: =props.item
-        width: 80x
+        width: 80px
         style:
           position: absolute
           top: -30px

@@ -148,7 +148,7 @@ slots:
       config:
         visible: "=props.roofwindow == true ? true : false"
         icon: "=items[props.item].state === 'geschlossen' ? 'window-closed' : 'window-open'"
-        width: 80x
+        width: 80px
         item: =props.item
         style:
           position: absolute
@@ -159,7 +159,7 @@ slots:
       config:
         visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
         icon: "=items[props.item].state === 'OPEN' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
-        width: 80x
+        width: 80px
         item: =props.item
         style:
           position: absolute
