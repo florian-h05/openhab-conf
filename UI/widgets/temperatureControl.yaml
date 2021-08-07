@@ -1,20 +1,12 @@
 uid: temperatureControl
-description: shows current temperature, heating/cooling state and controls target temperature
-source: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
-originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
-changes: added popup page
-changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
+description: Shows current temperature, heating/cooling state and controls target temperature. Can perform an action on click.
+author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
     - description: Small title on top of the card
       label: Title
       name: title
-      required: false
-      type: TEXT
-    - description: Icon on top of the card (only f7 icons (without f7:)), e.g. thermometer
-      label: Icon
-      name: icon
       required: false
       type: TEXT
     - description: in rgba() or HEX or empty
@@ -54,12 +46,17 @@ props:
       name: cooling_item
       required: false
       type: TEXT
-    - description: Page that pops up on page of the left 35%
-      label: Popup page
+    - description: Page or group that pops up
+      label: Popup page / group
       name: page
       required: false
+    - description: Action to perform on click on left 35%, e.g. group. Default to navigate.
+      label: Action
+      name: action
+      required: false
+      type: TEXT
   parameterGroups: []
-timestamp: Jul 18, 2021, 9:27:47 PM
+timestamp: Aug 6, 2021, 5:27:22 PM
 component: f7-card
 config:
   style:
@@ -85,11 +82,10 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: =props.icon
+              f7: thermometer
               size: 18
               style:
                 margin-right: 10px
-              visible: "=props.icon ? true : false"
           - component: Label
             config:
               text: "=props.title ? props.title : ''"
@@ -256,8 +252,9 @@ slots:
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
-        action: popup
-        actionModal: ='page:' + props.page
+        action: "=props.action ? props.action : 'navigate'"
+        actionPage: ='page:' + props.page
+        actionGroupPopupItem: =props.page
         style:
           position: absolute
           left: 0px
