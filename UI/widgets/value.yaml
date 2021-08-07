@@ -1,5 +1,5 @@
-uid: value
-description: Display any value. For numbers with trendline and analyzer.
+uid: label
+description: Display any item state or text. For numbers with trendline and analyzer.
 author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -20,19 +20,30 @@ props:
       required: false
       type: TEXT
     - context: item
-      label: Current value
+      description: item value to display
+      label: Item
       name: item_value
-      required: true
+      required: false
+      type: TEXT
+    - description: text to display in front of item's value
+      label: Label
+      name: label
+      required: false
       type: TEXT
     - description: Display trendline and enable analyzer, only for number items
       label: Trendline & Analyzer
       name: trendAnalyze
       required: false
       type: BOOLEAN
-    - description: Page that pops up on page of the left 35%
-      label: Popup page
+    - description: Page or group that pops up
+      label: Popup page / group
       name: page
       required: false
+    - description: Action to perform on click, e.g. group. Default to navigate.
+      label: Action
+      name: action
+      required: false
+      type: TEXT
   parameterGroups: []
 timestamp: Aug 2, 2021, 1:39:27 AM
 component: f7-card
@@ -82,7 +93,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state"
+              text: "=props.item_value ? props.label ? props.label + ' ' + (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (props.label ? props.label : 'Set item or label!')"
               style:
                 font-size: 22px
                 font-weight: 400
@@ -134,8 +145,9 @@ slots:
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
-        action: navigate
+        action: "=props.action ? props.action : 'navigate'"
         actionPage: ='page:' + props.page
+        actionGroupPopupItem: =props.page
         style:
           position: absolute
           left: 0px
