@@ -1,0 +1,118 @@
+uid: trigger
+description: Send one command to an item on click, useful for calling scenes. Supports light and dark background.
+author: Copyright (c) 2021 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+    - description: Icon on top of the card (only f7 icons (without f7:))
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+    - description: rgba or HEX
+      label: Background Color (lightmode)
+      name: bgcolor
+      required: false
+      type: TEXT
+    - description: rgba or HEX
+      label: Background Color darkmode
+      name: bgcolor_dark
+      required: false
+      type: TEXT
+    - description: invert text color for light and dark mode
+      label: Invert text color
+      name: invertText
+      required: false
+      type: BOOLEAN
+    - context: item
+      description: Item to control
+      label: Item
+      name: item
+      required: false
+      type: TEXT
+    - label: Command to send
+      name: command
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Aug 21, 2021, 11:53:02 PM
+component: f7-card
+config:
+  style:
+    noShadow: false
+    class:
+      - padding: 0px
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    background-color: "=props.bgcolor ? (props.bgcolor_dark ? (themeOptions.dark === 'dark' ? props.bgcolor_dark : props.bgcolor) : props.bgcolor) : ''"
+    height: 100px
+    margin-left: 5px
+    margin-right: 5px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          top: -5px
+          left: 16px
+          flex-direction: row
+          display: flex
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: =props.icon
+              size: 18
+              style:
+                margin-right: 10px
+                color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
+              visible: "=props.icon ? true : false"
+          - component: Label
+            config:
+              text: "=props.title ? props.title : ''"
+              style:
+                font-size: 12px
+                margin-top: 0px
+                color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
+    - component: f7-block
+      config:
+        style:
+          position: absolute
+          bottom: -15px
+          left: 16px
+          flex-direction: row
+      slots:
+        default:
+          - component: Label
+            config:
+              text: "=props.header ? props.header : 'Set Props'"
+              style:
+                font-size: 17px
+                font-weight: 600
+                margin-left: 0px
+                margin-top: 0px
+                color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
+    - component: oh-link
+      config:
+        action: command
+        actionItem: =props.item
+        style:
+          position: absolute
+          top: 0
+          left: 0
+          height: 100px
+          width: 100%
+          actionPosition: center
+        actionCommand: =props.command
+        actionFeedback: Done!
