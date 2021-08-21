@@ -13,8 +13,14 @@ props:
       label: page
       name: page
       required: false
+      type: TEXT
+    - description: Display the last update timestamp
+      label: Display last update
+      name: displayLastUpdate
+      required: false
+      type: BOOLEAN
   parameterGroups: []
-timestamp: Aug 7, 2021, 5:57:08 PM
+timestamp: Aug 7, 2021, 6:06:31 PM
 component: f7-card
 config:
   style:
@@ -92,6 +98,7 @@ slots:
               iconSize: 20
           - component: f7-chip
             config:
+              visible: "=props.displayLastUpdate ? (props.displayLastUpdate == true ? true : false) : false"
               iconF7: clock
               text: "='Stand: ' + items.pv_lastRefresh.displayState"
               style:
