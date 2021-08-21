@@ -18,7 +18,7 @@ Some widgets support to use a light and a dark background color, these widgets' 
 These widgets also have the option, to invert the color off all texts and icons to reach an appropiate level of contrast.
 
 This code-block enables light and dark background for widgets:
-'''yaml
+```yaml
 ...
     - description: rgba or HEX
       label: Background Color (lightmode)
@@ -40,7 +40,7 @@ This code-block enables light and dark background for widgets:
       background-color: "=props.bgcolor ? (props.bgcolor_dark ? (themeOptions.dark === 'dark' ? props.bgcolor_dark : props.bgcolor) : props.bgcolor) : ''"
     # for text:
       color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
-'''
+```
 
 ***
 ## Widgets
