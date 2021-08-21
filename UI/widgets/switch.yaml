@@ -146,9 +146,8 @@ slots:
         width: 80px
         style:
           position: absolute
-          top: -30px
+          top: -10px
           right: 15px
-          height: 145px
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
