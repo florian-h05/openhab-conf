@@ -45,10 +45,10 @@ This code-block enables light and dark background for widgets:
 ### Colors
 
 Which color pairs do I use for which color?
-* Green: ```yaml (themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
-* Yellow: ```yaml (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
-* Orange: ```yaml (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
-* Red: ```yaml (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
+* Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
+* Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
+* Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
+* Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
 
 ***
 ## Widgets
