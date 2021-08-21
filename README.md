@@ -2,17 +2,48 @@
 
 ### Parts of my openHAB 3 configuration.
 
-Sharing my configuration for others to get an idea about production openHAB installations.
+***
+## Table of Contents
+1. [Design guidelines](#design-guidelines)
+2. [Widgets](#widgets)
 
-# WARNING #
+***
+## Design guidelines
 
-### If you want to do this with your own openHAB configuration, please be _VERY CAREFUL_ to prevent sharing your personal/secret information, such as:
+For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
+I choose colors from the __400__ or the __600__ series.
+For UI in light mode I take the dark variation ot the color, for dark mode the light color variation.
 
-#### Wifi credentials (SSID/password)
-#### Account Password (iCloud, ...)
-#### API keys (Nest, ...)
-#### Location (Astro, weather forecast, ...)
+Some widgets support to use a light and a dark background color, these widgets' description includes: _Supports light and dark background._
+These widgets also have the option, to invert the color off all texts and icons to reach an appropiate level of contrast.
 
-Use GITIGNORE files to properly hide those files from your GitHub repo. 
+This code-block enables light and dark background for widgets:
+'''yaml
+...
+    - description: rgba or HEX
+      label: Background Color (lightmode)
+      name: bgcolor
+      required: false
+      type: TEXT
+    - description: rgba or HEX
+      label: Background Color darkmode
+      name: bgcolor_dark
+      required: false
+      type: TEXT
+    - description: invert text color for light and dark mode
+      label: Invert text color
+      name: invertText
+      required: false
+      type: BOOLEAN
+...
+    # for background (in f7-card config):
+      background-color: "=props.bgcolor ? (props.bgcolor_dark ? (themeOptions.dark === 'dark' ? props.bgcolor_dark : props.bgcolor) : props.bgcolor) : ''"
+    # for text:
+      color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
+'''
 
-Be AWARE that even if you delete the file from your repo after accidentally uploading it, the information is STILL THERE (GitHub keeps revision history). The ONLY way to get rid of the information is to DELETE the repo and start over!!!
+***
+## Widgets
+
+My custom widget set for the openHAB 3 MainUI.
+Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
