@@ -4,13 +4,13 @@
 
 ***
 ## Table of Contents
-* 1. [Color design](#1.-color-design)
-  * 1.1 [Color pairs](#1.1-color-pairs)
-* 2. [Widgets](#2.-widgets)
-  * 2.1 [Widget design](#2.1-widget-design)
-    * 2.1.1 [Widget style](#2.1.1-widget-style)
-    * 2.1.2 [Icons](#2.1.2-icons)
-    * 2.1.3 [Text](#2.1.3-text)
+* [1. Color design](#1-color-design)
+    * [1.1 Color pairs](#11-color-pairs)
+* [2. Widgets](#2-widgets)
+    * [2.1 Widget design](#21-widget-design)
+        * [2.1.1 Widget style](#211-widget-style)
+        * [2.1.2 Icons](#212-icons)
+        * [2.1.3 Text](#213-text)
 
 ***
 ## 1. Color design
