@@ -58,20 +58,8 @@ props:
       name: item_wind_dir
       required: false
       type: TEXT
-    - context: item
-      description: Item of weather warning 1
-      label: Warning 1
-      name: item_warn1
-      required: false
-      type: TEXT
-    - context: item
-      description: Item of weather warning 2
-      label: Warning 2
-      name: item_warn2
-      required: false
-      type: TEXT
   parameterGroups: []
-timestamp: Jul 16, 2021, 4:14:13 PM
+timestamp: Aug 22, 2021, 11:23:45 AM
 component: f7-card
 config:
   style:
@@ -153,12 +141,12 @@ slots:
               visible: "=props.item_rain ? true: false"
               iconF7: cloud_drizzle
               text: =items[props.item_rain].displayState
-              textColor: "=items[props.item_rain].state === 'OPEN' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+              textColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
               style:
                 margin-bottom: 10px
                 font-size: 16px
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              iconColor: "=items[props.item_rain].state === 'OPEN' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+              iconColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
               iconSize: 20
           - component: f7-chip
             config:
@@ -205,9 +193,9 @@ slots:
               iconSize: 20
           - component: f7-chip
             config:
-              visible: "=props.item_warn1 ? (items[props.item_warn1].state != 'None.' ? true : false) : false"
+              visible: "=items.NINA_WetterWarn1.state != 'None.' ? true : false"
               iconF7: bolt
-              text: =items[props.item_warn1].state
+              text: =items.NINA_WetterWarn1.state
               textColor: red
               style:
                 margin-bottom: 10px
@@ -217,9 +205,9 @@ slots:
               iconSize: 20
           - component: f7-chip
             config:
-              visible: "=props.item_warn2 ? (items[props.item_warn2].state != 'None.' ? true : false) : false"
+              visible: "=items.NINA_WetterWarn2.state != 'None.' ? true : false"
               iconF7: bolt
-              text: =items[props.item_warn2].state
+              text: =items.NINA_WetterWarn2.state
               textColor: red
               style:
                 margin-bottom: 10px
