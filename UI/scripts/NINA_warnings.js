@@ -11,6 +11,8 @@ Copyright (c) 2021 Florian Hotze under MIT License
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 var Exec = Java.type('org.openhab.core.model.script.actions.Exec')
 var Duration = Java.type('java.time.Duration')
+var previous // text of previous warning, used to avoid posting the same warning multiple times to openHAB
+// NINA sometimes publishes two warnings with same title
 
 var weather = Exec.executeCommandLine(Duration.ofSeconds(10), 'bash', '/etc/openhab/scripts/NINA_Warn.bash', '-w')
 //logger.info('Response from NINA_Warn.bash: ' + weather)
@@ -23,7 +25,12 @@ for (var i = 0; (i < weather.length) && (i < 4); i++) {
   var b = text.search('WARNUNG')
   if (b != -1) {
     text = text.replace('Amtliche ', '')
-    events.postUpdate('NINA_WetterWarn' + n, text)
+    if (text != previous) {
+      events.postUpdate('NINA_WetterWarn' + n, text)
+    } else {
+      events.postUpdate('NINA_WetterWarn' + n, 'None.')
+    }
+    previous = text
   } else {
     events.postUpdate('NINA_WetterWarn' + n, 'None.')
   }
