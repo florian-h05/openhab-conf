@@ -12,10 +12,10 @@
 
 For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
 I choose colors from the __400__ or the __600__ series.
-For UI in light mode I take the stanard or the dark variation ot the color, for dark mode the light color variation.
+For the light mode I take the normal color or the dark color variation, for dark mode the light color variation.
 
 Some widgets support to use a light and a dark background color, these widgets' description includes: _Supports light and dark background._
-These widgets also have the option, to invert the color off all texts and icons to reach an appropiate level of contrast.
+These widgets also have the option to invert the color of all texts and icons to reach an appropiate level of contrast.
 
 This code-block enables light and dark background for widgets:
 ```yaml
@@ -32,7 +32,7 @@ This code-block enables light and dark background for widgets:
       type: TEXT
     - description: invert text color for light and dark mode
       label: Invert text color
-      name: invertText
+      name: invertText a
       required: false
       type: BOOLEAN
 ...
@@ -42,13 +42,14 @@ This code-block enables light and dark background for widgets:
       color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
 ```
 
-### Colors
+### Color pairs
 
 Which color pairs do I use for which color?
 * Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
 * Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
 * Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
 * Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
+These color pairs are all from color series __600__.
 
 ***
 ## Widgets
