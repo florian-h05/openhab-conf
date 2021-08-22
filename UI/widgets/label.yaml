@@ -50,7 +50,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 7, 2021, 4:51:18 PM
+timestamp: Aug 7, 2021, 4:52:05 PM
 component: f7-card
 config:
   style:
@@ -100,7 +100,7 @@ slots:
             config:
               text: "=props.item_value ? props.label ? props.label + ' ' + (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (props.label ? props.label : 'Set item or label!')"
               style:
-                font-size: 22px
+                font-size: 24px
                 font-weight: 400
                 margin-left: 0px
                 margin-top: 0px

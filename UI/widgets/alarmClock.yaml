@@ -42,7 +42,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 14, 2021, 4:43:00 PM
+timestamp: Jul 14, 2021, 5:41:17 PM
 component: f7-card
 config:
   style:
@@ -111,7 +111,7 @@ slots:
               text: "=(props.item_time2) ? items[props.item_time1].state + ' | ' + items[props.item_time2].state : items[props.item_time1].state"
               style:
                 font-size: 24px
-                font-weight: 300
+                font-weight: 400
                 margin-left: 0px
                 margin-top: 0px
   default:
