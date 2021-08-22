@@ -12,11 +12,6 @@ props:
       name: title
       required: false
       type: TEXT
-    - description: HEX or rgba
-      label: Background Color
-      name: bgcolor
-      required: false
-      type: TEXT
     - description: Page ID of page to be opened
       label: page
       name: page
@@ -76,7 +71,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 14, 2021, 12:22:08 PM
+timestamp: Jul 16, 2021, 4:14:13 PM
 component: f7-card
 config:
   style:
@@ -85,7 +80,6 @@ config:
       - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 150px
     margin-left: 5px
     margin-right: 5px

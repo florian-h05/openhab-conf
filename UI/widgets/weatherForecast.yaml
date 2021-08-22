@@ -10,11 +10,6 @@ props:
       name: title
       required: false
       type: TEXT
-    - description: HEX, rgba or name, e.g. white or black
-      label: Background Color
-      name: bgcolor
-      required: false
-      type: TEXT
     - description: Full URL to background image
       label: Backgroundimage
       name: bgimage
@@ -25,7 +20,7 @@ props:
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 14, 2021, 12:21:49 PM
+timestamp: Aug 22, 2021, 12:56:21 AM
 component: f7-card
 config:
   style:
@@ -34,7 +29,6 @@ config:
       - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     background-image: "=props.bgimage ? 'url(' + props.bgimage + ')': ''"
     height: 150px
     margin-left: 5px

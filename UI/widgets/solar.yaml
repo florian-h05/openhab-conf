@@ -4,11 +4,6 @@ author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
-    - description: HEX or rgba
-      label: Background Color
-      name: bgcolor
-      required: false
-      type: TEXT
     - description: Page ID of page to be opened
       label: page
       name: page
@@ -20,7 +15,7 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Aug 7, 2021, 6:06:31 PM
+timestamp: Aug 21, 2021, 10:57:42 PM
 component: f7-card
 config:
   style:
@@ -29,7 +24,6 @@ config:
       - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 150px
     margin-left: 5px
     margin-right: 5px
