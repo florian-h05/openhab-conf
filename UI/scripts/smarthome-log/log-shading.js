@@ -1,8 +1,9 @@
 /*
 This script logs knx shading to the InfluxDB smarthome log.
 Configure the suffix of the shading state item in line 15. 
-This script gets "this.triggeringItem" from the rule that calls the script.
-The "Unique ID" of this script should be: "log-shading-script".
+This script gets the rule triggering item.
+This script is used directly in the rule.
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
@@ -23,4 +24,4 @@ function logShading (itemName) {
   }
 }
 
-logShading(this.triggeringItem)
+logShading(event.itemName)

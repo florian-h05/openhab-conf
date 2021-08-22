@@ -1,8 +1,9 @@
 /*
 This script logs knx automatic enable/disable to the InfluxDB smarthome log.
-No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
+No configuration needed. This script gets the rule triggering item.
 Requires items to start with the roomname before _. Example: livingRoom_automatic-disable
-The "Unique ID" of this script should be: "log-automatic_switch-script".
+This script is used directly in the rule.
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
@@ -24,4 +25,4 @@ function logAutomatic (itemName) {
   }
 }
 
-logAutomatic(this.triggeringItem)
+logAutomatic(event.itemName)

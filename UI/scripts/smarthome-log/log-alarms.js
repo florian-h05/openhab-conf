@@ -1,7 +1,8 @@
 /*
 This script logs alarms to the InfluxDB smarthome log.
-No configuration needed. This script gets "this.triggerinItem" fom the rule that calls the script.
-The "Unique ID" of this script should be: "log-alarms-script".
+No configuration needed. This script gets the rule triggering item.
+This script is used directly in the rule.
+Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
@@ -17,4 +18,4 @@ function logAlarm (itemName) {
   }
 }
 
-logAlarm(this.triggeringItem)
+logAlarm(event.itemName)
