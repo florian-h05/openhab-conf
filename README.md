@@ -1,19 +1,40 @@
 # openHAB configuration [@florian-h05](https://github.com/florian-h05)
 
-### Parts of my openHAB 3 configuration.
 
 ***
 ## Table of Contents
-* [1. Color design](#1-color-design)
-    * [1.1 Color pairs](#11-color-pairs)
-* [2. Widgets](#2-widgets)
-    * [2.1 Widget design](#21-widget-design)
-        * [2.1.1 Widget style](#211-widget-style)
-        * [2.1.2 Icons](#212-icons)
-        * [2.1.3 Text](#213-text)
+* [1. JavaScript rules tools](#1-javascript-rules-tools)
+    * [1.1 Prerequisites](#11-prerequisites)
+    * [1.2 group utilities](#12-group-utilities)
+* [2. Color design](#2-color-design)
+    * [2.1 Color pairs](#21-color-pairs)
+* [3. Widgets](#3-widgets)
+    * [3.1 Widget design](#31-widget-design)
+        * [3.1.1 Widget style](#311-widget-style)
+        * [3.1.2 Icons](#312-icons)
+        * [3.1.3 Text](#313-text)
 
 ***
-## 1. Color design
+## 1. JavaScript rules tools
+
+Library functions, classes and modules to reuse in JavaScript rules. My focus on building these tools is to solve often needed tasks in a efficient and simple way. Providing fully realized capabilities is not the goal of this tools.
+
+### 1.1 Prerequisites
+
+* openHAB 3.x
+* __IMPORTANT:__ This code is not compatible with the GraalVM JavaScript add-on.
+
+Note: these tools are created for use in UI rules and scripts.
+
+### 1.2 group utilities
+
+[groupUtils.js](/automation/lib/javascript/community/groupUtils.js) implements a class to simplify the work with openHAB groups.
+It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
+
+For more information, have a look at the [README](/automation/lib/javascript/community).
+
+***
+## 2. Color design
 
 For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
 I choose colors from the __400__ or the __600__ series.
@@ -47,7 +68,7 @@ This code-block enables light and dark background for widgets:
       color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
 ```
 
-### 1.1 Color pairs
+### 2.1 Color pairs
 
 Which color pairs do I use for which color?
 * Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
@@ -58,15 +79,15 @@ Which color pairs do I use for which color?
 These color pairs are all from color series __600__.
 
 ***
-## 2. Widgets
+## 3. Widgets
 
 My custom widget set for the openHAB 3 MainUI.
 Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
 
-### 2.1 Widget design
+### 3.1 Widget design
 
 
-#### 2.1.1 Widget style
+#### 3.1.1 Widget style
 
 My custom widgets always use this design:
 ```yaml
@@ -92,7 +113,7 @@ The _height_ attribute usually varies between three sizes:
 * __150px__ for large widgets with much content and controls
 * __130px__ for the room card, which is not combined with other cards on one page
 
-#### 2.1.2 Icons
+#### 3.1.2 Icons
 
 Most icons are from [Framework7](https://framework7.io/icons/). 
 Sometimes, openHAB icons are used, e.g. for state representation. 
@@ -103,7 +124,7 @@ _Framework7_ icons normally use these sizes:
 
 _openHAB_ icons' size varies.
 
-#### 2.1.3 Text
+#### 3.1.3 Text
 
 Text style follows these guidelines:
 * small text (e.g. upper left corner): ```font-size: 12px```
