@@ -60,7 +60,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 24, 2021, 1:19:53 PM
+timestamp: Aug 7, 2021, 5:59:40 PM
 component: f7-card
 config:
   style:
@@ -131,7 +131,7 @@ slots:
               visible: "=props.roofwindow == true ? true : false"
               text: =items[props.item].state
               style:
-                color: "=items[props.item].state === 'geschlossen' ? 'green' : items[props.item].state === 'kleine Lüftung' ? themeOptions.dark === 'dark' ? '#FFEB3B' : '#FBC02D' : items[props.item].state === 'große Lüftung' ? themeOptions.dark === 'dark' ? '#FF9800' : '#F57C00' : 'red'"
+                color: "=items[props.item].state === 'geschlossen' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === 'kleine Lüftung' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === 'große Lüftung' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 margin-left: 0px
                 margin-top: 0px
@@ -140,7 +140,7 @@ slots:
               visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
               text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : (props.contacts_open ? (props.contacts_total ? (items[props.contacts_open].state + ' von ' + props.contacts_total + ' geöffnet') : items[props.contacts_open].state + ' geöffnet') : 'geöffnet')"
               style:
-                color: "=items[props.item].state === 'OPEN' ? 'green' : 'red'"
+                color: "=items[props.item].state === 'OPEN' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 margin-left: 0px
                 margin-top: 0px
