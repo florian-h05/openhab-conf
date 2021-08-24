@@ -5,7 +5,7 @@
 ## Table of Contents
 * [1. JavaScript rules tools](#1-javascript-rules-tools)
     * [1.1 Prerequisites](#11-prerequisites)
-    * [1.2 group utilities](#12-group-utilities)
+    * [1.2 Group utilities](#12-group-utilities)
 * [2. Color design](#2-color-design)
     * [2.1 Color pairs](#21-color-pairs)
 * [3. Widgets](#3-widgets)
@@ -26,7 +26,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 Note: these tools are created for use in UI rules and scripts.
 
-### 1.2 group utilities
+### 1.2 Group utilities
 
 [groupUtils.js](/automation/lib/javascript/community/groupUtils.js) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
@@ -58,7 +58,7 @@ This code-block enables light and dark background for widgets:
       type: TEXT
     - description: invert text color for light and dark mode
       label: Invert text color
-      name: invertText a
+      name: invertText
       required: false
       type: BOOLEAN
 ...

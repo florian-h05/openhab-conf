@@ -4,7 +4,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 ## Table of contents
 * [1. Prerequisites](#1-prerequisites)
-* [2. group utilities](#2-group-utilities)
+* [2. Group utilities](#2-group-utilities)
 
 ***
 ## 1. Prerequisites
@@ -15,7 +15,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 Note: these tools are created for use in UI rules and scripts.
 
 ***
-## 2. group utilities
+## 2. Group utilities
 
 [groupUtils.js](./groupUtils.js) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
