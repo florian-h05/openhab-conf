@@ -101,7 +101,7 @@ These three parameters are required:
 ***
 ## 3. Item Control Utility
 
-[itemControl.js](./itemControl.js) implements a class to execute often used command sequences on Items.
+[itemControl.js](./itemControl.js) implements a class to easily execute often used command sequences on Items.
 Currently, it provides a dimmer for sound/speaker volume.
 There are no dependencies.
 

@@ -34,7 +34,7 @@ It allows you to get members of a group, to perform arithmetic operations on mem
 
 ### 1.3 Item Control Utility
 
-[itemControl.js](./itemControl.js) implements a class to execute often used command sequences on Items.
+[itemControl.js](/automation/lib/javascript/community/itemControl.js) implements a class to easily execute often used command sequences on Items.
 Currently, it provides a dimmer for sound/speaker volume.
 
 For more information, have a look at the [README](/automation/lib/javascript/community).
