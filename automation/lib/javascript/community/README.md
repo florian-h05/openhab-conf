@@ -5,7 +5,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 ## Table of contents
 * [1. Prerequisites](#1-prerequisites)
 * [2. Group Utilities](#2-group-utilities)
-* [3. Item Control Utility](3#-item-control-utility)
+* [3. Item Control Utility](#3-item-control-utility)
 
 ***
 ## 1. Prerequisites
