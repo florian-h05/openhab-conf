@@ -72,11 +72,11 @@ ItemControl.prototype.volumeDimming = function (dummyItem, realItem, timePerStep
       }
     }
     if (diff > 0) { // increasing
-      this.log.debug('Final increasing, step: ' + i + '; time: ' + i * timePerStep / 1000 + ' sec; value: ' + target)
-      this.ScriptExecution.createTimer(this.now.plusSeconds(i * timePerStep / 1000 + 0.15), timerOverTarget(realItem, target, dummyItem))
+      this.log.debug('Final increasing, step: ' + i + '; time: ' + Math.abs(diff) * timePerStep / 1000 + ' sec; value: ' + target)
+      this.ScriptExecution.createTimer(this.now.plusSeconds(Math.abs(diff) * timePerStep / 1000 + 0.3), timerOverTarget(realItem, target, dummyItem))
     } else if (diff < 0) { // decreasing
-      this.log.debug('Final decreasing, step: ' + i + '; time: ' + i * timePerStep / 1000 + ' sec; value: ' + target)
-      this.ScriptExecution.createTimer(this.now.plusSeconds(i * timePerStep / 1000 + 0.15), timerOverTarget(realItem, target, dummyItem))
+      this.log.debug('Final decreasing, step: ' + i + '; time: ' + Math.abs(diff) * timePerStep / 1000 + ' sec; value: ' + target)
+      this.ScriptExecution.createTimer(this.now.plusSeconds(Math.abs(diff) * timePerStep / 1000 + 0.3), timerOverTarget(realItem, target, dummyItem))
     }
     delete this.dimmers[realItem]
   }
