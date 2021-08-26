@@ -4,7 +4,8 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 ## Table of contents
 * [1. Prerequisites](#1-prerequisites)
-* [2. Group utilities](#2-group-utilities)
+* [2. Group Utilities](#2-group-utilities)
+* [3. Item Control Utility](3#-item-control-utility)
 
 ***
 ## 1. Prerequisites
@@ -15,7 +16,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 Note: these tools are created for use in UI rules and scripts.
 
 ***
-## 2. Group utilities
+## 2. Group Utilities
 
 [groupUtils.js](./groupUtils.js) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
@@ -97,3 +98,46 @@ These three parameters are required:
 * _op_ is the comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual
 * _comp_ is the value to compare with, e.g. numbers or ON/OFF states
 
+***
+## 3. Item Control Utility
+
+[itemControl.js](./itemControl.js) implements a class to execute often used command sequences on Items.
+Currently, it provides a dimmer for sound/speaker volume.
+There are no dependencies.
+
+### How it works:
+
+Load the class into your script:
+```javascript
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
+load(OPENHAB_CONF+'/automation/lib/javascript/community/itemControl.js')
+/*
+Every time a rule is created or update it is given a context. This persists the function in the context, 
+so every time it is called, the functions can access values from before.
+*/
+this.ic = (this.ic === undefined) ? new ItemControl() : this.ic
+```
+
+The class provides one functions:
+
+### volumeDimming
+
+This function dimms a sound/speakervolume to a given target volume. For example, I use it to have a smooth transision to a new volume level on my Yamaha amplifiers.
+
+```javascript
+this.ic.volumeDimming(dummyItem, realItem, timePerStep)
+```
+These three parameters are required:
+* _dummyItem_ Name of the openHAB item that represents the target value and the state
+* _realItem_ Name of the openHAB item that controls the volume
+* _timePerStep_ Time for each step in milliseconds
+
+#### Example
+```javascript
+// example
+this.ic.volumeDimming('Amplifier_Volume', 'Amplifier_RealVolume', 333)
+```
+This does the following:
+* get the target volume from the dummy item ```Amplifier_Volume```
+* increase or decrease the real volume (item ```Amplifier_RealVolume```) by 1 step every 1/3 second
+* update the state of the dummy item after each step

@@ -5,7 +5,8 @@
 ## Table of Contents
 * [1. JavaScript rules tools](#1-javascript-rules-tools)
     * [1.1 Prerequisites](#11-prerequisites)
-    * [1.2 Group utilities](#12-group-utilities)
+    * [1.2 Group Utilities](#12-group-utilities)
+    * [1.3 Item Control Utility](#13-item-control-utility)
 * [2. Color design](#2-color-design)
     * [2.1 Color pairs](#21-color-pairs)
 * [3. Widgets](#3-widgets)
@@ -26,10 +27,15 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 Note: these tools are created for use in UI rules and scripts.
 
-### 1.2 Group utilities
+### 1.2 Group Utilities
 
 [groupUtils.js](/automation/lib/javascript/community/groupUtils.js) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
+
+### 1.3 Item Control Utility
+
+[itemControl.js](./itemControl.js) implements a class to execute often used command sequences on Items.
+Currently, it provides a dimmer for sound/speaker volume.
 
 For more information, have a look at the [README](/automation/lib/javascript/community).
 
