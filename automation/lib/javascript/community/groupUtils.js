@@ -23,10 +23,10 @@ var GroupUtils = function () {
 GroupUtils.prototype.getMembers = function (group, characteristic) {
   this.log.debug('Getting direct members of group ' + group)
   var groupMembers = Array()
-  ir.getItem(group).getMembers().stream().forEach(function (item) {
-    if (characteristic == 'label') {
+  itemRegistry.getItem(group).getMembers().stream().forEach(function (item) {
+    if (characteristic === 'label') {
       groupMembers.push(item.getLabel())
-    } else if (characteristic == 'state') {
+    } else if (characteristic === 'state') {
       groupMembers.push(item.getState())
     } else {
       groupMembers.push(item.getName())
@@ -45,10 +45,10 @@ GroupUtils.prototype.getMembers = function (group, characteristic) {
 GroupUtils.prototype.getAllMembers = function (group, characteristic) {
   this.log.debug('Getting all members of group ' + group)
   var groupAllMembers = Array()
-  ir.getItem(group).getAllMembers().stream().forEach(function (item) {
-    if (characteristic == 'label') {
+  itemRegistry.getItem(group).getAllMembers().stream().forEach(function (item) {
+    if (characteristic === 'label') {
       groupAllMembers.push(item.getLabel())
-    } else if (characteristic == 'state') {
+    } else if (characteristic === 'state') {
       groupAllMembers.push(item.getState())
     } else {
       groupAllMembers.push(item.getName())
@@ -65,33 +65,32 @@ GroupUtils.prototype.getAllMembers = function (group, characteristic) {
  * @param {*} func Arithmetic function to perform, valid: SUM, AVG, MIN, MAX
  */
 GroupUtils.prototype.arithmetic = function (items, func) {
-  if (func == 'SUM') {
+  if (func === 'SUM') {
     var sum = items[0]
     for (var i = 1; i < items.length; i++) {
       sum += items[i]
     }
     return sum
-  } else if (func == 'AVG') {
+  } else if (func === 'AVG') {
     var sum = items[0]
     for (var i = 1; i < items.length; i++) {
       sum += items[i]
     }
     var avg = sum / items.length
     return avg
-  } else if (func == 'MIN') {
-    var min = items[0];
+  } else if (func === 'MIN') {
+    var min = items[0]
     for (var i = 1; i < items.length; ++i) {
       if (items[i] < min) {
-        min = items[i];
+        min = items[i]
       }
     }
     return min
-    
-  } else if (func == 'MAX') {
-    var max = items[0];
+  } else if (func === 'MAX') {
+    var max = items[0]
     for (var i = 1; i < items.length; ++i) {
       if (items[i] > max) {
-        max = items[i];
+        max = items[i]
       }
     }
     return max
@@ -108,27 +107,27 @@ GroupUtils.prototype.arithmetic = function (items, func) {
 GroupUtils.prototype.count = function (items, op, comp) {
   var counter = 0
   for (var i = 0; i < items.length; ++i) {
-    if (op == 'equal') {
+    if (op === 'equal') {
       if (items[i] == comp) {
         ++counter
       }
-    } else if (op == 'notEqual') {
+    } else if (op === 'notEqual') {
       if (items[i] != comp) {
         ++counter
       }
-    } else if (op == 'larger') {
+    } else if (op === 'larger') {
       if (items[i] > comp) {
         ++counter
       }
-    } else if (op == 'largerEqual') {
+    } else if (op === 'largerEqual') {
       if (items[i] >= comp) {
         ++counter
       }
-    } else if (op == 'smaller') {
+    } else if (op === 'smaller') {
       if (items[i] < comp) {
         ++counter
       }
-    } else if (op == 'smallerEqual') {
+    } else if (op === 'smallerEqual') {
       if (items[i] <= comp) {
         ++counter
       }
