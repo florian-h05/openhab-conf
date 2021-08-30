@@ -56,7 +56,7 @@ var windows = GroupUtils.getMembers('windows', 'state')
 Argument | Purpose | Required
 -|-|-
 groupname | The name of the group. | no
-characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
+characteristic | Defines what you get from the members. Valid are: name (default), label, state. | yes
 
 ### getAllMembers
 
@@ -72,7 +72,7 @@ var name = GroupUtils.getMembers('doors', 'name') // the same as ...getMembers('
 Argument | Purpose | Required
 -|-|-
 groupname | The name of the group. | no
-characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
+characteristic | Defines what you get from the members. Valid are: name (default), label, state. | yes
 
 ### arithmetic
 
@@ -95,7 +95,7 @@ var sum = GroupUtils.arithmetic(power, 'SUM') // the summarized value from "powe
 Argument | Purpose | Required
 -|-|-
 items | The array of item states. | yes
-func | defines which function to perform, valid: MAX, MIN, AVG, SUM | yes
+func | Defines which function to perform, valid: MAX, MIN, AVG, SUM. | yes
 
 ### count
 
@@ -122,8 +122,8 @@ var smalEq24 = GroupUtils.count(temp, 'largerEqual', 24) // the number of states
 Argument | Purpose | Required
 -|-|-
 items | The array of item states. | yes
-op | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual | yes
-comp | The value to compare with, e.g. numbers, ON/OFF states or strings | yes
+op | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual. | yes
+comp | The value to compare with, e.g. numbers, ON/OFF states or strings. | yes
 
 
 ## 3. Item Control Utility
@@ -157,9 +157,9 @@ this.ic.volumeDimming(dummyItem, realItem, timePerStep)
 ```
 Argument | Purpose | Required
 -|-|-
-dummyItem | Name of the openHAB item that represents the target value and the state | yes
-realItem | Name of the openHAB item that controls the volume | yes
-timePerStep | Time for each step in milliseconds | yes
+dummyItem | Name of the openHAB item that represents the target value and the state. | yes
+realItem | Name of the openHAB item that controls the volume. | yes
+timePerStep | Time for each step in milliseconds. | yes
 
 
 ```javascript
