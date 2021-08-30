@@ -54,7 +54,7 @@ var group = GroupUtils.getMembers(groupname, characteristic)
 var windows = GroupUtils.getMembers('windows', 'state') 
 ```
 Argument | Purpose | Required
-- | - | -
+-|-|-
 groupname | The name of the group. | no
 characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
 
@@ -70,7 +70,7 @@ var group = GroupUtils.getAllMembers(groupname, characteristic)
 var name = GroupUtils.getMembers('doors', 'name') // the same as ...getMembers('doors')
 ```
 Argument | Purpose | Required
-- | - | -
+-|-|-
 groupname | The name of the group. | no
 characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
 
@@ -93,7 +93,7 @@ var avg = GroupUtils.arithmetic(power, 'AVG') // the average value from "power"
 var sum = GroupUtils.arithmetic(power, 'SUM') // the summarized value from "power"
 ```
 Argument | Purpose | Required
-- | - | -
+-|-|-
 items | The array of item states. | yes
 func | defines which function to perform, valid: MAX, MIN, AVG, SUM | yes
 
@@ -120,7 +120,7 @@ var largEq24 = GroupUtils.count(temp, 'smallerEqual', 24) // the number of state
 var smalEq24 = GroupUtils.count(temp, 'largerEqual', 24) // the number of states higher or equal than/to 24
 ```
 Argument | Purpose | Required
-- | - | -
+-|-|-
 items | The array of item states. | yes
 op | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual | yes
 comp | The value to compare with, e.g. numbers, ON/OFF states or strings | yes
@@ -156,7 +156,7 @@ This function dimms a sound/speakervolume to a given target volume. For example,
 this.ic.volumeDimming(dummyItem, realItem, timePerStep)
 ```
 Argument | Purpose | Required
-- | - | -
+-|-|-
 dummyItem | Name of the openHAB item that represents the target value and the state | yes
 realItem | Name of the openHAB item that controls the volume | yes
 timePerStep | Time for each step in milliseconds | yes
