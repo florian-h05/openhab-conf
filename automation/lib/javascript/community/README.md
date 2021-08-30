@@ -2,10 +2,18 @@
 
 Library functions, classes and modules to reuse in JavaScript rules. My focus on building these tools is to solve often needed tasks in a efficient and simple way. Providing fully realized capabilities is not the goal of this tools.
 
-## Table of contents
-* [1. Prerequisites](#1-prerequisites)
-* [2. Group Utilities](#2-group-utilities)
-* [3. Item Control Utility](#3-item-control-utility)
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [1. Prerequisites](#1-prerequisites)
+- [2. Group Utilities](#2-group-utilities)
+  - [How it works](#how-it-works)
+  - [getMembers](#getmembers)
+  - [getAllMembers](#getallmembers)
+  - [arithmetic](#arithmetic)
+  - [count](#count)
+- [3. Item Control Utility](#3-item-control-utility)
+  - [How it works](#how-it-works-1)
+  - [volumeDimming](#volumedimming)
 
 ***
 ## 1. Prerequisites
@@ -15,16 +23,17 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 Note: these tools are created for use in UI rules and scripts.
 
-***
+
 ## 2. Group Utilities
+***
 
 [groupUtils.js](./groupUtils.js) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
 There are no dependencies.
 
-### How it works:
+### How it works
 
-Load the class into your script:
+This creates an instance of the Group Utilities:
 ```javascript
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
 load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
@@ -39,9 +48,15 @@ This function returns the names, the labels or the states of direct group member
 
 ```javascript
 var group = GroupUtils.getMembers(groupname, characteristic)
+
+// example
+// the states of direct members of "windows"
+var windows = GroupUtils.getMembers('windows', 'state') 
 ```
-* _groupname_ is the name of the group.
-* _characteristic_ defines what you get from the members. Valid are: name (default), label, state; this parameter is not required.
+Argument | Purpose | Required
+- | - | -
+groupname | The name of the group. | no
+characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
 
 ### getAllMembers
 
@@ -49,14 +64,19 @@ This function returns the names, the labels or the states of direct and child gr
 
 ```javascript
 var group = GroupUtils.getAllMembers(groupname, characteristic)
+
+// example
+// the names of all (direct & child) members of "doors"
+var name = GroupUtils.getMembers('doors', 'name') // the same as ...getMembers('doors')
 ```
-* _groupname_ is the name of the group.
-* _characteristic_ defines what you get from the members. Valid are: name (default), label, state; this parameter is not required.
+Argument | Purpose | Required
+- | - | -
+groupname | The name of the group. | no
+characteristic | Defines what you get from the members. Valid are: name (default), label, state | yes
 
 ### arithmetic
 
-Perform arithmetic operations on the states of Number members. This functionality is the same as in the openHAB [group item definition](https://www.openhab.org/docs/configuration/items.html#derive-group-state-from-member-items).
-You have to pass the states as an array to this function.
+Perform arithmetic operations on the states of Number members. This functionality is the same as in the openHAB [group item definition](https://www.openhab.org/docs/configuration/items.html#derive-group-state-from-member-items). The function returns the value from the given function.
 
 ```javascript
 // get the states
@@ -66,48 +86,56 @@ var group = GroupUtils.getMembers(groupname, 'state')
 var arithmetic = GroupUtils.arithmetic(items, func)
 
 // examples
-var max = GroupUtils.arithmetic(group, 'MAX')
-var min = GroupUtils.arithmetic(group, 'MIN')
-var avg = GroupUtils.arithmetic(group, 'AVG')
-var sum = GroupUtils.arithmetic(group, 'SUM')
+var power = GroupUtils.getMembers('power', 'state') // the states of direct members of "power"
+var max = GroupUtils.arithmetic(power, 'MAX') // the highest value from "power"
+var min = GroupUtils.arithmetic(power, 'MIN') // the lowest value from "power"
+var avg = GroupUtils.arithmetic(power, 'AVG') // the average value from "power"
+var sum = GroupUtils.arithmetic(power, 'SUM') // the summarized value from "power"
 ```
-These two parameters are required:
-* _items_ is the array of states
-* _func_ defines which function to perform, valid: MAX, MIN, AVG, SUM
+Argument | Purpose | Required
+- | - | -
+items | The array of item states. | yes
+func | defines which function to perform, valid: MAX, MIN, AVG, SUM | yes
 
 ### count
 
 Count the states matching a given comparison expression. This functionality is the same as in the openHAB [group item definition](https://www.openhab.org/docs/configuration/items.html#derive-group-state-from-member-items).
-You have to pass the states as an array to this function.
+The function returns how many members match the given comparison expression.
 
 ```javascript
 // get the states
-var group = GroupUtils.getMembers(groupname, 'state')
-
+var items = GroupUtils.getMembers(groupname, 'state')
 // count
 var counter = GroupUtils.count(items, op, comp)
 
 // examples
-var larg24 = GroupUtils.count(group, 'larger', 24)
-var smal24 = GroupUtils.count(group, 'smaller', 24)
-var largEq24 = GroupUtils.count(group, 'smallerEqual', 24)
-var smalEq24 = GroupUtils.count(group, 'largerEqual', 24)
-```
-These three parameters are required:
-* _items_ is the array of states
-* _op_ is the comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual
-* _comp_ is the value to compare with, e.g. numbers or ON/OFF states
+var lights = GroupUtils.getMembers('lights', 'state') // the states of direct members of "lights"
+var lightsOFF = GroupUtils.count(lights, 'equal', 'OFF') // the number of lights off
+var lightsNotOFF = GroupUtils.count(lights, 'notEqual', 'OFF') // the number of lights not off
 
-***
+var temp = GroupUtils.getMembers('temperatures', 'state') // the states of direct members of "temperatures"
+var larg24 = GroupUtils.count(temp, 'larger', 24) // the number of states higher than 24
+var smal24 = GroupUtils.count(temp, 'smaller', 24) // the number of states lower than 24
+var largEq24 = GroupUtils.count(temp, 'smallerEqual', 24) // the number of states lower or equal than/to 24
+var smalEq24 = GroupUtils.count(temp, 'largerEqual', 24) // the number of states higher or equal than/to 24
+```
+Argument | Purpose | Required
+- | - | -
+items | The array of item states. | yes
+op | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual | yes
+comp | The value to compare with, e.g. numbers, ON/OFF states or strings | yes
+
+
 ## 3. Item Control Utility
+***
 
 [itemControl.js](./itemControl.js) implements a class to easily execute often used command sequences on Items.
 Currently, it provides a dimmer for sound/speaker volume.
 There are no dependencies.
 
-### How it works:
+### How it works
 
-Load the class into your script:
+This creates an instance of the Item Control Utility:
 ```javascript
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
 load(OPENHAB_CONF+'/automation/lib/javascript/community/itemControl.js')
@@ -127,12 +155,13 @@ This function dimms a sound/speakervolume to a given target volume. For example,
 ```javascript
 this.ic.volumeDimming(dummyItem, realItem, timePerStep)
 ```
-These three parameters are required:
-* _dummyItem_ Name of the openHAB item that represents the target value and the state
-* _realItem_ Name of the openHAB item that controls the volume
-* _timePerStep_ Time for each step in milliseconds
+Argument | Purpose | Required
+- | - | -
+dummyItem | Name of the openHAB item that represents the target value and the state | yes
+realItem | Name of the openHAB item that controls the volume | yes
+timePerStep | Time for each step in milliseconds | yes
 
-#### Example
+
 ```javascript
 // example
 this.ic.volumeDimming('Amplifier_Volume', 'Amplifier_RealVolume', 333)
