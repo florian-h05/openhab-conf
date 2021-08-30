@@ -6,13 +6,14 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 - [Table of Contents](#table-of-contents)
 - [1. Prerequisites](#1-prerequisites)
 - [2. Group Utilities](#2-group-utilities)
-  - [How it works](#how-it-works)
+  - [Create an instance of the Group Utilities](#create-an-instance-of-the-group-utilities)
   - [getMembers](#getmembers)
   - [getAllMembers](#getallmembers)
   - [arithmetic](#arithmetic)
   - [count](#count)
+  - [Tests](#tests)
 - [3. Item Control Utility](#3-item-control-utility)
-  - [How it works](#how-it-works-1)
+  - [Create an instance of the Item Control Utility](#create-an-instance-of-the-item-control-utility)
   - [volumeDimming](#volumedimming)
 
 ***
@@ -31,21 +32,15 @@ Note: these tools are created for use in UI rules and scripts.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
 There are no dependencies.
 
-### How it works
-
-This creates an instance of the Group Utilities:
+### Create an instance of the Group Utilities
 ```javascript
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
 load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
 var GroupUtils = new GroupUtils()
 ```
 
-The class provides four functions:
-
 ### getMembers
-
 This function returns the names, the labels or the states of direct group members as an array.
-
 ```javascript
 var group = GroupUtils.getMembers(groupname, characteristic)
 
@@ -55,13 +50,11 @@ var windows = GroupUtils.getMembers('windows', 'state')
 ```
 Argument | Purpose | Required
 -|-|-
-groupname | The name of the group. | no
-characteristic | Defines what you get from the members. Valid are: name (default), label, state. | yes
+`groupname` | The name of the group. | no
+`characteristic` | Defines what you get from the members. Valid are: name (default), label, state. | yes
 
 ### getAllMembers
-
 This function returns the names, the labels or the states of direct and child group members. The group items are excluded from the array.
-
 ```javascript
 var group = GroupUtils.getAllMembers(groupname, characteristic)
 
@@ -71,13 +64,11 @@ var name = GroupUtils.getMembers('doors', 'name') // the same as ...getMembers('
 ```
 Argument | Purpose | Required
 -|-|-
-groupname | The name of the group. | no
-characteristic | Defines what you get from the members. Valid are: name (default), label, state. | yes
+`groupname` | The name of the group. | no
+`characteristic` | Defines what you get from the members. Valid are: name (default), label, state. | yes
 
 ### arithmetic
-
 Perform arithmetic operations on the states of Number members. This functionality is the same as in the openHAB [group item definition](https://www.openhab.org/docs/configuration/items.html#derive-group-state-from-member-items). The function returns the value from the given function.
-
 ```javascript
 // get the states
 var group = GroupUtils.getMembers(groupname, 'state')
@@ -94,14 +85,12 @@ var sum = GroupUtils.arithmetic(power, 'SUM') // the summarized value from "powe
 ```
 Argument | Purpose | Required
 -|-|-
-items | The array of item states. | yes
-func | Defines which function to perform, valid: MAX, MIN, AVG, SUM. | yes
+`items` | The array of item states. | yes
+`func` | Defines which function to perform, valid: MAX, MIN, AVG, SUM. | yes
 
 ### count
-
 Count the states matching a given comparison expression. This functionality is the same as in the openHAB [group item definition](https://www.openhab.org/docs/configuration/items.html#derive-group-state-from-member-items).
 The function returns how many members match the given comparison expression.
-
 ```javascript
 // get the states
 var items = GroupUtils.getMembers(groupname, 'state')
@@ -121,9 +110,12 @@ var smalEq24 = GroupUtils.count(temp, 'largerEqual', 24) // the number of states
 ```
 Argument | Purpose | Required
 -|-|-
-items | The array of item states. | yes
-op | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual. | yes
-comp | The value to compare with, e.g. numbers, ON/OFF states or strings. | yes
+`items` | The array of item states. | yes
+`op` | The comparison operator, available: equal, notEqual, larger, largerEqual, smaller, smallerEqual. | yes
+`comp` | The value to compare with, e.g. numbers, ON/OFF states or strings. | yes
+
+### Tests
+There are no tests, as the library has no dependencies it should always work.
 
 
 ## 3. Item Control Utility
@@ -133,9 +125,7 @@ comp | The value to compare with, e.g. numbers, ON/OFF states or strings. | yes
 Currently, it provides a dimmer for sound/speaker volume.
 There are no dependencies.
 
-### How it works
-
-This creates an instance of the Item Control Utility:
+### Create an instance of the Item Control Utility
 ```javascript
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
 load(OPENHAB_CONF+'/automation/lib/javascript/community/itemControl.js')
@@ -149,24 +139,20 @@ this.ic = (this.ic === undefined) ? new ItemControl() : this.ic
 The class provides one functions:
 
 ### volumeDimming
-
 This function dimms a sound/speakervolume to a given target volume. For example, I use it to have a smooth transision to a new volume level on my Yamaha amplifiers.
-
 ```javascript
 this.ic.volumeDimming(dummyItem, realItem, timePerStep)
 ```
 Argument | Purpose | Required
 -|-|-
-dummyItem | Name of the openHAB item that represents the target value and the state. | yes
-realItem | Name of the openHAB item that controls the volume. | yes
-timePerStep | Time for each step in milliseconds. | yes
-
-
+`dummyItem` | Name of the openHAB item that represents the target value and the state. | yes
+`realItem` | Name of the openHAB item that controls the volume. | yes
+`timePerStep` | Time for each step in milliseconds. | yes
 ```javascript
 // example
 this.ic.volumeDimming('Amplifier_Volume', 'Amplifier_RealVolume', 333)
 ```
 This does the following:
-* get the target volume from the dummy item ```Amplifier_Volume```
-* increase or decrease the real volume (item ```Amplifier_RealVolume```) by 1 step every 1/3 second
+* get the target volume from the dummy item `Amplifier_Volume`
+* increase or decrease the real volume (item `Amplifier_RealVolume`) by 1 step every 1/3 second
 * update the state of the dummy item after each step
