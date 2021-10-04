@@ -29,7 +29,7 @@ Note: these tools are created for use in UI rules and scripts.
 
 ### 1.2 Group Utilities
 
-[groupUtils.js](/automation/lib/javascript/community/groupUtils.js) implements a class to simplify the work with openHAB groups.
+[groupUtils.js](/automation/lib/javascript/community/README.md) implements a class to simplify the work with openHAB groups.
 It allows you to get members of a group, to perform arithmetic operations on members' states and to count states matching a given expression.
 
 ### 1.3 Item Control Utility
