@@ -70,18 +70,6 @@ var Duration = Java.type('java.time.Duration')
 var results = Exec.executeCommandLine(Duration.ofSeconds(20), 'echo','hello')
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
-/* Get the members of a group. Using the library /automation/lib/javascript/community/groupUtils.js from this repo. */
-// import the library
-this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
-load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
-var GroupUtils = new GroupUtils()
-// get only direct members
-var groupMembers = GroupUtils.getMembers(groupName)
-// get all members
-var groupMembers = GroupUtils.getAllMembers(groupName)
-
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------- */
 /* get item state */
 var actualState = itemRegistry.getItem('itemName').getState()
 
