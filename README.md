@@ -15,8 +15,8 @@
         * [3.1.2 Icons](#312-icons)
         * [3.1.3 Text](#313-text)
 * [4. Scripts](#4-scripts)
-    * [4.1 shaddow.py](#41-shaddow-py)
-    * [4.2 openhab-log-influxb.py](#42-openhab-log-influxb-py)
+    * [4.1 Shaddow](#41-shaddow)
+    * [4.2 openHAB Log InfluxDB](#42-openhab-log-influxdb)
 
 ***
 ## 1. JavaScript rules tools
@@ -147,7 +147,7 @@ Text style follows these guidelines:
 
 Scripts for the _openhab-conf/scripts_ folder.
 
-### 4.1 shaddow.py
+### 4.1 Shaddow
 
 This script was originally written by [@pmpkk](https://github.com/pmpkk) at [openhab-habpanel-theme-matrix](https://github.com/pmpkk/openhab-habpanel-theme-matrix).
 I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_. 
@@ -157,7 +157,7 @@ I added the position of the moon to the image.
 
 Please look at [this guide](/scripts/SHADDOW.md).
 
-### 4.2 openhab-log-influxdb.py
+### 4.2 openHAB Log InfluxDB
 
 A log for your smart home with [openhab-log-influxdb.py](../openhab/openhab-log-influxdb.py).
 
