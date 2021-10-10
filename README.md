@@ -159,7 +159,7 @@ Please look at [this guide](/scripts/SHADDOW.md).
 
 ### 4.2 openHAB Log InfluxDB
 
-A log for your smart home with [openhab-log-influxdb.py](../openhab/openhab-log-influxdb.py).
+A log for your smart home with [openhab-log-influxdb.py](/scripts/openhab-log-influxdb.py).
 
 Create a log of your smart home in InfluxDB with the following data:
 * log message
