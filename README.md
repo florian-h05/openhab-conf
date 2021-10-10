@@ -16,6 +16,7 @@
         * [3.1.3 Text](#313-text)
 * [4. Scripts](#4-scripts)
     * [4.1 shaddow.py](#41-shaddow-py)
+    * [4.2 openhab-log-influxb.py](#42-openhab-log-influxb-py)
 
 ***
 ## 1. JavaScript rules tools
@@ -155,3 +156,22 @@ I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_.
 I added the position of the moon to the image. 
 
 Please look at [this guide](/scripts/SHADDOW.md).
+
+### 4.2 openhab-log-influxdb.py
+
+A log for your smart home with [openhab-log-influxdb.py](../openhab/openhab-log-influxdb.py).
+
+Create a log of your smart home in InfluxDB with the following data:
+* log message
+* device
+* temperature
+* windspeed
+* brightness
+* rain
+* elevation
+* azimuth
+
+__How to setup:__
+* line 30: set ``base_url`` to _openHAB_ hostname/address and append ``/rest``
+* lines 34 to 39: setup _InfluxDB_
+* lines 52 to 57: set your _openHAB_ items in ``items.get('<itemname>').state``
