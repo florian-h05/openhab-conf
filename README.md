@@ -14,6 +14,8 @@
         * [3.1.1 Widget style](#311-widget-style)
         * [3.1.2 Icons](#312-icons)
         * [3.1.3 Text](#313-text)
+* [4. Scripts](#4-scripts)
+    * [4.1 shaddow.py](#41-shaddow-py)
 
 ***
 ## 1. JavaScript rules tools
@@ -138,3 +140,18 @@ Text style follows these guidelines:
 * header text: ```font-size: 17px``` & ```font-weight: 600```
 * sub-header text: ```font-size: 12px```
 * large text (for state representation, e.g. in widget contact): ```font-size: 24px``` & ```font-weight: 400```
+
+***
+## 4. Scripts
+
+Scripts for the _openhab-conf/scripts_ folder.
+
+### 4.1 shaddow.py
+
+This script was originally written by [@pmpkk](https://github.com/pmpkk) at [openhab-habpanel-theme-matrix](https://github.com/pmpkk/openhab-habpanel-theme-matrix).
+I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_. 
+
+[shaddow.py](/scripts/shaddow.py) generates a _.svg_ image to illustrate where the sun is currently positioned, which site of the house is facing the sun and where the shaddow of your house is.
+I added the position of the moon to the image. 
+
+Please look at [this guide](/scripts/SHADDOW.md).
