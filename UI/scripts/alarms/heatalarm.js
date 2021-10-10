@@ -8,10 +8,10 @@ Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 // configuration of heatalarm
-var klLueftungTime = 25
-var grLueftungTime = 20
+var klLueftungTime = 30
+var grLueftungTime = 25
 var openTime = 15
-var warningTime = 10 // time to add when its only a warning
+var warningTime = 20 // time to add when its only a warning
 // Temperature treshold, positive values mean inside temp to outside. Example: 2 means at least 2 degress higher temp on the outside.
 var tempTreshold = 2
 // configuration of the itemnames
@@ -23,7 +23,6 @@ var contactGroup = 'KontakteAufZu'
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF
 load(OPENHAB_CONF+'/automation/lib/javascript/community/timerMgr.js')
 load(OPENHAB_CONF+'/automation/lib/javascript/community/groupUtils.js')
-var GroupUtils = new GroupUtils()
 // Only create a new manager if one doesn't already exist or else it will be wiped out each time the rule runs
 this.tm = (this.tm === undefined) ? new TimerMgr() : this.tm
 
@@ -47,7 +46,7 @@ function TemperatureDifference (contactItem) {
   var tempInItem = contactItem.split('_')[0]
   tempInItem = tempInItem + '_Temperatur'
   // check whether item exists, if not -1 it is member of temperature group
-  var tempCheck = GroupUtils.getMembers('Temperature').indexOf(tempInItem)
+  var tempCheck = getMembersNames('Temperature').indexOf(tempInItem)
   // calculate difference, inside to outside
   if (tempCheck != -1) {
     var tempIn = itemRegistry.getItem(tempInItem).getState()
@@ -140,7 +139,7 @@ function SingleContact (contactItem) {
   }
 }
 
-var groupMembers = GroupUtils.getMembers(contactGroup)
+var groupMembers = getMembersNames(contactGroup)
 for (var index in groupMembers) {
   // check whether itemname contains 'Dachfenster'
   var b = groupMembers[index].search('Dachfenster')

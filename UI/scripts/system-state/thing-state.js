@@ -12,7 +12,6 @@ var knxIpBridge = 'KNX_IP_Gateway_state'
 
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF
 load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js')
-var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 var ThingUID = Java.type('org.openhab.core.thing.ThingUID')
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
@@ -31,7 +30,7 @@ function updateThingStatus (thingName, itemName) {
 }
 
 // KNX Things
-var groupMembers = GroupUtils.getMembers('KNXState')
+var groupMembers = getMembersNames('KNXState')
 // remove KNX IP bridge from array
 for (var i = 0; i < groupMembers.length; i++) {
   if (groupMembers[i] === knxIpBridge) {
@@ -46,7 +45,7 @@ for (var index in groupMembers) {
 }
 
 // Yamaha Things
-groupMembers = GroupUtils.getMembers('YamahaState')
+groupMembers = getMembersNames('YamahaState')
 for (var index in groupMembers) {
   var name = groupMembers[index].replace('Yamaha_', '')
   name = name.replace('_state', '')

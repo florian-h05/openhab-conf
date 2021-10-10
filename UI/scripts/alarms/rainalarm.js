@@ -14,16 +14,16 @@ Copyright (c) 2021 Florian Hotze under MIT License
 
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF
 load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js')
-var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
+var HTTP = Java.type('org.openhab.core.model.script.actions.HTTP')
 
 // set your itemnames
 var rain = itemRegistry.getItem('Regenalarm').getState().toString()
 var wind = itemRegistry.getItem('Windgeschwindigkeit').getState()
 // configuration of windspeed limits
-var klStufe = 6
-var grStufe = 3.5
+var klStufe = 12
+var grStufe = 7
 
 // send the notification
 function Notification (itemLabel, messageText) {
@@ -82,7 +82,7 @@ if (this.mode === 'onChange') {
   }
 } else {
   logger.info('mode is: onAlarm or on manual execution')
-  var groupMembers = GroupUtils.getMembers('KontakteAufZu')
+  var groupMembers = getMembersNames('KontakteAufZu')
   for (var index in groupMembers) {
     // check whether itemname contains 'Dachfenster'
     var c = groupMembers[index].search('Dachfenster')

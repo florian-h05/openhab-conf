@@ -11,11 +11,10 @@ var statusString = '' // contains the generated text
 
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF
 load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js')
-var GroupUtils = new GroupUtils()
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID)
 
 // KNX Things
-var groupMembers = GroupUtils.getMembers('KNXState')
+var groupMembers = getMembersNames('KNXState')
 for (var index in groupMembers) {
   var status = itemRegistry.getItem(groupMembers[index]).getState().toString()
   if (status != 'ONLINE') {
@@ -24,7 +23,7 @@ for (var index in groupMembers) {
 }
 
 // Yamaha Things
-var groupMembers = GroupUtils.getMembers('YamahaState')
+var groupMembers = getMembersNames('YamahaState')
 for (var index in groupMembers) {
   var status = itemRegistry.getItem(groupMembers[index]).getState().toString()
   if (status != 'ONLINE') {
