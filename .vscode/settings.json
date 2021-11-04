@@ -2,5 +2,10 @@
     "standard.engine": "semistandard",
     "javascript.validate.enable": false,
     "openhab.useRestApi": false,
-    "standard.enableGlobally": true
+    "standard.enableGlobally": true,
+    "openhab.languageserver.remoteEnabled": false,
+    "openhab.itemCasing": "snake",
+    "oh-alignment-tool.preserveWhitespace": true,
+    "editor.defaultFormatter": "max-beckenbauer.oh-alignment-tool",
+    "editor.formatOnSave": true
 }
