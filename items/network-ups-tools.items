@@ -1,10 +1,10 @@
-Group                       UPS                         "UPS"                                   <energy>     (GF_Boiler, Systemstatus)    ["Battery"]
+Group                       UPS                         "UPS"                          <energy>     (GF_Boiler, Systemstatus)    ["Battery"]
 
-Number:Dimensionless        ups_batteryCharge           "Battery Charge [%d %%]"                <battery>    (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:batteryCharge"}
-Number:Time                 ups_batteryRuntime          "Battery Runtime [%.0f s]"              <battery>    (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:batteryRuntime"}
-String                      ups_upsStatus               "UPS Status [%s]"                                    (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:upsStatus"}
-Number:Dimensionless        ups_upsLoadCurrent          "Load on UPS [%d %%]"                   <energy>     (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:upsLoadCurrent"}
-Number:ElectricPotential    ups_outputVoltageCurrent    "Output Voltage Current [%.1f V]"                    (UPS)                                                   {channel="networkupstools:ups:ups1:outputVoltageCurrent"}
+Number:Dimensionless        ups_batteryCharge           "Battery Charge [%d %%]"       <battery>    (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:batteryCharge"}
+Number:Time                 ups_batteryRuntime          "Battery Runtime [%.0f s]"     <battery>    (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:batteryRuntime"}
+String                      ups_upsStatus               "UPS Status [%s]"                           (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:upsStatus"}
+Number:Dimensionless        ups_upsLoadCurrent          "Load on UPS [%d %%]"          <energy>     (UPS)                        ["Measurement"]            {channel="networkupstools:ups:ups1:upsLoadCurrent"}
+Number:ElectricPotential    ups_outputVoltageCurrent    "Output Voltage Current"                    (UPS)                                                   {channel="networkupstools:ups:ups1:outputVoltageCurrent"}
 
 // calculated by a Javascript in the openHAB UI (GitHub repo: ui-based/scripts/ups_current-power.js):
-Number:Power                ups_calculatedPower         "Output power (calculated) [%.1f W]"    <energy>     (UPS)                        ["Measurement","Power"]
+Number:Power                ups_calculatedPower         "Output power (calculated)"    <energy>     (UPS)                        ["Measurement","Power"]
