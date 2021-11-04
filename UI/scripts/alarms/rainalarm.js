@@ -5,6 +5,8 @@ Configuration:
  - Names of weather items and wind tresholds on top.
  - Names of roofwindow items on top.
  - String in roofwindow item names.
+Dependencies:
+ - groupUtils (For more information have a look at the repo.)
 Note:
  - One item is filtered out of the alarm, have a look at the end of file.
 The "Unique ID" of this script should be: "rainalarm-script".
