@@ -1,4 +1,6 @@
 {
-    "standard.engine": "standard",
-    "javascript.validate.enable": false
+    "standard.engine": "semistandard",
+    "javascript.validate.enable": false,
+    "openhab.useRestApi": false,
+    "standard.enableGlobally": true
 }
