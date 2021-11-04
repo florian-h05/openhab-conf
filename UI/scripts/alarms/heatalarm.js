@@ -1,5 +1,5 @@
 /*
-This script contains the logic for the rainalarms and sends the notifications.
+This script contains the logic for the heatalarms and sends the notifications.
 Configuration on top of the file.
 Dependencies:
  -  groupUtils & timerMgr from https://github.com/rkoshak/openhab-rules-tools.
@@ -184,7 +184,7 @@ for (var index in groupMembers) {
   // Check whether itemname contains variable roofwindowString.
   var b = groupMembers[index].search(roofwindowString);
   if ((b !== -1) &&
-  (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check for my special window that closes automatically on rain.
+  (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
     logger.debug('Checking roofindow: ' + groupMembers[index]);
     RoofwindowAlarm(groupMembers[index]);
   } else {
