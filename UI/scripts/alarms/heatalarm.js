@@ -99,7 +99,6 @@ function StartWarning (contactItem, timerDuration) {
   if ((heatLevel >= 1) && (diff === true)) {
     // Function generator for the timerOver actions.
     function timerOver (contactItem, itemLabel, heatLevelItem) {
-      logger.info('Creating timer "' + contactItem + '" time: ' + timerTime);
       return function () {
         var contactState = itemRegistry.getItem(contactItem).getState().toString();
         var heatLevel = itemRegistry.getItem(heatLevelItem).getState().toBigDecimal();
@@ -116,16 +115,18 @@ function StartWarning (contactItem, timerDuration) {
       };
     }
     // Generate the timer time, if heatLevel is not 4 (alarm) add time.
+    var timerTime;
     if (heatLevel === 4) {
-      var timerTime = timerDuration + 'm';
+      timerTime = timerDuration + 'm';
     } else {
-      var timerTime = timerDuration + warningTime + 'm';
+      timerTime = timerDuration + warningTime + 'm';
     }
     // Create the Timer
     if (this.tm.hasTimer(contactItem)) {
       logger.debug('Timer for "' + contactItem + '" already exists, skipping!');
     } else {
       this.tm.check(contactItem, timerTime, timerOver(contactItem, itemLabel, heatLevelItem));
+      logger.info('Created timer "' + contactItem + '"; time: ' + timerTime);
     }
   }
 }
