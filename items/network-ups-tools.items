@@ -7,4 +7,4 @@ Number:Dimensionless        ups_upsLoadCurrent          "Load on UPS [%d %%]"   
 Number:ElectricPotential    ups_outputVoltageCurrent    "Output Voltage Current"                    (UPS)                                                   {channel="networkupstools:ups:ups1:outputVoltageCurrent"}
 
 // calculated by a Javascript in the openHAB UI (GitHub repo: ui-based/scripts/ups_current-power.js):
-Number:Power                ups_calculatedPower         "Output power (calculated)"    <energy>     (UPS)                        ["Measurement","Power"]
+Number                      ups_calculatedPower         "Output power (calculated) [%.1f W]"  <energy>   (UPS)                      ["Measurement","Power"]
