@@ -3,8 +3,6 @@ This script contains the logic for the rainalarms and sends the notifications.
 Configuration on top of the file.
 Dependencies:
  - groupUtils from https://github.com/rkoshak/openhab-rules-tools.
-Note:
- - One item is filtered out of the alarm, have a look at the end of file.
 The "Unique ID" of this script should be: "rainalarm-script".
 How it works: it is called by a script in a rule with the following parameters:
   - this.mode (values: 'onChange', else check all contacts (like 'onAlarm'))
@@ -24,6 +22,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
  */
 var groupname = 'KontakteAufZu';
 var roofwindowString = 'Dachfenster';
+var ignoreList = ['Treppenhaus_Dachfenster_zu'];
 // Set your itemnames.
 var rain = itemRegistry.getItem('Regenalarm').getState().toString(); // raining == OPEN
 var wind = itemRegistry.getItem('Windgeschwindigkeit').getState(); // in m/s
@@ -100,28 +99,31 @@ function SingleContact (contactItem) {
 if (this.mode === 'onChange') {
   // Check whether itemname contains variable roofwindowString.
   logger.info('Mode is: onChange');
-  var b = this.triggeringItem.search(roofwindowString);
-  if ((b !== -1) &&
-  (this.triggeringItem !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
-    logger.debug('Checking roofindow: ' + this.triggeringItem);
-    RoofwindowAlarm(this.triggeringItem);
-  } else {
-    logger.debug('Checking single contact: ' + this.triggeringItem);
-    SingleContact(this.triggeringItem);
+  // Check whether itemname is member of array ignoreList.
+  if (ignoreList.indexOf(groupMembers[index]) === -1) {
+    // Check whether itemname contains variable roofwindowString.
+    if (this.triggeringItem.search(roofwindowString) !== -1) {
+      logger.debug('Checking roofindow: ' + this.triggeringItem);
+      RoofwindowAlarm(this.triggeringItem);
+    } else {
+      logger.debug('Checking single contact: ' + this.triggeringItem);
+      SingleContact(this.triggeringItem);
+    }
   }
 } else {
   logger.info('Mode is: onAlarm or on manual execution');
   var groupMembers = getMembersNames(groupname);
   for (var index in groupMembers) {
-    // Check whether itemname contains variable roofwindowString.
-    var c = groupMembers[index].search(roofwindowString);
-    if ((c !== -1) &&
-    (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
-      logger.debug('Checking roofindow: ' + groupMembers[index]);
-      RoofwindowAlarm(groupMembers[index]);
-    } else {
-      logger.debug('Checking single contact: ' + groupMembers[index]);
-      SingleContact(groupMembers[index]);
+    // Check whether itemname is member of array ignoreList.
+    if (ignoreList.indexOf(groupMembers[index]) === -1) {
+      // Check whether itemname contains variable roofwindowString.
+      if (groupMembers[index].search(roofwindowString) !== -1) {
+        logger.debug('Checking roofindow: ' + groupMembers[index]);
+        RoofwindowAlarm(groupMembers[index]);
+      } else {
+        logger.debug('Checking single contact: ' + groupMembers[index]);
+        SingleContact(groupMembers[index]);
+      }
     }
   }
 }

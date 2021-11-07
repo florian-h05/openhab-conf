@@ -28,6 +28,7 @@ var tempTreshold = -2;
 // Configuration of the itemnames.
 var groupname = 'KontakteAufZu';
 var roofwindowString = 'Dachfenster';
+var ignoreList = ['Treppenhaus_Dachfenster_zu'];
 var tempOut = itemRegistry.getItem('Aussentemperatur').getState();
 var frostLevelItem = 'Frost_Stufe';
 
@@ -184,14 +185,15 @@ function SingleContact (contactItem) {
 
 var groupMembers = getMembersNames(groupname);
 for (var index in groupMembers) {
-  // Check whether itemname contains variable roofwindowString.
-  var b = groupMembers[index].search(roofwindowString);
-  if ((b !== -1) &&
-  (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
-    logger.debug('Checking roofindow: ' + groupMembers[index]);
-    RoofwindowAlarm(groupMembers[index]);
-  } else {
-    logger.debug('Checking single contact: ' + groupMembers[index]);
-    SingleContact(groupMembers[index]);
+  // Check whether itemname is member of array ignoreList.
+  if (ignoreList.indexOf(groupMembers[index]) === -1) {
+    // Check whether itemname contains variable roofwindowString.
+    if (groupMembers[index].search(roofwindowString) !== -1) {
+      logger.debug('Checking roofindow: ' + groupMembers[index]);
+      RoofwindowAlarm(groupMembers[index]);
+    } else {
+      logger.debug('Checking single contact: ' + groupMembers[index]);
+      SingleContact(groupMembers[index]);
+    }
   }
 }
