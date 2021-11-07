@@ -2,7 +2,8 @@
 This script contains the logic for the frostalarms and sends the notifications.
 Configuration on top of the file.
 Dependencies:
- -  groupUtils & timerMgr from https://github.com/rkoshak/openhab-rules-tools.
+ - groupUtils & timerMgr from https://github.com/rkoshak/openhab-rules-tools.
+ - Group "Temperature" with items in scheme <room>_Temperatur.
 The "Unique ID" of this script should be: "frostalarm-script".
 
 Copyright (c) 2021 Florian Hotze under MIT License
@@ -36,7 +37,7 @@ Script starts here. Do not modify.
 this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv('OPENHAB_CONF') : this.OPENHAB_CONF;
 load(OPENHAB_CONF + '/automation/lib/javascript/community/timerMgr.js');
 load(OPENHAB_CONF + '/automation/lib/javascript/community/groupUtils.js');
-// Only create a new manager if one doesn't already exist or else it will be wiped out each time the rule runs
+// Only create a new manager if one doesn't already exist or else it will be wiped out each time the rule runs.
 this.tm = (this.tm === undefined) ? new TimerMgr() : this.tm;
 
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
@@ -66,16 +67,17 @@ function NotificationAlarm (itemLabel) {
 function TemperatureDifference (contactItem) {
   var tempInItem = contactItem.split('_')[0];
   tempInItem = tempInItem + '_Temperatur';
-  // check whether item exists, if not -1 it is member of temperature group
+  // Check whether item exists, if not -1 it is member of temperature group.
   var tempCheck = getMembersNames('Temperature').indexOf(tempInItem);
-  // calculate difference, inside to outside
+  // Calculate difference, inside to outside.
+  var bool;
   if (tempCheck !== -1) {
     var tempIn = itemRegistry.getItem(tempInItem).getState();
     var diff = tempOut - tempIn;
     if (diff <= tempTreshold) {
-      var bool = true;
+      bool = true;
     } else {
-      var bool = false;
+      bool = false;
     }
   } else {
     bool = true;
@@ -105,7 +107,7 @@ function StartWarning (contactItem, timerDuration) {
         var diff = TemperatureDifference(contactItem);
         logger.info('The timer is over. Contact item is: ' + contactItem + ' temp treshold reached: ' + diff);
         // Check frost level and temperature difference on alarm execution.
-        if ((contactState === 'CLOSED') && (diff === true)) {
+        if ((contactState === 'OPEN') && (diff === true)) {
           if (frostLevel === 4) {
             NotificationAlarm(itemLabel);
           } else if (frostLevel >= 1) {
@@ -121,7 +123,7 @@ function StartWarning (contactItem, timerDuration) {
     } else {
       timerTime = timerDuration + warningTime + 'm';
     }
-    // Create the Timer
+    // Create the timer.
     if (this.tm.hasTimer(contactItem)) {
       logger.debug('Timer for "' + contactItem + '" already exists, skipping!');
     } else {
@@ -138,22 +140,22 @@ function StartWarning (contactItem, timerDuration) {
  * @param {string} item Name of the item.
  */
 function RoofwindowAlarm (item) {
-  // remove the suffix
+  // Remove the suffix.
   item = item.replace('_zu', '');
   item = item.replace('_klLueftung', '');
   item = item.replace('_grLueftung', '');
-  // retrieve the contact states from openHAB
+  // Retrieve the contact states from openHAB.
   var StateZu = itemRegistry.getItem(item + '_zu').getState().toString();
   var StateKlLueftung = itemRegistry.getItem(item + '_klLueftung').getState().toString();
   var StateGrLueftung = itemRegistry.getItem(item + '_grLueftung').getState().toString();
-  // checks for the different states.
-  if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // ganz geöffnet
+  // Checks for the different states.
+  if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // ganz geöffnet
     StartWarning(item + '_zu', openTime);
-  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN') { // große Lüftung
+  } else if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'CLOSED') { // große Lüftung
     StartWarning(item + '_zu', grLueftungTime);
-  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // kleine Lüftung
+  } else if (StateZu === 'OPEN' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // kleine Lüftung
     StartWarning(item + '_zu', klLueftungTime);
-  } else if (StateZu === 'OPEN') { // ganz geschlossen
+  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // geschlossen
     if (this.tm.hasTimer(item + '_zu')) {
       logger.info('Cancelling timer for "' + item + '_zu", contact closed.');
       this.tm.cancel(item + '_zu');
@@ -168,11 +170,11 @@ function RoofwindowAlarm (item) {
  * @param {string} contactItem Name of the item.
  */
 function SingleContact (contactItem) {
-  // retrieve the contact state from openHAB
+  // Retrieve the contact state from openHAB.
   var stateSingle = itemRegistry.getItem(contactItem).getState().toString();
-  if (stateSingle === 'CLOSED') {
+  if (stateSingle === 'OPEN') {
     StartWarning(contactItem, openTime);
-  } else if (stateSingle === 'OPEN') {
+  } else if (stateSingle === 'CLOSED') {
     if (this.tm.hasTimer(contactItem)) {
       logger.info('Cancelling timer for "' + contactItem + '", contact closed.');
       this.tm.cancel(contactItem);

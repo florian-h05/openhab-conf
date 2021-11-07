@@ -28,7 +28,7 @@ Script starts here. Do not modify.
 */
 var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' + ctx.ruleUID);
 
-/** 
+/**
  * Generate the state from the three contacts.
  *
  * @param {string} currentRoom Name of the roowindows' room.

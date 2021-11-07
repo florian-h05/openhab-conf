@@ -1,12 +1,8 @@
 /*
 This script contains the logic for the rainalarms and sends the notifications.
-Configuration:
- - Groupname of items to run the rainalarm on.
- - Names of weather items and wind tresholds on top.
- - Names of roofwindow items on top.
- - String in roofwindow item names.
+Configuration on top of the file.
 Dependencies:
- - groupUtils (For more information have a look at the repo.)
+ - groupUtils from https://github.com/rkoshak/openhab-rules-tools.
 Note:
  - One item is filtered out of the alarm, have a look at the end of file.
 The "Unique ID" of this script should be: "rainalarm-script".
@@ -44,12 +40,22 @@ var logger = Java.type('org.slf4j.LoggerFactory').getLogger('org.openhab.rule.' 
 var NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction');
 var HTTP = Java.type('org.openhab.core.model.script.actions.HTTP');
 
-// Send the notification.
+/**
+ * Send the notification.
+ *
+ * @param {string} itemLabel Label of the contact item.
+ * @param {string} messageText Part of the notification message.
+ */
 function Notification (itemLabel, messageText) {
   NotificationAction.sendBroadcastNotification('Achtung! Regenalarm: ' + itemLabel + ' ' + messageText + '!');
 }
 
-// Rainalarm for roofwindow. The state of the window is built out of three contacts. Called with the room name.
+/**
+ * Rainalarm for roofwindow.
+ * The state of the window is built out of three contacts.
+ *
+ * @param {string} item Name of the contact item.
+ */
 function RoofwindowAlarm (item) {
   // Remove the suffix.
   item = item.replace('_zu', '');
@@ -63,17 +69,21 @@ function RoofwindowAlarm (item) {
   // Check for rain.
   if (rain === 'OPEN') { // active alarm === OPEN
     // Checks for the different states.
-    if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN' && wind >= klStufe) { // kleine Lüftung
+    if (StateZu === 'OPEN' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED' && wind >= klStufe) { // kleine Lüftung
       Notification(itemLabel, 'kleine Lüftung');
-    } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN' && wind >= grStufe) { // große Lüftung
+    } else if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'CLOSED' && wind >= grStufe) { // große Lüftung
       Notification(itemLabel, 'große Lüftung');
-    } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // ganz geöffnet
+    } else if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // ganz geöffnet
       Notification(itemLabel, 'ganz geöffnet');
     }
   }
 }
 
-// Rainalarm for windows with a single contact. Called with the contact item.
+/**
+ * Rainalarm for single contact.
+ *
+ * @param {string} contactItem Name of the contact item.
+ */
 function SingleContact (contactItem) {
   // Retrieve the contact state from openHAB.
   var StateSingle = itemRegistry.getItem(contactItem).getState().toString();
@@ -81,7 +91,7 @@ function SingleContact (contactItem) {
   logger.debug('Checking single contact: item: ' + contactItem + ' label: ' + itemLabel + ' state: ' + StateSingle);
   // Check for rain.
   if (rain === 'OPEN') { // active alarm === OPEN
-    if (StateSingle === 'CLOSED') { // open contact == CLOSED
+    if (StateSingle === 'OPEN') {
       Notification(itemLabel, 'geöffnet');
     }
   }
@@ -92,7 +102,7 @@ if (this.mode === 'onChange') {
   logger.info('Mode is: onChange');
   var b = this.triggeringItem.search(roofwindowString);
   if ((b !== -1) &&
-  (this.triggeringItem !== 'Treppenhaus_Dachfenster_zu')) { // Additional check for my special window that closes automatically on rain.
+  (this.triggeringItem !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
     logger.debug('Checking roofindow: ' + this.triggeringItem);
     RoofwindowAlarm(this.triggeringItem);
   } else {
@@ -106,7 +116,7 @@ if (this.mode === 'onChange') {
     // Check whether itemname contains variable roofwindowString.
     var c = groupMembers[index].search(roofwindowString);
     if ((c !== -1) &&
-    (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check for my special window that closes automatically on rain.
+    (groupMembers[index] !== 'Treppenhaus_Dachfenster_zu')) { // Additional check to filter a single window.
       logger.debug('Checking roofindow: ' + groupMembers[index]);
       RoofwindowAlarm(groupMembers[index]);
     } else {
