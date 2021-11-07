@@ -170,7 +170,7 @@ function RoofwindowAlarm (item) {
  * @param {string} contactItem Name of the item.
  */
 function SingleContact (contactItem) {
-  // retrieve the contact state from openHAB
+  // Retrieve the contact state from openHAB.
   var stateSingle = itemRegistry.getItem(contactItem).getState().toString();
   if (stateSingle === 'OPEN') {
     StartWarning(contactItem, openTime);
