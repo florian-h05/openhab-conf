@@ -105,7 +105,7 @@ function StartWarning (contactItem, timerDuration) {
         var diff = TemperatureDifference(contactItem);
         logger.info('The timer is over. Contact item is: ' + contactItem + ' temp treshold reached: ' + diff);
         // Check frost level and temperature difference on alarm execution.
-        if ((contactState === 'CLOSED') && (diff === true)) {
+        if ((contactState === 'OPEN') && (diff === true)) {
           if (frostLevel === 4) {
             NotificationAlarm(itemLabel);
           } else if (frostLevel >= 1) {
@@ -147,13 +147,13 @@ function RoofwindowAlarm (item) {
   var StateKlLueftung = itemRegistry.getItem(item + '_klLueftung').getState().toString();
   var StateGrLueftung = itemRegistry.getItem(item + '_grLueftung').getState().toString();
   // checks for the different states.
-  if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // ganz geöffnet
+  if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // ganz geöffnet
     StartWarning(item + '_zu', openTime);
-  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'OPEN') { // große Lüftung
+  } else if (StateZu === 'OPEN' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'CLOSED') { // große Lüftung
     StartWarning(item + '_zu', grLueftungTime);
-  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'OPEN' && StateGrLueftung === 'OPEN') { // kleine Lüftung
+  } else if (StateZu === 'OPEN' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // kleine Lüftung
     StartWarning(item + '_zu', klLueftungTime);
-  } else if (StateZu === 'OPEN') { // ganz geschlossen
+  } else if (StateZu === 'CLOSED' && StateKlLueftung === 'CLOSED' && StateGrLueftung === 'CLOSED') { // geschlossen
     if (this.tm.hasTimer(item + '_zu')) {
       logger.info('Cancelling timer for "' + item + '_zu", contact closed.');
       this.tm.cancel(item + '_zu');
@@ -170,9 +170,9 @@ function RoofwindowAlarm (item) {
 function SingleContact (contactItem) {
   // retrieve the contact state from openHAB
   var stateSingle = itemRegistry.getItem(contactItem).getState().toString();
-  if (stateSingle === 'CLOSED') {
+  if (stateSingle === 'OPEN') {
     StartWarning(contactItem, openTime);
-  } else if (stateSingle === 'OPEN') {
+  } else if (stateSingle === 'CLOSED') {
     if (this.tm.hasTimer(contactItem)) {
       logger.info('Cancelling timer for "' + contactItem + '", contact closed.');
       this.tm.cancel(contactItem);
