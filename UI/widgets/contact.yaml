@@ -60,7 +60,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 22, 2021, 1:22:54 AM
+timestamp: Aug 22, 2021, 12:57:58 PM
 component: f7-card
 config:
   style:
@@ -139,9 +139,9 @@ slots:
           - component: Label
             config:
               visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
-              text: "=items[props.item].state === 'OPEN' ? 'geschlossen' : (props.contacts_open ? (props.contacts_total ? (items[props.contacts_open].state + ' von ' + props.contacts_total + ' geöffnet') : items[props.contacts_open].state + ' geöffnet') : 'geöffnet')"
+              text: "=items[props.item].state === 'CLOSED' ? 'geschlossen' : (props.contacts_open ? (props.contacts_total ? (items[props.contacts_open].state + ' von ' + props.contacts_total + ' geöffnet') : items[props.contacts_open].state + ' geöffnet') : 'geöffnet')"
               style:
-                color: "=items[props.item].state === 'OPEN' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                color: "=items[props.item].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 font-weight: 400
                 margin-left: 0px
@@ -160,7 +160,7 @@ slots:
     - component: oh-icon
       config:
         visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
-        icon: "=items[props.item].state === 'OPEN' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
+        icon: "=items[props.item].state === 'CLOSED' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
         width: 80px
         item: =props.item
         style:

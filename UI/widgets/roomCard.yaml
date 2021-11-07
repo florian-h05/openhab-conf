@@ -123,7 +123,7 @@ props:
       name: door_lock
       required: false
       type: TEXT
-timestamp: Jul 11, 2021, 2:59:42 PM
+timestamp: Jul 11, 2021, 4:23:46 PM
 component: f7-card
 config:
   style:
@@ -191,7 +191,7 @@ slots:
               media:
                 - component: oh-icon
                   config:
-                    icon: "=items[props.door_state].state === 'OPEN' ? 'door-closed' : 'door-open'"
+                    icon: "=items[props.door_state].state === 'CLOSED' ? 'door-closed' : 'door-open'"
                     iconSize: 24
                     style:
                       height: 24px
@@ -200,13 +200,13 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
               visible: "=props.window ? true : false"
-              text: "=(items[props.window].state == 'CLOSED') ? (props.windows_number ? items[props.windows_number].state : '') : ''"
+              text: "=(items[props.window].state == 'OPEN') ? (props.windows_number ? items[props.windows_number].state : '') : ''"
               textColor: =props.color
             slots:
               media:
                 - component: oh-icon
                   config:
-                    icon: "=items[props.window].state === 'OPEN' ? 'window-closed' : 'window-open'"
+                    icon: "=items[props.window].state === 'CLOSED' ? 'window-closed' : 'window-open'"
                     iconSize: 24
                     style:
                       height: 24px
