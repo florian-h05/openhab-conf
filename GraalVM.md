@@ -99,7 +99,7 @@ Replace `<scriptToRun>` with your rule's or script's (unique-)id.
 
 Ephemeris allows time-based actions.
 For more information, have a look at the [JavaDoc](https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/ephemeris).
-```javadoc
+```javascript
 let Ephemeris = Java.type('org.openhab.core.model.script.actions.Ephemeris');
 let weekend = Ephemeris.isWeekend();
 ```
@@ -130,7 +130,7 @@ Replace `<url>` with the request url.
 ## 8. Notification
 
 Send Notifications to openHAB clients using the openHAB Cloud.
-```javadoc
+```javascript
 let NotificationAction = Java.type('org.openhab.io.openhabcloud.NotificationAction')
 NotificationAction.sendNotification('<email>', '<message>''); // to a single myopenHAB user identified by e-mail
 NotificationAction.sendBroadcastNotification('<message>'); // to all myopenHAB users
@@ -142,7 +142,7 @@ Replace `<message>` with the notification text.
 ## 9. Persistence
 
 Get data from the persistence extension.
-For more information, have a look at the [JavaDoc]().
+For more information, have a look at the [JavaDoc](https://www.openhab.org/javadoc/latest/org/openhab/core/persistence/extensions/persistenceextensions).
 ```javascript
 let PersistenceExtension = Java.type('org.openhab.core.persistence.extensions.PersistenceExtensions');
 // last update
