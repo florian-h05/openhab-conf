@@ -3,11 +3,23 @@
 The `JavaScript Automation` Add-On provides support for `JavaScript/ECMA 11`.
 In contrast to the included openHAB JavaScript engine (`NashornJS`), nothing from openHAB is imported.
 
-***
-## Table Of Contents
+The code-snippets shown in this guide require the `JavaScript Automation` Add-On and at least `openHAB 3.2.0.M4 Milestone Build`.
 
 ***
-## 1. Service
+## Table Of Contents
+* [1. Default Services](#1-default-services)
+* [2. Types and Units](#2-types-and-units)
+* [3. Logging](#3-logging)
+* [4. Timers](#4-timers)
+* [5. Call Script](#5-call-script)
+* [6. Ephemeris](#6-ephemeris)
+* [7. Execute Command Line](#7-execute-command-line)
+* [8. HTTP Action](#8-http-action)
+* [9. Notification](#9-notification)
+* [10. Persistence](#10-persistence)
+
+***
+## 1. Default Services
 
 Import the basic openHAB services, which are included in `NashornJS`, to access items and more.
 ```javascript
@@ -16,7 +28,7 @@ let { itemRegistry, things, rules, events, actions } = require('@runtime');
 Please note that `toString()` is supported, but `toBigDecimal()`is not working anymore.
 
 ***
-## 2. Types & Units
+## 2. Types and Units
 
 Import types & units from openHAB to perform conversions and more.
 ```javascript
@@ -55,7 +67,7 @@ logger.error('Successfully logged error.');
 Replace `<ruleId>` with your rule's or script's (unique-)id.
 
 ***
-## 4. Create timers
+## 4. Timers
 
 Currently, my favourite solution for timers, the [timerMgr](https://github.com/rkoshak/openhab-rules-tools/tree/main/timer_mgr) module, does not support GraalVM.
 The "normal" way to create timers works.
@@ -75,7 +87,7 @@ this.myTimer = ScriptExecution.createTimer(now.plusSeconds(10), timerOver);
 ```
 
 ***
-## 4. Call another script/rule
+## 5. Call Script
 
 ```javascript
 let FrameworkUtil = Java.type('org.osgi.framework.FrameworkUtil');
@@ -95,7 +107,7 @@ RuleManager.runNow('<scriptToRun>', true, map); // second argument is whether to
 Replace `<scriptToRun>` with your rule's or script's (unique-)id.
 
 ***
-## 5. Ephemeris
+## 6. Ephemeris
 
 Ephemeris allows time-based actions.
 For more information, have a look at the [JavaDoc](https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/ephemeris).
@@ -105,7 +117,7 @@ let weekend = Ephemeris.isWeekend();
 ```
 
 ***
-## 6. Execute Command Line
+## 7. Execute Command Line
 
 Execute a command on command-line and get the reponse.
 ```javascript
@@ -115,7 +127,7 @@ let response = Exec.executeCommandLine(Duration.ofSeconds(20), 'echo','hello');
 ```
 
 ***
-## 7. HTTP action
+## 8. HTTP Action
 
 Make HTTP requests.
 For more information, have a look at the [JavaDoc](https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/http).
@@ -127,7 +139,7 @@ var response = HTTP.sendHttpGetRequest('<url>');
 Replace `<url>` with the request url.
 
 ***
-## 8. Notification
+## 9. Notification
 
 Send Notifications to openHAB clients using the openHAB Cloud.
 ```javascript
@@ -139,7 +151,7 @@ Replace `<email>` with the e-mail address of the user.
 Replace `<message>` with the notification text.
 
 ***
-## 9. Persistence
+## 10. Persistence
 
 Get data from the persistence extension.
 For more information, have a look at the [JavaDoc](https://www.openhab.org/javadoc/latest/org/openhab/core/persistence/extensions/persistenceextensions).
