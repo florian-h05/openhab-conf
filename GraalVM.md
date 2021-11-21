@@ -7,16 +7,17 @@ The code-snippets shown in this guide require the `JavaScript Automation` Add-On
 
 ***
 ## Table Of Contents
-* [1. Default Services](#1-default-services)
-* [2. Types and Units](#2-types-and-units)
-* [3. Logging](#3-logging)
-* [4. Timers](#4-timers)
-* [5. Call Script](#5-call-script)
-* [6. Ephemeris](#6-ephemeris)
-* [7. Execute Command Line](#7-execute-command-line)
-* [8. HTTP Action](#8-http-action)
-* [9. Notification](#9-notification)
-* [10. Persistence](#10-persistence)
+- [Table Of Contents](#table-of-contents)
+- [1. Default Services](#1-default-services)
+- [2. Types and Units](#2-types-and-units)
+- [3. Logging](#3-logging)
+- [4. Timers](#4-timers)
+- [5. Call Script](#5-call-script)
+- [6. Ephemeris](#6-ephemeris)
+- [7. Execute Command Line](#7-execute-command-line)
+- [8. HTTP Action](#8-http-action)
+- [9. Notification](#9-notification)
+- [10. Persistence](#10-persistence)
 
 ***
 ## 1. Default Services
@@ -25,7 +26,7 @@ Import the basic openHAB services, which are included in `NashornJS`, to access 
 ```javascript
 let { itemRegistry, things, rules, events, actions } = require('@runtime');
 ```
-Please note that `toString()` is supported, but `toBigDecimal()`is not working anymore.
+You can use `toString()` or `toBigDecimal()` to convert an item's state to string or to number.
 
 ***
 ## 2. Types and Units
