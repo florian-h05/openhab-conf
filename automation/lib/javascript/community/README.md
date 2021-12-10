@@ -70,9 +70,17 @@ This does the following:
 ## 4. Scene Engine
 ***
 __Work in Progress__: For now, the ScriptEngine is not finished and only a first draw/pre-release.
+At the moment, there is no real documentation, just JSDoc.
 
 Call scenes using a `selectorItem` and update the `selectorItem` to the matching scene on scene members' change.
 
+### Create an instance of the Scene Engine
+```javascript
+this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF;
+load(this.OPENHAB_CONF + '/automation/lib/javascript/community/sceneEngine.js');
+var SceneEngine = new SceneEngine();
+```
+### Scene Definition
 Scene definition works as in this example:
 ```javascript
 var scenes = [
