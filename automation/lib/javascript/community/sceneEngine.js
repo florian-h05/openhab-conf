@@ -3,7 +3,8 @@
  * Call scenes using a selectorItem and update the selectorItem to the matching scene on scene members' change.
  * This code is not compatible with the GraalVM JavaScript add-on.
  *
- * Tested to work with openHAB 3.2.0 stable.
+ * NOTE: getTriggers is not working for now.
+ *
  * Copyright (c) 2021 Florian Hotze under MIT License
  */
 
@@ -22,7 +23,6 @@ var SceneEngine = function () {
  * @param {string} selectorItem openHAB Item used for scene selection
  * @param {*} scenesDefinition Array of Objects that defines the scenes
  */
-
 SceneEngine.prototype.callScene = function (selectorItem, scenesDefinition) {
   // Get the correct sceneSelector.
   for (var i = 0; i < scenesDefinition.length; i++) {
@@ -55,7 +55,6 @@ SceneEngine.prototype.callScene = function (selectorItem, scenesDefinition) {
  * @param {string} triggeringItem openHAB Item that is member of scene and has changed
  * @param {*} scenesDefinition Array of Objects that defines the scenes
  */
-
 SceneEngine.prototype.checkScene = function (triggeringItem, scenesDefinition) {
   // Check each sceneSelector.
   for (var i = 0; i < scenesDefinition.length; i++) {
@@ -96,4 +95,44 @@ SceneEngine.prototype.checkScene = function (triggeringItem, scenesDefinition) {
     // Update sceneSelector with the selectorValue matching all sceneTargets.
     events.postUpdate(currentSelector.selectorItem, selectorValueMatching);
   }
+}
+
+/**
+ * When a scene member changes, check whether a scene and which scene matches all required targets.
+ *
+ * @param {*} scenesDefinition Array of Objects that defines the scenes
+ * @returns {*} triggers Triggers for the openHAB Rule Engine
+ */
+SceneEngine.prototype.getTriggers = function (scenesDefinition) {
+  var triggers = [];
+  var updateItems = [];
+  // For each sceneSelector the selectorItem.
+  for (var i = 0; i < scenesDefinition.length; i++) {
+    var currentSelector = scenesDefinition[i]; 
+    this.log.info('Adding ItemCommandTrigger [{}].', currentSelector.selectorItem);
+    
+    // GraalJS [openhab-js]: triggers.push(ItemCommandTrigger(currentSelector.selectorItem));
+    triggers.push(currentSelector.selectorItem);
+    
+    // For each selectorState.
+    for (var j = 0; j < currentSelector.selectorStates.length; j++) {
+      var currentState = currentSelector.selectorStates[j];
+      // For for each sceneTarget, the member items.
+      for (var k = 0; k < currentState.sceneTargets.length; k++) {
+        var targetItem = currentState.sceneTargets[k].item;
+        if (updateItems.indexOf(targetItem) === -1) {
+          updateItems.push(targetItem);
+        }
+      }
+    }
+  }
+  // Put the member items of each scene target into triggers.
+  for (var i = 0; i < updateItems.length; i++) {
+    this.log.info('Adding ItemStateChangeTrigger [{}].', updateItems[i]);
+    
+    // GraalJS [openhab-js]: trigger.push(ItemStateChangeTrigger(updateItems[i]));
+    triggers.push(updateItems[i]);
+    
+  }
+  return triggers;
 }
