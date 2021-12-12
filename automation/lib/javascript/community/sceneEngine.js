@@ -98,7 +98,7 @@ SceneEngine.prototype.checkScene = function (triggeringItem, scenesDefinition) {
 }
 
 /**
- * When a scene member changes, check whether a scene and which scene matches all required targets.
+ * Get all required triggers for the scene rule.
  *
  * @param {*} scenesDefinition Array of Objects that defines the scenes
  * @returns {*} triggers Triggers for the openHAB Rule Engine
