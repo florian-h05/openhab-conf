@@ -10,9 +10,6 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
   - [Create an instance of the Item Control Utility](#create-an-instance-of-the-item-control-utility)
   - [volumeDimming](#volumedimming)
 - [4. Scene Engine](#4-scene-engine)
-  - [Create an instance of the Scene Engine](#create-an-instance-of-the-scene-engine)
-  - [Scene Definition](#scene-definition)
-    - [sceneTargets](#scenetargets)
 
 ***
 ## 1. Prerequisites
@@ -72,44 +69,5 @@ This does the following:
 
 ## 4. Scene Engine
 ***
-__Work in Progress__: For now, the ScriptEngine is not finished and only a first draw/pre-release.
-At the moment, there is no real documentation, just JSDoc.
-
-Call scenes using a `selectorItem` and update the `selectorItem` to the matching scene on scene members' change.
-
-### Create an instance of the Scene Engine
-```javascript
-this.OPENHAB_CONF = (this.OPENHAB_CONF === undefined) ? java.lang.System.getenv("OPENHAB_CONF") : this.OPENHAB_CONF;
-load(this.OPENHAB_CONF + '/automation/lib/javascript/community/sceneEngine.js');
-var SceneEngine = new SceneEngine();
-```
-### Scene Definition
-Scene definition works as in this example:
-```javascript
-var scenes = [
-  { // sceneSelector, identified by selectorItem
-    selectorItem: 'F2_Florian_Szene',
-    selectorStates: [
-      { // a selectorState, itentified by selectorValue
-        selectorValue: 1, // everything off
-        sceneTargets: [
-          { item: 'Florian_Licht', value: 'OFF', required: true },
-          { item: 'Florian_LED_Stripes', value: 'OFF', required: true }
-        ] 
-      },
-      {
-        selectorValue: 15,
-        sceneTargets: [
-          { item: 'Florian_LED_Stripes', value: 'ON', required: true }
-        ]
-      }
-    ]
-  }
-];
-```
-#### sceneTargets
-Identifier | Purpose | Type
--|-|-
-`item` | Name of the openHAB Item. | String
-`value` | Target value for the scene in a string. | String
-`required` | Whether to ignore changes of that item. | Boolean
+Please note that the sceneEngine has moved to the npm package [florianh-openhab-tools](https://www.npmjs.com/package/florianh-openhab-tools) 
+and is now compatible with the GraalVM JavaScript addon.

@@ -28,6 +28,7 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
 
 * openHAB 3.x
 * __IMPORTANT:__ This code is not compatible with the GraalVM JavaScript add-on.
+* __NOTE__: The rules tools will be brought to GraalVM, either by being included in the [openHAB JavaScript Library](https://github.com/openhab/openhab-js) or by getting moved to the npm package [florianh-openhab-tools](https://www.npmjs.com/package/florianh-openhab-tools).
 
 Note: these tools are created for use in UI rules and scripts.
 
