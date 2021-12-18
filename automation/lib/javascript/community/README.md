@@ -10,6 +10,9 @@ Library functions, classes and modules to reuse in JavaScript rules. My focus on
   - [Create an instance of the Item Control Utility](#create-an-instance-of-the-item-control-utility)
   - [volumeDimming](#volumedimming)
 - [4. Scene Engine](#4-scene-engine)
+  - [Create an instance of the Scene Engine](#create-an-instance-of-the-scene-engine)
+  - [Scene Definition](#scene-definition)
+    - [sceneTargets](#scenetargets)
 
 ***
 ## 1. Prerequisites

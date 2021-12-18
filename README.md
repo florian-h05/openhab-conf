@@ -3,20 +3,21 @@
 
 ***
 ## Table of Contents
-* [1. JavaScript rules tools](#1-javascript-rules-tools)
-    * [1.1 Prerequisites](#11-prerequisites)
-    * [1.2 Group Utilities](#12-group-utilities)
-    * [1.3 Item Control Utility](#13-item-control-utility)
-* [2. Color design](#2-color-design)
-    * [2.1 Color pairs](#21-color-pairs)
-* [3. Widgets](#3-widgets)
-    * [3.1 Widget design](#31-widget-design)
-        * [3.1.1 Widget style](#311-widget-style)
-        * [3.1.2 Icons](#312-icons)
-        * [3.1.3 Text](#313-text)
-* [4. Scripts](#4-scripts)
-    * [4.1 Shaddow](#41-shaddow)
-    * [4.2 openHAB Log InfluxDB](#42-openhab-log-influxdb)
+- [Table of Contents](#table-of-contents)
+- [1. JavaScript rules tools](#1-javascript-rules-tools)
+  - [1.1 Prerequisites](#11-prerequisites)
+  - [1.2 Group Utilities](#12-group-utilities)
+  - [1.3 Item Control Utility](#13-item-control-utility)
+- [2. Color design](#2-color-design)
+  - [2.1 Color pairs](#21-color-pairs)
+- [3. Widgets](#3-widgets)
+  - [3.1 Widget design](#31-widget-design)
+    - [3.1.1 Widget style](#311-widget-style)
+    - [3.1.2 Icons](#312-icons)
+    - [3.1.3 Text](#313-text)
+- [4. Scripts](#4-scripts)
+  - [4.1 Shaddow](#41-shaddow)
+  - [4.2 openHAB Log InfluxDB](#42-openhab-log-influxdb)
 
 ***
 ## 1. JavaScript rules tools
