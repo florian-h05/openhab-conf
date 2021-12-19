@@ -59,7 +59,7 @@ device = args.Device
 temp = float(items.get('Aussentemperatur').state)
 wind = float(items.get('Windgeschwindigkeit').state)
 brightness = float(items.get('Helligkeit').state)
-rain = str(items.get('RegenalarmStr').state)
+rain = "Kein Regen" if str(items.get('Regenalarm').state) == "CLOSED" else "Regen!"
 elevation = float(items.get('Elevation').state)
 azimuth = float(items.get('Azimut').state)
 
