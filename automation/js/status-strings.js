@@ -19,8 +19,7 @@ rules.JSRule({
     const rain = items.getItem('Regenalarm').state;
     const heatLevel = parseInt(items.getItem('Hitze_Stufe').state);
     const frostLevel = parseInt(items.getItem('Frost_Stufe').state);
-    
-    
+
     let statusString = '';
     if (contacts === 'OPEN') {
       if (rain === 'OPEN') {
@@ -54,9 +53,10 @@ rules.JSRule({
     triggers.GroupStateChangeTrigger('YamahaState')
   ],
   execute: data => {
-    let knx = false, yamaha = false;
+    let knx = false;
+    let yamaha = false;
     let statusString = '';
-    
+
     // KNX Things
     let members = items.getItem('KNXState').members.map(item => item.name);
     for (let i = 0; i < members.length; i++) {
@@ -65,7 +65,7 @@ rules.JSRule({
         knx = true;
       }
     }
-    
+
     // Yamaha Things
     members = items.getItem('YamahaState').members.map(item => item.name);
     for (let i = 0; i < members.length; i++) {
@@ -74,7 +74,7 @@ rules.JSRule({
         yamaha = true;
       }
     }
-    
+
     // Generate status string
     if (knx === true) {
       statusString += 'mind. 1 KNX Gerät nicht erreichbar!';
