@@ -1,11 +1,50 @@
 /*
-This script generates a system status overview string.
-
 Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 const { rules, triggers, items } = require('openhab');
 
+// Generates an alarm status string.
+rules.JSRule({
+  name: 'Alarm Status String Summary',
+  description: 'Summarize alarms.',
+  triggers: [
+    triggers.ItemStateChangeTrigger('Kontakte'),
+    triggers.ItemStateChangeTrigger('Regenalarm'),
+    triggers.ItemStateChangeTrigger('Hitze_Stufe'),
+    triggers.ItemStateChangeTrigger('Frost_Stufe')
+  ],
+  execute: data => {
+    const contacts = items.getItem('Kontakte').state;
+    const rain = items.getItem('Regenalarm').state;
+    const heatLevel = parseInt(items.getItem('Hitze_Stufe').state);
+    const frostLevel = parseInt(items.getItem('Frost_Stufe').state);
+    
+    
+    let statusString = '';
+    if (contacts === 'OPEN') {
+      if (rain === 'OPEN') {
+        statusString = statusString + 'Regen! ';
+      }
+      if (heatLevel === 4) {
+        statusString = statusString + 'Hitze! ';
+      } else if (heatLevel >= 1) {
+        statusString = statusString + 'Wärme beachten. ';
+      }
+      if (frostLevel === 4) {
+        statusString = statusString + 'Frost! ';
+      } else if (frostLevel >= 1) {
+        statusString = statusString + 'Kälte beachten. ';
+      }
+    } else if (contacts === 'OPEN') {
+      statusString = '';
+    }
+    // Post string to openHAB item.
+    items.getItem('Alarm_Status').postUpdate(statusString);
+  }
+});
+
+// Generates a system status overview string.
 rules.JSRule({
   name: 'System Status String Summary',
   description: 'Summarize state of things.',
