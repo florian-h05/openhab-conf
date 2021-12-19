@@ -9,6 +9,8 @@ rules.JSRule({
   name: 'Alarm Status String Summary',
   description: 'Summarize alarms.',
   triggers: [
+    triggers.SystemStartlevelTrigger(100),
+    triggers.GenericCronTrigger('0 0/5 * * * *'),
     triggers.ItemStateChangeTrigger('Kontakte'),
     triggers.ItemStateChangeTrigger('Regenalarm'),
     triggers.ItemStateChangeTrigger('Hitze_Stufe'),
@@ -49,6 +51,7 @@ rules.JSRule({
   description: 'Summarize state of things.',
   triggers: [
     triggers.SystemStartlevelTrigger(100),
+    triggers.GenericCronTrigger('0 0/5 * * * *'),
     triggers.GroupStateChangeTrigger('KNXState'),
     triggers.GroupStateChangeTrigger('YamahaState')
   ],
