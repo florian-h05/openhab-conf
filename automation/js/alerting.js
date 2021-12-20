@@ -1,3 +1,7 @@
+/*
+Copyright (c) 2021 Florian Hotze under MIT License
+*/
+
 const { rules, triggers, items, actions } = require('openhab');
 const logger = require('openhab').log('alerting-JS');
 
