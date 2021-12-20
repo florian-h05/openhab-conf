@@ -8,7 +8,7 @@ Copyright (c) 2021 Florian Hotze under MIT License
 */
 
 const { actions, items, rules, triggers } = require('openhab');
-let triggersList = [triggers.SystemStartlevelTrigger(100)];
+let triggersList = [triggers.SystemStartlevelTrigger(100), triggers.GenericCronTrigger('0 0/5 * * * *')];
 
 /**
  * Send a Thing's state to an openHAB Item.
