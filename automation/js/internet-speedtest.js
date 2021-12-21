@@ -24,7 +24,6 @@ rules.JSRule({
     // Simple error checking.
     if (output.search('Speedtest') !== -1) {
       items.getItem('SpeedtestResultDate').postUpdate(time.ZonedDateTime.now().withFixedOffsetZone().toString());
-      logger.info('Starte Datenauswertung.');
       items.getItem('SpeedtestRunning').postUpdate('Datenauswertung läuft ...');
       // check for the given keywords
       for (let i = 0; i < response.length; i++) {
