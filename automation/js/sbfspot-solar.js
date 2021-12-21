@@ -6,11 +6,11 @@ const { rules, triggers, items, time, actions } = require('openhab');
 const logger = require('openhab').log('sbfspot-solar-JS');
 
 rules.JSRule({
-  name: 'Solar data from SBFspot',
+  name: 'Solar data: fetch from SBFspot',
   description: 'Fetch data from SMA inverter.',
   triggers: [
     triggers.ItemCommandTrigger('pv_refresh', 'ON'),
-    triggers.GenericCronTrigger('0 0/5 * * * ? *')
+    triggers.GenericCronTrigger('0 0/5 5-22 * * ? *')
   ],
   execute: data => {
     logger.info('Fetching data from SBFspot.');
@@ -72,7 +72,19 @@ rules.JSRule({
     }
     items.getItem('pv_refresh').postUpdate('OFF');
   },
-  id: 'sbfspot-solar'
+  id: 'solar-fetch-data'
+});
+
+rules.JSRule({
+  name: 'Solar data: reset before midnight',
+  description: 'Reset day data to 0 before the next day starts.',
+  triggers: [
+    triggers.GenericCronTrigger('0 58 23 * * ? *')
+  ],
+  execute: data => {
+    items.getItem('pv_EToday').postUpdate(0);
+  },
+  id: 'solar-reset-endofday'
 });
 
 logger.info('Script loaded.');
