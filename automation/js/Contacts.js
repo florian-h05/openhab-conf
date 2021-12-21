@@ -18,6 +18,7 @@ rules.JSRule({
   name: 'Kontakte: Dachfenster Status',
   description: 'Generiert den Textstatus aus den Kontakten.',
   triggers: [
+    triggers.GenericCronTrigger('0 0/5 * * * *'),
     triggers.GroupStateChangeTrigger('Kontakte')
   ],
   execute: data => {
