@@ -61,4 +61,19 @@ rules.when().item('Sun_Azimuth').changed().then(e => {
   actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/3shaddow.py', 'update');
 }).build('shaddow.py: Update', '... bei Änderung von Azimut.');
 
+// Calculates the current output power of UPS.
+rules.JSRule({
+  name: 'UPS current output power',
+  description: 'Calculation based on load and maximum output power.',
+  triggers: [
+    triggers.ItemStateUpdateTrigger('ups_upsLoadCurrent')
+  ],
+  execute: data => {
+    const maxPower = 420; // For Eaton 3S 700
+    const currentLoad = parseFloat(items.getItem('ups_upsLoadCurrent').state) / 100;
+    items.getItem('ups_calculatedPower').postUpdate(currentLoad * maxPower);
+  },
+  id: 'UPS-current-output-power'
+});
+
 logger.info('Script loaded.');
