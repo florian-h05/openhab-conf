@@ -1,6 +1,7 @@
 uid: roomCard
 description: room card with background image & state overview
 author: Copyright (c) 2021 Florian Hotze under MIT License
+credits: Mike P (@integer) at https://community.openhab.org/t/oh3-main-ui-examples/117928/22 for the concept
 tags: []
 props:
   parameters:
@@ -123,7 +124,7 @@ props:
       name: door_lock
       required: false
       type: TEXT
-timestamp: Jul 11, 2021, 4:23:46 PM
+timestamp: Nov 7, 2021, 8:29:36 PM
 component: f7-card
 config:
   style:
@@ -146,7 +147,7 @@ slots:
         style:
           position: absolute
           top: -5px
-          left: 16px
+          right: 16px
           background: =props.bgcolor
           opacity: =props.bgopacity
           border-radius: 7px
