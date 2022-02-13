@@ -4,38 +4,28 @@
 ***
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [1. JavaScript rules tools](#1-javascript-rules-tools)
-  - [1.1 Prerequisites](#11-prerequisites)
-- [2. Color design](#2-color-design)
-  - [2.1 Color pairs](#21-color-pairs)
-- [3. Widgets](#3-widgets)
-  - [3.1 Widget design](#31-widget-design)
-    - [3.1.1 Widget style](#311-widget-style)
-    - [3.1.2 Icons](#312-icons)
-    - [3.1.3 Text](#313-text)
-- [4. Scripts](#4-scripts)
-  - [4.1 Shaddow](#41-shaddow)
-  - [4.2 openHAB Log InfluxDB](#42-openhab-log-influxdb)
+- [JavaScript Scripting](#javascript-scripting)
+- [Color design](#color-design)
+  - [Color pairs](#color-pairs)
+- [Widgets](#widgets)
+  - [Widget design](#widget-design)
+    - [Widget style](#widget-style)
+    - [Icons](#icons)
+    - [Text](#text)
+- [Scripts](#scripts)
+  - [Shaddow](#shaddow)
+  - [openHAB Log InfluxDB](#openhab-log-influxdb)
 
 ***
-## 1. JavaScript rules tools
+## JavaScript Scripting
 
-Library functions, classes and modules to reuse in JavaScript rules. My focus on building these tools is to solve often needed tasks in a efficient and simple way. Providing fully realized capabilities is not the goal of this tools.
+My JavaScript tools are at [openhab-js-tools](https://github.com/florian-h05/openhab-js-tools).
+You may also have a look at [rkoshak/openhab-rules-tools](https://github.com/rkoshak/openhab-rules-tools).
 
-Also have a look at the npm package [florianh-openhab-tools](https://www.npmjs.com/package/florianh-openhab-tools).
-
-### 1.1 Prerequisites
-
-* openHAB 3.x
-* __IMPORTANT:__ This code is not compatible with the GraalVM JavaScript add-on.
-* __NOTE__: The rules tools will be brought to GraalVM, either by being included in the [openHAB JavaScript Library](https://github.com/openhab/openhab-js) or by getting moved to the npm package [florianh-openhab-tools](https://www.npmjs.com/package/florianh-openhab-tools).
-
-Note: these tools are created for use in UI rules and scripts.
-
-For a look at the utils, have a look at the [README](/automation/lib/javascript/community).
+To access the old NashornJS tools, head over to the [nashorn-js-libs branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-libs).
 
 ***
-## 2. Color design
+## Color design
 
 For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
 I choose colors from the __400__ or the __600__ series.
@@ -69,7 +59,7 @@ This code-block enables light and dark background for widgets:
       color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
 ```
 
-### 2.1 Color pairs
+### Color pairs
 
 Which color pairs do I use for which color?
 * Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
@@ -80,15 +70,15 @@ Which color pairs do I use for which color?
 These color pairs are all from color series __600__.
 
 ***
-## 3. Widgets
+## Widgets
 
 My custom widget set for the openHAB 3 MainUI.
 Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
 
-### 3.1 Widget design
+### Widget design
 
 
-#### 3.1.1 Widget style
+#### Widget style
 
 My custom widgets always use this design:
 ```yaml
@@ -114,7 +104,7 @@ The _height_ attribute usually varies between three sizes:
 * __150px__ for large widgets with much content and controls
 * __130px__ for the room card, which is not combined with other cards on one page
 
-#### 3.1.2 Icons
+#### Icons
 
 Most icons are from [Framework7](https://framework7.io/icons/). 
 Sometimes, openHAB icons are used, e.g. for state representation. 
@@ -125,7 +115,7 @@ _Framework7_ icons normally use these sizes:
 
 _openHAB_ icons' size varies.
 
-#### 3.1.3 Text
+#### Text
 
 Text style follows these guidelines:
 * small text (e.g. upper left corner): ```font-size: 12px```
@@ -135,11 +125,11 @@ Text style follows these guidelines:
 * large text (for state representation, e.g. in widget contact): ```font-size: 24px``` & ```font-weight: 400```
 
 ***
-## 4. Scripts
+## Scripts
 
 Scripts for the _openhab-conf/scripts_ folder.
 
-### 4.1 Shaddow
+### Shaddow
 
 This script was originally written by [@pmpkk](https://github.com/pmpkk) at [openhab-habpanel-theme-matrix](https://github.com/pmpkk/openhab-habpanel-theme-matrix).
 I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_. 
@@ -149,7 +139,7 @@ I added the position of the moon to the image.
 
 Please look at [this guide](/scripts/SHADDOW.md).
 
-### 4.2 openHAB Log InfluxDB
+### openHAB Log InfluxDB
 
 A log for your smart home with [openhab-log-influxdb.py](/scripts/openhab-log-influxdb.py).
 
