@@ -45,29 +45,29 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Mar 20, 2022, 10:15:00 PM
+timestamp: Mar 20, 2022, 10:53:36 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
-    min-width: 220px
     margin-left: 5px
     margin-right: 5px
+    min-width: 220px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 16px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -78,129 +78,128 @@ slots:
                 margin-right: 10px
           - component: Label
             config:
-              text: "=props.title ? props.title : ''"
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: "=props.title ? props.title : ''"
     - component: f7-block
       config:
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
+          flex-direction: row
+          left: 16px
           position: absolute
           top: 56px
-          left: 16px
-          flex-direction: row
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
       slots:
         default:
           - component: Label
             config:
-              text: =items[props.item_title].state
               style:
                 color: "#dd4124"
                 font-size: 17px
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
+              text: =items[props.item_title].state
     - component: f7-block
       config:
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
-        style:
-          position: absolute
-          top: 102px
-          left: 16px
-          flex-direction: row
         class:
           - text-align-left
+        style:
+          flex-direction: row
+          left: 16px
+          position: absolute
+          top: 102px
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
       slots:
         default:
           - component: Label
             config:
-              text: =items[props.item_artist].state
               style:
                 font-size: 13px
-                margin-top: 0px
                 font-weight: 300
+                margin-top: 0px
+              text: =items[props.item_artist].state
+    - component: oh-button
+      config:
+        action: command
+        actionCommand: "=props.musiccast == true ? 'PREVIOUS' : 'Previous'"
+        actionItem: =props.item_playback
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: lessthan_circle
+        iconSize: 30px
+        large: false
+        round: true
+        style:
+          height: 34px
+          position: absolute
+          right: 80px
+          top: 15px
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
+    - component: oh-button
+      config:
+        action: command
+        actionCommand: "=props.musiccast == true ? 'PAUSE' : 'Pause'"
+        actionItem: =props.item_playback
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: pause_circle
+        iconSize: 30px
+        large: false
+        round: true
+        style:
+          height: 34px
+          position: absolute
+          right: 45px
+          top: 15px
+        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state !== 'Pause' ? (items[props.item_playback].state !== 'PAUSE' ? true : false) : false) : false"
+    - component: oh-button
+      config:
+        action: command
+        actionCommand: "=props.musiccast == true ? 'PLAY' : 'Play'"
+        actionItem: =props.item_playback
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: play_circle
+        iconSize: 30px
+        large: false
+        round: true
+        style:
+          height: 34px
+          position: absolute
+          right: 45px
+          top: 15px
+        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state === 'Pause' ? true : (items[props.item_playback].state === 'PAUSE' ? true : false)) : false"
+    - component: oh-button
+      config:
+        action: command
+        actionCommand: "=props.musiccast == true ? 'NEXT' : 'Next'"
+        actionItem: =props.item_playback
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: greaterthan_circle
+        iconSize: 30px
+        large: false
+        round: true
+        style:
+          height: 34px
+          position: absolute
+          right: 10px
+          top: 15px
+        visible: "=items[props.item_power].state == 'ON' ? true : false"
     - component: f7-block
       config:
-        style:
-          position: absolute
-          top: 85px
-          flex-direction: row
-          width: 100%
         class:
           - text-align-center
+        style:
+          flex-direction: row
+          position: absolute
+          top: 75px
+          width: 100%
       slots:
         default:
           - component: Label
             config:
-              visible: "=items[props.item_power].state === 'OFF' ? true : false"
-              text: Bitte anschalten!
               style:
                 font-size: 22px
-                margin-top: 0px
                 font-weight: 400
-    - null
-    - component: oh-button
-      config:
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
-        round: true
-        large: false
-        iconF7: lessthan_circle
-        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
-        action: command
-        actionItem: =props.item_playback
-        actionCommand: "=props.musiccast == true ? 'PREVIOUS' : 'Previous'"
-        style:
-          position: absolute
-          top: 15px
-          right: 80px
-          height: 34px
-    - component: oh-button
-      config:
-        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state !== 'Pause' ? (items[props.item_playback].state !== 'PAUSE' ? true : false) : false) : false"
-        round: true
-        large: false
-        iconF7: pause_circle
-        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
-        action: command
-        actionItem: =props.item_playback
-        actionCommand: "=props.musiccast == true ? 'PAUSE' : 'Pause'"
-        style:
-          position: absolute
-          top: 15px
-          right: 45px
-          height: 34px
-    - component: oh-button
-      config:
-        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state === 'Pause' ? true : (items[props.item_playback].state === 'PAUSE' ? true : false)) : false"
-        round: true
-        large: false
-        iconF7: play_circle
-        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
-        action: command
-        actionItem: =props.item_playback
-        actionCommand: "=props.musiccast == true ? 'PLAY' : 'Play'"
-        style:
-          position: absolute
-          top: 15px
-          right: 45px
-          height: 34px
-    - component: oh-button
-      config:
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
-        round: true
-        large: false
-        iconF7: greaterthan_circle
-        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
-        action: command
-        actionItem: =props.item_playback
-        actionCommand: "=props.musiccast == true ? 'NEXT' : 'Next'"
-        style:
-          position: absolute
-          top: 15px
-          right: 10px
-          height: 34px
+                margin-top: 0px
+              text: Bitte anschalten!
+              visible: "=items[props.item_power].state === 'OFF' ? true : false"
