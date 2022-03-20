@@ -44,8 +44,14 @@ props:
       name: item_playback
       required: true
       type: TEXT
+    - description: false for Yamaha Receiver binding, true for Yamaha MusicCast binding
+      label: Playback command mode
+      name: musiccast
+      required: false
+      type: BOOLEAN
+      default: false
   parameterGroups: []
-timestamp: Jul 18, 2021, 9:13:07 PM
+timestamp: Jul 20, 2021, 3:49:45 PM
 component: f7-card
 config:
   style:
@@ -55,6 +61,7 @@ config:
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 150px
+    min-width: 220px
     margin-left: 5px
     margin-right: 5px
 slots:
@@ -165,7 +172,7 @@ slots:
         iconSize: 30px
         action: command
         actionItem: =props.item_playback
-        actionCommand: Previous
+        actionCommand: "=props.musiccast == true ? 'PREVIOUS' : 'Previous'"
         style:
           position: absolute
           top: 15px
@@ -173,7 +180,7 @@ slots:
           height: 34px
     - component: oh-button
       config:
-        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state !== 'Pause' ? true : false : false"
+        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state !== 'Pause' ? (items[props.item_playback].state !== 'PAUSE' ? true : false) : false) : false"
         round: true
         large: false
         iconF7: pause_circle
@@ -181,7 +188,7 @@ slots:
         iconSize: 30px
         action: command
         actionItem: =props.item_playback
-        actionCommand: Pause
+        actionCommand: "=props.musiccast == true ? 'PAUSE' : 'Pause'"
         style:
           position: absolute
           top: 15px
@@ -189,7 +196,7 @@ slots:
           height: 34px
     - component: oh-button
       config:
-        visible: "=items[props.item_power].state == 'ON' ? items[props.item_playback].state === 'Pause' ? true : false : false"
+        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state === 'Pause' ? true : (items[props.item_playback].state === 'PAUSE' ? true : false)) : false"
         round: true
         large: false
         iconF7: play_circle
@@ -197,7 +204,7 @@ slots:
         iconSize: 30px
         action: command
         actionItem: =props.item_playback
-        actionCommand: Play
+        actionCommand: "=props.musiccast == true ? 'PLAY' : 'Play'"
         style:
           position: absolute
           top: 15px
@@ -213,7 +220,7 @@ slots:
         iconSize: 30px
         action: command
         actionItem: =props.item_playback
-        actionCommand: Next
+        actionCommand: "=props.musiccast == true ? 'NEXT' : 'Next'"
         style:
           position: absolute
           top: 15px
