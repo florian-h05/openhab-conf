@@ -1,12 +1,12 @@
 uid: amplifierPlayback
-description: control playback and display playback information of an amplifier
-author: Copyright (c) 2021 Florian Hotze under MIT License
+# description: control playback and display playback information of an amplifier
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
-    - description: Header big sized
-      label: Header
-      name: header
+    - description: Small title on top of the card
+      label: Title
+      name: title
       required: false
       type: TEXT
     - description: HEX or rgba
@@ -27,12 +27,6 @@ props:
       required: true
       type: TEXT
     - context: item
-      description: Item for album
-      label: Album
-      name: item_album
-      required: true
-      type: TEXT
-    - context: item
       description: Item for artist
       label: Artist
       name: item_artist
@@ -44,14 +38,14 @@ props:
       name: item_playback
       required: true
       type: TEXT
-    - description: false for Yamaha Receiver binding, true for Yamaha MusicCast binding
+    - default: "false"
+      description: false for Yamaha Receiver binding, true for default Player Item (e.g. Yamaha MusicCast binding)
       label: Playback command mode
       name: musiccast
       required: false
       type: BOOLEAN
-      default: false
   parameterGroups: []
-timestamp: Jul 20, 2021, 3:49:45 PM
+timestamp: Mar 20, 2022, 10:15:00 PM
 component: f7-card
 config:
   style:
@@ -60,7 +54,7 @@ config:
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     background-color: "=props.bgcolor ? props.bgcolor : ''"
-    height: 150px
+    height: 120px
     min-width: 220px
     margin-left: 5px
     margin-right: 5px
@@ -71,29 +65,31 @@ slots:
         style:
           position: absolute
           top: -5px
+          left: 16px
           flex-direction: row
-          width: 50%
-        class:
-          - text-align-left
+          display: flex
       slots:
         default:
+          - component: f7-icon
+            config:
+              f7: hifispeaker
+              size: 18
+              style:
+                margin-right: 10px
           - component: Label
             config:
-              text: =props.header
+              text: "=props.title ? props.title : ''"
               style:
-                font-size: 22px
+                font-size: 12px
                 margin-top: 0px
-                font-weight: 600
     - component: f7-block
       config:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 62px
+          top: 56px
+          left: 16px
           flex-direction: row
-          width: 100%
-        class:
-          - text-align-left
       slots:
         default:
           - component: Label
@@ -101,17 +97,18 @@ slots:
               text: =items[props.item_title].state
               style:
                 color: "#dd4124"
-                font-size: 15px
+                font-size: 17px
+                font-weight: 600
+                margin-left: 0px
                 margin-top: 0px
-                font-weight: 400
     - component: f7-block
       config:
         visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 92px
+          top: 102px
+          left: 16px
           flex-direction: row
-          width: 100%
         class:
           - text-align-left
       slots:
@@ -125,28 +122,9 @@ slots:
                 font-weight: 300
     - component: f7-block
       config:
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
         style:
           position: absolute
-          top: 128px
-          flex-direction: row
-          width: 100%
-        class:
-          - text-align-left
-      slots:
-        default:
-          - component: Label
-            config:
-              text: =items[props.item_album].state
-              style:
-                font-size: 11px
-                margin-top: 0px
-                font-weight: 300
-    - component: f7-block
-      config:
-        style:
-          position: absolute
-          top: 75px
+          top: 85px
           flex-direction: row
           width: 100%
         class:
