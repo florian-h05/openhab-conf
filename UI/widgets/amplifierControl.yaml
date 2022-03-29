@@ -44,29 +44,29 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Mar 20, 2022, 10:20:27 PM
+timestamp: Mar 29, 2022, 3:24:37 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
-    min-width: 220px
     margin-left: 5px
     margin-right: 5px
+    min-width: 220px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 16px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -77,96 +77,96 @@ slots:
                 margin-right: 10px
           - component: Label
             config:
-              text: "=props.title ? props.title : ''"
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: "=props.title ? props.title : ''"
     - component: oh-button
       config:
-        visible: "items[props.item_power].state === 'ON' ? true : false"
-        round: false
-        large: false
-        iconF7: hifispeaker
-        iconColor: "=items[props.item_power].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
         action: toggle
+        actionCommand: OFF
+        actionCommandAlt: ON
         actionItem: =props.item_power
-        actionCommand: OFF
-        actionCommandAlt: ON
+        iconColor: "=items[props.item_power].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: hifispeaker
+        iconSize: 30px
+        large: false
+        round: false
         style:
-          position: absolute
-          top: 15x
-          right: 10px
           height: 34px
+          position: absolute
+          right: 10px
+          top: 15x
+        visible: "items[props.item_power].state === 'ON' ? true : false"
     - component: oh-button
       config:
-        visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
-        round: false
-        large: false
-        iconF7: speaker_slash
-        iconColor: "=items[props.item_mute].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
-        iconSize: 30px
         action: toggle
-        actionItem: =props.item_mute
         actionCommand: OFF
         actionCommandAlt: ON
+        actionItem: =props.item_mute
+        iconColor: "=items[props.item_mute].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconF7: speaker_slash
+        iconSize: 30px
+        large: false
+        round: false
         style:
-          position: absolute
-          top: 15px
-          right: 50px
           height: 34px
+          position: absolute
+          right: 50px
+          top: 15px
+        visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
     - component: oh-slider
       config:
-        visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"
         item: =props.item_volume
-        min: -80
         max: -20
+        min: -80
         scale: true
         scaleSteps: 6
         style:
-          position: absolute
+          --f7-range-bar-border-radius: 8px
+          --f7-range-bar-size: 8px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+          --f7-range-knob-size: 18px
           bottom: -75px
           left: 20px
+          position: absolute
           width: calc(100% - 40px)
-          --f7-range-bar-size: 6px
-          --f7-range-bar-border-radius: 8px
-          --f7-range-knob-size: 16px
-          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+        visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"
     - component: oh-button
       config:
-        visible: "=props.item_input ? items[props.item_power].state === 'ON' ? true : false : false"
-        round: false
-        large: false
-        text: "='Eingang: ' + items[props.item_input].state"
         action: options
         actionItem: =props.item_input
-        item: =props.item_input
         actionOptions: =props.inputActions
-        vertical: false
+        item: =props.item_input
+        large: false
+        round: false
         style:
-          position: absolute
-          top: 37px
-          left: 6px
           font-size: 17px
           font-weight: 600
+          left: 6px
           margin-left: 0px
           margin-top: 0px
+          position: absolute
+          top: 40px
+        text: "='Eingang: ' + items[props.item_input].state"
+        vertical: false
+        visible: "=props.item_input ? items[props.item_power].state === 'ON' ? true : false : false"
     - component: f7-block
       config:
-        style:
-          position: absolute
-          top: 75px
-          flex-direction: row
-          width: 100%
         class:
           - text-align-center
+        style:
+          flex-direction: row
+          position: absolute
+          top: 75px
+          width: 100%
       slots:
         default:
           - component: Label
             config:
-              visible: "=items[props.item_power].state === 'OFF' ? true : false"
-              text: Bitte anschalten!
               style:
                 font-size: 22px
-                margin-top: 0px
                 font-weight: 400
+                margin-top: 0px
+              text: Bitte anschalten!
+              visible: "=items[props.item_power].state === 'OFF' ? true : false"

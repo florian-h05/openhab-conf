@@ -1,6 +1,6 @@
 uid: solar
-description: Display current power, today and total production and last fresh of solar inverter. Requires items from /items/solar.items
-author: Copyright (c) 2021 Florian Hotze under MIT License
+# description: Display current power, today and total production and last fresh of solar inverter. Requires items from /items/solar.items
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -57,7 +57,7 @@ slots:
           position: absolute
           top: 55px
           left: 16px
-          width: calc(100% - 65px)
+          width: calc(100% - 70px)
       slots:
         default:
           - component: f7-chip

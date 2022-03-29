@@ -88,7 +88,7 @@ slots:
           flex-direction: row
           left: 16px
           position: absolute
-          top: 56px
+          top: 60px
         visible: "=items[props.item_power].state == 'ON' ? true : false"
       slots:
         default:
