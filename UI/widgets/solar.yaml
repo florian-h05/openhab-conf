@@ -15,28 +15,28 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Aug 21, 2021, 10:57:42 PM
+timestamp: Mar 29, 2022, 3:07:22 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    class:
-      - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    height: 150px
+    class:
+      - padding: 0px
+    height: 120px
     margin-left: 5px
     margin-right: 5px
+    noShadow: false
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 16px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -47,77 +47,67 @@ slots:
                 margin-right: 10px
           - component: Label
             config:
-              text: Photovoltaik
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: Photovoltaik
     - component: f7-block
       config:
         style:
+          left: 16px
           position: absolute
           top: 55px
-          left: 16px
           width: calc(100% - 70px)
       slots:
         default:
           - component: f7-chip
             config:
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
               iconF7: bolt
+              iconSize: 20
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                font-size: 16px
+                margin-bottom: 10px
               text: =items.pv_Power.displayState
-              style:
-                margin-bottom: 10px
-                font-size: 16px
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconSize: 20
           - component: f7-chip
             config:
+              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
               iconF7: gauge
-              text: =items.pv_EToday.displayState
-              style:
-                margin-bottom: 10px
-                font-size: 16px
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
               iconSize: 20
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                font-size: 16px
+                margin-bottom: 10px
+              text: "=items.pv_EToday.state + ' | ' + items.pv_ETotal.displayState"
           - component: f7-chip
             config:
-              iconF7: gauge
-              text: "='Gesamt: ' + items.pv_ETotal.displayState"
-              style:
-                margin-bottom: 10px
-                font-size: 16px
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconSize: 20
-          - component: f7-chip
-            config:
-              visible: "=props.displayLastUpdate ? (props.displayLastUpdate == true ? true : false) : false"
               iconF7: clock
-              text: "='Stand: ' + items.pv_lastRefresh.displayState"
-              style:
-                margin-bottom: 10px
-                font-size: 16px
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
               iconSize: 20
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                font-size: 16px
+                margin-bottom: 10px
+              text: "='Stand: ' + items.pv_lastRefresh.displayState"
+              visible: "=props.displayLastUpdate ? (props.displayLastUpdate == true ? true : false) : false"
     - component: oh-icon
       config:
         icon: solarplant
-        width: 80px
         style:
-          position: absolute
-          top: -20px
-          right: 15px
           height: 145px
+          position: absolute
+          right: 15px
+          top: -20px
+        width: 75px
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
         action: navigate
         actionPage: ='page:' + props.page
         style:
-          position: absolute
-          left: 0px
-          top: 0px
           height: 150px
+          left: 0px
+          position: absolute
+          top: 0px
           width: 100%
+        visible: "=props.page ? true : false"
