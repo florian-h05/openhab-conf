@@ -43,8 +43,20 @@ props:
       name: inputActions
       required: false
       type: TEXT
+    - description: Minimal volume for slider
+      label: Minimal volume
+      name: volumeMin
+      required: false
+      advanced: true
+      type: NUMBER
+    - description: Maximum volume for slider
+      label: Maximum volume
+      name: volumeMax
+      required: false
+      advanced: true
+      type: NUMBER
   parameterGroups: []
-timestamp: Mar 29, 2022, 3:24:37 PM
+timestamp: Mar 29, 2022, 9:25:26 PM
 component: f7-card
 config:
   style:
@@ -118,8 +130,9 @@ slots:
     - component: oh-slider
       config:
         item: =props.item_volume
-        max: -20
-        min: -80
+        max: "=props.volumeMax ? props.volumeMax : '-20'"
+        min: "=props.volumeMin ? props.volumeMin : '-80'"
+        releaseOnly: true
         scale: true
         scaleSteps: 6
         style:
