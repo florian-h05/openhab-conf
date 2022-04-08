@@ -59,16 +59,14 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 22, 2021, 11:23:45 AM
+timestamp: Apr 8, 2022, 10:56:43 PM
 component: f7-card
 config:
   style:
     noShadow: false
-    class:
-      - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    height: 150px
+    height: 192.5px
     margin-left: 5px
     margin-right: 5px
 slots:
@@ -193,9 +191,9 @@ slots:
               iconSize: 20
           - component: f7-chip
             config:
-              visible: "=items.NINA_WetterWarn1.state != 'None.' ? true : false"
+              visible: "=items.WetterWarnung_1.state == 'ON' ? true : false"
               iconF7: bolt
-              text: =items.NINA_WetterWarn1.state
+              text: =items.WetterWarnung_1Titel.state
               textColor: red
               style:
                 margin-bottom: 10px
@@ -205,9 +203,9 @@ slots:
               iconSize: 20
           - component: f7-chip
             config:
-              visible: "=items.NINA_WetterWarn2.state != 'None.' ? true : false"
+              visible: "=items.WetterWarnung_2.state == 'ON' ? true : false"
               iconF7: bolt
-              text: =items.NINA_WetterWarn2.state
+              text: =items.WetterWarnung_2Titel.state
               textColor: red
               style:
                 margin-bottom: 10px
