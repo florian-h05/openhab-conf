@@ -1,5 +1,8 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
+
+Extended by alerting.js with frost- and heatalarms.
+Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
 const { rules, triggers, items, actions } = require('openhab');

@@ -8,7 +8,6 @@ Hosted at: https://github.com/florian-h05/openhab-conf
 // Create an API token for an admin user in the user profile (click on your username on the bottom of the side bar).
 const API_TOKEN = '';
 
-
 // DO NOT MODIFY ------------------------------------------------------------------------------------------------------
 const { actions, items, rules, triggers } = require('openhab');
 const HashMap = Java.type('java.util.HashMap');
@@ -57,8 +56,8 @@ const getThingName = (itemname, patterns, replaces) => {
   // When patterns and replaces are Arrays.
   let thingname = itemname.replace('_state', '');
   for (const i in patterns) {
-    thingname = thingname.replaceAll(patterns[i], replaces[i])
-  };
+    thingname = thingname.replaceAll(patterns[i], replaces[i]);
+  }
   return thingname;
 };
 
@@ -74,7 +73,7 @@ const thingState = (groupName, patterns, replaces) => {
   // Set up default triggers for thing status rules.
   const triggersList = [
     triggers.ItemCommandTrigger('ThingState_Refresh', 'ON'),
-    triggers.SystemStartlevelTrigger(100), 
+    triggers.SystemStartlevelTrigger(100),
     triggers.GenericCronTrigger('0 0/5 * * * *')
   ];
   // Add ThingStatusChangeTrigger for the matching Thing of each member Item.
@@ -103,7 +102,6 @@ const thingState = (groupName, patterns, replaces) => {
     tags: ['System', 'Things', 'Status']
   });
 };
-
 
 // CONFIGURE DOWN HERE ------------------------------------------------------------------------------------------------
 // Examples
