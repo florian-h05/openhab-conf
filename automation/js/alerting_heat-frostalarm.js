@@ -1,4 +1,3 @@
-
 /*
 Copyright (c) 2022 Florian Hotze under MIT License
 
