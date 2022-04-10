@@ -1,7 +1,7 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
 
-Extended by alerting_heat-frostalarm.js with frost- and heatalarms.
+Extended by Alerting_frost-heatalarm.js with frost- and heatalarms.
 Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
