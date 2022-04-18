@@ -1,6 +1,4 @@
-uid: alarmClock
-description: display the time of an alarm clock and turn it on/off
-author: Copyright (c) 2021 Florian Hotze under MIT License
+uid: alarmClock120
 tags: []
 props:
   parameters:
@@ -21,28 +19,16 @@ props:
       type: TEXT
     - context: item
       description: Item alarm clock switch
-      label: Alarm clock switch
-      name: item_switch
+      label: Alarm switch
+      name: item_alarm
       required: true
-      type: TEXT
-    - context: item
-      description: Item alarm clock (main) time
-      label: Main time
-      name: item_time1
-      required: true
-      type: TEXT
-    - context: item
-      description: Item alarm clock secondary time
-      label: Secondary time
-      name: item_time2
-      required: false
       type: TEXT
     - description: Page which will be opened as popup.
       label: Page ID
       name: page
       required: false
   parameterGroups: []
-timestamp: Jul 14, 2021, 5:41:17 PM
+timestamp: Apr 16, 2022, 9:33:41 PM
 component: f7-card
 config:
   style:
@@ -108,7 +94,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=(props.item_time2) ? items[props.item_time1].state + ' | ' + items[props.item_time2].state : items[props.item_time1].state"
+              text: =items[props.item_alarm + '_Time'].state
               style:
                 font-size: 24px
                 font-weight: 400
@@ -127,7 +113,7 @@ slots:
           width: 100%
     - component: oh-toggle
       config:
-        item: =props.item_switch
+        item: =props.item_alarm
         style:
           position: absolute
           top: 15px
