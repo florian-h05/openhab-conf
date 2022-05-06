@@ -1,5 +1,7 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
+
+Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
 const { rules, triggers, items } = require('openhab');
@@ -11,8 +13,7 @@ It requires the following items (<room_1> should be replaced):
   "<room_1>_Dachfenster_zu"         as input
   "<room_1>_Dachfenster_klLueftung" as input
   "<room_1>_Dachfenster_grLueftung" as input
-  "<room_1>_Dachfenster_Status"     as textual output
-  "<room_1>_Dachfenster_Status_num" as numeric output
+  "<room_1>_Dachfenster"            as generated state
 */
 rules.JSRule({
   name: 'Kontakte: Dachfenster Status',
@@ -32,25 +33,24 @@ rules.JSRule({
       // checks for the different states.
       if (stateZu === 'CLOSED' && stateKlLueftung === 'CLOSED' && stateGrLueftung === 'CLOSED') { // geschlossen
         outText = 'geschlossen';
-        outInt = 1;
+        outInt = 100;
       } else if (stateZu === 'OPEN' && stateKlLueftung === 'CLOSED' && stateGrLueftung === 'CLOSED') { // kleine Lüftung
         outText = 'kleine Lüftung';
-        outInt = 0.6;
+        outInt = 1;
       } else if (stateZu === 'OPEN' && stateKlLueftung === 'OPEN' && stateGrLueftung === 'CLOSED') { // große Lüftung
         outText = 'große Lüftung';
-        outInt = 0.3;
+        outInt = 2;
       } else if (stateZu === 'OPEN' && stateKlLueftung === 'OPEN' && stateGrLueftung === 'OPEN') { // ganz geöffnet
         outText = 'ganz geöffnet';
-        outInt = 0;
+        outInt = 4;
       } else {
         outText = 'Fehler!';
-        outInt = 0;
+        outInt = 5;
       }
-      items.getItem(roomList[i] + '_Fenster_Status').postUpdate(outText);
-      items.getItem(roomList[i] + '_Fenster_Status_num').postUpdate(outInt);
+      items.getItem(roomList[i] + '_Dachfenster').postUpdate(outInt);
     }
   },
-  id: 'dachfenster-status'
+  id: 'dachfenster-status',
+  tags: ['Dachfenster']
 });
-
 logger.info('Script loaded.');
