@@ -38,7 +38,7 @@ props:
       name: item_input
       required: false
       type: TEXT
-    - description: Input actions
+    - description: key=value pairs, defaults to stateDescription's options of Item when empty
       label: Input actions
       name: inputActions
       required: false
@@ -54,7 +54,7 @@ props:
       required: false
       advanced: true
   parameterGroups: []
-timestamp: Apr 1, 2022, 8:07:26 PM
+timestamp: Apr 2, 2022, 8:00:31 PM
 component: f7-card
 config:
   style:
