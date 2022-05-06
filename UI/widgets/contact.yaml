@@ -1,6 +1,7 @@
 uid: Contact
-description: display state of a window or door textual and with icon, open a popup
-author: Copyright (c) 2021 Florian Hotze under MIT License
+# description: display state of a window or door textual and with icon, open a popup
+# note: considers contact as closed when state is "CLOSED" or "100"
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -45,11 +46,6 @@ props:
       label: Contacts total number
       name: contacts_total
       required: false
-    - description: ON, if type is roofwindow, else OFF
-      label: Special type - Roofwindow
-      name: roofwindow
-      required: false
-      type: BOOLEAN
     - description: Page or group that pops up
       label: Popup page / group
       name: page
@@ -60,7 +56,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 22, 2021, 12:57:58 PM
+timestamp: May 6, 2022, 7:14:46 PM
 component: f7-card
 config:
   style:
@@ -128,39 +124,18 @@ slots:
         default:
           - component: Label
             config:
-              visible: "=props.roofwindow == true ? true : false"
-              text: =items[props.item].state
+              visible: true
+              text: =items[props.item].displayState
               style:
-                color: "=items[props.item].state === 'geschlossen' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === 'kleine Lüftung' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === 'große Lüftung' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
-                font-size: 24px
-                font-weight: 400
-                margin-left: 0px
-                margin-top: 0px
-          - component: Label
-            config:
-              visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
-              text: "=items[props.item].state === 'CLOSED' ? 'geschlossen' : (props.contacts_open ? (props.contacts_total ? (items[props.contacts_open].state + ' von ' + props.contacts_total + ' geöffnet') : items[props.contacts_open].state + ' geöffnet') : 'geöffnet')"
-              style:
-                color: "=items[props.item].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === 'kleine Lüftung' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === 'große Lüftung' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 font-weight: 400
                 margin-left: 0px
                 margin-top: 0px
     - component: oh-icon
       config:
-        visible: "=props.roofwindow == true ? true : false"
-        icon: "=items[props.item].state === 'geschlossen' ? 'window-closed' : 'window-open'"
-        width: 80px
-        item: =props.item
-        style:
-          position: absolute
-          top: -30px
-          right: 5px
-          height: 145px
-    - component: oh-icon
-      config:
-        visible: "=props.roofwindow ? props.roofwindow == false ? true : false : true"
-        icon: "=items[props.item].state === 'CLOSED' ? props.stateIcon + '-closed' :  props.stateIcon + '-open'"
+        visible: true
+        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? 'window-closed' : 'window-open'"
         width: 80px
         item: =props.item
         style:
