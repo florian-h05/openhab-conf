@@ -10,38 +10,9 @@ const API_TOKEN = '';
 
 // DO NOT MODIFY ------------------------------------------------------------------------------------------------------
 const { actions, items, rules, triggers } = require('openhab');
-const HashMap = Java.type('java.util.HashMap');
+const HashMap = Java.type('java.util.HashMap'); // eslint-disable-line no-undef
 
-/**
- * Return rule to reinitialize a Thing by Item.
- * The Thing is disabled and then enabled.
- *
- * @param {String} itemname name of Item
- * @param {String} thingUID UID of the Thing to reinitialize
- */
-const thingReEnable = (itemname, thingUID) => {
-  // Set up headers for REST API requests.
-  const headers = new HashMap();
-  headers.put('Authorization', 'Bearer ' + API_TOKEN);
-  return rules.JSRule({
-    name: 'Re-enable ' + thingUID + ' with switch Item',
-    description: 'Disable and then enabled a Thing.',
-    triggers: triggers.ItemCommandTrigger(itemname, 'ON'),
-    execute: (event) => {
-      // Set Thing to disabled.
-      actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'false', headers, 1000);
-      setTimeout(() => {
-        // Set Thing to enabled.
-        actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'true', headers, 1000);
-        // Set command Item to OFF.
-        items.getItem(itemname).sendCommand('OFF');
-        console.info('Re-enabled Thing ' + thingUID);
-      }, 500);
-    },
-    tags: ['Things', 'System'],
-    id: 'Thing_' + thingUID + '_reinitialize'
-  });
-};
+// Utility functions.
 
 /**
  * Get a Thing's name from the Item name.
@@ -59,6 +30,76 @@ const getThingName = (itemname, patterns, replaces) => {
     thingname = thingname.replaceAll(patterns[i], replaces[i]);
   }
   return thingname;
+};
+
+/**
+ * Re-enables/reinitializes a thing by UID.
+ * The Thing is disabled and then enabled by using the REST API.
+ *
+ * @param {String} thingUID UID of thing
+ */
+const reEnableThing = (thingUID) => {
+  // Set up headers for REST API requests.
+  const headers = new HashMap();
+  headers.put('Authorization', 'Bearer ' + API_TOKEN);
+  // Set Thing to disabled.
+  actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'false', headers, 1000);
+  // Set Thing to enabled.
+  actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'true', headers, 1000);
+  console.info('Re-enabled Thing ' + thingUID);
+};
+
+// Rule creators.
+
+/**
+ * Return rule to reinitialize a Thing by Item.
+ * The Thing is disabled and then enabled.
+ *
+ * @param {String} itemname name of Item
+ * @param {String} thingUID UID of the Thing to reinitialize
+ * @returns {rules.JSRule} {@link rules.JSRule}
+ */
+const itemReEnableThingRule = (itemname, thingUID) => {
+  return rules.JSRule({
+    name: 'Re-enable ' + thingUID + ' with switch Item',
+    description: 'Disable and then enabled a Thing.',
+    triggers: triggers.ItemCommandTrigger(itemname, 'ON'),
+    execute: (event) => {
+      reEnableThing(thingUID);
+      // Set command Item to OFF.
+      items.getItem(itemname).sendCommand('OFF');
+    },
+    tags: ['Things', 'System'],
+    id: 'Thing_' + thingUID + '_reinitialize'
+  });
+};
+
+/**
+ * Return rule to automatically reinitialize bridge when too many childs are offline.
+ *
+ * @param {String} groupName name of Group whose members store thing states
+ * @param {String} bridgeUID UID of bridge
+ * @returns {rules.JSRule} {@link rules.JSRule}
+ */
+const autoReEnableThingRule = (groupName, bridgeUID) => {
+  // Set up headers for REST API requests.
+  const headers = new HashMap();
+  headers.put('Authorization', 'Bearer ' + API_TOKEN);
+  return rules.JSRule({
+    name: `Automatic re-enabling of bridge ${bridgeUID}`,
+    description: `Automatically re-enables the bridge when to many members of ${groupName} are offline.`,
+    triggers: triggers.GroupStateChangeTrigger(groupName),
+    execute: (event) => {
+      setTimeout(() => {
+        const group = items.getItem(groupName);
+        const totalMembers = group.members.filter(item => item.state !== 'NULL');
+        const offlineMembers = group.members.filter(item => item.state !== 'ONLINE').length;
+        if (offlineMembers > (totalMembers / 2)) {
+          reEnableThing(bridgeUID);
+        }
+      }, 60000);
+    }
+  });
 };
 
 /**
@@ -104,9 +145,12 @@ const thingState = (groupName, patterns, replaces) => {
 };
 
 // CONFIGURE DOWN HERE ------------------------------------------------------------------------------------------------
-// Examples
+// Automatically reinitializes bridge when too many childs are not online.
+autoReEnableThingRule('KNXState', 'knx:ip:bridge');
+
 // When Item KNX_ReInit receives command ON, Thing knx:ip:bridge is reactived.
-thingReEnable('KNX_ReInit', 'knx:ip:bridge');
+itemReEnableThingRule('KNX_ReInit', 'knx:ip:bridge');
+
 // Sets the state of each member of Item group KNXState to the matching Thing's state.
 // Item-Thing matching: KNX_IP_Gateway = knx:ip:bridge, rest (example): KNX_demo_actuator_state = knx:device:bridge:demo:actuator
 thingState('KNXState', ['KNX_IP_Gateway', 'KNX_'], ['knx:ip:bridge', 'knx:device:bridge:']);
