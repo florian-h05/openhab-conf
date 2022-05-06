@@ -1,9 +1,10 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
+
+Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
 const { rules, triggers, items, time, actions } = require('openhab');
-const logger = require('openhab').log('sbfspot-solar-JS');
 
 rules.JSRule({
   name: 'Solar data: fetch from SBFspot',
@@ -13,7 +14,7 @@ rules.JSRule({
     triggers.GenericCronTrigger('0 0/5 5-22 * * ? *')
   ],
   execute: data => {
-    logger.info('Fetching data from SBFspot.');
+    console.info('Fetching data from SBFspot.');
     const output = actions.Exec.executeCommandLine(time.Duration.ofSeconds(40), '/usr/local/bin/sbfspot.3/SBFspot', '-v', '-finq', '-nocsv', '-nosql');
     // Split by newline
     const response = output.split(/\r?\n/);
@@ -57,7 +58,7 @@ rules.JSRule({
       items.getItem('pv_string2_voltage').postUpdate(string2Voltage);
       items.getItem('pv_string2_amperage').postUpdate(string2Amperage);
       items.getItem('pv_lastRefresh').postUpdate(time.ZonedDateTime.now().withFixedOffsetZone().toString());
-      logger.info('Data pull from SBFspot completed.');
+      console.info('Data pull from SBFspot completed.');
     } else {
       // post numbers to openHAB items
       items.getItem('pv_EToday').postUpdate(0);
@@ -68,11 +69,12 @@ rules.JSRule({
       items.getItem('pv_string2_power').postUpdate(0);
       items.getItem('pv_string2_voltage').postUpdate(0);
       items.getItem('pv_string2_amperage').postUpdate(0);
-      logger.error('Data pull from SBFspot failed. Output: \n' + output);
+      console.error('Data pull from SBFspot failed. Output: \n' + output);
     }
     items.getItem('pv_refresh').postUpdate('OFF');
   },
-  id: 'solar-fetch-data'
+  id: 'solar-fetch-data',
+  tags: ['Solaranlage', 'Energie']
 });
 
 rules.JSRule({
@@ -84,7 +86,6 @@ rules.JSRule({
   execute: data => {
     items.getItem('pv_EToday').postUpdate(0);
   },
-  id: 'solar-reset-endofday'
+  id: 'solar-reset-endofday',
+  tags: ['Solaranlage', 'Energie']
 });
-
-logger.info('Script loaded.');

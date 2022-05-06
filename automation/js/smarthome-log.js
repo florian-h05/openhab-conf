@@ -1,9 +1,10 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
+
+Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
-const { rules, actions, triggers, items } = require('openhab');
-const logger = require('openhab').log('smarthome-log-JS');
+const { rules, actions, triggers, items, time } = require('openhab');
 
 // Log alarms.
 rules.JSRule({
@@ -12,12 +13,13 @@ rules.JSRule({
   triggers: [triggers.GroupStateChangeTrigger('Alarms')],
   execute: event => {
     const item = items.getItem(event.itemName);
-    // logger.info(itemName + ' actual state is: ' + actualState)
+    // console.info(itemName + ' actual state is: ' + actualState)
     if (item.state === 'OPEN') {
       actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d system-wide', '-l ' + item.name + ' ausgelöst!');
     }
   },
-  id: 'smarthome-log_alarms'
+  id: 'smarthome-log_alarms',
+  tags: ['SmartHome Log', 'Alarme']
 });
 
 // KNX disable automatics.
@@ -31,13 +33,14 @@ rules.JSRule({
     // check the state and log
     if (item.state === 'ON') {
       actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d ' + roomName, '-l Automatik deaktiviert.');
-      // logger.info('logged ' + roomName + ' automatic off to the smarthome-log')
+      // console.info('logged ' + roomName + ' automatic off to the smarthome-log')
     } else if (item.state === 'OFF') {
       actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d ' + roomName, '-l Automatik aktiviert.');
-      // logger.info('logged ' + roomName + ' automatic on to the smarthome-log')
+      // console.info('logged ' + roomName + ' automatic on to the smarthome-log')
     }
   },
-  id: 'smarthome-log_knx-auto-off'
+  id: 'smarthome-log_knx-auto-off',
+  tags: ['SmartHome Log', 'KNX']
 });
 
 // KNX Shading.
@@ -47,17 +50,16 @@ rules.JSRule({
   triggers: [triggers.GroupStateChangeTrigger('KNX_BeschattungStatus')],
   execute: event => {
     const item = items.getItem(event.itemName);
-    // logger.info(itemName + ' actual state is: ' + actualState)
+    // console.info(itemName + ' actual state is: ' + actualState)
     const deviceName = item.name.replace('_BeschStat', '');
     if (item.state === 'ON') {
       actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d ' + deviceName, '-l Aut. Verschattung aktiviert.');
-      // logger.info('logged ' + deviceName + ' shading on to the smarthome-log')
+      // console.info('logged ' + deviceName + ' shading on to the smarthome-log')
     } else if (item.state === 'OFF') {
       actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/openhab-log-influxdb.py', '-t knx', '-d ' + deviceName, '-l Aut. Verschattung deaktiviert.');
-      // logger.info('logged ' + deviceName + ' shading off to the smarthome-log')
+      // console.info('logged ' + deviceName + ' shading off to the smarthome-log')
     }
   },
-  id: 'smarthome-log_knx-shading'
+  id: 'smarthome-log_knx-shading',
+  tags: ['SmartHome Log', 'Verschattung']
 });
-
-logger.info('Script loaded.');

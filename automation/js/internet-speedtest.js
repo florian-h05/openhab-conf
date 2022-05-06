@@ -1,19 +1,20 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
+
+Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
 const { rules, triggers, items, time, actions } = require('openhab');
-const logger = require('openhab').log('internet-speedtest-JS');
 
 rules.JSRule({
   name: 'Internet speedtest',
-  description: 'Using Ookla\' speedtest cli',
+  description: 'Using Ookla\'s speedtest cli',
   triggers: [
     triggers.ItemCommandTrigger('SpeedtestRerun', 'ON'),
     triggers.GenericCronTrigger('0 0/15 * * * ? *')
   ],
   execute: data => {
-    logger.info('Starting speedtest.');
+    console.info('Starting speedtest.');
     items.getItem('SpeedtestRunning').postUpdate('Messung läuft ...');
     const output = actions.Exec.executeCommandLine(time.Duration.ofSeconds(40), '/bin/speedtest', '--accept-license', '--accept-gdpr');
     // Split by newline
@@ -47,14 +48,12 @@ rules.JSRule({
       const summary = 'ᐁ ' + down.toFixed(1) + ' Mbit/s  ᐃ ' + up.toFixed(1) + ' Mbit/s (' + ping.toFixed(0) + ' ms)';
       items.getItem('SpeedtestSummary').postUpdate(summary.replaceAll('.', ','));
       items.getItem('SpeedtestRunning').postUpdate('-');
-      logger.info('Speedtest finished.');
+      console.info('Speedtest finished.');
     } else {
-      logger.error('Speedtest failed.');
+      console.error('Speedtest failed.');
       items.getItem('SpeedtestRunning').postUpdate('Letzte Ausführung fehlgeschlagen!');
     }
     items.getItem('SpeedtestRerun').postUpdate('OFF');
   },
   id: 'internet-speedtest'
 });
-
-logger.info('Script loaded.');

@@ -91,15 +91,15 @@ rules.JSRule({
     // For state strings, see: https://github.com/openhab/openhab-addons/blob/main/bundles/org.openhab.binding.networkupstools/src/main/resources/OH-INF/thing/channels.xml#L36
     const stateItem = items.getItem('ups_upsUnnormal');
     if (event.state !== 'OL' && event.state !== 'OL CHRG') {
-      stateItem.sendCommand('ON')
+      stateItem.sendCommand('ON');
     } else {
-      stateItem.sendCommand('OFF')
+      stateItem.sendCommand('OFF');
     }
   },
   id: 'UPS-status-unnormal-boolean',
   tags: ['System', 'Energie', 'USV']
 });
 
-scriptLoaded = () => {
+scriptLoaded = () => { // eslint-disable-line no-undef
   console.info('Script loaded.');
 };

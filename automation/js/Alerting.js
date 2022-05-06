@@ -22,7 +22,7 @@ rules.JSRule({
     */
     const groupname = 'KontakteAufZu';
     const roofwindowString = 'Dachfenster';
-    const ignoreList = [];
+    const ignoreList = ['Treppenhaus_Dachfenster_zu', 'Garagentor_zu'];
     // Set your itemnames.
     const rain = items.getItem('Regenalarm').state; // raining == OPEN
     const wind = parseFloat(items.getItem('Windgeschwindigkeit').state); // in m/s
@@ -116,7 +116,8 @@ rules.JSRule({
       }
     }
   },
-  id: 'rainalarm'
+  id: 'rainalarm',
+  tags: ['Alarme', 'Fenster & Türen']
 });
 
 // Generates an alarm status string.
@@ -158,7 +159,8 @@ rules.JSRule({
     // Post string to openHAB item.
     items.getItem('Alarm_Status').postUpdate(statusString);
   },
-  id: 'alarm-status-string'
+  id: 'alarm-status-string',
+  tags: ['Alarme', 'Status']
 });
 
 // Generates the frost level.
@@ -195,7 +197,7 @@ rules.JSRule({
       items.getItem('Frost_Stufe').postUpdate(frostLevel);
     }
   },
-  id: 'frostLevel'
+  id: 'frost-level'
 });
 
 // Generates the heat level.
@@ -233,7 +235,7 @@ rules.JSRule({
       items.getItem('Hitze_Stufe').postUpdate(heatLevel);
     }
   },
-  id: 'heatLevel'
+  id: 'heat-level'
 });
 
 logger.info('Script loaded.');
