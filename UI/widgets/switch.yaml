@@ -1,6 +1,6 @@
 uid: Switch
-description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
-author: Copyright (c) 2021 Florian Hotze under MIT License
+# description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -17,11 +17,6 @@ props:
     - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb, power or divide_circle
       label: Icon
       name: icon
-      required: false
-      type: TEXT
-    - description: Big icon in the right corner (only openHAB icons) instead of switch
-      label: Big icon
-      name: bigIcon
       required: false
       type: TEXT
     - description: rgba or HEX
@@ -46,8 +41,13 @@ props:
       name: items_total
       required: false
     - description: Display a slider or not
-      label: Slider enable/disable
+      label: Enable slider
       name: sliderOption
+      required: false
+      type: BOOLEAN
+    - description: Display a selector, replaces toggle
+      label: Enable selector
+      name: selectorOption
       required: false
       type: BOOLEAN
     - description: Page or group that pops up
@@ -60,7 +60,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 2, 2021, 3:44:15 PM
+timestamp: May 10, 2022, 10:49:27 PM
 component: f7-card
 config:
   style:
@@ -130,9 +130,27 @@ slots:
           --f7-range-bar-border-radius: 8px
           --f7-range-knob-size: 20px
           --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+    - component: oh-button
+      config:
+        action: options
+        actionItem: =props.item
+        item: =props.item
+        large: false
+        round: false
+        style:
+          position: absolute
+          bottom: -75px
+          width: calc(100% - 30px)
+          font-size: 30px
+          font-weight: 600
+          margin-left: 0px
+          margin-top: 0px
+        text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
+        vertical: false
+        visible: "=props.selectorOption ? props.selectorOption == true ? true : false : false"
     - component: oh-toggle
       config:
-        visible: "=props.bigIcon ? false : true"
+        visible: "=props.selectorOption ? props.selectorOption == true ? false : true : true"
         item: =props.item
         style:
           position: absolute
@@ -140,14 +158,13 @@ slots:
           right: 20px
     - component: oh-icon
       config:
-        visible: "=props.bigIcon ? true : false"
-        icon: =props.bigIcon
-        item: =props.item
-        width: 80px
+        icon: door
+        height: 70px
         style:
           position: absolute
-          top: -10px
+          top: 10px
           right: 15px
+        visible: "=props.selectorOption ? props.selectorOption == true ? true : false : false"
     - component: oh-link
       config:
         visible: "=props.page ? true : false"
@@ -158,5 +175,5 @@ slots:
           position: absolute
           left: 0px
           top: 0px
-          height: 120px
-          width: "=props.bigIcon ? '100%' : 'calc(100% - 75px)'"
+          height: "=props.selectorOption ? props.selectorOption == true ? 70px : 120px : 120px"
+          width: 100%
