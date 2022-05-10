@@ -36,6 +36,7 @@ props:
       name: stateIcon
       required: false
       type: TEXT
+      default: window
     - context: item
       description: Group:Number:COUNT(CLOSED) item for numbers of contacts open
       label: Number of contacts open
@@ -56,29 +57,29 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: May 6, 2022, 7:14:46 PM
+timestamp: May 10, 2022, 10:23:54 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
     margin-left: 5px
     margin-right: 5px
     minWidth: 200px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 16px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -91,67 +92,65 @@ slots:
               visible: "=props.icon ? true : false"
           - component: Label
             config:
-              text: "=props.title ? props.title : ''"
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: "=props.title ? props.title : ''"
     - component: f7-block
       config:
         style:
-          position: absolute
           bottom: -12px
-          left: 16px
           flex-direction: row
+          left: 16px
+          position: absolute
       slots:
         default:
           - component: Label
             config:
-              text: "=props.header ? props.header : 'Set Props'"
               style:
                 font-size: 17px
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
+              text: "=props.header ? props.header : 'Set Props'"
     - component: f7-block
       config:
-        style:
-          position: absolute
-          bottom: -60px
-          width: 100%
         class:
           - text-align-center
+        style:
+          bottom: -60px
+          position: absolute
+          width: 100%
       slots:
         default:
           - component: Label
             config:
-              visible: true
-              text: =items[props.item].displayState
               style:
                 color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === 'kleine Lüftung' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === 'große Lüftung' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 font-weight: 400
                 margin-left: 0px
                 margin-top: 0px
+              text: =items[props.item].displayState
+              visible: true
     - component: oh-icon
       config:
-        visible: true
-        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? 'window-closed' : 'window-open'"
-        width: 80px
-        item: =props.item
+        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.stateIcon + '-closed' : props.stateIcon + '-open'"
+        height: 70px
         style:
           position: absolute
-          top: -30px
-          right: 5px
-          height: 145px
+          top: 10px
+          right: 15px
+        visible: true
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
         action: "=props.action ? props.action : 'navigate'"
-        actionPage: ='page:' + props.page
         actionGroupPopupItem: =props.page
+        actionPage: ='page:' + props.page
         style:
-          position: absolute
-          left: 0px
-          top: 0px
           height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
           width: 100%
+        visible: "=props.page ? true : false"
