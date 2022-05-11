@@ -50,6 +50,11 @@ props:
       name: selectorOption
       required: false
       type: BOOLEAN
+    - description: Big icon in the right corner shown when selector option enabled
+      label: Selector icon
+      name: selectorIcon
+      required: false
+      type: TEXT
     - description: Page or group that pops up
       label: Popup page / group
       name: page
@@ -60,7 +65,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: May 10, 2022, 10:49:27 PM
+timestamp: May 10, 2022, 10:52:17 PM
 component: f7-card
 config:
   style:
@@ -158,7 +163,7 @@ slots:
           right: 20px
     - component: oh-icon
       config:
-        icon: door
+        icon: =props.selectorIcon
         height: 70px
         style:
           position: absolute
