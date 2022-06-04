@@ -1,5 +1,6 @@
 uid: amplifierPlayback
 # description: control playback and display playback information of an amplifier
+# note: this widget requires an Item naming scheme: itemname + '_Power', '_Playback', '_Playback_Song', '_Playback_Artist'
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -14,38 +15,19 @@ props:
       name: bgcolor
       required: false
       type: TEXT
-    - context: item
-      description: Item for power
-      label: Power
-      name: item_power
-      required: true
-      type: TEXT
-    - context: item
-      description: Item for title
-      label: Title
-      name: item_title
-      required: true
-      type: TEXT
-    - context: item
-      description: Item for artist
-      label: Artist
-      name: item_artist
-      required: true
-      type: TEXT
-    - context: item
-      description: Item for playback control
-      label: Playback control
-      name: item_playback
+    - description: "Base of amplifier Item names; naming scheme required: itemname + '_Power', '_Playback', '_Playback_Song', '_Playback_Artist'"
+      label: Base Item
+      name: itemname
       required: true
       type: TEXT
     - default: "false"
-      description: false for Yamaha Receiver binding, true for default Player Item (e.g. Yamaha MusicCast binding)
-      label: Playback command mode
+      description: Off for Yamaha Receiver binding, on for default Player Item (e.g. Yamaha MusicCast binding)
+      label: Use default player control
       name: musiccast
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Mar 20, 2022, 10:53:36 PM
+timestamp: Jun 4, 2022, 5:17:36 PM
 component: f7-card
 config:
   style:
@@ -89,7 +71,7 @@ slots:
           left: 16px
           position: absolute
           top: 60px
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
       slots:
         default:
           - component: Label
@@ -100,7 +82,7 @@ slots:
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
-              text: =items[props.item_title].state
+              text: =items[props.itemname + '_Playback_Song'].state
     - component: f7-block
       config:
         class:
@@ -110,7 +92,7 @@ slots:
           left: 16px
           position: absolute
           top: 102px
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
       slots:
         default:
           - component: Label
@@ -119,12 +101,12 @@ slots:
                 font-size: 13px
                 font-weight: 300
                 margin-top: 0px
-              text: =items[props.item_artist].state
+              text: =items[props.itemname + '_Playback_Artist'].state
     - component: oh-button
       config:
         action: command
         actionCommand: "=props.musiccast == true ? 'PREVIOUS' : 'Previous'"
-        actionItem: =props.item_playback
+        actionItem: =props.itemname + '_Playback'
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: lessthan_circle
         iconSize: 30px
@@ -135,12 +117,12 @@ slots:
           position: absolute
           right: 80px
           top: 15px
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
     - component: oh-button
       config:
         action: command
         actionCommand: "=props.musiccast == true ? 'PAUSE' : 'Pause'"
-        actionItem: =props.item_playback
+        actionItem: =props.itemname + '_Playback'
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: pause_circle
         iconSize: 30px
@@ -151,12 +133,12 @@ slots:
           position: absolute
           right: 45px
           top: 15px
-        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state !== 'Pause' ? (items[props.item_playback].state !== 'PAUSE' ? true : false) : false) : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? (items[props.itemname + '_Playback'].state !== 'Pause' ? (items[props.itemname + '_Playback'].state !== 'PAUSE' ? true : false) : false) : false"
     - component: oh-button
       config:
         action: command
         actionCommand: "=props.musiccast == true ? 'PLAY' : 'Play'"
-        actionItem: =props.item_playback
+        actionItem: =props.itemname + '_Playback'
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: play_circle
         iconSize: 30px
@@ -167,12 +149,12 @@ slots:
           position: absolute
           right: 45px
           top: 15px
-        visible: "=items[props.item_power].state == 'ON' ? (items[props.item_playback].state === 'Pause' ? true : (items[props.item_playback].state === 'PAUSE' ? true : false)) : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? (items[props.itemname + '_Playback'].state === 'Pause' ? true : (items[props.itemname + '_Playback'].state === 'PAUSE' ? true : false)) : false"
     - component: oh-button
       config:
         action: command
         actionCommand: "=props.musiccast == true ? 'NEXT' : 'Next'"
-        actionItem: =props.item_playback
+        actionItem: =props.itemname + '_Playback'
         iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: greaterthan_circle
         iconSize: 30px
@@ -183,7 +165,7 @@ slots:
           position: absolute
           right: 10px
           top: 15px
-        visible: "=items[props.item_power].state == 'ON' ? true : false"
+        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
     - component: f7-block
       config:
         class:
@@ -202,4 +184,4 @@ slots:
                 font-weight: 400
                 margin-top: 0px
               text: Bitte anschalten!
-              visible: "=items[props.item_power].state === 'OFF' ? true : false"
+              visible: "=items[props.itemname + '_Power'].state === 'OFF' ? true : false"

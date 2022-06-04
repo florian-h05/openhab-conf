@@ -15,7 +15,7 @@ props:
       name: bgcolor
       required: false
       type: TEXT
-    - description: "Base of the Items names; naming scheme required: itemname + '_Power', '_Mute', '_Volume', '_Input'; if an Item is not available, the control element is hidden"
+    - description: "Base of amplifier Item names; naming scheme required: itemname + '_Power', '_Mute', '_Volume', '_Input'; if an Item is not available, the control element is hidden"
       label: Base Item
       name: itemname
       required: true
