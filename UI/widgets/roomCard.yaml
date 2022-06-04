@@ -124,65 +124,65 @@ props:
       name: door_lock
       required: false
       type: TEXT
-timestamp: Nov 7, 2021, 8:29:36 PM
+timestamp: Dec 24, 2021, 4:27:46 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    class:
-      - padding: 0px
+    background-image: ='url(' + props.image + ')'
+    background-position: center
+    background-size: cover
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-image: ='url(' + props.image + ')'
-    background-size: cover
-    background-position: center
+    class:
+      - padding: 0px
     height: 130px
     margin-left: 5px
     margin-right: 5px
+    noShadow: false
 slots:
   content:
     - component: f7-block
       config:
-        visible: "=props.text_header ? true : false"
         style:
-          position: absolute
-          top: -5px
-          right: 16px
           background: =props.bgcolor
-          opacity: =props.bgopacity
           border-radius: 7px
+          opacity: =props.bgopacity
+          position: absolute
+          right: 16px
+          top: -5px
+        visible: "=props.text_header ? true : false"
       slots:
         default:
           - component: Label
             config:
-              text: =props.text_header
               style:
                 color: =props.color
                 font-size: 20px
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
+              text: =props.text_header
     - component: f7-block
       config:
         style:
-          position: absolute
+          background: =props.bgcolor
+          border-radius: 7px
           bottom: -75px
           left: 16px
-          background: =props.bgcolor
           opacity: =props.bgopacity
-          border-radius: 7px
+          position: absolute
       slots:
         default:
           - component: f7-chip
             config:
-              style:
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.light ? true : false"
-              text: "=props.lights_number ? ((items[props.light].state == 'ON') ? items[props.lights_number].state : '') : ''"
-              textColor: =props.color
               iconColor: =props.color
               iconF7: "=items[props.light].state == 'ON' ? 'lightbulb_fill' : 'lightbulb_slash'"
               iconSize: 18
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              text: "=props.lights_number ? ((items[props.light].state == 'ON') ? items[props.lights_number].state : '') : ''"
+              textColor: =props.color
+              visible: "=props.light ? true : false"
           - component: f7-chip
             config:
               style:
@@ -200,9 +200,9 @@ slots:
             config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.window ? true : false"
               text: "=(items[props.window].state == 'OPEN') ? (props.windows_number ? items[props.windows_number].state : '') : ''"
               textColor: =props.color
+              visible: "=props.window ? true : false"
             slots:
               media:
                 - component: oh-icon
@@ -213,107 +213,107 @@ slots:
                       height: 24px
           - component: f7-chip
             config:
-              style:
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.door_lock ? true : false"
-              text: "=items[props.door_lock].state === 'ON' ? '' : ''"
               iconColor: =props.color
               iconF7: "=items[props.door_lock].state === 'ON' ? 'lock_open' : 'lock'"
               iconSize: 18
-          - component: f7-chip
-            config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.blinds ? true : false"
-              text: "=props.blinds2 ? items[props.blinds].state + ' | ' + items[props.blinds2].displayState : items[props.blinds].displayState"
-              textColor: =props.color
+              text: "=items[props.door_lock].state === 'ON' ? '' : ''"
+              visible: "=props.door_lock ? true : false"
+          - component: f7-chip
+            config:
               iconColor: =props.color
               iconF7: arrow_up_arrow_down
               iconSize: 18
-          - component: f7-chip
-            config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.speaker ? true : false"
+              text: "=props.blinds2 ? items[props.blinds].state + ' | ' + items[props.blinds2].displayState : items[props.blinds].displayState"
+              textColor: =props.color
+              visible: "=props.blinds ? true : false"
+          - component: f7-chip
+            config:
               iconColor: =props.color
               iconF7: "=items[props.speaker].state === 'ON' ? 'speaker_3_fill' : 'speaker_slash'"
               iconSize: 18
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.speaker ? true : false"
     - component: f7-block
       config:
         style:
-          position: absolute
+          background: =props.bgcolor
+          border-radius: 7px
           bottom: -45px
           left: 16px
-          background: =props.bgcolor
           opacity: =props.bgopacity
-          border-radius: 7px
+          position: absolute
       slots:
         default:
           - component: f7-chip
             config:
-              style:
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.temp ? true : false"
-              text: "=(items[props.temp].displayState) +  (props.settemp ? ' (' + items[props.settemp].displayState + ')' : '')"
-              textColor: =props.color
               iconColor: =props.color
               iconF7: thermometer
               iconSize: 18
-          - component: f7-chip
-            config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: =items[props.heating].state === 'ON'
+              text: "=(items[props.temp].displayState ? items[props.temp].displayState : items[props.temp].state) +  (props.settemp ? ' (' + (items[props.settemp].displayState ? items[props.settemp].displayState : items[props.settemp].state) + ')' : '')"
+              textColor: =props.color
+              visible: "=props.temp ? true : false"
+          - component: f7-chip
+            config:
               iconColor: =props.color
               iconF7: flame
               iconSize: 18
-          - component: f7-chip
-            config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: =items[props.cooling].state === 'ON'
+              visible: =items[props.heating].state === 'ON'
+          - component: f7-chip
+            config:
               iconColor: =props.color
               iconF7: circle_grid_hex
               iconSize: 18
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: =items[props.cooling].state === 'ON'
     - component: f7-block
       config:
         style:
-          position: absolute
+          background: =props.bgcolor
+          border-radius: 7px
           bottom: -15px
           left: 16px
-          background: =props.bgcolor
           opacity: =props.bgopacity
-          border-radius: 7px
+          position: absolute
       slots:
         default:
           - component: f7-chip
             config:
-              style:
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.humidity ? true : false"
-              text: =items[props.humidity].displayState
-              textColor: =props.color
               iconColor: =props.color
               iconF7: drop
               iconSize: 18
-          - component: f7-chip
-            config:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              visible: "=props.illuminance ? true : false"
-              text: =items[props.illuminance].displayState
+              text: =items[props.humidity].displayState
               textColor: =props.color
+              visible: "=props.humidity ? true : false"
+          - component: f7-chip
+            config:
               iconColor: =props.color
               iconF7: sun_min
               iconSize: 18
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              text: =items[props.illuminance].displayState
+              textColor: =props.color
+              visible: "=props.illuminance ? true : false"
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
         action: navigate
         actionPage: ='page:' + props.page
         style:
-          position: absolute
-          left: 0px
-          top: 0px
           height: 125px
+          left: 0px
+          position: absolute
+          top: 0px
           width: 100%
+        visible: "=props.page ? true : false"
