@@ -293,7 +293,7 @@ slots:
               iconSize: 18
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              text: =items[props.humidity].displayState
+              text: "=items[props.humidity].displayState ? items[props.humidity].displayState : items[props.humidity].state"
               textColor: =props.color
               visible: "=props.humidity ? true : false"
           - component: f7-chip
@@ -303,7 +303,7 @@ slots:
               iconSize: 18
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
-              text: =items[props.illuminance].displayState
+              text: "=items[props.illuminance].displayState ? items[props.illuminance].displayState : items[props.illuminance].state"
               textColor: =props.color
               visible: "=props.illuminance ? true : false"
     - component: oh-link
