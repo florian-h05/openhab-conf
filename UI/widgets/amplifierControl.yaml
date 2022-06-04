@@ -1,5 +1,6 @@
 uid: amplifierControl
 # description: control power, mute, volume and input of an amplifier
+# note: this widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input'; if an Item is not available, the control element is hidden
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
@@ -14,29 +15,10 @@ props:
       name: bgcolor
       required: false
       type: TEXT
-    - context: item
-      description: Item for power
-      label: Power
-      name: item_power
+    - description: "Base of the Items names; naming scheme required: itemname + '_Power', '_Mute', '_Volume', '_Input'; if an Item is not available, the control element is hidden"
+      label: Base Item
+      name: itemname
       required: true
-      type: TEXT
-    - context: item
-      description: Item for volume
-      label: Volume
-      name: item_volume
-      required: false
-      type: TEXT
-    - context: item
-      description: Item for Mute
-      label: Mute
-      name: item_mute
-      required: false
-      type: TEXT
-    - context: item
-      description: Item for Input
-      label: Input
-      name: item_input
-      required: false
       type: TEXT
     - description: key=value pairs, defaults to stateDescription's options of Item when empty
       label: Input actions
@@ -54,7 +36,7 @@ props:
       required: false
       advanced: true
   parameterGroups: []
-timestamp: Apr 2, 2022, 8:00:31 PM
+timestamp: Jun 4, 2022, 5:02:33 PM
 component: f7-card
 config:
   style:
@@ -96,8 +78,8 @@ slots:
         action: toggle
         actionCommand: OFF
         actionCommandAlt: ON
-        actionItem: =props.item_power
-        iconColor: "=items[props.item_power].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        actionItem: =props.itemname + '_Power'
+        iconColor: "=items[props.itemname + '_Power'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: hifispeaker
         iconSize: 30px
         large: false
@@ -107,14 +89,13 @@ slots:
           position: absolute
           right: 10px
           top: 15x
-        visible: "items[props.item_power].state === 'ON' ? true : false"
     - component: oh-button
       config:
         action: toggle
         actionCommand: OFF
         actionCommandAlt: ON
-        actionItem: =props.item_mute
-        iconColor: "=items[props.item_mute].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
+        actionItem: =props.itemname + '_Mute'
+        iconColor: "=items[props.itemname + '_Mute'].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
         iconF7: speaker_slash
         iconSize: 30px
         large: false
@@ -124,10 +105,10 @@ slots:
           position: absolute
           right: 50px
           top: 15px
-        visible: "=props.item_mute ? items[props.item_power].state === 'ON' ? true : false : false"
+        visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Mute'].state !== '-' ? true : false) : false"
     - component: oh-slider
       config:
-        item: =props.item_volume
+        item: =props.itemname + '_Volume'
         max: "=props.volumeMax ? props.volumeMax : -20"
         min: "=props.volumeMin ? props.volumeMin : -80"
         releaseOnly: true
@@ -142,13 +123,13 @@ slots:
           left: 20px
           position: absolute
           width: calc(100% - 40px)
-        visible: "=props.item_volume ? items[props.item_power].state === 'ON' ? true : false : false"
+        visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Volume'].state !== '-' ? true : false) : false"
     - component: oh-button
       config:
         action: options
-        actionItem: =props.item_input
+        actionItem: =props.itemname + '_Input'
         actionOptions: =props.inputActions
-        item: =props.item_input
+        item: =props.itemname + '_Input'
         large: false
         round: false
         style:
@@ -159,9 +140,9 @@ slots:
           margin-top: 0px
           position: absolute
           top: 40px
-        text: "='Eingang: ' + items[props.item_input].state"
+        text: "='Eingang: ' + (items[props.itemname + '_Input'].displayState ? items[props.itemname + '_Input'].displayState : items[props.itemname + '_Input'].state)"
         vertical: false
-        visible: "=props.item_input ? items[props.item_power].state === 'ON' ? true : false : false"
+        visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Input'].state !== '-' ? true : false) : false"
     - component: f7-block
       config:
         class:
@@ -180,4 +161,4 @@ slots:
                 font-weight: 400
                 margin-top: 0px
               text: Bitte anschalten!
-              visible: "=items[props.item_power].state === 'OFF' ? true : false"
+              visible: "=items[props.itemname + '_Power'].state === 'OFF' ? true : false"
