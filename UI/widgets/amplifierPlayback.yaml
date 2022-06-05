@@ -20,6 +20,12 @@ props:
       name: itemname
       required: true
       type: TEXT
+    - context: item
+      description: Item for power, overwrites itemname + '_Volume'
+      label: Power
+      name: item_power
+      required: false
+      type: TEXT
     - default: "false"
       description: Off for Yamaha Receiver binding, on for default Player Item (e.g. Yamaha MusicCast binding)
       label: Use default player control
@@ -27,7 +33,7 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jun 4, 2022, 5:17:36 PM
+timestamp: Jun 5, 2022, 7:25:58 PM
 component: f7-card
 config:
   style:
@@ -71,7 +77,7 @@ slots:
           left: 16px
           position: absolute
           top: 60px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? true : false) : items[props.itemname + '_Power'].state === 'ON' ? true : false"
       slots:
         default:
           - component: Label
@@ -92,7 +98,7 @@ slots:
           left: 16px
           position: absolute
           top: 102px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? true : false) : items[props.itemname + '_Power'].state === 'ON' ? true : false"
       slots:
         default:
           - component: Label
@@ -117,7 +123,7 @@ slots:
           position: absolute
           right: 80px
           top: 15px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? true : false) : items[props.itemname + '_Power'].state === 'ON' ? true : false"
     - component: oh-button
       config:
         action: command
@@ -133,7 +139,7 @@ slots:
           position: absolute
           right: 45px
           top: 15px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? (items[props.itemname + '_Playback'].state !== 'Pause' ? (items[props.itemname + '_Playback'].state !== 'PAUSE' ? true : false) : false) : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? (items[props.itemname + '_Playback'].state !== 'Pause' ? (items[props.itemname + '_Playback'].state !== 'PAUSE' ? true : false) : false) : false) : items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== 'Pause' ? (items[props.itemname + '_Playback'].state !== 'PAUSE' ? true : false) : false) : false"
     - component: oh-button
       config:
         action: command
@@ -149,7 +155,7 @@ slots:
           position: absolute
           right: 45px
           top: 15px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? (items[props.itemname + '_Playback'].state === 'Pause' ? true : (items[props.itemname + '_Playback'].state === 'PAUSE' ? true : false)) : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? (items[props.itemname + '_Playback'].state === 'Pause' ? true : (items[props.itemname + '_Playback'].state === 'PAUSE' ? true : false)) : false) : items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state === 'Pause' ? true : (items[props.itemname + '_Playback'].state === 'PAUSE' ? true : false)) : false"
     - component: oh-button
       config:
         action: command
@@ -165,7 +171,7 @@ slots:
           position: absolute
           right: 10px
           top: 15px
-        visible: "=items[props.itemname + '_Power'].state == 'ON' ? true : false"
+        visible: "=props.item_power ? (items[props.item_power].state === 'ON' ? true : false) : items[props.itemname + '_Power'].state === 'ON' ? true : false"
     - component: f7-block
       config:
         class:
@@ -184,4 +190,4 @@ slots:
                 font-weight: 400
                 margin-top: 0px
               text: Bitte anschalten!
-              visible: "=items[props.itemname + '_Power'].state === 'OFF' ? true : false"
+              visible: "=props.item_power ? (items[props.item_power].state === 'OFF' ? true : false) : items[props.itemname + '_Power'].state === 'OFF' ? true : false"
