@@ -15,7 +15,7 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Mar 29, 2022, 3:07:22 PM
+timestamp: Jun 5, 2022, 7:46:48 PM
 component: f7-card
 config:
   style:
@@ -79,7 +79,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: "=items.pv_EToday.state + ' | ' + items.pv_ETotal.displayState"
+              text: =items.pv_EToday.displayState + ' | ' + items.pv_ETotal.displayState
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -89,7 +89,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: "='Stand: ' + items.pv_lastRefresh.displayState"
+              text: =items.pv_lastRefresh.displayState
               visible: "=props.displayLastUpdate ? (props.displayLastUpdate == true ? true : false) : false"
     - component: oh-icon
       config:
