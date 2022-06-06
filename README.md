@@ -20,6 +20,8 @@
 ## JavaScript Scripting
 
 My JavaScript tools are at [openhab-js-tools](https://github.com/florian-h05/openhab-js-tools).
+This npm module also provides numerous JavaScript rules, see [openhab-js-tools : JSDoc](https://florian-h05.github.io/openhab-js-tools/).
+
 You may also have a look at [rkoshak/openhab-rules-tools](https://github.com/rkoshak/openhab-rules-tools).
 
 To access the old NashornJS tools, head over to the [nashorn-js-libs branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-libs).
