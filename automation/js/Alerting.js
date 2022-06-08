@@ -1,11 +1,12 @@
 /*
 Copyright (c) 2021 Florian Hotze under MIT License
 
-Extended by Alerting_frost-heatalarm.js with frost- and heatalarms.
+See openhab-js-tool alerting - https://florian-h05.github.io/openhab-js-tools/rulesx.alerting.html for alerting rules.
+
 Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
-const { rules, triggers, items, actions } = require('openhab');
+const { rules, triggers, items } = require('openhab');
 const logger = require('openhab').log('alerting-JS');
 
 // Generates an alarm status string.
