@@ -65,7 +65,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: May 10, 2022, 11:03:04 PM
+timestamp: Jun 10, 2022, 8:55:27 PM
 component: f7-card
 config:
   style:
@@ -180,5 +180,5 @@ slots:
           left: 0px
           position: absolute
           top: 0px
-          width: 100%
+          width: calc(100% - 70px)
         visible: "=props.page ? true : false"
