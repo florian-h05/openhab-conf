@@ -1,6 +1,5 @@
 # openHAB configuration [@florian-h05](https://github.com/florian-h05)
 
-
 ***
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
@@ -25,6 +24,8 @@ This npm module also provides numerous JavaScript rules, see [openhab-js-tools :
 You may also have a look at [rkoshak/openhab-rules-tools](https://github.com/rkoshak/openhab-rules-tools).
 
 To access the old NashornJS tools, head over to the [nashorn-js-libs branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-libs).
+
+To access the old NashornJS scrips, head over to the [nashorn-js-scripts branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-scripts).
 
 ***
 ## Color design
