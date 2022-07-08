@@ -28,7 +28,7 @@ props:
       description: Item to control, groups also work
       label: Control item
       name: item
-      required: true
+      required: false
       type: TEXT
     - context: item
       description: Item with number of devices on
@@ -50,6 +50,12 @@ props:
       name: selectorOption
       required: false
       type: BOOLEAN
+    - description: Options for selector
+      label: Selector options
+      name: actionOptions
+      required: false
+      type: TEXT
+      advanced: true
     - description: Big icon in the right corner shown when selector option enabled
       label: Selector icon
       name: selectorIcon
@@ -59,13 +65,20 @@ props:
       label: Popup page / group
       name: page
       required: false
-    - description: Action to perform on click, e.g. group. Default to navigate.
+    - description: Action to perform on click, e.g. group. Default to navigate. (See https://www.openhab.org/docs/ui/components/oh-button.html#action)
       label: Action
       name: action
       required: false
       type: TEXT
+      advanced: true
+    - description: Action url to open on click
+      label: Action url
+      name: action_url
+      required: false
+      type: TEXT
+      advanced: true
   parameterGroups: []
-timestamp: Jun 10, 2022, 8:55:27 PM
+timestamp: Jul 8, 2022, 4:13:00 PM
 component: f7-card
 config:
   style:
@@ -139,6 +152,8 @@ slots:
       config:
         action: options
         actionItem: =props.item
+        actionOptions: =props.actionOptions
+        actionFeedback: Done!
         item: =props.item
         large: false
         round: false
@@ -160,7 +175,7 @@ slots:
           position: absolute
           right: 20px
           top: 15px
-        visible: "=props.selectorOption ? props.selectorOption == true ? false : true : true"
+        visible: "=props.selectorOption ? props.selectorOption == true ? false : true : props.action_url ? false : true"
     - component: oh-icon
       config:
         height: 70px
@@ -175,6 +190,7 @@ slots:
         action: "=props.action ? props.action : 'navigate'"
         actionGroupPopupItem: =props.page
         actionPage: ='page:' + props.page
+        actionUrl: =props.actionUrl
         style:
           height: "=props.selectorOption ? props.selectorOption == true ? '70px' : '120px' : '120px'"
           left: 0px
