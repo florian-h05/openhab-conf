@@ -1,4 +1,4 @@
-uid: Switch
+uid: switch
 # description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
@@ -19,64 +19,61 @@ props:
       name: icon
       required: false
       type: TEXT
+    - description: Big icon shown in the upper right corner (you need to hide the toggle (see advanced options))
+      label: Big openHAB Icon
+      name: bigOhIcon
+      required: false
+      advanced: true
+      type: TEXT  
     - description: rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
     - context: item
-      description: Item to control, groups also work
-      label: Control item
+      description: Item to control
+      label: Control Item
       name: item
       required: false
       type: TEXT
     - context: item
       description: Item with number of devices on
-      label: Devices on
+      label: Number of Items ON in the Group (Item)
       name: item_counter
       required: false
       type: TEXT
     - description: Number of total devices (in room, house, ...)
-      label: Devices total number
+      label: Total number of Items in group
       name: items_total
       required: false
-    - description: Display a slider or not
+    - description: Display a slider
       label: Enable slider
-      name: sliderOption
+      name: sliderEnable
       required: false
       type: BOOLEAN
-    - description: Display a selector, replaces toggle
-      label: Enable selector
-      name: selectorOption
+    - label: Hide toggle
+      name: toggleHide
       required: false
-      type: BOOLEAN
-    - description: Options for selector
-      label: Selector options
-      name: actionOptions
-      required: false
-      type: TEXT
       advanced: true
-    - description: Big icon in the right corner shown when selector option enabled
-      label: Selector icon
-      name: selectorIcon
+      type: BOOLEAN  
+    - description: "Display a selector, see 'Action configuration' to set the options in 'value=label' syntax (leave empty to use Item configuration)"
+      label: Enable selector
+      name: selectorEnable
       required: false
-      type: TEXT
-    - description: Page or group that pops up
-      label: Popup page / group
-      name: page
-      required: false
-    - description: Action to perform on click, e.g. group. Default to navigate. (See https://www.openhab.org/docs/ui/components/oh-button.html#action)
+      advanced: true
+      type: BOOLEAN
+    - description: "Action to perform on click, e.g. group, see https://www.openhab.org/docs/ui/components/oh-button.html#action)"
       label: Action
       name: action
       required: false
+      advanced: true       
       type: TEXT
-      advanced: true
-    - description: Action url to open on click
-      label: Action url
-      name: action_url
+    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
+      label: Action configuration
+      name: action_config
       required: false
-      type: TEXT
       advanced: true
+      type: TEXT
   parameterGroups: []
 timestamp: Jul 8, 2022, 4:13:00 PM
 component: f7-card
@@ -147,13 +144,13 @@ slots:
           left: 20px
           position: absolute
           width: calc(100% - 40px)
-        visible: "=props.sliderOption == true ? true : false"
+        visible: "=props.sliderEnable == true ? true : false"
     - component: oh-button
       config:
         action: options
         actionItem: =props.item
-        actionOptions: =props.actionOptions
-        actionFeedback: Done!
+        actionOptions: =props.action_config
+        actionFeedback: 'Erledigt!'
         item: =props.item
         large: false
         round: false
@@ -167,7 +164,7 @@ slots:
           width: calc(100% - 30px)
         text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
         vertical: false
-        visible: "=props.selectorOption ? props.selectorOption == true ? true : false : false"
+        visible: "=props.selectorEnable === true ? true : false"
     - component: oh-toggle
       config:
         item: =props.item
@@ -175,26 +172,26 @@ slots:
           position: absolute
           right: 20px
           top: 15px
-        visible: "=props.selectorOption ? props.selectorOption == true ? false : true : props.action_url ? false : true"
+        visible: "=props.toggleHide !== true ? true : false"
     - component: oh-icon
       config:
         height: 70px
-        icon: =props.selectorIcon
+        icon: =props.bigOhIcon
         style:
           position: absolute
           right: 15px
           top: 10px
-        visible: "=props.selectorOption ? props.selectorOption == true ? true : false : false"
+        visible: "=props.bigOhIcon ? true : false"
     - component: oh-link
       config:
-        action: "=props.action ? props.action : 'navigate'"
-        actionGroupPopupItem: =props.page
-        actionPage: ='page:' + props.page
+        action: =props.action
+        actionGroupPopupItem: =props.action_config
+        actionPage: ='page:' + props.action_config
         actionUrl: =props.actionUrl
         style:
-          height: "=props.selectorOption ? props.selectorOption == true ? '70px' : '120px' : '120px'"
+          height: "=props.selectorEnable == true ? '70px' : '120px'"
           left: 0px
           position: absolute
           top: 0px
           width: calc(100% - 70px)
-        visible: "=props.page ? true : false"
+        visible: "=props.action ? true : false"
