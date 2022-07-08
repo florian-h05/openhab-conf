@@ -1,0 +1,72 @@
+# description: This page provides an interface for your DoorBird video doorbell in landscape orientation.
+# description: You may use this in a tabbed page.
+config:
+  label: Türklingel
+  style:
+    background: url(http://<doorbird-ip>/bha-api/video.cgi?http-user=<doorbird-username>&http-password=<doorbird-password>)
+    background-position: center
+    background-size: cover
+blocks:
+  - component: oh-block
+    config: {}
+    slots:
+      default:
+        - component: oh-grid-row
+          config: {}
+          slots:
+            default:
+              - component: oh-grid-col
+                config:
+                  width: "100"
+                  medium: "35"
+                  small: "50"
+                  large: "30"
+                  xlarge: "25"
+                slots:
+                  default:
+                    - component: widget:doorbell
+                      config:
+                        page: Doorbell_History
+        - component: oh-grid-row
+          config: {}
+          slots:
+            default:
+              - component: oh-grid-col
+                config:
+                  width: "40"
+                  medium: "20"
+                  small: "30"
+                slots:
+                  default:
+                    - component: widget:control
+                      config:
+                        selectorEnable: true
+                        toggleHide: true
+                        action_config: ON=öffnen
+                        item: Doorbell_Relay1
+                        title: Türklingel
+                        header: Türöffner
+                        icon: lock_open
+        - component: oh-grid-row
+          config: {}
+          slots:
+            default:
+              - component: oh-grid-col
+                config:
+                  width: "40"
+                  medium: "20"
+                  small: "30"
+                slots:
+                  default:
+                    - component: widget:control
+                      config:
+                        selectorEnable: true
+                        action_config: ON=an
+                        item: Doorbell_Light
+                        title: Türklingel
+                        header: Nachtsicht
+                        icon: lightbulb
+                        toggleHide: true
+masonry: []
+grid: []
+canvas: []
