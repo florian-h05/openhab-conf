@@ -1,1 +1,0 @@
-This folder contains archived scripts, which are not used anymore.
