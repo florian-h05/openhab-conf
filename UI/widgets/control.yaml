@@ -1,4 +1,4 @@
-uid: switch
+uid: control
 # description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
@@ -23,9 +23,8 @@ props:
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
-      advanced: true
       type: TEXT  
-    - description: rgba or HEX
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
@@ -62,7 +61,7 @@ props:
       required: false
       advanced: true
       type: BOOLEAN
-    - description: "Action to perform on click, e.g. group, see https://www.openhab.org/docs/ui/components/oh-button.html#action)"
+    - description: "Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action)."
       label: Action
       name: action
       required: false
