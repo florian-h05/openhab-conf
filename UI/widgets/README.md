@@ -53,3 +53,21 @@ Example: How to open a popup to control a group and it‘s members?
 Example: How to navigate to a page?
 - Set the `action` prop (advanced) to `navigate`.
 - Set the `action_config` prop (advanced) to the name of the page.
+
+## Widget [`doorbell`](./doorbell.yaml)
+
+A widget specifically designed for usage with the DoorBird video doorbells/door intercoms, but should also work for others.
+
+![](./images/doorbell/dark.jpeg)
+
+The vertical widget provides a button pressed and a motion state icon at the top.
+A click on opens a page, which might show historic images like last motion or last time button was pressed.
+Next to the status, three control buttons follow:
+One to enable the lights (e.g. infrared lights of DoorBird video doorbells).
+Another to talk to the doorbell/door intercom using the `oh-sipclient` component.
+This component allow the MainUI to act as a SIP Client (SIP over WebSocket/WebRTC, which is not supported by all routers — for Fritz!Box, see [webrtc-sip-gw](https://github.com/florian-h05/webrtc-sip-gw)).
+And the last button to energize the relay and open the door.
+
+### Configuration
+
+Configuration is straight forward and requires no further explanation.
