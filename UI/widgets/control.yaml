@@ -19,11 +19,11 @@ props:
       name: icon
       required: false
       type: TEXT
-    - description: Big icon shown in the upper right corner (you need to hide the toggle (see advanced options))
+    - description: Big icon shown in the upper right corner (hides the toggle)
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
-      type: TEXT  
+      type: TEXT
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
@@ -45,36 +45,31 @@ props:
       label: Total number of Items in group
       name: items_total
       required: false
+      type: TEXT
     - description: Display a slider
       label: Enable slider
       name: sliderEnable
       required: false
       type: BOOLEAN
-    - label: Hide toggle
-      name: toggleHide
-      required: false
-      advanced: true
-      type: BOOLEAN  
-    - description: "Display a selector, see 'Action configuration' to set the options in 'value=label' syntax (leave empty to use Item configuration)"
+    - description: Display a selector (hides toggle & slider), see 'Action configuration' (advanced) to set the options in 'value=label' syntax (leave empty to use Item configuration)
       label: Enable selector
       name: selectorEnable
       required: false
-      advanced: true
       type: BOOLEAN
-    - description: "Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action)."
+    - description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
-      advanced: true       
       type: TEXT
+      advanced: true
     - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
       label: Action configuration
       name: action_config
       required: false
-      advanced: true
       type: TEXT
+      advanced: true
   parameterGroups: []
-timestamp: Jul 8, 2022, 4:13:00 PM
+timestamp: Jul 26, 2022, 11:48:39 PM
 component: f7-card
 config:
   style:
@@ -143,13 +138,13 @@ slots:
           left: 20px
           position: absolute
           width: calc(100% - 40px)
-        visible: "=props.sliderEnable == true ? true : false"
+        visible: "=props.sliderEnable === true && props.selectorEnable !== true ? true : false"
     - component: oh-button
       config:
         action: options
+        actionFeedback: Erledigt!
         actionItem: =props.item
         actionOptions: =props.action_config
-        actionFeedback: 'Erledigt!'
         item: =props.item
         large: false
         round: false
@@ -171,7 +166,7 @@ slots:
           position: absolute
           right: 20px
           top: 15px
-        visible: "=props.toggleHide !== true ? true : false"
+        visible: "=props.selectorEnable !== true && !props.bigOhIcon ? true : false"
     - component: oh-icon
       config:
         height: 70px

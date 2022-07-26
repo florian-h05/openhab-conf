@@ -13,12 +13,11 @@ This is probably the most universal widget in this collection, as it provides mu
 Configure the Item with the `item` param.
 
 The following ways of controlling that Item are available:
-- toggle (default): Displays a simple toggle (on/off) in the upper right corner. 
-  Might be hidden with the `toggleHide` param (advanced).
+- toggle (default): Displays a simple toggle (on/off) in the upper right corner.
 - slider: Displays a slider at the bottom.
   Enabled with the `sliderEnable` param.
 - selector (advanced): Displays a selector at the bottom which opens a popup with multiple options on click.
-  Enabled with the `selectorEnable` param (advanced), might be practical to disable the toggle with the `toggleHide` param (advanced).
+  Enabled with the `selectorEnable` param (advanced), hides both toggle and slider.
   Options can be configured in `value=label` syntax with the `action_config` param (advanced), leave empty to use default Item configuration.
 
 ### Style configuration
