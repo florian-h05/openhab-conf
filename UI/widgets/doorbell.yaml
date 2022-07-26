@@ -1,0 +1,140 @@
+uid: doorbell
+# description: Doorbell control widget (designed for DoorBird video doorbells) with light and relay control as well as speach support (SIP Client), button pressed and motion state
+# author: Copyright (c) 2022 Florian Hotze under MIT License
+tags: []
+props:
+  parameters:
+    - context: item
+      description: Door light Item
+      label: Light
+      name: light
+      required: true
+      type: TEXT
+    - context: item
+      description: Door relay Item to open door
+      label: Door relay
+      name: doorRelay
+      required: true
+      type: TEXT
+    - context: item
+      description: Doorbell pressed Item
+      label: Doorbell pressed
+      name: buttonPressed
+      required: true
+      type: TEXT
+    - context: item
+      description: Motion Item
+      label: Motion
+      name: motion
+      required: true
+      type: TEXT
+    - description: History popup page
+      label: History page
+      name: page
+      required: false
+      type: TEXT
+    - description: Full URL of the WebRTC SIP websocket, e.g. 'wss://siphost:8089/ws' or relative path, e.g. '/ws', for Android & iOS, you need wss (WebSocket secured)
+      label: WebSocket URL
+      name: websocketUrl
+      required: true
+      type: TEXT
+    - description: SIP Domain
+      label: Domain
+      name: domain
+      required: true
+      type: TEXT
+    - description: SIP Username
+      label: Username
+      name: username
+      required: true
+      type: TEXT
+    - description: SIP Password
+      label: Password
+      name: password
+      required: true
+      type: TEXT
+    - description: Enable ringback and ring tone. Might cause issues with your browser, so that your call fails
+      label: Enable tones
+      name: enableTones
+      required: false
+      type: BOOLEAN
+    - description: Hides the username of the remote party on incoming call
+      label: Hide caller id
+      name: hideCallerId
+      required: false
+      type: BOOLEAN
+    - description: Single SIP Address (phone number) for a single call target or a comma-separated list of 'phoneNumber=name' for multiple call targets
+      label: Phonebook
+      name: phonebook
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Jul 26, 2022, 9:37:38 AM
+component: f7-card
+config:
+  style:
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    height: 320px
+    margin-left: 5px
+    margin-right: 5px
+    width: 150px
+    noShadow: false
+    padding: 0px
+slots:
+  content:
+    - component: oh-icon
+      config:
+        icon: "=items[props.buttonPressed].state === 'ON' ? 'f7:bell' : 'f7:bell_slash'"
+        color: "=items[props.buttonPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+        height: 40
+    - component: oh-icon
+      config:
+        icon: f7:arrow_right_arrow_left
+        color: "=items[props.motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+        height: 40
+        style:
+          right: -35px
+    - component: oh-button
+      config:
+        action: popup
+        actionModal: ='page:' + props.page
+        visible: "=props.page ? true : false"
+        style:
+          height: 65px
+          position: absolute
+          top: 0px
+          left: 0px
+          width: 100%
+    - component: oh-button
+      config:
+        action: command
+        actionCommand: ON
+        actionItem: =props.light
+        iconF7: lightbulb_fill
+        iconSize: 60
+        style:
+          --f7-button-height: 60
+          margin-top: 20px
+          margin-bottom: 10px
+    - component: oh-sipclient
+      config:
+        iconSize: 90
+        websocketUrl: =props.websocketUrl
+        domain: =props.domain
+        username: =props.username
+        password: =props.password
+        phonebook: =props.phonebook
+        enableTones: =props.enableTones
+        enableVideo: false
+    - component: oh-button
+      config:
+        action: options
+        actionItem: =props.doorRelay
+        actionOptions: ON=Tür öffnen
+        iconF7: lock_open_fill
+        iconSize: 60
+        style:
+          --f7-button-height: 60
+          margin-top: 10px
