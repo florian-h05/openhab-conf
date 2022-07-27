@@ -1,8 +1,10 @@
-uid: roomCard
 # description: room card with background image & state overview
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 # credits: Mike P (@integer) at https://community.openhab.org/t/oh3-main-ui-examples/117928/22 for the concept
-tags: []
+uid: roomCard
+tags:
+  - florianh-widgetset
+  - community.openhab.org
 props:
   parameters:
     - description: Title to display in upper right corner

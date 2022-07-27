@@ -6,6 +6,7 @@ Please keep in mind that some parts of the widgets are „hardcoded“ in German
 
 Most widgets allow to perform an on-click action, but usually the action config is only displayed when __advanced__ is ticked.
 
+
 ## Widget [`contact`](./contact.yaml)
 
 This widget represents the state of a contact with a configurable openHAB icon and a textual state representation.
@@ -16,6 +17,7 @@ The textual state representation changes the color based on the contact‘s stat
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
+
 
 ## Widget [`control`](./control.yaml)
 
@@ -67,6 +69,7 @@ Example: How to navigate to a page?
 - Set the `action` prop (advanced) to `navigate`.
 - Set the `action_config` prop (advanced) to the name of the page.
 
+
 ## Widget [`doorbell`](./doorbell.yaml)
 
 A widget specifically designed for usage with the DoorBird video doorbells/door intercoms, but should also work for others.
@@ -85,6 +88,7 @@ And the last button to energize the relay and open the door.
 
 Configuration is straight forward and requires no further explanation.
 
+
 ## Widget [`label`](./label.yaml)
 
 Display any Item‘s state or just a simple text.
@@ -96,3 +100,24 @@ If any action is enabled, the analyzer will open on a left-side click and the ac
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
+
+
+## Widget [`roomCard`](./roomCard.yaml)
+
+The room card widget provides a quick overview for many states in one room and is fully configurable.
+You can use a background image and you may use a header.
+Color scheme and opacity is fully configurable for the columns.
+
+![](./images/roomCard/complete.png)
+![](./images/roomCard/reduced.png)
+
+### Data displayed
+
+The widget can display up to three columns of data, each data field can and has to be configured:
+- Humidity and illumination
+- Current temperature, target temperature (in braces), heating & cooling state
+- Lights state (on/off + number of lights on), windows/doors (for each open/closed + number of open), one or two blinds position, speaker state
+
+### Configuration
+
+Configuration is self-explaining.
