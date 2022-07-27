@@ -1,3 +1,5 @@
+# description: Control Items via toggle, slider or selector and display group state (x of y are on)
+# author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: control
 tags:
   - florianh-widgetset

@@ -1,6 +1,6 @@
-uid: doorbell
 # description: Doorbell control widget (designed for DoorBird video doorbells) with light and relay control as well as speach support (SIP Client), button pressed and motion state
 # author: Copyright (c) 2022 Florian Hotze under MIT License
+uid: doorbell
 tags:
   - florianh-widgetset
 props:

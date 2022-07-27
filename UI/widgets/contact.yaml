@@ -1,3 +1,5 @@
+# description: Represent state of a contact with icon and colored text (color depends on state)
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: contact
 tags:
   - florianh-widgetset

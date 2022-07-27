@@ -1,9 +1,8 @@
+# description: shows current weather data, requires items from Astro - Sun_Elevation, Sunrise_Time, Sunset_Starttime
+# community thread: https://community.openhab.org/t/oh3-main-ui-examples/117928/22
+# community author: @Integer Mike P
+# changes made: style changes, added weather warnings, added sunrise/sunset time
 uid: weatherCurrent
-description: shows current weather data, requires items from Astro - Sun_Elevation, Sunrise_Time, Sunset_Starttime
-source: from https://community.openhab.org/t/oh3-main-ui-examples/117928/22
-originalAuthor: User "Integer" - "Mike P" on https://community.openhab.org
-changes: style changes, added weather warnings, added sunrise/sunset time
-changesAuthor: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:

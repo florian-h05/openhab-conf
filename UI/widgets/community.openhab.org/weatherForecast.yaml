@@ -1,7 +1,7 @@
+# community thread: https://community.openhab.org/t/oh3-main-ui-examples/117928/30
+# community author: @Integer Mike P
+# changes made: style changes
 uid: weatherForecast
-description: from https://community.openhab.org/t/oh3-main-ui-examples/117928/30
-author: User "Integer" - "Mike P" on https://community.openhab.org
-changes: only style changes
 tags: []
 props:
   parameters:

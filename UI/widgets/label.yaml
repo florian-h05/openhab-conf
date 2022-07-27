@@ -1,6 +1,6 @@
-uid: label
-# description: Display any item state or text. For numbers with trendline and analyzer.
+# description: Display any Item's state or text, for number Items trendline and analyzer can be enabled
 # author: Copyright (c) 2021 Florian Hotze under MIT License
+uid: label
 tags:
   - florianh-widgetset
 props:
