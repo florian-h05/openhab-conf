@@ -1,7 +1,8 @@
 uid: doorbell
 # description: Doorbell control widget (designed for DoorBird video doorbells) with light and relay control as well as speach support (SIP Client), button pressed and motion state
 # author: Copyright (c) 2022 Florian Hotze under MIT License
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - context: item
@@ -69,7 +70,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Jul 26, 2022, 9:37:38 AM
+timestamp: Jul 27, 2022, 5:55:23 PM
 component: f7-card
 config:
   style:
@@ -79,34 +80,34 @@ config:
     height: 320px
     margin-left: 5px
     margin-right: 5px
-    width: 150px
     noShadow: false
     padding: 0px
+    width: 150px
 slots:
   content:
     - component: oh-icon
       config:
-        icon: "=items[props.buttonPressed].state === 'ON' ? 'f7:bell' : 'f7:bell_slash'"
         color: "=items[props.buttonPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
         height: 40
+        icon: "=items[props.buttonPressed].state === 'ON' ? 'f7:bell' : 'f7:bell_slash'"
     - component: oh-icon
       config:
-        icon: f7:arrow_right_arrow_left
         color: "=items[props.motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
         height: 40
+        icon: f7:arrow_right_arrow_left
         style:
           right: -35px
     - component: oh-button
       config:
         action: popup
         actionModal: ='page:' + props.page
-        visible: "=props.page ? true : false"
         style:
           height: 65px
+          left: 0px
           position: absolute
           top: 0px
-          left: 0px
           width: 100%
+        visible: "=props.page ? true : false"
     - component: oh-button
       config:
         action: command
@@ -116,18 +117,18 @@ slots:
         iconSize: 60
         style:
           --f7-button-height: 60
-          margin-top: 20px
           margin-bottom: 10px
+          margin-top: 20px
     - component: oh-sipclient
       config:
-        iconSize: 90
-        websocketUrl: =props.websocketUrl
         domain: =props.domain
-        username: =props.username
-        password: =props.password
-        phonebook: =props.phonebook
         enableTones: =props.enableTones
         enableVideo: false
+        iconSize: 90
+        password: =props.password
+        phonebook: =props.phonebook
+        username: =props.username
+        websocketUrl: =props.websocketUrl
     - component: oh-button
       config:
         action: options

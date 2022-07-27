@@ -1,7 +1,8 @@
 uid: control
 # description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
 # author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -29,6 +30,7 @@ props:
       name: bgcolor
       required: false
       type: TEXT
+      advanced: true
     - context: item
       description: Item to control
       label: Control Item
