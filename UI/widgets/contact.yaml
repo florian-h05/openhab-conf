@@ -1,8 +1,9 @@
-uid: Contact
-# description: display state of a window or door textual and with icon, open a popup
-# note: considers contact as closed when state is "CLOSED" or "100"
+uid: contact
+# description: Display state of a window or door textual and with icon, open a popup
+# note: Considers contact as closed when state is "CLOSED" or "100"
 # author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -13,7 +14,7 @@ props:
     - description: Header big sized
       label: Header
       name: header
-      required: true
+      required: false
       type: TEXT
     - description: Icon on top of the card (only f7 icons (without f7:)), e.g square
       label: Icon
@@ -25,21 +26,22 @@ props:
       name: bgcolor
       required: false
       type: TEXT
+      advanced: true
     - context: item
-      description: State item to display
-      label: State item
+      description: Item whose state to display
+      label: Item
       name: item
       required: true
       type: TEXT
-    - description: State icon in the right corner of the card (only openHAB icons)
-      label: State icon
-      name: stateIcon
+    - default: window
+      description: Big icon shown in the upper right corner for state representation
+      label: Big openHAB Icon
+      name: bigOhIcon
       required: false
       type: TEXT
-      default: window
     - context: item
-      description: Group:Number:COUNT(CLOSED) item for numbers of contacts open
-      label: Number of contacts open
+      description: Group:Number:COUNT(OPEN) Item for numbers of contacts open
+      label: Contacts open Item
       name: contacts_open
       required: false
       type: TEXT
@@ -47,17 +49,21 @@ props:
       label: Contacts total number
       name: contacts_total
       required: false
-    - description: Page or group that pops up
-      label: Popup page / group
-      name: page
-      required: false
-    - description: Action to perform on click, e.g. group. Default to navigate.
+      type: INTEGER
+    - description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
       type: TEXT
+      advanced: true
+    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
+      label: Action configuration
+      name: action_config
+      required: false
+      type: TEXT
+      advanced: true
   parameterGroups: []
-timestamp: May 10, 2022, 10:23:54 PM
+timestamp: Jul 27, 2022, 2:01:34 PM
 component: f7-card
 config:
   style:
@@ -126,7 +132,7 @@ slots:
           - component: Label
             config:
               style:
-                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === 'kleine Lüftung' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === 'große Lüftung' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 font-weight: 400
                 margin-left: 0px
@@ -135,22 +141,22 @@ slots:
               visible: true
     - component: oh-icon
       config:
-        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.stateIcon + '-closed' : props.stateIcon + '-open'"
         height: 70px
+        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
         style:
           position: absolute
-          top: 10px
           right: 15px
+          top: 10px
         visible: true
     - component: oh-link
       config:
         action: "=props.action ? props.action : 'navigate'"
-        actionGroupPopupItem: =props.page
-        actionPage: ='page:' + props.page
+        actionGroupPopupItem: =props.action_config
+        actionPage: ='page:' + props.config
         style:
           height: 120px
           left: 0px
           position: absolute
           top: 0px
           width: 100%
-        visible: "=props.page ? true : false"
+        visible: "=props.action ? true : false"

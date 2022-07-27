@@ -4,6 +4,17 @@ You can add the widgets by opening `Developer Tools` > `Widgets`, clicking on th
 
 Please keep in mind that some parts of the widgets are „hardcoded“ in German, but this can be changed easily!
 
+## Widget [`contact`](./contact.yaml)
+
+This widget represents the state of a contact with a configurable openHAB icon and a textual state representation.
+The textual state representation changes the color based on the contact‘s state.
+
+![](./images/contact/dark.jpeg)
+
+### Configuration
+
+Configuration is straight forward and requires no further explanation.
+
 ## Widget [`control`](./control.yaml)
 
 This is probably the most universal widget in this collection, as it provides multiple ways of controlling an Item as well as state representation for groups and on-click actions.
