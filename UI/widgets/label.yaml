@@ -1,7 +1,8 @@
 uid: label
-description: Display any item state or text. For numbers with trendline and analyzer.
-author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+# description: Display any item state or text. For numbers with trendline and analyzer.
+# author: Copyright (c) 2021 Florian Hotze under MIT License
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -14,9 +15,9 @@ props:
       name: icon
       required: false
       type: TEXT
-    - description: Big icon in the right corner of the card (only openHAB icons)
-      label: Big icon
-      name: bigIcon
+    - description: Big icon shown in the upper right corner
+      label: Big openHAB Icon
+      name: bigOhIcon
       required: false
       type: TEXT
     - description: in rgba() or HEX or empty
@@ -24,10 +25,11 @@ props:
       name: bgcolor
       required: false
       type: TEXT
+      advanced: true
     - context: item
-      description: item value to display
+      description: Item whosee state should be displayed
       label: Item
-      name: item_value
+      name: item
       required: false
       type: TEXT
     - description: text to display in front of item's value
@@ -40,17 +42,20 @@ props:
       name: trendAnalyze
       required: false
       type: BOOLEAN
-    - description: Page or group that pops up
-      label: Popup page / group
-      name: page
-      required: false
-    - description: Action to perform on click, e.g. group. Default to navigate.
+    - default: navigate
+      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
       type: TEXT
-  parameterGroups: []
-timestamp: Aug 7, 2021, 4:52:05 PM
+      advanced: true
+    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
+      label: Action configuration
+      name: action_config
+      required: false
+      type: TEXT
+      advanced: true
+timestamp: Jul 27, 2022, 6:17:23 PM
 component: f7-card
 config:
   style:
@@ -98,7 +103,7 @@ slots:
         default:
           - component: Label
             config:
-              text: "=props.item_value ? props.label ? props.label + ' ' + (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (items[props.item_value].displayState ? items[props.item_value].displayState : items[props.item_value].state) : (props.label ? props.label : 'Set item or label!')"
+              text: "=props.item ? props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (props.label ? props.label : 'Set item or label!')"
               style:
                 font-size: 24px
                 font-weight: 400
@@ -136,8 +141,8 @@ slots:
                 z-index: 1
     - component: oh-icon
       config:
-        visible: "=props.bigIcon ? true : false"
-        icon: =props.bigIcon
+        visible: "=props.bigOhIcon ? true : false"
+        icon: =props.bigOhIcon
         width: 80px
         style:
           position: absolute
@@ -156,13 +161,13 @@ slots:
           right: 0px
           top: 0px
           height: 120px
-          width: "=props.page ? '65%' : '100%'"
+          width: "=props.action_config ? '65%' : '100%'"
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
-        action: "=props.action ? props.action : 'navigate'"
-        actionPage: ='page:' + props.page
-        actionGroupPopupItem: =props.page
+        visible: "=props.action_config ? true : false"
+        action: =props.action
+        actionPage: ='page:' + props.action_config
+        actionGroupPopupItem: =props.action_config
         style:
           position: absolute
           left: 0px

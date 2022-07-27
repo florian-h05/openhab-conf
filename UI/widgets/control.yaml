@@ -1,6 +1,4 @@
 uid: control
-# description: Display switch or icon and slider. Show number of items on and total items and to perform action on click.
-# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags:
   - florianh-widgetset
 props:
@@ -58,7 +56,8 @@ props:
       name: selectorEnable
       required: false
       type: BOOLEAN
-    - description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
+    - default: navigate
+      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
@@ -71,7 +70,7 @@ props:
       type: TEXT
       advanced: true
   parameterGroups: []
-timestamp: Jul 26, 2022, 11:48:39 PM
+timestamp: Jul 27, 2022, 5:54:23 PM
 component: f7-card
 config:
   style:

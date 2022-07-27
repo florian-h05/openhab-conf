@@ -1,7 +1,4 @@
 uid: contact
-# description: Display state of a window or door textual and with icon, open a popup
-# note: Considers contact as closed when state is "CLOSED" or "100"
-# author: Copyright (c) 2021 Florian Hotze under MIT License
 tags:
   - florianh-widgetset
 props:
@@ -50,7 +47,8 @@ props:
       name: contacts_total
       required: false
       type: INTEGER
-    - description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
+    - default: navigate
+      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
@@ -150,7 +148,7 @@ slots:
         visible: true
     - component: oh-link
       config:
-        action: "=props.action ? props.action : 'navigate'"
+        action: =props.action
         actionGroupPopupItem: =props.action_config
         actionPage: ='page:' + props.config
         style:

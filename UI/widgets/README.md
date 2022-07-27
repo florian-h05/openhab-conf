@@ -4,6 +4,8 @@ You can add the widgets by opening `Developer Tools` > `Widgets`, clicking on th
 
 Please keep in mind that some parts of the widgets are „hardcoded“ in German, but this can be changed easily!
 
+Most widgets allow to perform an on-click action, but usually the action config is only displayed when __advanced__ is ticked.
+
 ## Widget [`contact`](./contact.yaml)
 
 This widget represents the state of a contact with a configurable openHAB icon and a textual state representation.
@@ -78,6 +80,18 @@ One to enable the lights (e.g. infrared lights of DoorBird video doorbells).
 Another to talk to the doorbell/door intercom using the `oh-sipclient` component.
 This component allow the MainUI to act as a SIP Client (SIP over WebSocket/WebRTC, which is not supported by all routers — for Fritz!Box, see [webrtc-sip-gw](https://github.com/florian-h05/webrtc-sip-gw)).
 And the last button to energize the relay and open the door.
+
+### Configuration
+
+Configuration is straight forward and requires no further explanation.
+
+## Widget [`label`](./label.yaml)
+
+Display any Item‘s state or just a simple text.
+For numeric Items, you can display a trendline and open an analyzer.
+If any action is enabled, the analyzer will open on a left-side click and the action on a right-side click.
+
+![](./images/label/dark.jpeg)
 
 ### Configuration
 
