@@ -17,56 +17,26 @@ blocks:
             default:
               - component: oh-grid-col
                 config:
-                  width: "100"
-                  medium: "35"
-                  small: "50"
-                  large: "30"
-                  xlarge: "25"
+                  medium: "20"
+                  small: "30"
+                  width: "40"
                 slots:
                   default:
                     - component: widget:doorbell
                       config:
+                        buttonPressed: Doorbell_Pressed
+                        domain:
+                        doorRelay: Doorbell_Tueroeffner
+                        enableTones: false
+                        hideCallerId: true
+                        light: Doorbell_Light
+                        motion: Doorbell_Motion
                         page: Doorbell_History
-        - component: oh-grid-row
-          config: {}
-          slots:
-            default:
-              - component: oh-grid-col
-                config:
-                  width: "40"
-                  medium: "20"
-                  small: "30"
-                slots:
-                  default:
-                    - component: widget:control
-                      config:
-                        selectorEnable: true
-                        toggleHide: true
-                        action_config: ON=öffnen
-                        item: Doorbell_Relay1
-                        title: Türklingel
-                        header: Türöffner
-                        icon: lock_open
-        - component: oh-grid-row
-          config: {}
-          slots:
-            default:
-              - component: oh-grid-col
-                config:
-                  width: "40"
-                  medium: "20"
-                  small: "30"
-                slots:
-                  default:
-                    - component: widget:control
-                      config:
-                        selectorEnable: true
-                        action_config: ON=an
-                        item: Doorbell_Light
-                        title: Türklingel
-                        header: Nachtsicht
-                        icon: lightbulb
-                        toggleHide: true
+                        password:
+                        phonebook:
+                        sipAddress:
+                        username:
+                        websocketUrl:
 masonry: []
 grid: []
 canvas: []
