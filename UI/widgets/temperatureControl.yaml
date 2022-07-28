@@ -1,7 +1,8 @@
 # description: Shows current temperature with analyzer, heating/cooling state and controls target temperature. If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: temperatureControl
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card

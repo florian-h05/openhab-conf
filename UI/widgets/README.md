@@ -162,3 +162,17 @@ Shows current temperature with analyzer, heating/cooling state and controls targ
 
 Configuration is straight forward and requires no further explanation.
 If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget.
+
+
+## Widget [`trigger`](./trigger.yaml)
+
+Send one command to an Item on click, e.g. for calling scenes.
+Bring some color to your MainUI pages with different background colors for light- and darkmode.
+
+![](./images/trigger/light.jpeg)
+![](./images/trigger/dark.jpeg)
+
+### Configuration
+
+Configuration is self-explaining.
+For the color, I recommend to read my [Color design guideline](/README.md#color-design).

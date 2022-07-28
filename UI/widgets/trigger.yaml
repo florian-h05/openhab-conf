@@ -1,7 +1,8 @@
+# description: Send one command to an item on click, useful for calling scenes. Supports separate light and dark background color
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: trigger
-description: Send one command to an item on click, useful for calling scenes. Supports light and dark background.
-author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -19,17 +20,17 @@ props:
       name: icon
       required: false
       type: TEXT
-    - description: Big icon in the right corner of the card (only openHAB icons)
-      label: Big icon
-      name: bigIcon
+    - description: Big icon shown in the upper right corner (hides the toggle)
+      label: Big openHAB Icon
+      name: bigOhIcon
       required: false
       type: TEXT
-    - description: rgba or HEX
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color (lightmode)
       name: bgcolor
       required: false
       type: TEXT
-    - description: rgba or HEX
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color darkmode
       name: bgcolor_dark
       required: false
@@ -50,7 +51,7 @@ props:
       required: false
       type: TEXT
   parameterGroups: []
-timestamp: Aug 22, 2021, 1:01:49 AM
+timestamp: Jul 28, 2022, 6:37:34 PM
 component: f7-card
 config:
   style:
@@ -120,11 +121,11 @@ slots:
           width: 100%
           actionPosition: center
         actionCommand: =props.command
-        actionFeedback: Done!
+        actionFeedback: Erledigt!
     - component: oh-icon
       config:
-        visible: "=props.bigIcon ? true : false"
-        icon: =props.bigIcon
+        visible: "=props.bigOhIcon ? true : false"
+        icon: =props.bigOhIcon
         width: 80px
         style:
           position: absolute
