@@ -1,7 +1,8 @@
-uid: solar
-# description: Display current power, today and total production and last fresh of solar inverter. Requires items from /items/solar.items
+# description: Display current power and today's as well as total production and last refresh of solar inverter, requires some Items (see docs)
 # author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+uid: solar
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Page ID of page to be opened
@@ -15,7 +16,7 @@ props:
       required: false
       type: BOOLEAN
   parameterGroups: []
-timestamp: Jun 5, 2022, 7:46:48 PM
+timestamp: Jul 28, 2022, 6:05:20 PM
 component: f7-card
 config:
   style:

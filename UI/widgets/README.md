@@ -132,3 +132,21 @@ Control a shutter with buttons and optional slider, display the shutter’s posi
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
+
+
+## Widget [`solar`](./solar.yaml)
+
+Display current power and today’s as well as total production and last refresh of solar inverter.
+
+![](./images/solar/dark.jpeg)
+
+### Items
+
+- `pv_Power`: Current power of solar inverter.
+- `pv_EToday`: Today‘s energy production
+- `pv_ETotal`: Total energy production
+- `pv_lastRefresh`: Last refresh of data from inverter (optional)
+
+### Configuration
+
+Configuration is self-explaining.
