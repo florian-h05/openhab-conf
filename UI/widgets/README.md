@@ -150,3 +150,15 @@ Display current power and today’s as well as total production and last refresh
 ### Configuration
 
 Configuration is self-explaining.
+
+
+## Widget [`temperatureControl`](./temperatureControl.yaml)
+
+Shows current temperature with analyzer, heating/cooling state and controls target temperature.
+
+![](./images/temperatureControl/dark.jpeg)
+
+### Configuration
+
+Configuration is straight forward and requires no further explanation.
+If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget.

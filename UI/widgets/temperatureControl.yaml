@@ -1,6 +1,6 @@
+# description: Shows current temperature with analyzer, heating/cooling state and controls target temperature. If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: temperatureControl
-description: Shows current temperature, heating/cooling state and controls target temperature. Can perform an action on click.
-author: Copyright (c) 2021 Florian Hotze under MIT License
 tags: []
 props:
   parameters:
@@ -9,54 +9,59 @@ props:
       name: title
       required: false
       type: TEXT
-    - description: in rgba() or HEX or empty
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
+      advanced: true
     - context: item
-      label: Current Temperature
+      label: Temperature Item
       name: temp_item
       required: true
       type: TEXT
     - context: item
-      label: Current Outside Temperature
+      label: Outside temperature Item
       name: outside_temp_item
       required: true
       type: TEXT
     - context: item
-      label: Set Temperature
+      description: Temperature setpoint Item
+      label: Temperature control Item
       name: set_temp_item
       required: false
       type: TEXT
     - context: item
-      label: Current Humidity
+      label: Current humidity Item
       name: humidity_item
       required: false
       type: TEXT
     - context: item
-      description: on/off item
-      label: Heating control item
+      description: Switch Item
+      label: Heating state Item
       name: heating_item
       required: false
       type: TEXT
     - context: item
-      description: on/off item
-      label: Cooling control item
+      description: Switch Item
+      label: Cooling state Item
       name: cooling_item
       required: false
       type: TEXT
-    - description: Page or group that pops up
-      label: Popup page / group
-      name: page
-      required: false
-    - description: Action to perform on click on left 35%, e.g. group. Default to navigate.
+    - default: navigate
+      description: Action to perform on click on left side, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
       label: Action
       name: action
       required: false
       type: TEXT
-  parameterGroups: []
-timestamp: Aug 22, 2021, 12:53:43 PM
+      advanced: true
+    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
+      label: Action configuration
+      name: action_config
+      required: false
+      type: TEXT
+      advanced: true
+timestamp: Jul 28, 2022, 6:25:14 PM
 component: f7-card
 config:
   style:
@@ -127,7 +132,7 @@ slots:
           - component: Label
             config:
               visible: "=props.humidity_item ? true : false"
-              text: =items[props.humidity_item].displayState
+              text: "=items[props.humidity_item].displayState ? items[props.humidity_item].displayState : items[props.humidity_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
@@ -150,7 +155,7 @@ slots:
           - component: Label
             config:
               visible: "=props.heating_item ? true : false"
-              text: =items[props.heating_item].state
+              text: "=items[props.heating_item].displayState ? items[props.heating_item].displayState : items[props.heating_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
@@ -164,7 +169,7 @@ slots:
           - component: Label
             config:
               visible: "=props.cooling_item ? true : false"
-              text: =items[props.cooling_item].state
+              text: "=items[props.cooling_item].displayState ? items[props.cooling_item].displayState : items[props.cooling_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
@@ -202,7 +207,7 @@ slots:
     - component: Label
       config:
         visible: "=props.set_temp_item ? true : false"
-        text: =items[props.set_temp_item].displayState
+        text: "=items[props.set_temp_item].displayState ? items[props.set_temp_item].displayState : items[props.set_temp_item].state"
         style:
           font-size: 12px
           position: absolute
@@ -251,10 +256,10 @@ slots:
           width: "=props.set_temp_item ? (props.page ? 'calc(65% - 55px)' : 'calc(100% - 55px)') : (props.page ? '65%' : '100%')"
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
+        visible: "=props.action_config ? true : false"
         action: "=props.action ? props.action : 'navigate'"
-        actionPage: ='page:' + props.page
-        actionGroupPopupItem: =props.page
+        actionPage: ='page:' + props.action_config
+        actionGroupPopupItem: =props.action_config
         style:
           position: absolute
           left: 0px
