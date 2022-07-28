@@ -86,7 +86,7 @@ And the last button to energize the relay and open the door.
 
 ### Configuration
 
-Configuration is straight forward and requires no further explanation.
+Configuration is self-explaining.
 
 
 ## Widget [`label`](./label.yaml)
@@ -121,3 +121,14 @@ The widget can display up to three columns of data, each data field can and has 
 ### Configuration
 
 Configuration is self-explaining.
+
+
+## Widget [`shutter`](./shutter.yaml)
+
+Control a shutter with buttons and optional slider, display the shutter’s position and the state of the automatic shading.
+
+![](./images/shutter/dark.jpeg)
+
+### Configuration
+
+Configuration is straight forward and requires no further explanation.

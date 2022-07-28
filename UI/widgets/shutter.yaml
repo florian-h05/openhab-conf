@@ -1,7 +1,8 @@
+# description: Control a shutter with buttons and optional slider, display the position and the state of the automatic shading
+# author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: shutter
-description: control a shutter with buttons and optional slider, display the position and the state of the autmatic shading
-author: Copyright (c) 2021 Florian Hotze under MIT License
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -19,56 +20,66 @@ props:
       name: icon
       required: false
       type: TEXT
-    - description: HEX or rgba
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
+      advanced: true
     - context: item
-      description: Shutter item to control
-      label: Shutter item
+      description: Shutter Item to control
+      label: Shutter Item
       name: item
-      required: false
+      required: true
       type: TEXT
     - context: item
-      description: Shading state item
-      label: Shading state item
+      description: Shading state Item
+      label: Shading state Item
       name: itemShading
       required: false
       type: TEXT
-    - description: Display a slider or not
-      label: Slider enable/disable
-      name: sliderOption
+    - description: Display a slider
+      label: Enable slider
+      name: sliderEnable
       required: false
       type: BOOLEAN
-    - description: Page that pops up on page of the left 35%
-      label: Popup page
-      name: page
+    - default: navigate
+      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
+      label: Action
+      name: action
       required: false
+      type: TEXT
+      advanced: true
+    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
+      label: Action configuration
+      name: action_config
+      required: false
+      type: TEXT
+      advanced: true
   parameterGroups: []
-timestamp: Jul 8, 2022, 4:49:33 PM
+timestamp: Jul 28, 2022, 3:10:04 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
     margin-left: 5px
     margin-right: 5px
     minWidth: 220px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 16px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -80,114 +91,114 @@ slots:
               visible: "=props.icon ? true : false"
           - component: Label
             config:
-              text: "=props.title ? props.title : ''"
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: "=props.title ? props.title : ''"
     - component: f7-block
       config:
         style:
-          position: absolute
           bottom: -12px
-          left: 16px
           flex-direction: row
+          left: 16px
+          position: absolute
       slots:
         default:
           - component: Label
             config:
-              text: "=props.header ? props.header : 'Set Props'"
               style:
                 font-size: 17px
                 font-weight: 600
                 margin-left: 0px
                 margin-top: 0px
+              text: "=props.header ? props.header : 'Set Props'"
     - component: f7-block
       config:
         style:
-          position: absolute
           bottom: -28px
-          left: 16px
           flex-direction: row
+          left: 16px
+          position: absolute
       slots:
         default:
           - component: Label
             config:
-              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
               style:
                 font-size: 12px
                 margin-left: 0px
                 margin-top: 0px
+              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
     - component: oh-button
       config:
-        iconF7: arrow_up_circle
-        iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
-        iconSize: 34
         action: command
-        actionItem: =props.item
         actionCommand: UP
         actionFeedback: Erledigt!
+        actionItem: =props.item
+        iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+        iconF7: arrow_up_circle
+        iconSize: 34
         style:
-          position: absolute
-          top: 10px
-          right: 10px
-          height: 36px
           background: transparent
+          height: 36px
+          position: absolute
+          right: 10px
+          top: 10px
     - component: oh-button
       config:
+        action: command
+        actionCommand: STOP
+        actionFeedback: Erledigt!
+        actionItem: =props.item
         iconColor: red
         iconF7: stop_circle
         iconSize: 30
-        action: command
-        actionItem: =props.item
-        actionCommand: STOP
-        actionFeedback: Erledigt!
         style:
-          position: absolute
-          top: 43.5px
-          right: 12px
-          height: 32px
           background: transparent
+          height: 32px
+          position: absolute
+          right: 12px
+          top: 43.5px
     - component: oh-button
       config:
-        iconF7: arrow_down_circle
-        iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
-        iconSize: 34
         action: command
-        actionItem: =props.item
         actionCommand: DOWN
         actionFeedback: Erledigt!
+        actionItem: =props.item
+        iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+        iconF7: arrow_down_circle
+        iconSize: 34
         style:
-          position: absolute
-          top: 72px
-          right: 10px
-          height: 36px
           background: transparent
+          height: 36px
+          position: absolute
+          right: 10px
+          top: 72px
     - component: oh-slider
       config:
-        visible: "=props.sliderOption == true ? true : false"
-        releaseOnly: true
         item: =props.item
-        min: 0
         max: 100
+        min: 0
+        releaseOnly: true
         scale: true
         scaleSteps: 5
         style:
+          --f7-range-bar-border-radius: 8px
+          --f7-range-bar-size: 6px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
+          --f7-range-knob-size: 16px
+          left: 20px
           position: absolute
           top: 76px
-          left: 20px
           width: calc(100% - 85px)
-          --f7-range-bar-size: 6px
-          --f7-range-bar-border-radius: 8px
-          --f7-range-knob-size: 16px
-          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
+        visible: "=props.sliderEnable == true ? true : false"
     - component: oh-link
       config:
-        visible: "=props.page ? true : false"
-        action: navigate
-        actionPage: ='page:' + props.page
+        action: =props.action
+        actionPage: ='page:' + props.action_config
         style:
-          position: absolute
-          left: 0px
-          top: 0px
           height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
           width: calc(100% - 55px)
+        visible: "=props.action_config ? true : false"
