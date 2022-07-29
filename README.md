@@ -13,7 +13,7 @@
     - [Text](#text)
 - [Scripts](#scripts)
   - [Shaddow](#shaddow)
-  - [openHAB Log InfluxDB](#openhab-log-influxdb)
+- [Custom Loggers](#custom-loggers)
 
 ***
 ## JavaScript Scripting
@@ -142,21 +142,36 @@ I added the position of the moon to the image.
 
 Please look at [this guide](/scripts/SHADDOW.md).
 
-### openHAB Log InfluxDB
+***
+### Custom Loggers
 
-A log for your smart home with [openhab-log-influxdb.py](/scripts/openhab-log-influxdb.py).
+openHAB is using [log4j2](https://logging.apache.org/log4j/2.x/) as logger library, which allows the user to add custom loggers for writing into separate log files.
 
-Create a log of your smart home in InfluxDB with the following data:
-* log message
-* device
-* temperature
-* windspeed
-* brightness
-* rain
-* elevation
-* azimuth
+To enable a custom logger, you have to add something like the following example to _$openhab-userdata/etc/log4j2.xml_:
 
-__How to setup:__
-* line 30: set ``base_url`` to _openHAB_ hostname/address and append ``/rest``
-* lines 34 to 39: setup _InfluxDB_
-* lines 52 to 57: set your _openHAB_ items in ``items.get('<itemname>').state``
+To the `Appenders` section:
+```xml
+		<!— KNX appender (custom) —>
+		<RollingFile fileName="${sys:openhab.logdir}/knx.log" filePattern="${sys:openhab.logdir}/knx.log.%i.gz" name="KNX">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5.5p] [%-36.36c] - %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="16 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="7"/>
+		</RollingFile>
+```
+
+To the `Loggers` section:
+```xml
+		<!— Custom loggers —>
+		<!— KNX logger —>
+		<Logger additivity="false" level="DEBUG" name="org.openhab.logging.knx">
+			<AppenderRef ref="KNX"/>
+		</Logger>
+```
+
+To use this custom logger in JS Scripting, set the according logger name, e.g.:
+```javascript
+// @ts-ignore
+console.loggerName = 'org.openhab.logging.knx';
+```
