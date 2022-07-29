@@ -4,6 +4,8 @@ Copyright (c) 2021 Florian Hotze under MIT License
 Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
+// @ts-check
+
 const { rules, actions, triggers, items } = require('openhab');
 
 // Generates a system status overview string.
@@ -12,10 +14,8 @@ rules.JSRule({
   description: 'Summarize state of things.',
   triggers: [
     triggers.ItemCommandTrigger('ThingState_Refresh', 'ON'),
-    triggers.SystemStartlevelTrigger(100),
     triggers.GenericCronTrigger('0 0/5 * * * *'),
-    triggers.GroupStateChangeTrigger('KNXState'),
-    triggers.GroupStateChangeTrigger('YamahaState')
+    triggers.GroupStateChangeTrigger('KNXState')
   ],
   execute: data => {
     let knx = false;
@@ -59,8 +59,11 @@ rules.JSRule({
 });
 
 // For shaddow.py
+// @ts-ignore
 rules.when().channel('astro:sun:home:set#event').triggered('START').then().copyAndSendState().fromItem('Sun_Azimuth').toItem('Sunset_Azimuth').build('Astro: Sonnenuntergang speichern', '... in Item Sunset_Azimuth.', ['shaddow.py']);
+// @ts-ignore
 rules.when().channel('astro:sun:home:rise#event').triggered('START').then().copyAndSendState().fromItem('Sun_Azimuth').toItem('Sunrise_Azimuth').build('Astro: Sonnenaufgang speichern', '... in Item Sunrise_Azimuth.', ['shaddow.py']);
+// @ts-ignore
 rules.when().item('Sun_Azimuth').changed().then(e => {
   actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/3shaddow.py', 'update');
 }).build('shaddow.py: Update', '... bei Änderung von Azimut.', ['shaddow.py']);
@@ -100,6 +103,7 @@ rules.JSRule({
   tags: ['System', 'Energie', 'USV']
 });
 
+// @ts-ignore
 scriptLoaded = () => { // eslint-disable-line no-undef
   console.info('Script loaded.');
 };

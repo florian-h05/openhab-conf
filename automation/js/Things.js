@@ -4,12 +4,13 @@ Copyright (c) 2022 Florian Hotze under MIT License
 Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
+// @ts-check
+
 // CONFIGURE HERE AND AT THE BOTTOM OF THE FILE -----------------------------------------------------------------------
-// Create an API token for an admin user in the user profile (click on your username on the bottom of the side bar).
-const API_TOKEN = '';
 
 // DO NOT MODIFY ------------------------------------------------------------------------------------------------------
-const { actions, items, rules, triggers } = require('openhab');
+const { actions, items, rules, triggers, things } = require('openhab');
+// @ts-ignore
 const HashMap = Java.type('java.util.HashMap'); // eslint-disable-line no-undef
 
 // Utility functions.
@@ -23,30 +24,26 @@ const HashMap = Java.type('java.util.HashMap'); // eslint-disable-line no-undef
  * @param {String|Array<String>} replaces String that is used for replacing.
  */
 const getThingName = (itemname, patterns, replaces) => {
-  if (typeof patterns === 'string') return itemname.replace('_state', '').replaceAll(patterns, replaces);
+  if (typeof patterns === 'string' && typeof replaces === 'string') return itemname.replace('_state', '').replaceAll(patterns, replaces);
   // When patterns and replaces are Arrays.
   let thingname = itemname.replace('_state', '');
-  for (const i in patterns) {
-    thingname = thingname.replaceAll(patterns[i], replaces[i]);
+  if (typeof patterns === 'object') {
+    for (const i in patterns) {
+      thingname = thingname.replaceAll(patterns[i], replaces[i]);
+    }
+    return thingname;
   }
-  return thingname;
 };
 
 /**
  * Re-enables/reinitializes a thing by UID.
- * The Thing is disabled and then enabled by using the REST API.
  *
  * @param {String} thingUID UID of thing
  */
 const reEnableThing = (thingUID) => {
-  // Set up headers for REST API requests.
-  const headers = new HashMap();
-  headers.put('Authorization', 'Bearer ' + API_TOKEN);
-  // Set Thing to disabled.
-  actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'false', headers, 1000);
-  // Set Thing to enabled.
-  actions.HTTP.sendHttpPutRequest('http://localhost:8080/rest/things/' + thingUID.replaceAll(':', '%3A') + '/enable', 'text/plain', 'true', headers, 1000);
-  console.info('Re-enabled Thing ' + thingUID);
+  const Thing = things.getThing(thingUID);
+  Thing.setEnabled(false);
+  Thing.setEnabled(true);
 };
 
 // Rule creators.
@@ -57,7 +54,7 @@ const reEnableThing = (thingUID) => {
  *
  * @param {String} itemname name of Item
  * @param {String} thingUID UID of the Thing to reinitialize
- * @returns {rules.JSRule} {@link rules.JSRule}
+ * @returns {import('openhab').HostRule} {@link rules.JSRule}
  */
 const itemReEnableThingRule = (itemname, thingUID) => {
   return rules.JSRule({
@@ -79,12 +76,9 @@ const itemReEnableThingRule = (itemname, thingUID) => {
  *
  * @param {String} groupName name of Group whose members store thing states
  * @param {String} bridgeUID UID of bridge
- * @returns {rules.JSRule} {@link rules.JSRule}
+ * @returns {import('openhab').HostRule} {@link rules.JSRule}
  */
 const autoReEnableThingRule = (groupName, bridgeUID) => {
-  // Set up headers for REST API requests.
-  const headers = new HashMap();
-  headers.put('Authorization', 'Bearer ' + API_TOKEN);
   return rules.JSRule({
     name: `Automatic re-enabling of bridge ${bridgeUID}`,
     description: `Automatically re-enables the bridge when to many members of ${groupName} are offline.`,
@@ -114,7 +108,6 @@ const thingState = (groupName, patterns, replaces) => {
   // Set up default triggers for thing status rules.
   const triggersList = [
     triggers.ItemCommandTrigger('ThingState_Refresh', 'ON'),
-    triggers.SystemStartlevelTrigger(100),
     triggers.GenericCronTrigger('0 0/5 * * * *')
   ];
   // Add ThingStatusChangeTrigger for the matching Thing of each member Item.

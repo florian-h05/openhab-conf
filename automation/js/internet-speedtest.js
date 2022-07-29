@@ -4,6 +4,8 @@ Copyright (c) 2021 Florian Hotze under MIT License
 Hosted at: https://github.com/florian-h05/openhab-conf
 */
 
+// @ts-check
+
 const { rules, triggers, items, time, actions } = require('openhab');
 
 rules.JSRule({
@@ -19,9 +21,9 @@ rules.JSRule({
     const output = actions.Exec.executeCommandLine(time.Duration.ofSeconds(40), '/bin/speedtest', '--accept-license', '--accept-gdpr');
     // Split by newline
     const response = output.split(/\r?\n/);
-    let ping;
-    let down;
-    let up;
+    let ping = 1000;
+    let down = 0;
+    let up = 0;
     // Simple error checking.
     if (output.search('Speedtest') !== -1) {
       items.getItem('SpeedtestResultDate').postUpdate(time.ZonedDateTime.now().withFixedOffsetZone().toString());
