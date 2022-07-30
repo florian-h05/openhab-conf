@@ -258,7 +258,7 @@ slots:
     - component: oh-link
       config:
         visible: "=props.action_config ? true : false"
-        action: "=props.action ? props.action : 'navigate'"
+        action: =props.action
         actionPage: ='page:' + props.action_config
         actionGroupPopupItem: =props.action_config
         style:
