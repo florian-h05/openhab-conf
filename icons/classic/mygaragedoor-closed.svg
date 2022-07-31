@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 267 267" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(4.16667,0,0,4.16667,0,0)">
+        <path d="M55.5,53.5L55.5,18.5L8.5,18.5L8.5,53.5L3.5,53.5L3.5,13.5L60.5,13.5L60.5,53.5L55.5,53.5Z" style="fill:rgb(240,240,240);fill-rule:nonzero;"/>
+        <path d="M60,14L60,53L56,53L56,18L8,18L8,53L4,53L4,14L60,14M61,13L3,13L3,54L9,54L9,19L55,19L55,54L61,54L61,13Z" style="fill:rgb(200,200,200);fill-rule:nonzero;"/>
+        <g id="Tor">
+            <g>
+                <g>
+                    <rect x="9.5" y="41.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="24.5" y="41.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="39.5" y="41.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                </g>
+                <g>
+                    <path d="M24,42L24,52L10,52L10,42L24,42M25,41L9,41L9,53L25,53L25,41Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M39,42L39,52L25,52L25,42L39,42M40,41L24,41L24,53L40,53L40,41Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M54,42L54,52L40,52L40,42L54,42M55,41L39,41L39,53L55,53L55,41Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <rect x="9.5" y="30.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="24.5" y="30.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="39.5" y="30.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                </g>
+                <g>
+                    <path d="M24,31L24,41L10,41L10,31L24,31M25,30L9,30L9,42L25,42L25,30Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M39,31L39,41L25,41L25,31L39,31M40,30L24,30L24,42L40,42L40,30Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M54,31L54,41L40,41L40,31L54,31M55,30L39,30L39,42L55,42L55,30Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <rect x="9.5" y="19.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="24.5" y="19.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                    <rect x="39.5" y="19.5" width="15" height="11" style="fill:rgb(148,94,15);fill-rule:nonzero;"/>
+                </g>
+                <g>
+                    <path d="M24,20L24,30L10,30L10,20L24,20M25,19L9,19L9,31L25,31L25,19Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M39,20L39,30L25,30L25,20L39,20M40,19L24,19L24,31L40,31L40,19Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                    <path d="M54,20L54,30L40,30L40,20L54,20M55,19L39,19L39,31L55,31L55,19Z" style="fill:rgb(69,53,29);fill-rule:nonzero;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

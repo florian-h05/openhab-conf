@@ -111,6 +111,8 @@ Color scheme and opacity is fully configurable for the columns.
 ![](./images/roomCard/complete.png)
 ![](./images/roomCard/reduced.png)
 
+Note that this widget requires the [`mygaragedoor`](/icons/classic) icons for the garagedoor state.
+
 ### Data displayed
 
 The widget can display up to three columns of data, each data field can and has to be configured:

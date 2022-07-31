@@ -3,8 +3,8 @@
 # credits: Mike P (@integer) at https://community.openhab.org/t/oh3-main-ui-examples/117928/22 for the concept
 uid: roomCard
 tags:
-  - florianh-widgetset
   - community.openhab.org
+  - florianh-widgetset
 props:
   parameters:
     - description: Title to display in upper right corner
@@ -17,17 +17,20 @@ props:
       name: image
       required: false
       type: TEXT
-    - description: HEX, rgba or name, e.g. white or black
+    - default: black
+      description: HEX, rgba or name, e.g. white or black
       label: Background color
       name: bgcolor
       required: true
       type: TEXT
-    - description: decimal, e.g. 0.6
+    - default: "0.6"
+      description: decimal, e.g. 0.6
       label: Background opacity
       name: bgopacity
       required: true
       type: TEXT
-    - description: icon & text color, e.g. black or white
+    - default: white
+      description: icon & text color, e.g. black or white
       label: Icon & text color
       name: color
       required: true
@@ -126,7 +129,13 @@ props:
       name: door_lock
       required: false
       type: TEXT
-timestamp: Dec 24, 2021, 4:27:46 PM
+    - context: item
+      description: Item for garagedoor state(s)
+      label: Garagedoor state(s)
+      name: garagedoor_state
+      required: false
+      type: TEXT
+timestamp: Jul 31, 2022, 1:20:52 PM
 component: f7-card
 config:
   style:
@@ -185,6 +194,19 @@ slots:
               text: "=props.lights_number ? ((items[props.light].state == 'ON') ? items[props.lights_number].state : '') : ''"
               textColor: =props.color
               visible: "=props.light ? true : false"
+          - component: f7-chip
+            config:
+              style:
+                --f7-chip-bg-color: rgba(255, 255, 255, 0)
+              visible: "=props.garagedoor_state ? true : false"
+            slots:
+              media:
+                - component: oh-icon
+                  config:
+                    icon: "=items[props.garagedoor_state].state === 'CLOSED' ? 'mygaragedoor-closed' : 'mygaragedoor-open'"
+                    iconSize: 24
+                    style:
+                      height: 24px
           - component: f7-chip
             config:
               style:
