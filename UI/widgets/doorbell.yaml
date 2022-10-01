@@ -69,8 +69,14 @@ props:
       name: phonebook
       required: false
       type: TEXT
+    - description: Enable SIP debugging to the console
+      label: Enable SIP Debugging
+      name: enableSIPDebug
+      required: false
+      type: BOOLEAN
+      advanced: true
   parameterGroups: []
-timestamp: Jul 27, 2022, 5:55:23 PM
+timestamp: Aug 17, 2022, 2:35:48 PM
 component: f7-card
 config:
   style:
@@ -129,6 +135,7 @@ slots:
         phonebook: =props.phonebook
         username: =props.username
         websocketUrl: =props.websocketUrl
+        enableSIPDebug: =props.enableSIPDebug
     - component: oh-button
       config:
         action: options
