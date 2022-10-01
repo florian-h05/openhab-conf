@@ -10,60 +10,62 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: Header big sized
       label: Header
       name: header
       required: false
       type: TEXT
+      groupName: appearance
     - description: Icon on top of the card (only f7 icons (without f7:)), e.g square
       label: Icon
       name: icon
       required: false
       type: TEXT
+      groupName: appearance
     - description: HEX or rgba
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
-      advanced: true
+      groupName: appearance
     - context: item
       description: Item whose state to display
       label: Item
       name: item
       required: true
       type: TEXT
+      groupName: widgetSetting
     - default: window
       description: Big icon shown in the upper right corner for state representation
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
       type: TEXT
+      groupName: widgetSetting
     - context: item
       description: Group:Number:COUNT(OPEN) Item for numbers of contacts open
       label: Contacts open Item
       name: contacts_open
       required: false
       type: TEXT
+      groupName: widgetSetting
     - description: Number of total contacts (in room, house, ...)
       label: Contacts total number
       name: contacts_total
       required: false
       type: INTEGER
-    - default: navigate
-      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
-      label: Action
-      name: action
-      required: false
-      type: TEXT
-      advanced: true
-    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
-      label: Action configuration
-      name: action_config
-      required: false
-      type: TEXT
-      advanced: true
-  parameterGroups: []
-timestamp: Jul 27, 2022, 2:01:34 PM
+      groupName: widgetSetting
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
+    - name: widgetSetting
+      label: Widget settings
+timestamp: Oct 1, 2022, 2:25:03 AM
 component: f7-card
 config:
   style:
@@ -150,13 +152,14 @@ slots:
         visible: true
     - component: oh-link
       config:
-        action: =props.action
-        actionGroupPopupItem: =props.action_config
-        actionPage: ='page:' + props.config
+        actionPropsParameterGroup: widgetAction
+        class:
+          - no-padding
+          - no-margin
         style:
           height: 120px
           left: 0px
           position: absolute
           top: 0px
           width: 100%
-        visible: "=props.action ? true : false"
+        visible: "=props.widget_action ? true : false"
