@@ -2,7 +2,8 @@
 # note: This widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input', '_Playback', '_Playback_Song', '_Playback_Artist'; if an Item is not available, the control element is hidden
 # author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: amplifier
-tags: []
+tags:
+  - florianh-widgetset
 props:
   parameters:
     - description: Small title on top of the card
@@ -51,7 +52,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 1, 2022, 12:58:16 AM
+timestamp: Oct 1, 2022, 2:11:32 AM
 component: f7-card
 config:
   style:
@@ -94,13 +95,13 @@ slots:
           - component: f7-block
             config:
               style:
-                position: absolute
-                top: 30px
-                right: 5px
-                text-align: right
                 display: flex
                 flex-direction: row
                 justify-content: center
+                position: absolute
+                right: 5px
+                text-align: right
+                top: 30px
             slots:
               default:
                 - component: oh-button
@@ -115,6 +116,7 @@ slots:
                     large: false
                     round: false
                     style:
+                      height: 34px
                       margin: 0 -0.25em
                     visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Mute'].state !== '-' ? true : false) : false) : false"
                 - component: oh-button
@@ -129,18 +131,19 @@ slots:
                     large: false
                     round: false
                     style:
+                      height: 34px
                       margin: 0 -0.25em
                     visible: "=vars.show_player_controls !== true ? true : (items[props.itemname + '_Power'].state === 'ON' ? false : true)"
           - component: f7-block
             config:
               style:
-                position: absolute
-                top: 100px
-                right: 5px
-                text-align: right
                 display: flex
                 flex-direction: row
                 justify-content: center
+                position: absolute
+                right: 5px
+                text-align: right
+                top: 100px
               visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? true : false) : false"
             slots:
               default:
@@ -159,11 +162,11 @@ slots:
             config:
               style:
                 bottom: -55px
+                display: flex
+                flex-direction: column
                 left: 20px
                 position: absolute
                 width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 45px)' : '100%'"
-                display: flex
-                flex-direction: column
               visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
             slots:
               default:
@@ -199,48 +202,48 @@ slots:
           - component: f7-block
             config:
               style:
-                position: absolute
-                left: 20px
-                top: 45px
                 display: flex
-                width: calc(100% - 40px)
                 flex-direction: column
+                left: 20px
+                position: absolute
+                top: 45px
+                width: calc(100% - 40px)
               visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
             slots:
               default:
                 - component: Label
                   config:
-                    text: =items[props.itemname + '_Playback_Song'].state
                     class:
                       - margin-top
                     style:
-                      overflow: hidden
-                      white-space: nowrap
-                      text-overflow: ellipsis
                       color: "#dd4124"
                       font-size: 17px
                       font-weight: 600
+                      overflow: hidden
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                    text: =items[props.itemname + '_Playback_Song'].state
                 - component: Label
                   config:
-                    text: =items[props.itemname + '_Playback_Artist'].state
                     class:
                       - margin-top
                     style:
-                      overflow: hidden
-                      white-space: nowrap
-                      text-overflow: ellipsis
                       font-size: 13px
                       font-weight: 400
+                      overflow: hidden
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                    text: =items[props.itemname + '_Playback_Artist'].state
           - component: f7-block
             config:
               style:
-                position: absolute
-                top: 30px
-                right: 5px
-                text-align: right
                 display: flex
                 flex-direction: row
                 justify-content: center
+                position: absolute
+                right: 5px
+                text-align: right
+                top: 30px
               visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
             slots:
               default:
