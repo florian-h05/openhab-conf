@@ -1,6 +1,9 @@
 # description: Control power, mute, volume, input and playback of an amplifier
 # note: This widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input', '_Playback', '_Playback_Song', '_Playback_Album', '_Playback_Artist'; if an Item is not available, the control element is hidden
 # author: Copyright (c) 2022 Florian Hotze under MIT License
+# description: Control power, mute, volume, input and playback of an amplifier
+# note: This widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input', '_Playback', '_Playback_Song', '_Playback_Album', '_Playback_Artist'; if an Item is not available, the control element is hidden
+# author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: amplifier
 tags:
   - amplifier
@@ -133,30 +136,21 @@ slots:
                 height: 34px
                 margin: 0 -0.25em
               visible: "=vars.show_player_controls !== true ? true : (items[props.itemname + '_Power'].state === 'ON' ? false : true)"
-    - component: f7-block
+    - component: oh-button
       config:
+        action: variable
+        actionVariable: show_player_controls
+        actionVariableValue: "=vars.show_player_controls === false ? true : false"
+        iconF7: "=vars.show_player_controls === true ? 'xmark' : 'player'"
+        iconSize: 30px
+        large: false
+        round: false
         style:
-          display: flex
-          flex-direction: row
-          justify-content: center
+          margin: 0 -0.25em
           position: absolute
           right: 5px
-          text-align: right
-          top: 100px
+          top: 80px
         visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? true : false) : false"
-      slots:
-        default:
-          - component: oh-button
-            config:
-              action: variable
-              actionVariable: show_player_controls
-              actionVariableValue: "=vars.show_player_controls === false ? true : false"
-              iconF7: "=vars.show_player_controls === true ? 'xmark' : 'player'"
-              iconSize: 30px
-              large: false
-              round: false
-              style:
-                margin: 0 -0.25em
     - component: f7-block
       config:
         style:
