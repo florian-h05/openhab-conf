@@ -209,7 +209,7 @@ slots:
                 flex-direction: column
                 left: 17px
                 position: absolute
-                top: 45px
+                top: 60px
                 width: calc(100% - 40px)
               visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
             slots:
@@ -220,7 +220,6 @@ slots:
                       color: "#dd4124"
                       font-size: 17px
                       font-weight: 600
-                      margin-top: 0.75em
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
@@ -240,7 +239,6 @@ slots:
                     style:
                       font-size: 13px
                       font-weight: 400
-                      margin-top: 0.5em
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
