@@ -121,7 +121,7 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-                width: "=props.bigOhIcon ? 'calc(100% - 60px)' : '100%'"
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
               text: "=props.header ? props.header : 'Set header!'"
           - component: Label
             config:

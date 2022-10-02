@@ -100,7 +100,7 @@ slots:
           left: 17px
           position: absolute
           top: 50px
-          width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+          width: 100%
       slots:
         default:
           - component: Label
@@ -111,6 +111,7 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
               text: "=props.item ? (props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state)) : (props.label ? props.label : 'Set item or label!')"
     - component: oh-trend
       config:

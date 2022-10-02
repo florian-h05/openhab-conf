@@ -10,69 +10,73 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: Header big sized
       label: Header
       name: header
       required: false
       type: TEXT
+      groupName: appearance
     - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb, power or divide_circle
       label: Icon
       name: icon
       required: false
       type: TEXT
+      groupName: appearance
     - description: Big icon shown in the upper right corner (hides the toggle)
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
       type: TEXT
+      groupName: appearance
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
-      advanced: true
+      groupName: appearance
     - context: item
       description: Item to control
       label: Control Item
       name: item
       required: false
       type: TEXT
+      groupName: widgetSettings
     - context: item
       description: Item with number of devices on
       label: Number of Items ON in the Group (Item)
       name: item_counter
       required: false
       type: TEXT
+      groupName: widgetSettings
     - description: Number of total devices (in room, house, ...)
       label: Total number of Items in group
       name: items_total
       required: false
       type: TEXT
+      groupName: widgetSettings
     - description: Display a slider
       label: Enable slider
       name: sliderEnable
       required: false
       type: BOOLEAN
+      groupName: widgetSettings
     - description: Display a selector (hides toggle & slider), see 'Action configuration' (advanced) to set the options in 'value=label' syntax (leave empty to use Item configuration)
       label: Enable selector
       name: selectorEnable
       required: false
       type: BOOLEAN
-    - default: navigate
-      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
-      label: Action
-      name: action
-      required: false
-      type: TEXT
-      advanced: true
-    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
-      label: Action configuration
-      name: action_config
-      required: false
-      type: TEXT
-      advanced: true
-  parameterGroups: []
-timestamp: Jul 27, 2022, 6:16:08 PM
+      groupName: widgetSettings
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 2, 2022, 4:35:17 PM
 component: f7-card
 config:
   style:
@@ -98,11 +102,10 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: =props.icon
+              f7: "=props.icon ? props.icon : 'lightbulb'"
               size: 18
               style:
                 margin-right: 10px
-              visible: "=props.icon ? true : false"
           - component: Label
             config:
               style:
@@ -112,20 +115,22 @@ slots:
     - component: f7-block
       config:
         style:
-          bottom: -15px
-          flex-direction: row
-          left: 16px
+          left: 17px
           position: absolute
+          width: 100%
+          top: 50px
       slots:
         default:
           - component: Label
             config:
               style:
-                font-size: 17px
-                font-weight: 600
-                margin-left: 0px
-                margin-top: 0px
-              text: "=props.item_counter ? props.header + ' - ' + items[props.item_counter].state + ' von ' + props.items_total + ' an': props.header ? props.header : 'Set Props'"
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+              text: "=props.header ? props.header : 'Set header!'"
     - component: oh-slider
       config:
         item: =props.item
@@ -172,23 +177,21 @@ slots:
         visible: "=props.selectorEnable !== true && !props.bigOhIcon ? true : false"
     - component: oh-icon
       config:
-        height: 70px
         icon: =props.bigOhIcon
         style:
           position: absolute
-          right: 15px
-          top: 10px
+          right: 10px
+          top: 5px
+          width: 80px
         visible: "=props.bigOhIcon ? true : false"
     - component: oh-link
       config:
         action: =props.action
-        actionGroupPopupItem: =props.action_config
-        actionPage: ='page:' + props.action_config
-        actionUrl: =props.actionUrl
+        actionPropsParameterGroup: widgetAction
         style:
-          height: "=props.selectorEnable == true ? '70px' : '120px'"
+          height: 120px
           left: 0px
           position: absolute
           top: 0px
-          width: calc(100% - 70px)
-        visible: "=props.action_config ? true : false"
+          width: 100%
+        visible: "=props.widget_action ? true : false"
