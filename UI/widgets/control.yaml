@@ -77,9 +77,9 @@ props:
       label: Disable toggle
       name: toggleDisable
       required: false
-      advanced: true
       type: BOOLEAN
       groupName: widgetSettings
+      advanced: true
   parameterGroups:
     - name: appearance
       label: Appearence settings
@@ -89,7 +89,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 7:01:02 PM
+timestamp: Oct 2, 2022, 7:03:56 PM
 component: f7-card
 config:
   style:
@@ -203,9 +203,9 @@ slots:
         actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:
-          height: 120px
+          height: "=props.selectorEnable === true || props.sliderEnable === true ? '80px' : '120px'"
           left: 0px
           position: absolute
           top: 0px
-          width: 100%
+          width: "=props.selectorEnable === true || props.toggleHide === true ? '100%' : 'calc(100% - 60px)'"
         visible: "=props.widget_action ? true : false"
