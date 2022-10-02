@@ -10,48 +10,51 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: Header big sized
       label: Header
       name: header
       required: false
       type: TEXT
+      groupName: appearance
     - description: Icon on top of the card (only f7 icons (without f7:))
       label: Icon
       name: icon
       required: false
       type: TEXT
+      groupName: appearance
     - description: Big icon shown in the upper right corner (hides the toggle)
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
       type: TEXT
+      groupName: appearance
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color (lightmode)
       name: bgcolor
       required: false
       type: TEXT
+      groupName: appearance
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color darkmode
       name: bgcolor_dark
       required: false
       type: TEXT
+      groupName: appearance
     - description: invert text color for light and dark mode
       label: Invert text color
       name: invertText
       required: false
       type: BOOLEAN
-    - context: item
-      description: Item to control
-      label: Item
-      name: item
-      required: false
-      type: TEXT
-    - label: Command to send
-      name: command
-      required: false
-      type: TEXT
-  parameterGroups: []
-timestamp: Jul 28, 2022, 6:37:34 PM
+      groupName: appearance
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
+timestamp: Oct 2, 2022, 6:43:06 PM
 component: f7-card
 config:
   style:
@@ -95,7 +98,7 @@ slots:
       config:
         style:
           position: absolute
-          bottom: -15px
+          top: 50px
           left: 16px
           flex-direction: row
       slots:
@@ -109,19 +112,6 @@ slots:
                 margin-left: 0px
                 margin-top: 0px
                 color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
-    - component: oh-link
-      config:
-        action: command
-        actionItem: =props.item
-        style:
-          position: absolute
-          top: 0
-          left: 0
-          height: 100px
-          width: 100%
-          actionPosition: center
-        actionCommand: =props.command
-        actionFeedback: Erledigt!
     - component: oh-icon
       config:
         visible: "=props.bigOhIcon ? true : false"
@@ -132,3 +122,16 @@ slots:
           top: -30px
           right: 15px
           height: 145px
+    - component: oh-link
+    - component: oh-link
+      config:
+        action: =props.action
+        actionPropsParameterGroup: widgetAction
+        actionFeedback: Erledigt!
+        style:
+          height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
+          width: 100%
+        visible: "=props.widget_action ? true : false"
