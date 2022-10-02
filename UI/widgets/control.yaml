@@ -76,7 +76,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 4:35:17 PM
+timestamp: Oct 2, 2022, 4:58:00 PM
 component: f7-card
 config:
   style:
@@ -172,7 +172,7 @@ slots:
         item: =props.item
         style:
           position: absolute
-          right: 20px
+          right: 15px
           top: 15px
         visible: "=props.selectorEnable !== true && !props.bigOhIcon ? true : false"
     - component: oh-icon

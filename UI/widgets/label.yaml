@@ -99,7 +99,7 @@ slots:
         style:
           left: 17px
           position: absolute
-          top: 50px
+          top: 45px
           width: 100%
       slots:
         default:

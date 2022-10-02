@@ -54,7 +54,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 1, 2022, 11:17:50 AM
+timestamp: Oct 2, 2022, 5:23:15 PM
 component: f7-card
 config:
   style:
@@ -98,7 +98,7 @@ slots:
           flex-direction: row
           justify-content: center
           position: absolute
-          right: 10px
+          right: 5px
           text-align: right
           top: 30px
       slots:
@@ -140,7 +140,7 @@ slots:
           flex-direction: row
           justify-content: center
           position: absolute
-          right: 10px
+          right: 5px
           text-align: right
           top: 100px
         visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? true : false) : false"
@@ -165,7 +165,7 @@ slots:
           flex-direction: column
           left: 18.5px
           position: absolute
-          width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 50px)' : '100%'"
+          width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 45px)' : '100%'"
         visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
       slots:
         default:
