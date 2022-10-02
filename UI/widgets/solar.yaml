@@ -55,10 +55,10 @@ slots:
     - component: f7-block
       config:
         style:
-          left: 16px
+          left: 12px
           position: absolute
           top: 55px
-          width: calc(100% - 70px)
+          width: calc(100% - 75px)
       slots:
         default:
           - component: f7-chip
@@ -96,11 +96,10 @@ slots:
       config:
         icon: solarplant
         style:
-          height: 145px
           position: absolute
           right: 15px
-          top: -20px
-        width: 75px
+          top: 15px
+          width: 80px
     - component: oh-link
       config:
         action: navigate

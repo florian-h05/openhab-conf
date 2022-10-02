@@ -10,52 +10,54 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: Icon on top of the card (only f7 icons (without f7:)), e.g. thermometer
       label: Icon
       name: icon
       required: false
       type: TEXT
+      groupName: appearance
     - description: Big icon shown in the upper right corner
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
       type: TEXT
+      groupName: appearance
     - description: in rgba() or HEX or empty
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
-      advanced: true
+      groupName: appearance
     - context: item
       description: Item whosee state should be displayed
       label: Item
       name: item
       required: false
       type: TEXT
+      groupName: widgetSettings
     - description: text to display in front of item's value
       label: Label
       name: label
       required: false
       type: TEXT
-    - description: Display trendline and enable analyzer, only for number items
+      groupName: widgetSettings
+    - description: Display trendline and enable analyzer, only for number Items
       label: Trendline & Analyzer
       name: trendAnalyze
       required: false
       type: BOOLEAN
-    - default: navigate
-      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
-      label: Action
-      name: action
-      required: false
-      type: TEXT
-      advanced: true
-    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
-      label: Action configuration
-      name: action_config
-      required: false
-      type: TEXT
-      advanced: true
-timestamp: Jul 27, 2022, 6:17:23 PM
+      groupName: widgetSettings
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked. If trendline & analyzer are enabled, only clicks on the left third of the widget perform the action.
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 2, 2022, 4:32:55 PM
 component: f7-card
 config:
   style:
@@ -65,6 +67,7 @@ config:
     height: 120px
     margin-left: 5px
     margin-right: 5px
+    min-width: 220px
     noShadow: false
     padding: 0px
 slots:
@@ -81,11 +84,10 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: =props.icon
+              f7: "=props.icon ? props.icon : 'thermometer'"
               size: 18
               style:
                 margin-right: 10px
-              visible: "=props.icon ? true : false"
           - component: Label
             config:
               style:
@@ -95,10 +97,10 @@ slots:
     - component: f7-block
       config:
         style:
-          bottom: -20px
-          flex-direction: row
-          left: 16px
+          left: 17px
           position: absolute
+          top: 45px
+          width: 100%
       slots:
         default:
           - component: Label
@@ -106,9 +108,11 @@ slots:
               style:
                 font-size: 24px
                 font-weight: 400
-                margin-left: 0px
-                margin-top: 0px
-              text: "=props.item ? props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (props.label ? props.label : 'Set item or label!')"
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+              text: "=props.item ? (props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state)) : (props.label ? props.label : 'Set item or label!')"
     - component: f7-block
       config:
         style:
@@ -117,14 +121,14 @@ slots:
           position: absolute
           top: 15px
           width: 100%
+        visible: "=props.trendAnalyze === true ? true : false"
       slots:
         default:
           - component: oh-trend
             config:
               style:
-                --f7-theme-color-bg-color: transparent
-                background: var(--f7-theme-color-bg-color)
-                filter: opacity(30%)
+                background: transparent
+                filter: opacity(40%)
                 height: 100%
                 left: 0px
                 position: absolute
@@ -137,18 +141,16 @@ slots:
                 - "#00796b"
                 - "#388e3c"
               trendItem: =props.item
-              trendSampling: 60
-              visible: "=props.trendAnalyze === true ? true : false"
+              trendSampling: 30
     - component: oh-icon
       config:
         icon: =props.bigOhIcon
         style:
-          height: 145px
           position: absolute
-          right: 15px
-          top: -30px
+          right: 10px
+          top: 5px
+          width: 80px
         visible: "=props.bigOhIcon ? true : false"
-        width: 80px
     - component: oh-link
       config:
         action: analyzer
@@ -160,17 +162,16 @@ slots:
           position: absolute
           right: 0px
           top: 0px
-          width: "=props.action_config ? '65%' : '100%'"
-        visible: "=props.trendAnalyze === true ? true : false"
+          width: "=props.widget_action ? '65%' : '100%'"
+        visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
     - component: oh-link
       config:
         action: =props.action
-        actionGroupPopupItem: =props.action_config
-        actionPage: ='page:' + props.action_config
+        actionPropsParameterGroup: widgetAction
         style:
           height: 120px
           left: 0px
           position: absolute
           top: 0px
           width: "=props.trendAnalyze == true ? '35%' : '100%'"
-        visible: "=props.action_config ? true : false"
+        visible: "=props.widget_action ? true : false"

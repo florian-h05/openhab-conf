@@ -98,6 +98,48 @@ config:
     margin-left: 5px
     margin-right: 5px
 slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          left: 16px
+          position: absolute
+          top: -5px
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: "=props.icon ? props.icon : 'lightbulb'"
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
+            config:
+              style:
+                font-size: 12px
+                margin-top: 0px
+              text: "=props.title ? props.title : ''"
+    - component: f7-block
+      config:
+        style:
+          left: 17px
+          position: absolute
+          width: 100%
+          top: 45px
+      slots:
+        default:
+          - component: Label
+            config:
+              style:
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+              text: "=props.header ? props.header : 'Set header!'"
 ...
 ```
 The _background-color_ attribute varies if the widget supports light and dark backgrounds. For more information have a look at [design guidelines](#design-guidelines).
@@ -106,6 +148,22 @@ The _height_ attribute usually varies between three sizes:
 * __120px__ for normal-sized widgets
 * __150px__ for large widgets with much content and controls
 * __130px__ for the room card, which is not combined with other cards on one page
+
+#### Widget Components
+
+##### Big openHAB icon
+
+```yaml
+    - component: oh-icon
+      config:
+        icon: =props.bigOhIcon
+        style:
+          position: absolute
+          right: 15px
+          top: 15px
+          width: 80px
+        visible: "=props.bigOhIcon ? true : false"
+```
 
 #### Icons
 

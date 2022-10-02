@@ -10,54 +10,55 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: Header big sized
       label: Header
       name: header
       required: false
       type: TEXT
+      groupName: appearance
     - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify or arrow_up_arrow_down
       label: Icon
       name: icon
       required: false
       type: TEXT
+      groupName: appearance
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
-      advanced: true
+      groupName: appearance
     - context: item
       description: Shutter Item to control
       label: Shutter Item
       name: item
       required: true
       type: TEXT
+      groupName: widgetSettings
     - context: item
       description: Shading state Item
       label: Shading state Item
       name: itemShading
       required: false
       type: TEXT
+      groupName: widgetSettings
     - description: Display a slider
       label: Enable slider
       name: sliderEnable
       required: false
       type: BOOLEAN
-    - default: navigate
-      description: Action to perform on click, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
-      label: Action
-      name: action
-      required: false
-      type: TEXT
-      advanced: true
-    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
-      label: Action configuration
-      name: action_config
-      required: false
-      type: TEXT
-      advanced: true
-  parameterGroups: []
-timestamp: Jul 28, 2022, 3:10:04 PM
+      groupName: widgetSettings
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 2, 2022, 5:20:48 PM
 component: f7-card
 config:
   style:
@@ -84,11 +85,10 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: =props.icon
+              f7: "=props.icon ? props.icon : 'text_justify'"
               size: 18
               style:
                 margin-right: 10px
-              visible: "=props.icon ? true : false"
           - component: Label
             config:
               style:
@@ -98,81 +98,74 @@ slots:
     - component: f7-block
       config:
         style:
-          bottom: -12px
-          flex-direction: row
-          left: 16px
+          left: 17px
           position: absolute
+          width: calc(100% - 40px)
+          top: 45px
       slots:
         default:
           - component: Label
             config:
               style:
-                font-size: 17px
-                font-weight: 600
-                margin-left: 0px
-                margin-top: 0px
-              text: "=props.header ? props.header : 'Set Props'"
-    - component: f7-block
-      config:
-        style:
-          bottom: -28px
-          flex-direction: row
-          left: 16px
-          position: absolute
-      slots:
-        default:
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: "=props.header ? props.header : 'Set header!'"
           - component: Label
             config:
               style:
                 font-size: 12px
-                margin-left: 0px
-                margin-top: 0px
+                margin-top: -0.25em
               text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
-    - component: oh-button
+    - component: f7-block
       config:
-        action: command
-        actionCommand: UP
-        actionFeedback: Erledigt!
-        actionItem: =props.item
-        iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
-        iconF7: arrow_up_circle
-        iconSize: 34
         style:
-          background: transparent
-          height: 36px
+          display: flex
+          flex-direction: column
+          justify-content: between
           position: absolute
-          right: 10px
-          top: 10px
-    - component: oh-button
-      config:
-        action: command
-        actionCommand: STOP
-        actionFeedback: Erledigt!
-        actionItem: =props.item
-        iconColor: red
-        iconF7: stop_circle
-        iconSize: 30
-        style:
-          background: transparent
-          height: 32px
-          position: absolute
-          right: 12px
-          top: 43.5px
-    - component: oh-button
-      config:
-        action: command
-        actionCommand: DOWN
-        actionFeedback: Erledigt!
-        actionItem: =props.item
-        iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
-        iconF7: arrow_down_circle
-        iconSize: 34
-        style:
-          background: transparent
-          height: 36px
-          position: absolute
-          right: 10px
-          top: 72px
+          right: 5px
+          top: 25px
+      slots:
+        default:
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: UP
+              actionFeedback: Erledigt!
+              actionItem: =props.item
+              iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+              iconF7: arrow_up_circle
+              iconSize: 34
+              style:
+                background: transparent
+                height: 36px
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: STOP
+              actionFeedback: Erledigt!
+              actionItem: =props.item
+              iconColor: red
+              iconF7: stop_circle
+              iconSize: 30
+              style:
+                background: transparent
+                height: 32px
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: DOWN
+              actionFeedback: Erledigt!
+              actionItem: =props.item
+              iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+              iconF7: arrow_down_circle
+              iconSize: 34
+              style:
+                background: transparent
+                height: 36px
     - component: oh-slider
       config:
         item: =props.item
@@ -186,19 +179,19 @@ slots:
           --f7-range-bar-size: 6px
           --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
           --f7-range-knob-size: 16px
-          left: 20px
+          left: 18.5px
           position: absolute
-          top: 76px
-          width: calc(100% - 85px)
+          top: 75px
+          width: calc(100% - 80px)
         visible: "=props.sliderEnable == true ? true : false"
     - component: oh-link
       config:
         action: =props.action
-        actionPage: ='page:' + props.action_config
+        actionPropsParameterGroup: widgetAction
         style:
           height: 120px
           left: 0px
           position: absolute
           top: 0px
-          width: calc(100% - 55px)
-        visible: "=props.action_config ? true : false"
+          width: 100%
+        visible: "=props.widget_action ? true : false"
