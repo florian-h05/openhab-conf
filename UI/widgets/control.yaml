@@ -61,11 +61,17 @@ props:
       required: false
       type: BOOLEAN
       groupName: widgetSettings
-    - description: Display a selector (hides toggle & slider), see 'Action configuration' (advanced) to set the options in 'value=label' syntax (leave empty to use Item configuration)
+    - description: Display a selector (hides toggle & slider)
       label: Enable selector
       name: selectorEnable
       required: false
       type: BOOLEAN
+      groupName: widgetSettings
+    - description: Set the options in 'value=label' syntax (leave empty to use Item's stateDescription)
+      label: Selector options
+      name: selectorOptions
+      required: false
+      type: TEXT
       groupName: widgetSettings
   parameterGroups:
     - name: appearance
@@ -152,7 +158,7 @@ slots:
         action: options
         actionFeedback: Erledigt!
         actionItem: =props.item
-        actionOptions: =props.action_config
+        actionOptions: =props.selectorOptions
         item: =props.item
         large: false
         round: false
