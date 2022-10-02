@@ -54,7 +54,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 1, 2022, 10:51:42 AM
+timestamp: Oct 1, 2022, 11:17:50 AM
 component: f7-card
 config:
   style:
@@ -183,7 +183,7 @@ slots:
                     style:
                       font-size: 17px
                       font-weight: 600
-                      margin-bottom: 0.25em
+                      margin-bottom: -0.6em
                     text: "='Eingang: ' + (items[props.itemname + '_Input'].displayState ? items[props.itemname + '_Input'].displayState : items[props.itemname + '_Input'].state)"
                     vertical: false
                     visible: "=items[props.itemname + '_Input'].state !== '-' ? true : false"
@@ -200,6 +200,7 @@ slots:
                       --f7-range-bar-size: 8px
                       --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
                       --f7-range-knob-size: 18px
+                      margin-top: 0.85em
                     visible: "=items[props.itemname + '_Volume'].state !== '-' ? true : false"
           - component: f7-block
             config:
@@ -219,7 +220,7 @@ slots:
                       color: "#dd4124"
                       font-size: 17px
                       font-weight: 600
-                      margin-top: 0.5em
+                      margin-top: 0.75em
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
