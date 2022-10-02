@@ -54,10 +54,10 @@ props:
     - name: widgetAction
       context: action
       label: Action settings
-      description: Action to perform when the widget is clicked
+      description: Action to perform when the widget is clicked. If trendline & analyzer are enabled, only clicks on the left third of the widget perform the action.
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 4:02:57 PM
+timestamp: Oct 2, 2022, 4:32:55 PM
 component: f7-card
 config:
   style:
@@ -71,97 +71,94 @@ config:
     noShadow: false
     padding: 0px
 slots:
-  default:
-    - component: f7-card-content
+  content:
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          left: 16px
+          position: absolute
+          top: -5px
       slots:
         default:
-          - component: f7-block
+          - component: f7-icon
+            config:
+              f7: "=props.icon ? props.icon : 'thermometer'"
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
             config:
               style:
-                display: flex
-                flex-direction: row
-                left: 16px
-                position: absolute
-                top: -5px
-            slots:
-              default:
-                - component: f7-icon
-                  config:
-                    f7: "=props.icon ? props.icon : 'thermometer'"
-                    size: 18
-                    style:
-                      margin-right: 10px
-                - component: Label
-                  config:
-                    style:
-                      font-size: 12px
-                      margin-top: 0px
-                    text: "=props.title ? props.title : ''"
-          - component: f7-block
+                font-size: 12px
+                margin-top: 0px
+              text: "=props.title ? props.title : ''"
+    - component: f7-block
+      config:
+        style:
+          left: 17px
+          position: absolute
+          top: 50px
+          width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+      slots:
+        default:
+          - component: Label
             config:
               style:
-                left: 17px
-                position: absolute
-                top: 50px
-            slots:
-              default:
-                - component: Label
-                  config:
-                    style:
-                      font-size: 24px
-                      font-weight: 400
-                      overflow: hidden
-                      text-overflow: ellipsis
-                      white-space: nowrap
-                    text: "=props.item ? (props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state)) : (props.label ? props.label : 'Set item or label!')"
-          - component: oh-trend
-            config:
-              style:
-                filter: opacity(30%)
-                height: 100px
-                left: 0px
-                position: absolute
-                top: 10px
-                z-index: 1
-                trendGradient:
-                  - "#1976d2"
-                  - "#0288d1"
-                  - "#00796b"
-                  - "#388e3c"
-              trendItem: =props.item
-              trendSampling: 30
-              visible: "=props.trendAnalyze === true ? true : false"
-          - component: oh-icon
-            config:
-              icon: =props.bigOhIcon
-              style:
-                height: 145px
-                position: absolute
-                right: 0px
-                top: 0px
-                width: 80px
-              visible: "=props.bigOhIcon ? true : false"
-          - component: oh-link
-            config:
-              action: analyzer
-              actionAnalyzerChartType: day
-              actionAnalyzerCoordSystem: time
-              actionAnalyzerItems: =[props.item]
-              style:
-                height: 120px
-                position: absolute
-                right: 0px
-                top: 0px
-                width: "=props.widget_action ? '65%' : '100%'"
-              visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
-          - component: oh-link
-            config:
-              action: =props.action
-              actionPropsParameterGroup: widgetAction
-              style:
-                height: 120px
-                left: 0px
-                position: absolute
-                top: 0px
-                width: "=props.trendAnalyze == true ? '35%' : '100%'"
-              visible: "=props.widget_action ? true : false"
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: "=props.item ? (props.label ? props.label + ' ' + (items[props.item].displayState ? items[props.item].displayState : items[props.item].state) : (items[props.item].displayState ? items[props.item].displayState : items[props.item].state)) : (props.label ? props.label : 'Set item or label!')"
+    - component: oh-trend
+      config:
+        style:
+          filter: opacity(30%)
+          height: 100px
+          left: 0px
+          position: absolute
+          top: 10px
+          z-index: 1
+          trendGradient:
+            - "#1976d2"
+            - "#0288d1"
+            - "#00796b"
+            - "#388e3c"
+        trendItem: =props.item
+        trendSampling: 30
+        visible: "=props.trendAnalyze === true ? true : false"
+    - component: oh-icon
+      config:
+        icon: =props.bigOhIcon
+        style:
+          position: absolute
+          right: 10px
+          top: 5px
+          width: 80px
+        visible: "=props.bigOhIcon ? true : false"
+    - component: oh-link
+      config:
+        action: analyzer
+        actionAnalyzerChartType: day
+        actionAnalyzerCoordSystem: time
+        actionAnalyzerItems: =[props.item]
+        style:
+          height: 120px
+          position: absolute
+          right: 0px
+          top: 0px
+          width: "=props.widget_action ? '65%' : '100%'"
+        visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
+    - component: oh-link
+      config:
+        action: =props.action
+        actionPropsParameterGroup: widgetAction
+        style:
+          height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
+          width: "=props.trendAnalyze == true ? '35%' : '100%'"
+        visible: "=props.widget_action ? true : false"

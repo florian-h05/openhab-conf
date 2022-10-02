@@ -65,7 +65,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 4:20:09 PM
+timestamp: Oct 2, 2022, 4:31:52 PM
 component: f7-card
 config:
   style:
@@ -79,83 +79,79 @@ config:
     noShadow: false
     padding: 0px
 slots:
-  default:
-    - component: f7-card-content
+  content:
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          left: 16px
+          position: absolute
+          top: -5px
       slots:
         default:
-          - component: f7-block
+          - component: f7-icon
+            config:
+              f7: "=props.icon ? props.icon : 'square'"
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
             config:
               style:
-                display: flex
-                flex-direction: row
-                left: 16px
-                position: absolute
-                top: -5px
-            slots:
-              default:
-                - component: f7-icon
-                  config:
-                    f7: "=props.icon ? props.icon : 'square'"
-                    size: 18
-                    style:
-                      margin-right: 10px
-                - component: Label
-                  config:
-                    style:
-                      font-size: 12px
-                      margin-top: 0px
-                    text: "=props.title ? props.title : ''"
-          - component: f7-block
+                font-size: 12px
+                margin-top: 0px
+              text: "=props.title ? props.title : ''"
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: column
+          left: 17px
+          position: absolute
+          top: 50px
+          width: 100%
+      slots:
+        default:
+          - component: Label
             config:
               style:
-                display: flex
-                flex-direction: column
-                left: 17px
-                position: absolute
-                top: 50px
-                width: 100%
-            slots:
-              default:
-                - component: Label
-                  config:
-                    style:
-                      font-size: 24px
-                      font-weight: 400
-                      overflow: hidden
-                      text-overflow: ellipsis
-                      white-space: nowrap
-                      width: "=props.bigOhIcon ? 'calc(100% - 60px)' : '100%'"
-                    text: "=props.header ? props.header : 'Set header!'"
-                - component: Label
-                  config:
-                    style:
-                      color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
-                      font-size: 24px
-                      font-weight: 400
-                      margin-top: 0.3em
-                      overflow: hidden
-                      text-align: center
-                      text-overflow: ellipsis
-                      white-space: nowrap
-                    text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
-          - component: oh-icon
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 60px)' : '100%'"
+              text: "=props.header ? props.header : 'Set header!'"
+          - component: Label
             config:
-              icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
               style:
-                height: 145px
-                position: absolute
-                right: 0px
-                top: -32.5px
-                width: 80px
-              visible: "=props.bigOhIcon ? true : false"
-          - component: oh-link
-            config:
-              action: =props.action
-              actionPropsParameterGroup: widgetAction
-              style:
-                height: 120px
-                left: 0px
-                position: absolute
-                top: 0px
-                width: "=props.trendAnalyze == true ? '35%' : '100%'"
-              visible: "=props.widget_action ? true : false"
+                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                font-size: 24px
+                font-weight: 400
+                margin-top: 0.3em
+                overflow: hidden
+                text-align: center
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
+    - component: oh-icon
+      config:
+        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
+        style:
+          position: absolute
+          right: 10px
+          top: 5px
+          width: 80px
+        visible: "=props.bigOhIcon ? true : false"
+    - component: oh-link
+      config:
+        action: =props.action
+        actionPropsParameterGroup: widgetAction
+        style:
+          height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
+          width: 100%
+        visible: "=props.widget_action ? true : false"
