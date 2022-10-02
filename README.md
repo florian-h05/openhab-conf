@@ -78,14 +78,53 @@ These color pairs are all from color series __600__.
 My custom widget set for the openHAB 3 MainUI.
 Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
 
-### Widget design
+### Widgets
 
 
-#### Widget style
+#### Widget Template
 
-My custom widgets always use this design:
+Most of my custom widgets are based on this template:
+
 ```yaml
-...
+uid: mynewwidget
+tags:
+  - florianh-widgetset
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+      groupName: appearance
+    - description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+      groupName: appearance
+    - description: Icon on top of the card (only f7 icons (without f7:)), e.g lightbulb, power or divide_circle
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+      groupName: appearance
+    - description: word (e.g. ‚red‘), rgba or HEX
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+      groupName: appearance
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 2, 2022, 7:19:09 PM
 component: f7-card
 config:
   style:
@@ -154,6 +193,14 @@ The _height_ attribute usually varies between three sizes:
 ##### Big openHAB icon
 
 ```yaml
+...
+    - description: Big icon shown in the upper right corner (hides the toggle)
+      label: Big openHAB Icon
+      name: bigOhIcon
+      required: false
+      type: TEXT
+      groupName: appearance
+...
     - component: oh-icon
       config:
         icon: =props.bigOhIcon
@@ -163,6 +210,7 @@ The _height_ attribute usually varies between three sizes:
           top: 15px
           width: 80px
         visible: "=props.bigOhIcon ? true : false"
+...
 ```
 
 #### Icons
