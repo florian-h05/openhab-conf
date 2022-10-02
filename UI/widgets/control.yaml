@@ -73,6 +73,13 @@ props:
       required: false
       type: TEXT
       groupName: widgetSettings
+    - description: Disable the toggle, useful when using only the on-click action
+      label: Disable toggle
+      name: toggleDisable
+      required: false
+      advanced: true
+      type: BOOLEAN
+      groupName: widgetSettings
   parameterGroups:
     - name: appearance
       label: Appearence settings
@@ -82,7 +89,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 4:58:00 PM
+timestamp: Oct 2, 2022, 7:01:02 PM
 component: f7-card
 config:
   style:
@@ -180,7 +187,7 @@ slots:
           position: absolute
           right: 15px
           top: 15px
-        visible: "=props.selectorEnable !== true && !props.bigOhIcon ? true : false"
+        visible: "=props.selectorEnable !== true && props.toggleDisable !== true && !props.bigOhIcon ? true : false"
     - component: oh-icon
       config:
         icon: =props.bigOhIcon
@@ -193,6 +200,7 @@ slots:
     - component: oh-link
       config:
         action: =props.action
+        actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px
