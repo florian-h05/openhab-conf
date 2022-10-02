@@ -6,6 +6,31 @@ Please keep in mind that some parts of the widgets are „hardcoded“ in German
 
 Most widgets allow to perform an on-click action, but usually the action config is only displayed when __advanced__ is ticked.
 
+## Widget [`amplifier`](./amplifier.yaml)
+
+This widget provides power, mute, volume and input control, as well as playback information and playback control for an amplifier.
+
+![](./images/amplifier/control_dark.jpeg)
+![](./images/amplifier/playback_dark.jpeg)
+
+### Configuration
+
+Configuration is self-explaining.
+For amplifiers using the Yamaha AV Receiver binding, you need to enable legacy playback control!
+
+### Item Naming Scheme
+
+The amplifiers Items must follow a given scheme.
+The scheme applies to the base Item name:
+
+- `_Power` (Switch Item)
+- `_Mute` (Switch Item) (optional)
+- `_Volume` (Dimmer or Number Item) (optional)
+- `_Input` (String Item) (optional)
+- `_Playback` (Player Item or String Item for legacy Yamaha AV -> Legacy playback control mode must be enabled) (optional)
+  - `_Song` (String Item)
+  - `_Album` (String Item)
+  - `_Artist` (String Item)
 
 ## Widget [`contact`](./contact.yaml)
 
@@ -18,7 +43,6 @@ The textual state representation changes the color based on the contact‘s stat
 
 Configuration is straight forward and requires no further explanation.
 
-
 ## Widget [`control`](./control.yaml)
 
 This is probably the most universal widget in this collection, as it provides multiple ways of controlling an Item as well as state representation for groups and on-click actions.
@@ -28,6 +52,7 @@ This is probably the most universal widget in this collection, as it provides mu
 Configure the Item with the `item` param.
 
 The following ways of controlling that Item are available:
+
 - toggle (default): Displays a simple toggle (on/off) in the upper right corner.
 - slider: Displays a slider at the bottom.
   Enabled with the `sliderEnable` param.
@@ -45,6 +70,7 @@ This widget is able to display how many Items of a group are switched on.
 For this feature, the widget relies on external logic (like a rule that counts the number of group members ON and saves that number to an Item).
 
 Enable this „x of y are on“ feature with thia configuration steps:
+
 1. Set the `header` prop.
 2. Set the `item` prop to the group Item.
 3. Set the `item_counter` prop to the Item that holds the number of group members ON.
@@ -52,23 +78,6 @@ Enable this „x of y are on“ feature with thia configuration steps:
 
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
-
-### *On-click action* configuration
-
-This widget is able to perform a action on click.
-
-You can use most of [these actions](https://www.openhab.org/docs/ui/components/oh-button.html#action) as on-click action:
-- Set the `action` prop (advanced) to the name of the action to use.
-- Set the action‘s respective configuration in the `action_config` prop (advanced).
-
-Example: How to open a popup to control a group and it‘s members?
-- Set the `action` prop (advanced) to `group`.
-- Set the `action_config` prop (advanced) to the group‘s name.
-
-Example: How to navigate to a page?
-- Set the `action` prop (advanced) to `navigate`.
-- Set the `action_config` prop (advanced) to the name of the page.
-
 
 ## Widget [`doorbell`](./doorbell.yaml)
 
@@ -88,7 +97,6 @@ And the last button to energize the relay and open the door.
 
 Configuration is self-explaining.
 
-
 ## Widget [`label`](./label.yaml)
 
 Display any Item‘s state or just a simple text.
@@ -100,7 +108,6 @@ If any action is enabled, the analyzer will open on a left-side click and the ac
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
-
 
 ## Widget [`roomCard`](./roomCard.yaml)
 
@@ -124,7 +131,6 @@ The widget can display up to three columns of data, each data field can and has 
 
 Configuration is self-explaining.
 
-
 ## Widget [`shutter`](./shutter.yaml)
 
 Control a shutter with buttons and optional slider, display the shutter’s position and the state of the automatic shading.
@@ -134,7 +140,6 @@ Control a shutter with buttons and optional slider, display the shutter’s posi
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
-
 
 ## Widget [`solar`](./solar.yaml)
 
@@ -153,7 +158,6 @@ Display current power and today’s as well as total production and last refresh
 
 Configuration is self-explaining.
 
-
 ## Widget [`temperatureControl`](./temperatureControl.yaml)
 
 Shows current temperature with analyzer, heating/cooling state and controls target temperature.
@@ -164,7 +168,6 @@ Shows current temperature with analyzer, heating/cooling state and controls targ
 
 Configuration is straight forward and requires no further explanation.
 If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget.
-
 
 ## Widget [`trigger`](./trigger.yaml)
 
