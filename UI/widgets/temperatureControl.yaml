@@ -10,80 +10,83 @@ props:
       name: title
       required: false
       type: TEXT
+      groupName: appearance
     - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
       type: TEXT
-      advanced: true
+      groupName: appearance
     - context: item
       label: Temperature Item
       name: temp_item
       required: true
       type: TEXT
+      groupName: widgetSettings
     - context: item
       label: Outside temperature Item
       name: outside_temp_item
       required: true
       type: TEXT
+      groupName: widgetSettings
     - context: item
       description: Temperature setpoint Item
       label: Temperature control Item
       name: set_temp_item
       required: false
       type: TEXT
+      groupName: widgetSettings
     - context: item
       label: Current humidity Item
       name: humidity_item
       required: false
       type: TEXT
+      groupName: widgetSettings
     - context: item
       description: Switch Item
       label: Heating state Item
       name: heating_item
       required: false
       type: TEXT
+      groupName: widgetSettings
     - context: item
       description: Switch Item
       label: Cooling state Item
       name: cooling_item
       required: false
       type: TEXT
-    - default: navigate
-      description: Action to perform on click on left side, currently supported are 'navigate', 'popup', 'group', 'url'. See https://www.openhab.org/docs/ui/components/oh-button.html#action).
-      label: Action
-      name: action
-      required: false
-      type: TEXT
-      advanced: true
-    - description: "Dependending on the type of action: Group Popup Item (actionGroupPopupItem), Command options (actionOptions) for selector, Page (actionPage), URL (actionUrl), ..."
-      label: Action configuration
-      name: action_config
-      required: false
-      type: TEXT
-      advanced: true
-timestamp: Jul 28, 2022, 6:25:14 PM
+      groupName: widgetSettings
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked on the left third
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 2, 2022, 6:01:52 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
     margin-left: 5px
     margin-right: 5px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: row
+          left: 14px
           position: absolute
           top: -5px
-          left: 16px
-          flex-direction: row
-          display: flex
       slots:
         default:
           - component: f7-icon
@@ -94,176 +97,177 @@ slots:
                 margin-right: 10px
           - component: Label
             config:
-              text: "=props.title ? props.title : ''"
               style:
                 font-size: 12px
                 margin-top: 0px
+              text: "=props.title ? props.title : ''"
     - component: f7-block
       config:
         style:
+          left: 17px
           position: absolute
-          bottom: -20px
-          left: 16px
-          flex-direction: row
+          width: 100%
+          top: 50px
       slots:
         default:
           - component: Label
             config:
-              text: "=items[props.temp_item].displayState ? items[props.temp_item].displayState : items[props.temp_item].state"
               style:
                 font-size: 24px
                 font-weight: 400
-                margin-left: 0px
-                margin-top: 0px
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: "=items[props.temp_item].displayState ? items[props.temp_item].displayState : items[props.temp_item].state"
     - component: f7-block
       config:
         style:
-          position: absolute
           bottom: -40px
-          left: 12px
-          flex-direction: row
           display: flex
+          flex-direction: row
+          left: 15px
+          position: absolute
+        visible: "=props.humidity_item ? true : false"
       slots:
         default:
           - component: f7-icon
             config:
               f7: drop
               size: 18
-              visible: "=props.humidity_item ? true : false"
           - component: Label
             config:
-              visible: "=props.humidity_item ? true : false"
-              text: "=items[props.humidity_item].displayState ? items[props.humidity_item].displayState : items[props.humidity_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
                 margin-top: 0px
+              text: "=items[props.humidity_item].displayState ? items[props.humidity_item].displayState : items[props.humidity_item].state"
     - component: f7-block
       config:
         style:
-          position: absolute
           bottom: -63px
-          left: 12px
-          flex-direction: row
           display: flex
+          flex-direction: row
+          left: 15px
+          position: absolute
       slots:
         default:
           - component: f7-icon
             config:
-              visible: "=props.heating_item ? true : false"
               f7: flame
               size: 18
+              visible: "=props.heating_item ? true : false"
           - component: Label
             config:
-              visible: "=props.heating_item ? true : false"
-              text: "=items[props.heating_item].displayState ? items[props.heating_item].displayState : items[props.heating_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
-                margin-top: 0px
                 margin-right: 10px
+                margin-top: 0px
+              text: "=items[props.heating_item].displayState ? items[props.heating_item].displayState : items[props.heating_item].state"
+              visible: "=props.heating_item ? true : false"
           - component: f7-icon
             config:
-              visible: "=props.cooling_item ? true : false"
               f7: thermometer_snowflake
               size: 18
+              visible: "=props.cooling_item ? true : false"
           - component: Label
             config:
-              visible: "=props.cooling_item ? true : false"
-              text: "=items[props.cooling_item].displayState ? items[props.cooling_item].displayState : items[props.cooling_item].state"
               style:
                 font-size: 12px
                 margin-left: 5px
                 margin-top: 0px
-    - component: oh-button
-      config:
-        visible: "=props.set_temp_item ? true : false"
-        iconColor: red
-        iconF7: arrow_up_circle
-        iconSize: 34
-        action: command
-        actionItem: =props.set_temp_item
-        actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) + 0.5
-        style:
-          position: absolute
-          top: 10px
-          right: 10px
-          height: 36px
-          background: transparent
-    - component: oh-button
-      config:
-        visible: "=props.set_temp_item ? true : false"
-        iconColor: red
-        iconF7: arrow_down_circle
-        iconSize: 34
-        action: command
-        actionItem: =props.set_temp_item
-        actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) - 0.5
-        style:
-          position: absolute
-          top: 72px
-          right: 10px
-          height: 36px
-          background: transparent
-    - component: Label
-      config:
-        visible: "=props.set_temp_item ? true : false"
-        text: "=items[props.set_temp_item].displayState ? items[props.set_temp_item].displayState : items[props.set_temp_item].state"
-        style:
-          font-size: 12px
-          position: absolute
-          right: 15px
-          top: 50px
+              text: "=items[props.cooling_item].displayState ? items[props.cooling_item].displayState : items[props.cooling_item].state"
+              visible: "=props.cooling_item ? true : false"
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: column
+          justify-content: between
+          position: absolute
+          right: 5px
+          text-align: center
+          top: 26px
+        visible: "=props.set_temp_item ? true : false"
+      slots:
+        default:
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) + 0.5
+              actionItem: =props.set_temp_item
+              iconColor: red
+              iconF7: arrow_up_circle
+              iconSize: 34
+              style:
+                background: transparent
+                height: 36px
+          - component: Label
+            config:
+              style:
+                font-size: 12px
+                margin-bottom: 0.5em
+                margin-top: 0.5em
+              text: "=items[props.set_temp_item].displayState ? items[props.set_temp_item].displayState : items[props.set_temp_item].state + ' °C'"
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: =Number(items[props.set_temp_item].state.split(' ')[0]) - 0.5
+              actionItem: =props.set_temp_item
+              iconColor: red
+              iconF7: arrow_down_circle
+              iconSize: 34
+              style:
+                background: transparent
+                height: 36px
+    - component: f7-block
+      config:
+        style:
+          height: 120px
+          left: 15px
           position: absolute
           top: 15px
-          left: 15px
           width: "=props.set_temp_item ? 'calc(100% - 55px)' : '100%' "
-          height: 120px
       slots:
         default:
           - component: oh-trend
             config:
-              trendSampling: 60
-              trendItem: =props.temp_item
+              style:
+                background: transparent
+                filter: opacity(30%)
+                height: 100%
+                left: 0px
+                position: absolute
+                top: 0px
+                width: 100%
+                z-index: 1
               trendGradient:
                 - "#aa2b1d"
                 - "#cc561e"
                 - "#ef8d32"
                 - "#beca5c"
-              style:
-                --f7-theme-color-bg-color: transparent
-                background: var(--f7-theme-color-bg-color)
-                filter: opacity(30%)
-                position: absolute
-                width: 100%
-                height: 100%
-                top: 0px
-                left: 0px
-                z-index: 1
+              trendItem: =props.temp_item
+              trendSampling: 30
     - component: oh-link
       config:
-        actionAnalyzerChartType: day
         action: analyzer
-        actionAnalyzerItems: "=props.humidity_item ? [props.temp_item, props.humidity_item, props.set_temp_item, props.outside_temp_item] : (props.set_temp_item ? [props.temp_item, props.set_temp_item, props.outside_temp_item] : (props.humidity_item ? [props.temp_item, props.humidity_item, props.outside_temp_item] : [props.temp_item, props.outside_temp_item]))"
+        actionAnalyzerChartType: day
         actionAnalyzerCoordSystem: time
+        actionAnalyzerItems: "=props.humidity_item ? [props.temp_item, props.humidity_item, props.set_temp_item, props.outside_temp_item] : (props.set_temp_item ? [props.temp_item, props.set_temp_item, props.outside_temp_item] : (props.humidity_item ? [props.temp_item, props.humidity_item, props.outside_temp_item] : [props.temp_item, props.outside_temp_item]))"
         style:
+          height: 120px
           position: absolute
           right: "=props.set_temp_item ? '55px' : '0px' "
           top: 0px
-          height: 120px
           width: "=props.set_temp_item ? (props.page ? 'calc(65% - 55px)' : 'calc(100% - 55px)') : (props.page ? '65%' : '100%')"
     - component: oh-link
       config:
-        visible: "=props.action_config ? true : false"
         action: =props.action
-        actionPage: ='page:' + props.action_config
-        actionGroupPopupItem: =props.action_config
+        actionPropsParameterGroup: widgetAction
         style:
-          position: absolute
-          left: 0px
-          top: 0px
           height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
           width: 35%
+        visible: "=props.widget_action ? true : false"
