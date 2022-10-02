@@ -35,27 +35,27 @@ props:
       name: item
       required: true
       type: TEXT
-      groupName: widgetSetting
+      groupName: widgetSettings
     - default: window
       description: Big icon shown in the upper right corner for state representation
       label: Big openHAB Icon
       name: bigOhIcon
       required: false
       type: TEXT
-      groupName: widgetSetting
+      groupName: widgetSettings
     - context: item
       description: Group:Number:COUNT(OPEN) Item for numbers of contacts open
       label: Contacts open Item
       name: contacts_open
       required: false
       type: TEXT
-      groupName: widgetSetting
+      groupName: widgetSettings
     - description: Number of total contacts (in room, house, ...)
       label: Contacts total number
       name: contacts_total
       required: false
       type: INTEGER
-      groupName: widgetSetting
+      groupName: widgetSettings
   parameterGroups:
     - name: appearance
       label: Appearence settings
@@ -63,9 +63,9 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked
-    - name: widgetSetting
+    - name: widgetSettings
       label: Widget settings
-timestamp: Oct 1, 2022, 2:25:03 AM
+timestamp: Oct 2, 2022, 4:20:09 PM
 component: f7-card
 config:
   style:
@@ -79,87 +79,83 @@ config:
     noShadow: false
     padding: 0px
 slots:
-  content:
-    - component: f7-block
-      config:
-        style:
-          display: flex
-          flex-direction: row
-          left: 16px
-          position: absolute
-          top: -5px
+  default:
+    - component: f7-card-content
       slots:
         default:
-          - component: f7-icon
-            config:
-              f7: =props.icon
-              size: 18
-              style:
-                height: 18px
-                margin-right: 10px
-              visible: "=props.icon ? true : false"
-          - component: Label
+          - component: f7-block
             config:
               style:
-                font-size: 12px
-                margin-top: 0px
-              text: "=props.title ? props.title : ''"
-    - component: f7-block
-      config:
-        style:
-          bottom: -12px
-          flex-direction: row
-          left: 16px
-          position: absolute
-      slots:
-        default:
-          - component: Label
+                display: flex
+                flex-direction: row
+                left: 16px
+                position: absolute
+                top: -5px
+            slots:
+              default:
+                - component: f7-icon
+                  config:
+                    f7: "=props.icon ? props.icon : 'square'"
+                    size: 18
+                    style:
+                      margin-right: 10px
+                - component: Label
+                  config:
+                    style:
+                      font-size: 12px
+                      margin-top: 0px
+                    text: "=props.title ? props.title : ''"
+          - component: f7-block
             config:
               style:
-                font-size: 17px
-                font-weight: 600
-                margin-left: 0px
-                margin-top: 0px
-              text: "=props.header ? props.header : 'Set Props'"
-    - component: f7-block
-      config:
-        class:
-          - text-align-center
-        style:
-          bottom: -60px
-          position: absolute
-          width: 100%
-      slots:
-        default:
-          - component: Label
+                display: flex
+                flex-direction: column
+                left: 17px
+                position: absolute
+                top: 50px
+                width: 100%
+            slots:
+              default:
+                - component: Label
+                  config:
+                    style:
+                      font-size: 24px
+                      font-weight: 400
+                      overflow: hidden
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                      width: "=props.bigOhIcon ? 'calc(100% - 60px)' : '100%'"
+                    text: "=props.header ? props.header : 'Set header!'"
+                - component: Label
+                  config:
+                    style:
+                      color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                      font-size: 24px
+                      font-weight: 400
+                      margin-top: 0.3em
+                      overflow: hidden
+                      text-align: center
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                    text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
+          - component: oh-icon
             config:
+              icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
               style:
-                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
-                font-size: 24px
-                font-weight: 400
-                margin-left: 0px
-                margin-top: 0px
-              text: =items[props.item].displayState
-              visible: true
-    - component: oh-icon
-      config:
-        height: 70px
-        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
-        style:
-          position: absolute
-          right: 15px
-          top: 10px
-        visible: true
-    - component: oh-link
-      config:
-        actionPropsParameterGroup: widgetAction
-        class:
-          - no-padding
-          - no-margin
-        style:
-          height: 120px
-          left: 0px
-          position: absolute
-          top: 0px
-          width: 100%
-        visible: "=props.widget_action ? true : false"
+                height: 145px
+                position: absolute
+                right: 0px
+                top: -32.5px
+                width: 80px
+              visible: "=props.bigOhIcon ? true : false"
+          - component: oh-link
+            config:
+              action: =props.action
+              actionPropsParameterGroup: widgetAction
+              style:
+                height: 120px
+                left: 0px
+                position: absolute
+                top: 0px
+                width: "=props.trendAnalyze == true ? '35%' : '100%'"
+              visible: "=props.widget_action ? true : false"

@@ -102,7 +102,7 @@ slots:
               style:
                 left: 17px
                 position: absolute
-                top: 60px
+                top: 50px
             slots:
               default:
                 - component: Label
