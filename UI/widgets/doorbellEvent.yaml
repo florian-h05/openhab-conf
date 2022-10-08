@@ -1,3 +1,6 @@
+# description: Doorbell event widget that displays the image and the timestamp from a last event of a given type
+# note: This widget is required by the "doorbellPageWidget"
+# author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: doorbellEvent
 tags:
   - doorbell
@@ -12,35 +15,26 @@ props:
     - context: item
       description: Image Item that holds the last event image
       label: Event image Item
-      name: itemEventImage
+      name: item_eventImage
       required: true
       type: TEXT
       groupName: widgetSettings
     - context: item
       description: DateTime Item that holds the timestamp when the last event occured
       label: Event timestamp Item
-      name: itemEventTimestamp
+      name: item_eventTimestamp
       required: true
       type: TEXT
       groupName: widgetSettings
   parameterGroups:
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 8, 2022, 12:22:27 PM
+timestamp: Oct 8, 2022, 11:50:02 PM
 component: oh-image-card
 config:
-  action: photos
-  actionPhotoBrowserConfig:
-    lazy: true
-    toolbar: false
-    theme: dark
-    type: standalone
-  actionPhotos:
-    - item: =props.itemEventImage
-      caption: "=props.eventDescription ? props.eventDescription : ''"
   lazy: true
-  item: =props.itemEventImage
-  footer: "=props.eventDescription ? props.eventDescription + ': ' + items[props.itemEventTimestamp].displayState : items[props.itemEventTimestamp].displayState"
+  item: =props.item_eventImage
+  footer: "=props.eventDescription ? props.eventDescription + ': ' + items[props.item_eventTimestamp].displayState : items[props.item_eventTimestamp].displayState"
   style:
     footer-font-size: 24px
     border-radius: var(--f7-card-expandable-border-radius)
