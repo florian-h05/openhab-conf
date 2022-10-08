@@ -1,0 +1,50 @@
+uid: doorbellEvent
+tags:
+  - doorbell
+  - florianh-widgetset
+props:
+  parameters:
+    - label: Event description
+      name: eventDescription
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - context: item
+      description: Image Item that holds the last event image
+      label: Event image Item
+      name: itemEventImage
+      required: true
+      type: TEXT
+      groupName: widgetSettings
+    - context: item
+      description: DateTime Item that holds the timestamp when the last event occured
+      label: Event timestamp Item
+      name: itemEventTimestamp
+      required: true
+      type: TEXT
+      groupName: widgetSettings
+  parameterGroups:
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Oct 8, 2022, 12:22:27 PM
+component: oh-image-card
+config:
+  action: photos
+  actionPhotoBrowserConfig:
+    lazy: true
+    toolbar: false
+    theme: dark
+    type: standalone
+  actionPhotos:
+    - item: =props.itemEventImage
+      caption: "=props.eventDescription ? props.eventDescription : ''"
+  lazy: true
+  item: =props.itemEventImage
+  footer: "=props.eventDescription ? props.eventDescription + ': ' + items[props.itemEventTimestamp].displayState : items[props.itemEventTimestamp].displayState"
+  style:
+    footer-font-size: 24px
+    border-radius: var(--f7-card-expandable-border-radius)
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    margin-left: 0.35em
+    margin-top: 0.35em
+    text-align: center
