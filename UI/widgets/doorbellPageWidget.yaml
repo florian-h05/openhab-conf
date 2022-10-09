@@ -64,7 +64,7 @@ props:
       required: true
       type: TEXT
       groupName: doorbellMotionState
-    - description: "Full URL of the image providing the liveview (the image is updated several times a second). The image is used, not the MJPEG video stream, because the video stream stops often"
+    - description: Full URL of the image providing the liveview (the image is updated several times a second). Use the image if the MJPEG video stream is not stable
       label: Live image URL
       name: imageUrl
       required: true
@@ -123,7 +123,7 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Oct 9, 2022, 11:26:23 AM
+timestamp: Oct 9, 2022, 1:22:39 PM
 component: f7-card
 config:
   style:
@@ -148,36 +148,43 @@ slots:
     - component: f7-card
       config:
         style:
-          background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
+          background-color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
           border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
-          height: 330px
-          width: 150px
+          height: "=screen.width >= screen.height ? '330px' : '150px'"
+          width: "=screen.width >= screen.height ? '150px' : '100%'"
           position: absolute
-          top: 5px
+          top: "=screen.width >= screen.height ? '-10px' : ''"
           padding: 0px
-          left: "=(screen.height * (4/3)) / 2 - 175 >= 160 ? '5px' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)'"
+          left: "=screen.width >= screen.height ? ((screen.height * (4/3)) / 2 - 175 >= 160 ? '-10px' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)') : '-10px'"
       slots:
-        content:
+        default:
           - component: f7-block
             config:
               style:
                 display: flex
-                flex-direction: column
-                justify-content: between
+                flex-direction: "=screen.width >= screen.height ? 'column' : 'row'"
+                justify-content: space-around
+                align-content: space-around
                 position: absolute
                 top: 0px
                 left: 0px
+                margin-bottom: "=screen.width >= screen.height ? '16px' : ''"
+                height: "=screen.width >= screen.height ? '298px' : '115px'"
+                width: "=screen.width >= screen.height ? '150px' : '100%'"
             slots:
               default:
                 - component: f7-block
                   config:
                     style:
                       display: flex
-                      flex-direction: row
-                      justify-content: between
-                      text-align: center
+                      flex-direction: "=screen.width >= screen.height ? 'row' : 'column'"
+                      justify-content: space-around
+                      align-content: space-around
                       margin: 0 0 0 0
+                      padding: 0 0 0 0
+                      height: "=screen.width >= screen.height ? '40px' : '100%'"
+                      width: "=screen.width >= screen.height ? '118px' : ''"
                   slots:
                     default:
                       - component: oh-button
@@ -189,10 +196,11 @@ slots:
                             item_eventImage: =props.item_buttonLastPressedImage
                             item_eventTimestamp: =props.item_buttonLastPressedTimestamp
                           iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                          iconSize: 40
+                          iconSize: "=screen.width >= screen.height ? '40' : '30'"
                           iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
                           style:
-                            --f7-button-height: 40
+                            --f7-button-height: "=screen.width >= screen.height ? '40' : '30'"
+                            width: "=screen.width >= screen.height ? '59px' : '100%'"
                       - component: oh-button
                         config:
                           action: popup
@@ -202,45 +210,37 @@ slots:
                             item_eventImage: =props.item_lastMotionImage
                             item_eventTimestamp: =props.item_lastMotionTimestamp
                           iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                          iconSize: 40
+                          iconSize: "=screen.width >= screen.height ? '40' : '30'"
                           iconF7: arrow_right_arrow_left
                           style:
-                            --f7-button-height: 40
+                            --f7-button-height: "=screen.width >= screen.height ? '40' : '30'"
+                            width: "=screen.width >= screen.height ? '59px' : '100%'"
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: ON
+                    actionItem: =props.item_light
+                    iconF7: lightbulb_fill
+                    iconSize: "=screen.width >= screen.height ? '60' : '40'"
+                    style:
+                      padding-left: 0px
+                      padding-right: 0px
+                      --f7-button-height: "=screen.width >= screen.height ? '60px' : '115px'"
+                      width: 100%
                 - component: f7-block
                   config:
                     style:
-                      display: flex
-                      flex-direction: row
-                      justify-content: between
-                      text-align: center
-                      margin-top: 20px
-                      margin-left: 18px
-                  slots:
-                    default:
-                      - component: oh-button
-                        config:
-                          action: command
-                          actionCommand: ON
-                          actionItem: =props.item_light
-                          iconF7: lightbulb_fill
-                          iconSize: 60
-                          style:
-                            --f7-button-height: 60
-                - component: f7-block
-                  config:
-                    style:
-                      display: flex
-                      flex-direction: row
-                      justify-content: between
-                      text-align: center
-                      margin-top: 20px
+                      padding-left: 0px
+                      padding-right: 0px
+                      margin-top: "=screen.width >= screen.height ? '' : '30px'"
+                      width: 100%
                   slots:
                     default:
                       - component: oh-sipclient
                         config:
                           enableTones: false
                           enableVideo: false
-                          iconSize: 90
+                          iconSize: "=screen.width >= screen.height ? '80' : '60'"
                           hideCallerId: true
                           websocketUrl: =props.websocketUrl
                           domain: =props.domain
@@ -248,23 +248,15 @@ slots:
                           password: =props.password
                           phonebook: =props.phonebook
                           enableSIPDebug: =props.enableSIPDebug
-                - component: f7-block
+                - component: oh-button
                   config:
+                    action: options
+                    actionItem: =props.item_doorRelay
+                    actionOptions: ON=Tür öffnen
+                    iconF7: lock_open_fill
+                    iconSize: "=screen.width >= screen.height ? '60' : '40'"
                     style:
-                      display: flex
-                      flex-direction: row
-                      justify-content: between
-                      text-align: center
-                      margin-top: 10px
-                      margin-left: 20px
-                  slots:
-                    default:
-                      - component: oh-button
-                        config:
-                          action: options
-                          actionItem: =props.item_doorRelay
-                          actionOptions: ON=Tür öffnen
-                          iconF7: lock_open_fill
-                          iconSize: 60
-                          style:
-                            --f7-button-height: 60
+                      --f7-button-height: "=screen.width >= screen.height ? '60px' : '115px'"
+                      width: 100%
+                      padding-left: 0px
+                      padding-right: 0px
