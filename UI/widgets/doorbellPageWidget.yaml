@@ -64,7 +64,7 @@ props:
       required: true
       type: TEXT
       groupName: doorbellMotionState
-    - description: 'Full URL of the image providing the liveview (the image is updated several times a second). For DoorBird: the image is used, not the MJPEG video stream, because the video stream stops often.'
+    - description: "Full URL of the image providing the liveview (the image is updated several times a second). The image is used, not the MJPEG video stream, because the video stream stops often"
       label: Live image URL
       name: imageUrl
       required: true
@@ -123,13 +123,13 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Oct 8, 2022, 11:45:35 PM
+timestamp: Oct 9, 2022, 11:26:23 AM
 component: f7-card
 config:
   style:
     background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
     border-radius: var(--f7-card-expandable-border-radius)
-    height: calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height))
+    height: calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height))
     margin: 0px
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
     padding: 0px
@@ -144,19 +144,19 @@ slots:
         style:
           margin-left: "=screen.width <= (screen.height * (4/3)) ? '0' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
           border-radius: var(--f7-card-expandable-border-radius)
-          width: "=screen.width <= (screen.height * (4/3)) ? '100%' : 'calc(calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+          width: "=screen.width <= (screen.height * (4/3)) ? '100%' : 'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
     - component: f7-card
       config:
         style:
           background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
           border-radius: var(--f7-card-expandable-border-radius)
-          box-shaddow: 0 0 0 0
+          box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
           height: 330px
           width: 150px
           position: absolute
           top: 5px
           padding: 0px
-          left: "=screen.width <= (screen.height * (4/3)) ? '5px' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)'"
+          left: "=(screen.height * (4/3)) / 2 - 175 >= 160 ? '5px' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)'"
       slots:
         content:
           - component: f7-block
@@ -238,15 +238,15 @@ slots:
                     default:
                       - component: oh-sipclient
                         config:
-                          domain: =props.domain
                           enableTones: false
                           enableVideo: false
                           iconSize: 90
+                          hideCallerId: true
+                          websocketUrl: =props.websocketUrl
+                          domain: =props.domain
+                          username: =props.username
                           password: =props.password
                           phonebook: =props.phonebook
-                          hideCallerId: true
-                          username: =props.username
-                          websocketUrl: =props.websocketUrl
                           enableSIPDebug: =props.enableSIPDebug
                 - component: f7-block
                   config:
