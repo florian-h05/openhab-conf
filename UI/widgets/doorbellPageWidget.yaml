@@ -241,10 +241,16 @@ slots:
                     default:
                       - component: oh-sipclient
                         config:
+                          domain: =props.domain
+                          enableSIPDebug: =props.enableSIPDebug
                           enableTones: false
                           enableVideo: false
                           hideCallerId: true
-                          iconSize: "80"
+                          iconSize: "=screen.width >= screen.height ? '80' : '60'"
+                          password: =props.password
+                          phonebook: =props.phonebook
+                          username: =props.username
+                          websocketUrl: =props.websocketUrl
                 - component: oh-button
                   config:
                     action: options
