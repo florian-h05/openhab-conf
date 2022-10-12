@@ -123,68 +123,71 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Oct 9, 2022, 1:22:39 PM
+timestamp: Oct 12, 2022, 1:51:12 PM
 component: f7-card
 config:
   style:
     background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
     border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
     height: calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height))
     margin: 0px
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
     padding: 0px
     width: 100%
 slots:
   default:
     - component: oh-image
       config:
-        url: =props.imageUrl
-        refreshInterval: 250
         lazy: false
+        refreshInterval: 200
         style:
-          margin-left: "=screen.width <= (screen.height * (4/3)) ? '0' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
           border-radius: var(--f7-card-expandable-border-radius)
-          width: "=screen.width <= (screen.height * (4/3)) ? '100%' : 'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          margin-left: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '0' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
+          width: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '100%' : 'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+        url: =props.imageUrl
     - component: f7-card
       config:
         style:
-          background-color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+          background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
           border-radius: var(--f7-card-expandable-border-radius)
-          box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
-          height: "=screen.width >= screen.height ? '330px' : '150px'"
-          width: "=screen.width >= screen.height ? '150px' : '100%'"
-          position: absolute
-          top: "=screen.width >= screen.height ? '-10px' : ''"
+          bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : (device.ios === true ? '70px' : '-10px')"
+          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '330px' : '150px'"
+          left: "=screen.viewAreaWidth >= screen.viewAreaHeight ? (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)' : '-10px') : '-10px'"
+          min-width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '300px'"
           padding: 0px
-          left: "=screen.width >= screen.height ? ((screen.height * (4/3)) / 2 - 175 >= 160 ? '-10px' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)') : '-10px'"
+          position: absolute
+          top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '-10px' : ''"
+          width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '150px' : '100%'"
       slots:
         default:
           - component: f7-block
             config:
               style:
-                display: flex
-                flex-direction: "=screen.width >= screen.height ? 'column' : 'row'"
-                justify-content: space-around
                 align-content: space-around
+                display: flex
+                flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'column' : 'row'"
+                height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '298px' : '115px'"
+                justify-content: space-around
+                left: 0px
+                margin-bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '16px' : ''"
                 position: absolute
                 top: 0px
-                left: 0px
-                margin-bottom: "=screen.width >= screen.height ? '16px' : ''"
-                height: "=screen.width >= screen.height ? '298px' : '115px'"
-                width: "=screen.width >= screen.height ? '150px' : '100%'"
+                width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '150px' : '100%'"
             slots:
               default:
                 - component: f7-block
                   config:
                     style:
-                      display: flex
-                      flex-direction: "=screen.width >= screen.height ? 'row' : 'column'"
-                      justify-content: space-around
                       align-content: space-around
+                      display: flex
+                      flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'row' : 'column'"
+                      height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '40px' : '100%'"
+                      justify-content: space-around
                       margin: 0 0 0 0
                       padding: 0 0 0 0
-                      height: "=screen.width >= screen.height ? '40px' : '100%'"
-                      width: "=screen.width >= screen.height ? '118px' : ''"
+                      width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '118px' : ''"
                   slots:
                     default:
                       - component: oh-button
@@ -195,12 +198,12 @@ slots:
                             eventDescription: Letztes Klingeln
                             item_eventImage: =props.item_buttonLastPressedImage
                             item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                          iconSize: "=screen.width >= screen.height ? '40' : '30'"
+                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'black' : 'white') : 'gray'"
                           iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
+                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
-                            --f7-button-height: "=screen.width >= screen.height ? '40' : '30'"
-                            width: "=screen.width >= screen.height ? '59px' : '100%'"
+                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
+                            width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
                       - component: oh-button
                         config:
                           action: popup
@@ -209,30 +212,30 @@ slots:
                             eventDescription: Letzte Bewegung
                             item_eventImage: =props.item_lastMotionImage
                             item_eventTimestamp: =props.item_lastMotionTimestamp
-                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                          iconSize: "=screen.width >= screen.height ? '40' : '30'"
+                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'black' : 'white') : 'gray'"
                           iconF7: arrow_right_arrow_left
+                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
-                            --f7-button-height: "=screen.width >= screen.height ? '40' : '30'"
-                            width: "=screen.width >= screen.height ? '59px' : '100%'"
+                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
+                            width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
                 - component: oh-button
                   config:
                     action: command
                     actionCommand: ON
                     actionItem: =props.item_light
                     iconF7: lightbulb_fill
-                    iconSize: "=screen.width >= screen.height ? '60' : '40'"
+                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
                       padding-left: 0px
                       padding-right: 0px
-                      --f7-button-height: "=screen.width >= screen.height ? '60px' : '115px'"
                       width: 100%
                 - component: f7-block
                   config:
                     style:
+                      margin-top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '20px'"
                       padding-left: 0px
                       padding-right: 0px
-                      margin-top: "=screen.width >= screen.height ? '' : '30px'"
                       width: 100%
                   slots:
                     default:
@@ -240,23 +243,17 @@ slots:
                         config:
                           enableTones: false
                           enableVideo: false
-                          iconSize: "=screen.width >= screen.height ? '80' : '60'"
                           hideCallerId: true
-                          websocketUrl: =props.websocketUrl
-                          domain: =props.domain
-                          username: =props.username
-                          password: =props.password
-                          phonebook: =props.phonebook
-                          enableSIPDebug: =props.enableSIPDebug
+                          iconSize: "80"
                 - component: oh-button
                   config:
                     action: options
                     actionItem: =props.item_doorRelay
                     actionOptions: ON=Tür öffnen
                     iconF7: lock_open_fill
-                    iconSize: "=screen.width >= screen.height ? '60' : '40'"
+                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:
-                      --f7-button-height: "=screen.width >= screen.height ? '60px' : '115px'"
-                      width: 100%
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
                       padding-left: 0px
                       padding-right: 0px
+                      width: 100%
