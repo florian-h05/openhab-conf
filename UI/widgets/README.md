@@ -79,23 +79,41 @@ Enable this „x of y are on“ feature with thia configuration steps:
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
 
-## Widget [`doorbell`](./doorbell.yaml)
+## Widget [`doorbellPageWidget`](./doorbellPageWidget.yaml)
 
-A widget specifically designed for usage with the DoorBird video doorbells/door intercoms, but should also work for others.
+A very special widget to provide a full-page video doorbell UI with automatic optimization for different screen sizes and screen rotations.
 
-![](./images/doorbell/dark.jpeg)
+Most importantly, it displays the live video, provides a speech connection to the doorbell, and is able to open the door.
 
-The vertical widget provides a button pressed and a motion state icon at the top.
-A click on opens a page, which might show historic images like last motion or last time button was pressed.
+![Landscape mode](./images/doorbellPageWidget/dark_landscape.jpeg)
+![Portrait/mobile mode](./images/doorbellPageWidget/dark_iphone.jpeg)
+
+Depending on the screen orientation, the control elements are either displayed in an vertical arrangement on or besides the upper left of the live view, or displayed in a horizonal arrangement at the bottom of the screen.
+
+### Control Elements
+
+At the top or at the left of the control elements, are the doorbell pressed (bell icon) and motion (arrows icon) indicators are located.
+A click on the bell icon opens a popup of the [`doorbellEvent` widget](./doorbellEvent.yaml) displaying the image and the timestamp the last time the doorbell was pressed.
+A click on the motion indicator (arrows icon) does the same for the last motion event.
+
+![Motion popup](./images/doorbellPageWidget/dark_landscape_motion.jpeg)
+
 Next to the status, three control buttons follow:
-One to enable the lights (e.g. infrared lights of DoorBird video doorbells).
-Another to talk to the doorbell/door intercom using the `oh-sipclient` component.
-This component allow the MainUI to act as a SIP Client (SIP over WebSocket/WebRTC, which is not supported by all routers — for Fritz!Box, see [webrtc-sip-gw](https://github.com/florian-h05/webrtc-sip-gw)).
-And the last button to energize the relay and open the door.
+
+- One to enable night vision or lights (e.g. infrared lights of DoorBird video doorbells).
+- Another to talk to the person ringing at your door, using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component.
+  This component allows the MainUI to act as a SIP Client (SIP over WebSocket/WebRTC, which is not supported by all routers — for Fritz!Box, see [webrtc-sip-gw](https://github.com/florian-h05/webrtc-sip-gw)).
+- And the last one, which is a lock opened icon, to open the door (usually by energizing a relay).
 
 ### Configuration
 
-Configuration is self-explaining.
+This widget depends on the [`doorbellEvent` widget](./doorbellEvent.yaml), so add this one as well!
+
+Create a new layout page, add a block, then add a row, next add a column.
+Open the column options and set it's width to 100%.
+Finally, choose `doorbellPageWidget` from the personal widgets.
+
+Configuration of the widget itself is self-explaining.
 
 ## Widget [`label`](./label.yaml)
 

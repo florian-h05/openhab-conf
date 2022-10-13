@@ -233,7 +233,7 @@ slots:
                 - component: f7-block
                   config:
                     style:
-                      margin-top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '20px'"
+                      margin-top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '27.5px'"
                       padding-left: 0px
                       padding-right: 0px
                       width: 100%
@@ -246,7 +246,7 @@ slots:
                           enableTones: false
                           enableVideo: false
                           hideCallerId: true
-                          iconSize: "=screen.width >= screen.height ? '80' : '60'"
+                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '80' : '60'"
                           password: =props.password
                           phonebook: =props.phonebook
                           username: =props.username
