@@ -1,17 +1,46 @@
-# openHAB MainUI widgets
+# `florianh` Widget Set
 
-You can add the widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
+**Control and monitor many different types of devices with custom widgets following a consistent design language.**
 
-Please keep in mind that some parts of the widgets are „hardcoded“ in German, but this can be changed easily!
+- [`amplifier`](#amplifier)
+  - [Configuration](#configuration)
+  - [Item Naming Scheme](#item-naming-scheme)
+- [`contact`](#contact)
+  - [Configuration](#configuration-1)
+- [`control`](#control)
+  - [Control Configuration](#control-configuration)
+  - [Style Configuration](#style-configuration)
+  - [State Configuration](#state-configuration)
+- [Widget `doorbellPageWidget`](#widget-doorbellpagewidget)
+  - [Control Elements](#control-elements)
+  - [Configuration](#configuration-2)
+- [`label`](#label)
+  - [Configuration](#configuration-3)
+- [`roomCard`](#roomcard)
+  - [Displayed Data](#displayed-data)
+  - [Configuration](#configuration-4)
+- [`shutter`](#shutter)
+  - [Configuration](#configuration-5)
+- [`solar`](#solar)
+  - [Items](#items)
+  - [Configuration](#configuration-6)
+- [`temperatureControl`](#temperaturecontrol)
+  - [Configuration](#configuration-7)
+- [`trigger`](#trigger)
+  - [Configuration](#configuration-8)
 
-Most widgets allow to perform an on-click action, but usually the action config is only displayed when __advanced__ is ticked.
+You can add these widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
 
-## Widget [`amplifier`](./amplifier.yaml)
+Please keep in mind that some parts of the widgets are "hardcoded" in German, but this can be changed easily!
+
+*Note: This folder also contains some other widgets that are not documented here and no official parts of this widget set as they have very special functionality.*
+
+## [`amplifier`](./florianh-widgetset/amplifier.yaml)
 
 This widget provides power, mute, volume and input control, as well as playback information and playback control for an amplifier.
 
-![](./images/amplifier/control_dark.jpeg)
-![](./images/amplifier/playback_dark.jpeg)
+![](./doc/amplifier/control_dark.jpeg)
+![](./doc/amplifier/playback_dark.jpeg)
 
 ### Configuration
 
@@ -32,22 +61,22 @@ The scheme applies to the base Item name:
   - `_Album` (String Item)
   - `_Artist` (String Item)
 
-## Widget [`contact`](./contact.yaml)
+## [`contact`](./florianh-widgetset/contact.yaml)
 
 This widget represents the state of a contact with a configurable openHAB icon and a textual state representation.
 The textual state representation changes the color based on the contact‘s state.
 
-![](./images/contact/dark.jpeg)
+![](./doc/contact/dark.jpeg)
 
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
 
-## Widget [`control`](./control.yaml)
+## [`control`](./florianh-widgetset/control.yaml)
 
 This is probably the most universal widget in this collection, as it provides multiple ways of controlling an Item as well as state representation for groups and on-click actions.
 
-### Control configuration
+### Control Configuration
 
 Configure the Item with the `item` param.
 
@@ -60,11 +89,11 @@ The following ways of controlling that Item are available:
   Enabled with the `selectorEnable` param (advanced), hides both toggle and slider.
   Options can be configured in `value=label` syntax with the `action_config` param (advanced), leave empty to use default Item configuration.
 
-### Style configuration
+### Style Configuration
 
 The default style configuration applies here as well.
 
-### State configuration
+### State Configuration
 
 This widget is able to display how many Items of a group are switched on.
 For this feature, the widget relies on external logic (like a rule that counts the number of group members ON and saves that number to an Item).
@@ -79,24 +108,24 @@ Enable this „x of y are on“ feature with thia configuration steps:
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
 
-## Widget [`doorbellPageWidget`](./doorbellPageWidget.yaml)
+## Widget [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
 
 A very special widget to provide a full-page video doorbell UI with automatic optimization for different screen sizes and screen rotations.
 
 Most importantly, it displays the live video, provides a speech connection to the doorbell, and is able to open the door.
 
-![Landscape mode](./images/doorbellPageWidget/dark_landscape.jpeg)
-![Portrait/mobile mode](./images/doorbellPageWidget/dark_iphone.jpeg)
+![Landscape mode](./doc/doorbellPageWidget/dark_landscape.jpeg)
+![Portrait/mobile mode](./doc/doorbellPageWidget/dark_iphone.jpeg)
 
 Depending on the screen orientation, the control elements are either displayed in an vertical arrangement on or besides the upper left of the live view, or displayed in a horizonal arrangement at the bottom of the screen.
 
 ### Control Elements
 
 At the top or at the left of the control elements, are the doorbell pressed (bell icon) and motion (arrows icon) indicators are located.
-A click on the bell icon opens a popup of the [`doorbellEvent` widget](./doorbellEvent.yaml) displaying the image and the timestamp the last time the doorbell was pressed.
+A click on the bell icon opens a popup of the [`doorbellEvent` widget](./florianh-widgetset/doorbellEvent.yaml) displaying the image and the timestamp the last time the doorbell was pressed.
 A click on the motion indicator (arrows icon) does the same for the last motion event.
 
-![Motion popup](./images/doorbellPageWidget/dark_landscape_motion.jpeg)
+![Motion popup](./doc/doorbellPageWidget/dark_landscape_motion.jpeg)
 
 Next to the status, three control buttons follow:
 
@@ -107,7 +136,7 @@ Next to the status, three control buttons follow:
 
 ### Configuration
 
-This widget depends on the [`doorbellEvent` widget](./doorbellEvent.yaml), so add this one as well!
+This widget depends on the [`doorbellEvent` widget](./florianh-widgetset/doorbellEvent.yaml), so add this one as well!
 
 Create a new layout page, add a block, then add a row, next add a column.
 Open the column options and set it's width to 100%.
@@ -115,32 +144,33 @@ Finally, choose `doorbellPageWidget` from the personal widgets.
 
 Configuration of the widget itself is self-explaining.
 
-## Widget [`label`](./label.yaml)
+## [`label`](./florianh-widgetset/label.yaml)
 
 Display any Item‘s state or just a simple text.
 For numeric Items, you can display a trendline and open an analyzer.
 If any action is enabled, the analyzer will open on a left-side click and the action on a right-side click.
 
-![](./images/label/dark.jpeg)
+![](./doc/label/dark.jpeg)
 
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
 
-## Widget [`roomCard`](./roomCard.yaml)
+## [`roomCard`](./florianh-widgetset/roomCard.yaml)
 
 The room card widget provides a quick overview for many states in one room and is fully configurable.
 You can use a background image and you may use a header.
 Color scheme and opacity is fully configurable for the columns.
 
-![](./images/roomCard/complete.png)
-![](./images/roomCard/reduced.png)
+![](./doc/roomCard/complete.png)
+![](./doc/roomCard/reduced.png)
 
 Note that this widget requires the [`mygaragedoor`](/icons/classic) icons for the garagedoor state.
 
-### Data displayed
+### Displayed Data
 
 The widget can display up to three columns of data, each data field can and has to be configured:
+
 - Humidity and illumination
 - Current temperature, target temperature (in braces), heating & cooling state
 - Lights state (on/off + number of lights on), windows/doors (for each open/closed + number of open), one or two blinds position, speaker state
@@ -149,21 +179,21 @@ The widget can display up to three columns of data, each data field can and has 
 
 Configuration is self-explaining.
 
-## Widget [`shutter`](./shutter.yaml)
+## [`shutter`](./florianh-widgetset/shutter.yaml)
 
 Control a shutter with buttons and optional slider, display the shutter’s position and the state of the automatic shading.
 
-![](./images/shutter/dark.jpeg)
+![](./doc/shutter/dark.jpeg)
 
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
 
-## Widget [`solar`](./solar.yaml)
+## [`solar`](./florianh-widgetset/solar.yaml)
 
 Display current power and today’s as well as total production and last refresh of solar inverter.
 
-![](./images/solar/dark.jpeg)
+![](./doc/solar/dark.jpeg)
 
 ### Items
 
@@ -176,24 +206,24 @@ Display current power and today’s as well as total production and last refresh
 
 Configuration is self-explaining.
 
-## Widget [`temperatureControl`](./temperatureControl.yaml)
+## [`temperatureControl`](./florianh-widgetset/temperatureControl.yaml)
 
 Shows current temperature with analyzer, heating/cooling state and controls target temperature.
 
-![](./images/temperatureControl/dark.jpeg)
+![](./doc/temperatureControl/dark.jpeg)
 
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
 If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget.
 
-## Widget [`trigger`](./trigger.yaml)
+## [`trigger`](./florianh-widgetset/trigger.yaml)
 
 Send one command to an Item on click, e.g. for calling scenes.
 Bring some color to your MainUI pages with different background colors for light- and darkmode.
 
-![](./images/trigger/light.jpeg)
-![](./images/trigger/dark.jpeg)
+![](./doc/trigger/light.jpeg)
+![](./doc/trigger/dark.jpeg)
 
 ### Configuration
 
