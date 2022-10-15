@@ -1,21 +1,18 @@
 # openHAB configuration [@florian-h05](https://github.com/florian-h05)
 
-***
 ## Table of Contents
+
 - [Table of Contents](#table-of-contents)
 - [JavaScript Scripting](#javascript-scripting)
 - [Color design](#color-design)
   - [Color pairs](#color-pairs)
-- [Widgets](#widgets)
-  - [Widget design](#widget-design)
-    - [Widget style](#widget-style)
-    - [Icons](#icons)
-    - [Text](#text)
+- [Widget Design](#widget-design)
+  - [Widget Template](#widget-template)
+  - [Widget Components](#widget-components)
 - [Scripts](#scripts)
   - [Shaddow](#shaddow)
-- [Custom Loggers](#custom-loggers)
+  - [Custom Loggers](#custom-loggers)
 
-***
 ## JavaScript Scripting
 
 My JavaScript tools are at [openhab-js-tools](https://github.com/florian-h05/openhab-js-tools).
@@ -27,7 +24,6 @@ To access the old NashornJS tools, head over to the [nashorn-js-libs branch](htt
 
 To access the old NashornJS scrips, head over to the [nashorn-js-scripts branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-scripts).
 
-***
 ## Color design
 
 For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
@@ -38,6 +34,7 @@ Some widgets support to use a light and a dark background color, these widgets' 
 These widgets also have the option to invert the color of all texts and icons to reach an appropiate level of contrast.
 
 This code-block enables light and dark background for widgets:
+
 ```yaml
 ...
     - description: rgba or HEX
@@ -65,23 +62,20 @@ This code-block enables light and dark background for widgets:
 ### Color pairs
 
 Which color pairs do I use for which color?
-* Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
-* Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
-* Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
-* Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
+
+- Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
+- Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
+- Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
+- Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
 
 These color pairs are all from color series __600__.
 
-***
-## Widgets
+## Widget Design
 
 My custom widget set for the openHAB 3 MainUI.
 Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
 
-### Widgets
-
-
-#### Widget Template
+### Widget Template
 
 Most of my custom widgets are based on this template:
 
@@ -181,16 +175,18 @@ slots:
               text: "=props.header ? props.header : 'Set header!'"
 ...
 ```
-The _background-color_ attribute varies if the widget supports light and dark backgrounds. For more information have a look at [design guidelines](#design-guidelines).
+
+The _background-color_ attribute varies if the widget supports light and dark backgrounds. For more information have a look at [Color Design](#color-design).
 
 The _height_ attribute usually varies between three sizes:
-* __120px__ for normal-sized widgets
-* __150px__ for large widgets with much content and controls
-* __130px__ for the room card, which is not combined with other cards on one page
 
-#### Widget Components
+- __120px__ for normal-sized widgets
+- __150px__ for large widgets with much content and controls
+- __130px__ for the room card, which is not combined with other cards on one page
 
-##### Big openHAB icon
+### Widget Components
+
+#### Big openHAB icon
 
 ```yaml
 ...
@@ -215,25 +211,31 @@ The _height_ attribute usually varies between three sizes:
 
 #### Icons
 
-Most icons are from [Framework7](https://framework7.io/icons/). 
-Sometimes, openHAB icons are used, e.g. for state representation. 
+Most icons are from [Framework7](https://framework7.io/icons/).
+Sometimes, openHAB icons are used, e.g. for state representation.
 
 _Framework7_ icons normally use these sizes:
-* small icon (with small text, e.g. upper left corner): __18__
-* standard icon (with standard text): __20__
+
+- small icon (with small text, e.g. upper left corner): __18__
+- standard icon (with standard text): __20__
 
 _openHAB_ icons' size varies.
 
 #### Text
 
-Text style follows these guidelines:
-* small text (e.g. upper left corner): ```font-size: 12px```
-* standard text: ```font-size: 16px```
-* header text: ```font-size: 17px``` & ```font-weight: 600```
-* sub-header text: ```font-size: 12px```
-* large text (for state representation, e.g. in widget contact): ```font-size: 24px``` & ```font-weight: 400```
+Text size and weight follows these guidelines:
 
-***
+- small text (e.g. upper left corner): ```font-size: 12px```
+- standard text: no extra settings
+- small title (used at the top of the card): ```font-size: 12px```
+- header text (used at card heading, state representation etc.): ```font-size: 24px``` & ```font-weight: 400```
+
+Line wrap and overflow are usually configured with the following attributes:
+
+- `overflow: hidden`
+- `text-overflow: ellipsis`
+- `white-space: nowrap`
+
 ## Scripts
 
 Scripts for the _openhab-conf/scripts_ folder.
@@ -241,14 +243,13 @@ Scripts for the _openhab-conf/scripts_ folder.
 ### Shaddow
 
 This script was originally written by [@pmpkk](https://github.com/pmpkk) at [openhab-habpanel-theme-matrix](https://github.com/pmpkk/openhab-habpanel-theme-matrix).
-I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_. 
+I only modified it to work with _Python 3_ and the new _InfluxDB 2.x_.
 
 [shaddow.py](/scripts/shaddow.py) generates a _.svg_ image to illustrate where the sun is currently positioned, which site of the house is facing the sun and where the shaddow of your house is.
-I added the position of the moon to the image. 
+I added the position of the moon to the image.
 
 Please look at [this guide](/scripts/SHADDOW.md).
 
-***
 ### Custom Loggers
 
 openHAB is using [log4j2](https://logging.apache.org/log4j/2.x/) as logger library, which allows the user to add custom loggers for writing into separate log files.
@@ -256,6 +257,7 @@ openHAB is using [log4j2](https://logging.apache.org/log4j/2.x/) as logger libra
 To enable a custom logger, you have to add something like the following example to _$openhab-userdata/etc/log4j2.xml_:
 
 To the `Appenders` section:
+
 ```xml
 		<!— KNX appender (custom) —>
 		<RollingFile fileName="${sys:openhab.logdir}/knx.log" filePattern="${sys:openhab.logdir}/knx.log.%i.gz" name="KNX">
@@ -268,6 +270,7 @@ To the `Appenders` section:
 ```
 
 To the `Loggers` section:
+
 ```xml
 		<!— Custom loggers —>
 		<!— KNX logger —>
@@ -277,6 +280,7 @@ To the `Loggers` section:
 ```
 
 To use this custom logger in JS Scripting, set the according logger name, e.g.:
+
 ```javascript
 // @ts-ignore
 console.loggerName = 'org.openhab.logging.knx';
