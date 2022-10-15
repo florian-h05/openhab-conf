@@ -1,5 +1,6 @@
 # Local History for Visual Studio Code
-.history/
+.history
+.idea
 automation/js/package.json
 automation/js/package-lock.json
 automation/js/node_modules

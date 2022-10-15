@@ -7,5 +7,8 @@
     "openhab.itemCasing": "snake",
     "oh-alignment-tool.preserveWhitespace": true,
     "editor.defaultFormatter": "max-beckenbauer.oh-alignment-tool",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
 }

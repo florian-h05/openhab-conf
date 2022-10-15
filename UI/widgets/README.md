@@ -11,7 +11,7 @@
   - [Control Configuration](#control-configuration)
   - [Style Configuration](#style-configuration)
   - [State Configuration](#state-configuration)
-- [Widget `doorbellPageWidget`](#widget-doorbellpagewidget)
+- [`doorbellPageWidget`](#doorbellpagewidget)
   - [Control Elements](#control-elements)
   - [Configuration](#configuration-2)
 - [`label`](#label)
@@ -108,7 +108,7 @@ Enable this „x of y are on“ feature with thia configuration steps:
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
 
-## Widget [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
+## [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
 
 A very special widget to provide a full-page video doorbell UI with automatic optimization for different screen sizes and screen rotations.
 
