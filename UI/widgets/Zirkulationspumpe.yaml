@@ -1,0 +1,208 @@
+# description: Control the circulation pump of your hot water circuit
+# author: Copyright (c) 2022 Florian Hotze under MIT License
+uid: Zirkulationspumpe
+tags: []
+props:
+  parameters:
+    - description: word (e.g. 'red'), rgba or HEX
+      label: Background Color
+      name: bgcolor
+      required: false
+      type: TEXT
+      groupName: appearance
+    - context: item
+      description: Switch Item to control the time (staircase light) function of the pump
+      label: Control Item
+      name: item_control
+      required: true
+      type: TEXT
+      groupName: generalControl
+    - context: item
+      description: Switch Item to manually control the pump (only used for turning off)
+      label: Manual control Item
+      name: item_manualControl
+      required: false
+      type: TEXT
+      groupName: generalControl
+    - context: item
+      description: Number Item to select the time that the pump should be turned on
+      label: Set time Item
+      name: item_timeSelection
+      required: false
+      type: TEXT
+      groupName: manualTimeControl
+    - context: item
+      description: Switch Item to turn on the pump for the selected custom time
+      label: Enable time Item
+      name: item_enableTime
+      required: false
+      type: TEXT
+      groupName: manualTimeControl
+    - context: item
+      description: Number Item with the pump on duration of the last 24 hours
+      label: Last 24h hours on-time Item
+      name: item_ontime24h
+      required: false
+      type: TEXT
+      groupName: stats
+  parameterGroups:
+    - name: appearance
+      label: Appearence settings
+    - name: generalControl
+      label: General control
+    - name: manualTimeControl
+      label: Manual time control
+    - name: stats
+      label: Statistics
+timestamp: Oct 14, 2022, 6:08:27 PM
+component: f7-card
+config:
+  style:
+    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    border-radius: var(--f7-card-expandable-border-radius)
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    height: 120px
+    margin-left: 5px
+    margin-right: 5px
+    min-width: 245px
+    noShadow: false
+    padding: 0px
+slots:
+  content:
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          left: 16px
+          position: absolute
+          top: -5px
+      slots:
+        default:
+          - component: f7-icon
+            config:
+              f7: slowmo
+              size: 18
+              style:
+                margin-right: 10px
+          - component: Label
+            config:
+              style:
+                font-size: 12px
+                margin-top: 0px
+              text: Warmwasser
+    - component: f7-block
+      config:
+        style:
+          left: 17px
+          position: absolute
+          top: 50px
+          width: calc(100% - 30px)
+        visible: "=vars.show_manual_time == true || vars.show_stats === true ? false : true"
+      slots:
+        default:
+          - component: Label
+            config:
+              style:
+                font-size: 24px
+                font-weight: 400
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: Zirkulationspumpe
+          - component: Label
+            config:
+              style:
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: =items[props.item_ontime24h].displayState +' in den letzten 24h an'
+              visible: "=props.item_ontime24h ? true : false"
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: column
+          height: 90px
+          justify-content: space-between
+          position: absolute
+          right: 5px
+          text-align: right
+          top: 30px
+      slots:
+        default:
+          - component: oh-button
+            config:
+              action: toggle
+              actionCommand: ON
+              actionCommandAlt: OFF
+              actionItem: "=props.item_manualControl ? (items[props.item_control].state === 'ON' ? props.item_manualControl : props.item_control) : props.item_control"
+              iconColor: "=items[props.item_control].state === 'ON' ? 'green' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+              iconF7: power
+              iconSize: 30px
+              style:
+                align: top
+          - component: oh-button
+            config:
+              action: variable
+              actionVariable: show_manual_time
+              actionVariableValue: "=vars.show_manual_time !== true ? true : false"
+              iconF7: "=vars.show_manual_time !== true ? 'clock' : 'xmark'"
+              iconSize: 30px
+              visible: "=props.item_timeSelection ? true : false"
+    - component: f7-block
+      config:
+        style:
+          bottom: -55px
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          left: 15px
+          position: absolute
+          text-align: center
+          width: calc(100% - 45px)
+        visible: "=vars.show_manual_time === true ? true : false"
+      slots:
+        default:
+          - component: f7-block
+            config:
+              style:
+                display: flex
+                flex-direction: row
+                justify-content: center
+                text-align: right
+            slots:
+              default:
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: "=Number(items[props.item_timeSelection].state) > 25 ? Number(items[props.item_timeSelection].state) - 5 : 25"
+                    actionItem: =props.item_timeSelection
+                    iconF7: arrow_left_circle
+                    iconSize: 30
+                - component: Label
+                  config:
+                    style:
+                      color: "#dd4124"
+                      font-size: 16px
+                      margin-left: -0.5em
+                      margin-right: -0.5em
+                      margin-top: 3px
+                      white-space: nowrap
+                    text: =items[props.item_timeSelection].displayState
+                - component: oh-button
+                  config:
+                    action: command
+                    actionCommand: "=Number(items[props.item_timeSelection].state) < 90 ? Number(items[props.item_timeSelection].state) + 5 : 90"
+                    actionItem: =props.item_timeSelection
+                    iconF7: arrow_right_circle
+                    iconSize: 30
+          - component: oh-button
+            config:
+              action: command
+              actionCommand: ON
+              actionItem: =props.item_enableTime
+              outline: true
+              style:
+                margin-top: 0.5em
+              text: Für Zeit anschalten
