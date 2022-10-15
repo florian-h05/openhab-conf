@@ -135,7 +135,7 @@ props:
       name: garagedoor_state
       required: false
       type: TEXT
-timestamp: Jul 31, 2022, 1:25:48 PM
+timestamp: Oct 13, 2022, 6:08:49 PM
 component: f7-card
 config:
   style:
@@ -253,7 +253,7 @@ slots:
         style:
           background: =props.bgcolor
           border-radius: 7px
-          bottom: "=device.android === true ? '-35px' : '-45px'"
+          bottom: -45px
           left: 16px
           opacity: =props.bgopacity
           position: absolute
@@ -283,7 +283,7 @@ slots:
         style:
           background: =props.bgcolor
           border-radius: 7px
-          bottom: "=device.android === true ? '5px' : '-15px'"
+          bottom: -15px
           left: 16px
           opacity: =props.bgopacity
           position: absolute
