@@ -1,9 +1,6 @@
 # description: Control power, mute, volume, input and playback of an amplifier
 # note: This widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input', '_Playback', '_Playback_Song', '_Playback_Album', '_Playback_Artist'; if an Item is not available, the control element is hidden
 # author: Copyright (c) 2022 Florian Hotze under MIT License
-# description: Control power, mute, volume, input and playback of an amplifier
-# note: This widget requires an Item naming scheme: itemname + '_Power', '_Mute', '_Volume', '_Input', '_Playback', '_Playback_Song', '_Playback_Album', '_Playback_Artist'; if an Item is not available, the control element is hidden
-# author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: amplifier
 tags:
   - amplifier
@@ -57,7 +54,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 2, 2022, 5:23:15 PM
+timestamp: Oct 2, 2022, 6:08:36 PM
 component: f7-card
 config:
   style:
@@ -140,8 +137,8 @@ slots:
       config:
         action: variable
         actionVariable: show_player_controls
-        actionVariableValue: "=vars.show_player_controls === false ? true : false"
-        iconF7: "=vars.show_player_controls === true ? 'xmark' : 'player'"
+        actionVariableValue: "=vars.show_player_controls !== true ? true : false"
+        iconF7: "=vars.show_player_controls !== true ? 'player' : 'xmark'"
         iconSize: 30px
         large: false
         round: false
