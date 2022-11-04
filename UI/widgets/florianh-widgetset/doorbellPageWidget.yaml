@@ -198,7 +198,7 @@ slots:
                             eventDescription: Letztes Klingeln
                             item_eventImage: =props.item_buttonLastPressedImage
                             item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'black' : 'white') : 'gray'"
+                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
                           iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
                           iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
@@ -212,7 +212,7 @@ slots:
                             eventDescription: Letzte Bewegung
                             item_eventImage: =props.item_lastMotionImage
                             item_eventTimestamp: =props.item_lastMotionTimestamp
-                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'black' : 'white') : 'gray'"
+                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
                           iconF7: arrow_right_arrow_left
                           iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
