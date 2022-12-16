@@ -135,10 +135,14 @@ props:
       name: garagedoor_state
       required: false
       type: TEXT
-timestamp: Oct 13, 2022, 6:08:49 PM
+timestamp: Oct 13, 2022, 11:06:58 PM
 component: f7-card
 config:
   style:
+    --f7-chip-bg-color: rgba(255, 255, 255, 0.0)
+    --f7-chip-height: 22px
+    --f7-chip-padding-horizontal: 10px
+    --f7-chip-text-color: =props.color
     background-image: ='url(' + props.image + ')'
     background-position: center
     background-size: cover
@@ -150,10 +154,6 @@ config:
     margin-left: 5px
     margin-right: 5px
     noShadow: false
-    --f7-chip-height: 22px
-    --f7-chip-padding-horizontal: 10px
-    --f7-chip-bg-color: rgba(255, 255, 255, 0.0)
-    --f7-chip-text-color: =props.color
 slots:
   content:
     - component: f7-block
@@ -271,13 +271,13 @@ slots:
               iconColor: =props.color
               iconF7: flame
               iconSize: 18
-              visible: =items[props.heating].state === 'ON'
+              visible: "=props.heating ? items[props.heating].state === 'ON' : false"
           - component: f7-chip
             config:
               iconColor: =props.color
               iconF7: circle_grid_hex
               iconSize: 18
-              visible: =items[props.cooling].state === 'ON'
+              visible: "=props.cooling ? items[props.cooling].state === 'ON' : false"
     - component: f7-block
       config:
         style:
