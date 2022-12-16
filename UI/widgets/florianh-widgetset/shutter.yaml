@@ -58,7 +58,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 5:24:02 PM
+timestamp: Dec 16, 2022, 7:05:57 PM
 component: f7-card
 config:
   style:
@@ -118,7 +118,8 @@ slots:
               style:
                 font-size: 12px
                 margin-top: -0.25em
-              text: "=props.itemShading ? (items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState) : false"
+              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
+              visible: "=props.itemShading ? true : false"
     - component: f7-block
       config:
         style:
