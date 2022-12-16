@@ -54,7 +54,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 2, 2022, 6:08:36 PM
+timestamp: Oct 14, 2022, 6:01:02 PM
 component: f7-card
 config:
   style:
@@ -268,7 +268,7 @@ slots:
               round: true
               style:
                 margin: 0 -0.25em
-              visible: "=items[props.itemname + '_Playback'].state !== 'Pause' ? (items[props.itemname + '_Playback'].state !== 'PAUSE' ? true : false) : false"
+              visible: "=items[props.itemname + '_Playback'].state === 'Play' ? true : (items[props.itemname + '_Playback'].state === 'PLAY' ? true : false)"
           - component: oh-button
             config:
               action: command
