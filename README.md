@@ -122,14 +122,15 @@ timestamp: Oct 2, 2022, 7:19:09 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     background-color: "=props.bgcolor ? props.bgcolor : ''"
     height: 120px
     margin-left: 5px
     margin-right: 5px
+    minWidth: 200px
+    noShadow: false
+    padding: 0px
 slots:
   content:
     - component: f7-block

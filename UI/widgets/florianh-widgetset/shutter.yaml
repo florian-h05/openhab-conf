@@ -68,7 +68,7 @@ config:
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    minWidth: 220px
+    minWidth: 200px
     noShadow: false
     padding: 0px
 slots:
