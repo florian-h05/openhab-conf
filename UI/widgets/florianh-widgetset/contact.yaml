@@ -146,7 +146,6 @@ slots:
         visible: "=props.bigOhIcon ? true : false"
     - component: oh-link
       config:
-        action: =props.action
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px

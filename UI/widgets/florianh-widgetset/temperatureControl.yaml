@@ -263,7 +263,6 @@ slots:
           width: "=props.set_temp_item ? (props.page ? 'calc(65% - 55px)' : 'calc(100% - 55px)') : (props.page ? '65%' : '100%')"
     - component: oh-link
       config:
-        action: =props.action
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px

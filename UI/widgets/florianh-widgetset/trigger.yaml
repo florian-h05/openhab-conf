@@ -125,7 +125,6 @@ slots:
     - component: oh-link
     - component: oh-link
       config:
-        action: =props.action
         actionPropsParameterGroup: widgetAction
         actionFeedback: Erledigt!
         style:

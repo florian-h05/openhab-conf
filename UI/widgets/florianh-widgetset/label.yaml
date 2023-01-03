@@ -166,7 +166,6 @@ slots:
         visible: "=props.trendAnalyze ? (props.trendAnalyze == true ? true : false) : false"
     - component: oh-link
       config:
-        action: =props.action
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px

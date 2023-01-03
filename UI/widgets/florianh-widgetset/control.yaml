@@ -201,7 +201,6 @@ slots:
         visible: "=props.bigOhIcon ? true : false"
     - component: oh-link
       config:
-        action: =props.action
         actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:

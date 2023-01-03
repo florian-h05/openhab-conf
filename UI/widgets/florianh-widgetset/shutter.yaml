@@ -187,7 +187,6 @@ slots:
         visible: "=props.sliderEnable == true ? true : false"
     - component: oh-link
       config:
-        action: =props.action
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px
