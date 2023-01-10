@@ -54,7 +54,7 @@ props:
       label: Appearence settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Oct 14, 2022, 6:01:02 PM
+timestamp: Jan 10, 2023, 2:52:14 PM
 component: f7-card
 config:
   style:
@@ -100,7 +100,7 @@ slots:
           position: absolute
           right: 5px
           text-align: right
-          top: 30px
+          top: 27px
       slots:
         default:
           - component: oh-button
@@ -171,7 +171,7 @@ slots:
               style:
                 font-size: 17px
                 font-weight: 600
-                margin-bottom: -0.6em
+                margin-bottom: -0.275em
               text: "='Eingang: ' + (items[props.itemname + '_Input'].displayState ? items[props.itemname + '_Input'].displayState : items[props.itemname + '_Input'].state)"
               vertical: false
               visible: "=items[props.itemname + '_Input'].state !== '-' ? true : false"
@@ -188,7 +188,7 @@ slots:
                 --f7-range-bar-size: 8px
                 --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
                 --f7-range-knob-size: 18px
-                margin-top: 0.85em
+                margin-top: 0.25em
               visible: "=items[props.itemname + '_Volume'].state !== '-' ? true : false"
     - component: f7-block
       config:
@@ -240,7 +240,7 @@ slots:
           position: absolute
           right: 10px
           text-align: right
-          top: 30px
+          top: 25px
         visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
       slots:
         default:
@@ -255,6 +255,7 @@ slots:
               large: false
               round: true
               style:
+                --f7-button-height: 30px
                 margin: 0 -0.25em
           - component: oh-button
             config:
@@ -267,6 +268,7 @@ slots:
               large: false
               round: true
               style:
+                --f7-button-height: 30px
                 margin: 0 -0.25em
               visible: "=items[props.itemname + '_Playback'].state === 'Play' ? true : (items[props.itemname + '_Playback'].state === 'PLAY' ? true : false)"
           - component: oh-button
@@ -280,6 +282,7 @@ slots:
               large: false
               round: true
               style:
+                --f7-button-height: 30px
                 margin: 0 -0.25em
               visible: "=items[props.itemname + '_Playback'].state !== 'Play' ? (items[props.itemname + '_Playback'].state !== 'PLAY' ? true : false) : false"
           - component: oh-button
@@ -293,4 +296,5 @@ slots:
               large: false
               round: true
               style:
+                --f7-button-height: 30px
                 margin: 0 -0.25em
