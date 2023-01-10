@@ -89,7 +89,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Dec 16, 2022, 6:59:40 PM
+timestamp: Jan 10, 2023, 2:48:27 PM
 component: f7-card
 config:
   style:
@@ -168,13 +168,12 @@ slots:
         actionItem: =props.item
         actionOptions: =props.selectorOptions
         item: =props.item
-        large: false
+        large: true
         round: false
         style:
           bottom: -75px
           font-size: 30px
-          font-weight: 600
-          height: 35px
+          height: 40px
           margin-left: 0px
           margin-top: 0px
           position: absolute

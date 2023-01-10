@@ -110,7 +110,7 @@ No problem, the widget got you covered.
 
 ## [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
 
-A very special widget to provide a full-page video doorbell UI with automatic optimization for different screen sizes and screen rotations.
+A very special widget to provide a full-page, responsive doorbell UI for different screen sizes and screen orientations.
 
 Most importantly, it displays the live video, provides a speech connection to the doorbell, and is able to open the door.
 
