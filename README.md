@@ -6,8 +6,10 @@
 - [JavaScript Scripting](#javascript-scripting)
 - [Color design](#color-design)
   - [Color pairs](#color-pairs)
-- [Widget Design](#widget-design)
-  - [Widget Template](#widget-template)
+- [Widgets](#widgets)
+  - [Custom CSS for Pages](#custom-css-for-pages)
+  - [Switch Widget](#switch-widget)
+  - [Custom Widget Template](#custom-widget-template)
   - [Widget Components](#widget-components)
 - [Scripts](#scripts)
   - [Shaddow](#shaddow)
@@ -70,12 +72,58 @@ Which color pairs do I use for which color?
 
 These color pairs are all from color series __600__.
 
-## Widget Design
+## Widgets
 
 My custom widget set for the openHAB 3 MainUI.
 Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
 
-### Widget Template
+### Custom CSS for Pages
+
+To make all openHAB Cards look like my widgets, add this style section to the `config` block of your layout page:
+
+```yaml
+  style:
+    --f7-card-border-radius: var(--f7-card-expandable-border-radius)
+    --f7-card-box-shaddow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    --f7-card-margin-horizontal: 5px
+    --f7-card-padding: 0px
+    --f7-card-header-font-size: 17px
+    --f7-card-header-font-weight: 400
+```
+
+### Switch Widget
+
+For switching lights, outlets etc. I prefer to use a super simple card Apple Home App like card:
+
+![](./doc/switch_widget.jpeg)
+
+This card depends on my [Custom CSS for Pages](#custom-css-for-pages), paste this code into a layout page under the `slots`->`default` section:
+
+```yaml
+              - component: oh-grid-col
+                config:
+                  width: "50"
+                  xsmall: "33"
+                  medium: "25"
+                  large: "20"
+                  xlarge: "15"
+                slots:
+                  default:
+                    - component: oh-label-card
+                      config:
+                        action: toggle
+                        actionItem: Item
+                        actionCommand: ON
+                        actionCommandAlt: OFF
+                        label: Lightbulb
+                        icon: "=items.Item.state === 'ON' ? 'f7:lightbulb' :
+                          'f7:lightbulb_slash'"
+                        vertical: true
+                        iconColor: "=items.Item.state === 'ON' ? 'yellow' : ''"
+                        iconSize: 40
+```
+
+### Custom Widget Template
 
 Most of my custom widgets are based on this template:
 
