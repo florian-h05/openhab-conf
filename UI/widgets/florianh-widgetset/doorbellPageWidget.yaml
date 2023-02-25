@@ -123,14 +123,14 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Oct 12, 2022, 1:51:12 PM
+timestamp: Feb 17, 2023, 3:41:08 PM
 component: f7-card
 config:
   style:
-    background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
+    background-color: rgba(0,0,0,0.0)
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
-    height: calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height))
+    height: ='calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical))'
     margin: 0px
     padding: 0px
     width: 100%
@@ -149,9 +149,8 @@ slots:
     - component: f7-card
       config:
         style:
-          background-color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
           border-radius: var(--f7-card-expandable-border-radius)
-          bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : (device.ios === true ? '70px' : '-10px')"
+          bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '-10px'"
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '330px' : '150px'"
           left: "=screen.viewAreaWidth >= screen.viewAreaHeight ? (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)' : '-10px') : '-10px'"
