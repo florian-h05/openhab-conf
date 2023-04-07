@@ -1,0 +1,89 @@
+# community thread: https://community.openhab.org/t/grafana-chart-with-time-ranges/115190
+# community author: @maxmaximax Marcus
+# changes made: use iframe instead of oh-webframe-card, make it fullscreen, style adjustments
+uid: Grafana_Integration
+tags: []
+props:
+  parameters:
+    - description: URL to show in the frame
+      label: Source URL
+      name: URL
+      required: true
+      type: TEXT
+    - default: from=now/d&to=now/d;Today,from=now-2d&to=now;2 Days,from=now-3d&to=now;3 Days,from=now-7d&to=now;7 Days
+      description: Comma-separated list of options. Use value=label format (e.g. 1d=1 day) to provide a label different than the option. Minimum 1 entry required. The first entry is the default timerange.
+      label: Time range options
+      name: timerange
+      required: true
+      type: TEXT
+    - description: Height of the Frame (empty = default)
+      label: Height
+      name: height
+      required: false
+      type: TEXT
+  parameterGroups: []
+timestamp: Mar 10, 2023, 5:07:44 PM
+component: f7-card-content
+config:
+  class:
+    - no-padding
+    - no-margin
+  style:
+    --f7-card-content-padding-horizontal: 10px
+    --f7-card-content-padding-vertical: 10px
+    --f7-card-margin-horizontal: 0px
+    --f7-card-margin-vertical: 0px
+slots:
+  default:
+    - component: iframe
+      config:
+        src: =props.URL.replace('{period}', vars.selectedPeriod || [props.timerange.split(',')[0].split('=')[0]])
+        style:
+          border: none
+          border-radius: var(--f7-card-border-radius)
+          height: "=props.height ? props.height : 'calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical) - 32px)'"
+          width: 100%
+    - component: f7-segmented
+      config:
+        class:
+          - padding-bottom-half
+        outline: false
+        round: false
+        style:
+          --f7-button-border-radius: 4px
+          --f7-button-font-size: 14px
+          --f7-button-font-weight: 300
+          --f7-button-outline-border-width: 1px
+          --f7-button-padding-horizontal: 0px
+          --f7-button-padding-vertical: 0px
+          --f7-button-text-color: "=themeOptions.dark === 'light' ? 'black' : 'white'"
+          --f7-button-text-transform: none
+          margin-left: 10px
+          margin-right: 10px
+      slots:
+        default:
+          - component: oh-repeater
+            config:
+              for: size
+              fragment: true
+              sourceType: range
+            slots:
+              default:
+                - component: oh-repeater
+                  config:
+                    for: period
+                    fragment: true
+                    in: =[props.timerange.split(",")[loop.size].split(";")[1]]
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          action: variable
+                          actionVariable: selectedPeriod
+                          actionVariableValue: =props.timerange.split(",")[loop.size].split(";")[0]
+                          fill: "=(([props.timerange.split(',')[loop.size].split(';')[0]] == vars.selectedPeriod) || (props.timerange.split(',')[0].split(';')[1] === loop.period) && !vars.selectedPeriod) ? true : false"
+                          outline: true
+                          round: false
+                          style:
+                            --f7-button-border-color: var(--f7-card-outline-border-color)
+                          text: =loop.period
