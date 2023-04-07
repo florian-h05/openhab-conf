@@ -2,7 +2,10 @@
 # community author: @maxmaximax Marcus
 # changes made: use iframe instead of oh-webframe-card, make it fullscreen, style adjustments
 uid: Grafana_Integration
-tags: []
+tags:
+  - Grafana
+  - monitoring
+  - fullscreen
 props:
   parameters:
     - description: URL to show in the frame
