@@ -97,9 +97,9 @@ slots:
         icon: solarplant
         style:
           position: absolute
-          right: 15px
+          right: 20px
           top: 15px
-          width: 80px
+          width: 60px
     - component: oh-link
       config:
         action: navigate
