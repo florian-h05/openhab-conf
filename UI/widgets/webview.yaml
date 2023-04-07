@@ -1,0 +1,22 @@
+# description: Fullscreen webview (iframe) widget to embed other websites into the openHAB UI
+# author: Copyright (c) 2022 Florian Hotze under MIT License
+# also available on the marketplace: https://community.openhab.org/t/fullscreen-webview-widget/144950
+uid: webview
+tags: []
+props:
+  parameters:
+    - description: URL of webpage to embed
+      label: URL
+      name: url
+      required: true
+      type: TEXT
+  parameterGroups: []
+timestamp: Mar 4, 2023, 6:50:31 PM
+component: iframe
+config:
+  src: =props.url
+  style:
+    border: none
+    border-radius: var(--f7-card-border-radius)
+    height: ='calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical))'
+    width: ='calc(' + screen.viewAreaWidth + 'px - 2*var(--f7-block-padding-horizontal))'
