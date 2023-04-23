@@ -1,8 +1,0 @@
-Group     gSpeedtest           "Speedtest"                                           <"network-icon">                               ["NetworkAppliance"]
-String    SpeedtestSummary     "Speedtest [%s]"                                      <"speedtest_network">   (gSpeedtest)           ["Measurement"]
-Number    SpeedtestResultPing  "Ping [%.3f ms]"                                      <"speedtest_next5">     (gSpeedtest, Persist)  ["Measurement"]
-Number    SpeedtestResultDown  "Downlink [%.2f Mbit/s]"                              <"speedtest_download">  (gSpeedtest, Persist)  ["Measurement"]
-Number    SpeedtestResultUp    "Uplink [%.2f Mbit/s]"                                <"speedtest_upload">    (gSpeedtest, Persist)  ["Measurement"]
-String    SpeedtestRunning     "Speedtest running ... [%s]"                          <"speedtest_new">       (gSpeedtest)
-Switch    SpeedtestRerun       "Start manually"                                      <"speedtest_reload2">   (gSpeedtest)           ["Switch"]
-DateTime  SpeedtestResultDate  "Last executed [%1$td.%1$tm.%1$tY, %1$tH:%1$tM Uhr]"  <"speedtest_problem4">  (gSpeedtest)           ["Status"]
