@@ -17,19 +17,19 @@ props:
       name: image
       required: false
       type: TEXT
-    - default: black
+    - defaultValue: black
       description: HEX, rgba or name, e.g. white or black
       label: Background color
       name: bgcolor
       required: true
       type: TEXT
-    - default: "0.6"
+    - defaultValue: "0.6"
       description: decimal, e.g. 0.6
       label: Background opacity
       name: bgopacity
       required: true
       type: TEXT
-    - default: white
+    - defaultValue: white
       description: icon & text color, e.g. black or white
       label: Icon & text color
       name: color
