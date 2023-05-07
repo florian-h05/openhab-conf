@@ -123,7 +123,7 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Feb 17, 2023, 3:41:08 PM
+timestamp: Mar 4, 2023, 5:35:30 PM
 component: f7-card
 config:
   style:
@@ -232,7 +232,6 @@ slots:
                 - component: f7-block
                   config:
                     style:
-                      margin-top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '27.5px'"
                       padding-left: 0px
                       padding-right: 0px
                       width: 100%
