@@ -1,47 +1,41 @@
 ### shaddow.py python3 compatible fork ###
 #
-## Original script from: https://github.com/pmpkk/openhab-habpanel-theme-matrix/blob/master/shaddow.py
-## For how to use see: https://community.openhab.org/t/show-current-sun-position-and-shadow-of-house-generate-svg/34764
-## Original script: Copyright (c) 2017 pmpkk under MIT Licence
+## original script from: https://github.com/pmpkk/openhab-habpanel-theme-matrix/blob/master/shaddow.py
+## original script: Copyright (c) 2017 pmpkk under MIT Licence
 ##
 ## Author of changes: Copyright (c) 2021 Florian Hotze under MIT License
 ## Changes:
-##    - Python 3 compatible
-##    - using InfluxDB v2's FLUX language instead of the InfluxQL by influxdb_client Python Library
-##    - using OpenHAB Python Library
-##    - added current position of moon
+##   - Python 3 compatible
+##   - using InfluxDB v2's FLUX language instead of the InfluxQL by influxdb_client Python Library
+##   - using OpenHAB Python Library
+##   - added current position of moon
 ##
-## install dependencies with:
-##  - "sudo -H python3 -m pip install influxdb-client"
-##  - "sudo -h python3 -m pip install python-openhab"
+## Install depedencies with:
+##   - "sudo -H python3 -m pip install influxdb_client"
+##   - "sudo -h python3 -m pip install python-openhab"
+##
+## Options:
+##  - debug: enabled debug logging
 
 import math
 import time
-from datetime import datetime, timedelta, date
 import sys
-from shutil import copyfile
+from datetime import datetime, timedelta, date
+
 from influxdb_client import InfluxDBClient
 from openhab import OpenHAB
 
-## initialize openHAB client
-base_url="http://localhost:8080/rest"
-openhab = OpenHAB(base_url)
+# Initialize openHAB client
+openhab_url="http://localhost:8080/rest"
+openhab = OpenHAB(openhab_url)
 items = openhab.fetch_all_items()
 
-## initialize InfluxDB client
-url = 'http://localhost:8086'
-token = 'influxdb-token'
-org = 'influxdb-bucket'
-client = InfluxDBClient(url=url, token=token, org=org)
-query_api = client.query_api()
-
-WIDTH = 100
-HEIGHT = 100
-PRIMARY_COLOR = '#388e3c' #'#1b3024'
-LIGHT_COLOR = '#d32f2f' #'#26bf75'
-MOON_COLOR = '#1976d2'
-STROKE_WIDTH = '1'
-FILENAME = '/etc/openhab/html/shaddow.svg'
+# Intialize InfluxDB client
+influx_url = ''
+influx_token = ''
+influx_org = ''
+influx = InfluxDBClient(url=influx_url, token=influx_token, org=influx_org)
+query_api = influx.query_api()
 
 # Shape of the house in a 100 by 100 units square
 SHAPE = [{'x': 25.44, 'y': 06.40}, \
@@ -59,27 +53,44 @@ SHAPE = [{'x': 25.44, 'y': 06.40}, \
         {'x': 34.38, 'y': 39.93}, \
         {'x': 21.40, 'y':38.48}]
 
+# Item names
+ITEMS = {
+  'SUN_AZIMUTH': 'Sun_Azimuth',
+  'MOON_AZIMUTH': 'Moon_Azimuth',
+  'SUN_ELEVATION': 'Sun_Elevation',
+  'SUNRISE_AZIMUTH': 'Sunrise_Azimuth',
+  'SUNSET_AZIMUTH': 'Sunset_Azimuth'
+}
+
+WIDTH = 100
+HEIGHT = 100
+PRIMARY_COLOR = '#388e3c' #'#1b3024'
+LIGHT_COLOR = '#d32f2f' #'#26bf75'
+MOON_COLOR = '#1976d2'
+STROKE_WIDTH = '1'
+FILENAME = '/etc/openhab/html/shaddow.svg'
 HOURS = 1
 DEGS = []
 
 class shaddow(object):
     """
-    
     Shaddow Object
     """
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
+        self.azimuth = float(items.get(ITEMS['SUN_AZIMUTH']).state)
+        self.moon_azimuth = float(items.get(ITEMS['MOON_AZIMUTH']).state)
+        self.elevation = float(items.get(ITEMS['SUN_ELEVATION']).state)
+        self.sunrise_azimuth = float(items.get(ITEMS['SUNRISE_AZIMUTH']).state)
+        self.sunset_azimuth = float(items.get(ITEMS['SUNSET_AZIMUTH']).state)
 
-        self.debug = False 
-        self.azimuth = float(items.get('Sun_Azimuth').state)
-        print(f'openHAB: "Sun_Azimuth" is: "{self.azimuth}"')
-        self.moon_azimuth = float(items.get('Moon_Azimuth').state)
-        print(f'openHAB: "Moon_Azimuth" is: "{self.moon_azimuth}"')
-        self.elevation = float(items.get('Sun_Elevation').state)
-        print(f'openHAB: "Sun_Elevation" is: "{self.elevation}"')
-        self.sunrise_azimuth = float(items.get('Sunrise_Azimuth').state)
-        print(f'openHAB: "Sunrise_Azimuth" is: "{self.sunrise_azimuth}"')
-        self.sunset_azimuth = float(items.get('Sunset_Azimuth').state)
-        print(f'openHAB: "Sunset_Azimuth" is: "{self.sunset_azimuth}"')
+        if self.debug:
+            print(f'openHAB: "Sun Azimuth" is: "{self.azimuth}"')
+            print(f'openHAB: "Moon Azimuth" is: "{self.moon_azimuth}"')
+            print(f'openHAB: "Sun Elevation" is: "{self.elevation}"')
+            print(f'openHAB: "Sunrise Azimuth" is: "{self.sunrise_azimuth}"')
+            print(f'openHAB: "Sunset Azimuth" is: "{self.sunset_azimuth}"')
+
         ts = time.time()
         utc_offset = (datetime.fromtimestamp(ts) - datetime.utcfromtimestamp(ts)).total_seconds()/3600
         for h in range(0,24,HOURS):
@@ -87,21 +98,20 @@ class shaddow(object):
             querytime = t.strftime('%Y-%m-%dT%H:%M:%S') + 'Z'
             query = (f'from(bucket: "openhab")\
               |> range(start: {querytime})\
-              |> filter(fn: (r) => r["_measurement"] == "Sun_Azimuth")\
+              |> filter(fn: (r) => r["_measurement"] == "{ITEMS["SUN_AZIMUTH"]}")\
               |> first()\
               |> yield(name: "mean")')
-            result = client.query_api().query(org=org, query=query)
+            result = influx.query_api().query(org=influx_org, query=query)
             results = []
             for table in result:
               for record in table.records:
                 results.append((record.get_value()))
             a = float(record["_value"])
-            print(f'InfluxDB: "Sun_Azimuth" at: "{querytime}"; value: "{a}"')
+            if self.debug: print(f'InfluxDB: "Sun Azimuth" at: "{querytime}"; value: "{a}"')
             if (a == None): a = 0
             DEGS.extend([a])
 
     def generatePath(self,stroke,fill,points,attrs=None):
-
         p = ''
         p = p + '<path stroke="' + stroke + '" stroke-width="' + STROKE_WIDTH + '" fill="' + fill + '" '
         if (attrs != None): p = p + ' ' + attrs + ' '
@@ -116,7 +126,6 @@ class shaddow(object):
         return p
 
     def generateArc(self,dist,stroke,start,end,attrs=None):
-
         p = ''
         try:
             angle = end-start
@@ -142,7 +151,6 @@ class shaddow(object):
         return p	
 
     def degreesToPoint(self,d,r):
-
         coordinates = {'x': 0, 'y': 0}
         cx = WIDTH / 2
         cy = HEIGHT / 2 
@@ -153,7 +161,6 @@ class shaddow(object):
         return coordinates
 
     def generateSVG(self):
-
         realSun = self.degreesToPoint(self.azimuth, 10000)
         if self.debug: print(realSun)
 
@@ -276,11 +283,7 @@ class shaddow(object):
         # add the moon icon
         svg = svg + '<circle cx="' + str(moon['x']) + '" cy="' + str(moon['y']) + '" r="2" stroke="' + MOON_COLOR + '" stroke-width="' + STROKE_WIDTH + '" fill="' + MOON_COLOR + '" />'
 
-
-
         svg = svg + '</svg>'
-
-        if self.debug: print(svg)
 
         f = open(FILENAME, 'w')
         f.write(svg)
@@ -288,19 +291,14 @@ class shaddow(object):
 
 
 def main():
-
     t1 = time.time()
-
-    s = shaddow()
-
     args = sys.argv
-    
-    if(len(args) == 1):
-        print('\033[91mNo parameters specified\033[0;0m')
-    else:
-        if(args[1] == "update"):
-            s.generateSVG()
+    debug = False
 
+    if(len(args) > 1 and args[1] == "debug"):
+        debug = True
+
+    shaddow(debug).generateSVG()
     t2 = time.time()
     print("Done in " + str(t2-t1) + " seconds")
 
