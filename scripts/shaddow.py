@@ -30,7 +30,7 @@ openhab_url="http://localhost:8080/rest"
 openhab = OpenHAB(openhab_url)
 items = openhab.fetch_all_items()
 
-# Intialize InfluxDB client
+# Initialize InfluxDB client
 influx_url = ''
 influx_token = ''
 influx_org = ''

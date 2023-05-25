@@ -32,7 +32,7 @@
     rules.when().channel('astro:sun:home:set#event').triggered('START').then().copyAndSendState().fromItem('Sun_Azimuth').toItem('Sunset_Azimuth').build('Astro: Sonnenuntergang speichern', '... in Item Sunset_Azimuth.', ['shaddow.py']);
     rules.when().channel('astro:sun:home:rise#event').triggered('START').then().copyAndSendState().fromItem('Sun_Azimuth').toItem('Sunrise_Azimuth').build('Astro: Sonnenaufgang speichern', '... in Item Sunrise_Azimuth.', ['shaddow.py']);
     rules.when().item('Sun_Azimuth').changed().then(e => {
-      actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/shaddow.py', 'update');
+      actions.Exec.executeCommandLine('/usr/bin/python3', '/etc/openhab/scripts/shaddow.py');
     }).build('shaddow.py: Update', '... bei Änderung von Azimut.', ['shaddow.py']);
     ```
 * Now, you need to specify the shape of your house in 100 x 100 unit square:
