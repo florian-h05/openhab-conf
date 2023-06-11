@@ -37,6 +37,13 @@ props:
       type: TEXT
       groupName: widgetSettings
     - context: item
+      description: Item whose state should be shown as a subheader, e.g. for "x % to y %" state
+      label: Subheader Value Item
+      name: item_subheader
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - context: item
       description: Shading state Item
       label: Shading state Item
       name: itemShading
@@ -121,7 +128,7 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=@@props.itemShading === 'ON' ? (@@props.item === '100' ? 'Geschlossen - Verschattung' :  @props.item + ' - Verschattung') : (@@props.item === '0' ? 'Geöffnet' : @@props.item === '100' ? 'Geschlossen' : @props.item)"
+              text: "=props.item_subheader ? @props.item_subheader : (@@props.item === '100' ? 'Geschlossen' : @@props.item === '0' ? 'Geöffnet' : @props.item) + (props.itemShading ? @@props.itemShading === 'ON' ? ' - Verschattung' : '' : '')"
     - component: f7-block
       config:
         style:
