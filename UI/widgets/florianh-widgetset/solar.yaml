@@ -15,8 +15,12 @@ props:
       name: displayLastUpdate
       required: false
       type: BOOLEAN
-  parameterGroups: []
-timestamp: Jul 28, 2022, 6:05:20 PM
+  parameterGroups:
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked on the left third
+timestamp: Jun 11, 2023, 2:40:25 PM
 component: f7-card
 config:
   style:
@@ -70,7 +74,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items.pv_Power.displayState
+              text: =@'pv_Power'
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -80,7 +84,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items.pv_EToday.displayState + ' | ' + items.pv_ETotal.displayState
+              text: =@'pv_EToday' + ' | ' + @'pv_ETotal'
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -90,8 +94,8 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items.pv_lastRefresh.displayState
-              visible: "=props.displayLastUpdate ? (props.displayLastUpdate == true ? true : false) : false"
+              text: =@'pv_lastRefresh'
+              visible: "=props.displayLastUpdate === true ? true : false"
     - component: oh-icon
       config:
         icon: solarplant
@@ -106,8 +110,19 @@ slots:
         actionPage: ='page:' + props.page
         style:
           height: 150px
+          right: 0px
+          position: absolute
+          top: 0px
+          width: "=props.widget_action ? '65%' : '100%'"
+        visible: "=props.page ? true : false"
+    - component: oh-link
+      config:
+        actionFeedback: Erledigt!
+        actionPropsParameterGroup: widgetAction
+        style:
+          height: 150px
           left: 0px
           position: absolute
           top: 0px
-          width: 100%
-        visible: "=props.page ? true : false"
+          width: 35%
+        visible: "=props.widget_action ? true : false"
