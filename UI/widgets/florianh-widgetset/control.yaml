@@ -165,7 +165,7 @@ slots:
           left: 20px
           position: absolute
           width: calc(100% - 40px)
-        visible: "=props.sliderEnable === true && props.selectorEnable !== true ? true : false"
+        visible: "=props.item && props.sliderEnable === true && props.selectorEnable !== true ? true : false"
     - component: oh-button
       config:
         action: options
@@ -185,7 +185,7 @@ slots:
           width: calc(100% - 30px)
         text: =@props.item
         vertical: false
-        visible: "=props.selectorEnable === true ? true : false"
+        visible: "=props.item && props.selectorEnable === true ? true : false"
     - component: oh-toggle
       config:
         item: =props.item
@@ -193,7 +193,7 @@ slots:
           position: absolute
           right: 15px
           top: 15px
-        visible: "=props.selectorEnable !== true && props.toggleDisable !== true && !props.bigOhIcon ? true : false"
+        visible: "=props.item && props.selectorEnable !== true && props.toggleDisable !== true && !props.bigOhIcon ? true : false"
     - component: oh-icon
       config:
         icon: =props.bigOhIcon
