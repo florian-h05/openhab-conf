@@ -194,7 +194,7 @@ config:
     --weather-font-size-small: 16px
     --weather-font-size-normal: 18px
     --weather-font-size-large: 26px
-    --weather-font-size-xlarge: 60px
+    --weather-font-size-xlarge: 55px
     --weather-font-size-xxlarge: 70px
     --weather-text-shadow-light: 2px 2px rgba(var(--weather-card-text-shadow-color),.15)
     --weather-text-shadow-strong: 2px 2px rgba(var(--weather-card-text-shadow-color),.35)
