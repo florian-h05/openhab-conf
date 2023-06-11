@@ -37,21 +37,15 @@ props:
       groupName: appearance
     - context: item
       description: Item to control
-      label: Control Item
+      label: Item
       name: item
-      required: true
-      type: TEXT
-      groupName: widgetSettings
-    - context: item
-      description: Item with number of devices on
-      label: Number of Items ON in the Group (Item)
-      name: item_counter
       required: false
       type: TEXT
       groupName: widgetSettings
-    - description: Number of total devices (in room, house, ...)
-      label: Total number of Items in group
-      name: items_total
+    - context: item
+      description: Item whose state should be shown as a subheader, e.g. for "x of y on" state
+      label: Subheader Value Item
+      name: item_subheader
       required: false
       type: TEXT
       groupName: widgetSettings
@@ -89,11 +83,11 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Jan 10, 2023, 2:48:27 PM
+timestamp: Jun 11, 2023, 9:36:33 AM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -116,7 +110,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon ? props.icon : 'lightbulb'"
+              f7: "=props.icon || 'lightbulb'"
               size: 18
               style:
                 margin-right: 10px
@@ -125,13 +119,13 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: "=props.title || ''"
     - component: f7-block
       config:
         style:
           left: 17px
           position: absolute
-          top: 50px
+          top: 45px
           width: 100%
       slots:
         default:
@@ -144,7 +138,18 @@ slots:
                 text-overflow: ellipsis
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
-              text: "=props.item_counter ? ((props.header ? props.header + ' - ' : '') + items[props.item_counter].state + '/' + props.items_total) : props.header ? props.header : 'Set header!'"
+              text: "=props.header || 'Set header!'"
+          - component: Label
+            config:
+              style:
+                font-size: 14px
+                margin-top: -0.25em
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+              text: =@props.item_subheader
+              visible: "=props.item_subheader ? true : false"
     - component: oh-slider
       config:
         item: =props.item
@@ -178,7 +183,7 @@ slots:
           margin-top: 0px
           position: absolute
           width: calc(100% - 30px)
-        text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
+        text: =@props.item
         vertical: false
         visible: "=props.selectorEnable === true ? true : false"
     - component: oh-toggle
