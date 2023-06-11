@@ -4,10 +4,9 @@
 
 - [Table of Contents](#table-of-contents)
 - [JavaScript Scripting](#javascript-scripting)
-- [Color design](#color-design)
-  - [Color pairs](#color-pairs)
 - [Widgets](#widgets)
   - [Custom CSS for Pages](#custom-css-for-pages)
+  - [Widget Styling](#widget-styling)
   - [Switch Widget](#switch-widget)
   - [Custom Widget Template](#custom-widget-template)
   - [Widget Components](#widget-components)
@@ -26,56 +25,12 @@ To access the old NashornJS tools, head over to the [nashorn-js-libs branch](htt
 
 To access the old NashornJS scrips, head over to the [nashorn-js-scripts branch](https://github.com/florian-h05/openhab-conf/tree/nashorn-js-scripts).
 
-## Color design
-
-For color design, I usually use the [Material Design color palette](https://material.io/resources/color/).
-I choose colors from the __400__ or the __600__ series.
-For the light mode I take the normal color or the dark color variation, for dark mode the light color variation.
-
-Some widgets support to use a light and a dark background color, these widgets' description includes: _Supports light and dark background._
-These widgets also have the option to invert the color of all texts and icons to reach an appropiate level of contrast.
-
-This code-block enables light and dark background for widgets:
-
-```yaml
-...
-    - description: rgba or HEX
-      label: Background Color (lightmode)
-      name: bgcolor
-      required: false
-      type: TEXT
-    - description: rgba or HEX
-      label: Background Color darkmode
-      name: bgcolor_dark
-      required: false
-      type: TEXT
-    - description: invert text color for light and dark mode
-      label: Invert text color
-      name: invertText
-      required: false
-      type: BOOLEAN
-...
-    # for background (in f7-card config):
-      background-color: "=props.bgcolor ? (props.bgcolor_dark ? (themeOptions.dark === 'dark' ? props.bgcolor_dark : props.bgcolor) : props.bgcolor) : ''"
-    # for text:
-      color: "=props.invertText ? (props.invertText == true ? (themeOptions.dark === 'dark' ? 'black' : 'white') : '') : ''"
-```
-
-### Color pairs
-
-Which color pairs do I use for which color?
-
-- Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
-- Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
-- Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
-- Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
-
-These color pairs are all from color series __600__.
-
 ## Widgets
 
-My custom widget set for the openHAB 3 MainUI.
-Feel free to use or modify [these widgets](/UI/widgets). Information for each widget can be found [here](/UI/widgets).
+My custom widget set for the openHAB MainUI (introduced with the 3.0 Release).
+Feel free to use and/or modify [my widgets](/UI/widgets), just keep a copyright notice.
+
+Please note that those widgets are written for openHAB 3.4 or newer and might not work properly on older versions.
 
 ### Custom CSS for Pages
 
@@ -89,6 +44,62 @@ To make all openHAB Cards look like my widgets, add this style section to the `c
     --f7-card-padding: 0px
     --f7-card-header-font-size: 17px
     --f7-card-header-font-weight: 400
+```
+
+### Widget Styling
+
+#### Height
+
+The CSS style _height_ attribute usually varies between these three sizes:
+
+- __120px__ for normal-sized widgets
+- __150px__ for large widgets with much content and controls
+- __130px__ for the room card, which is not combined with other cards on one page
+
+#### Colors
+
+For colors, I usually use the [Material Design color palette](https://material.io/resources/color/).
+I choose colors from the __400__ or the __600__ series.
+For the light mode I take the normal color or the dark color variation, for dark mode the light color variation.
+
+Which color pairs do I use for which color?
+
+- Green: ```(themeOptions.dark === ‚dark‘ ? ‚#76d275‘ : ‚#00701a‘)```
+- Yellow: ```(themeOptions.dark === ‚dark‘ ? ‚#ffff6b‘ : ‚#c5a600‘)```
+- Orange: ```(themeOptions.dark === ‚dark‘ ? ‚#ffbc45‘ : ‚#c25e00‘)```
+- Red: ```(themeOptions.dark === ‚dark‘ ? ‚#e53735‘ : ‚#ab000d‘)```
+- openHAB orange: ```var(—-f7-theme-color)```
+
+These color pairs are all from color series __600__.
+
+#### Icons
+
+Most icons are from [Framework7](https://framework7.io/icons/).
+Sometimes, openHAB icons are used, e.g. for state representation.
+
+_Framework7_ icons normally use these sizes:
+
+- small icon (with small text, e.g. upper left corner): __18__
+- standard icon (with standard text): __20__
+
+_openHAB_ icons‘ size varies.
+
+#### Text
+
+Text size and weight follows these guidelines:
+
+- small text (e.g. upper left corner): ```font-size: 12px```
+- standard text: no extra settings
+- small title (used at the top of the card): ```font-size: 12px```
+- header text (used at card heading, state representation etc.): ```font-size: 24px``` & ```font-weight: 400```
+  - subheader text: ```font-size: 14px```
+
+Line wrap and overflow are usually configured with the following CSS style attributes:
+
+```yaml
+`overflow: hidden`
+`text-overflow: ellipsis`
+`white-space: nowrap`
 ```
 
 ### Switch Widget
@@ -172,7 +183,7 @@ config:
   style:
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || ''"
     height: 120px
     margin-left: 5px
     margin-right: 5px
@@ -193,7 +204,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon ? props.icon : 'lightbulb'"
+              f7: "=props.icon || 'lightbulb'"
               size: 18
               style:
                 margin-right: 10px
@@ -202,7 +213,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: "=props.title || ''"
     - component: f7-block
       config:
         style:
@@ -221,7 +232,7 @@ slots:
                 text-overflow: ellipsis
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
-              text: "=props.header ? props.header : 'Set header!'"
+              text: "=props.header || 'Set header!'"
           - component: Label
             config:
               style:
@@ -236,13 +247,7 @@ slots:
 ...
 ```
 
-The _background-color_ attribute varies if the widget supports light and dark backgrounds. For more information have a look at [Color Design](#color-design).
-
-The _height_ attribute usually varies between three sizes:
-
-- __120px__ for normal-sized widgets
-- __150px__ for large widgets with much content and controls
-- __130px__ for the room card, which is not combined with other cards on one page
+The _background-color_ attribute varies if the widget supports light and dark backgrounds. For more information have a look at [Colors](#colors).
 
 ### Widget Components
 
@@ -268,34 +273,6 @@ The _height_ attribute usually varies between three sizes:
         visible: "=props.bigOhIcon ? true : false"
 ...
 ```
-
-#### Icons
-
-Most icons are from [Framework7](https://framework7.io/icons/).
-Sometimes, openHAB icons are used, e.g. for state representation.
-
-_Framework7_ icons normally use these sizes:
-
-- small icon (with small text, e.g. upper left corner): __18__
-- standard icon (with standard text): __20__
-
-_openHAB_ icons' size varies.
-
-#### Text
-
-Text size and weight follows these guidelines:
-
-- small text (e.g. upper left corner): ```font-size: 12px```
-- standard text: no extra settings
-- small title (used at the top of the card): ```font-size: 12px```
-- header text (used at card heading, state representation etc.): ```font-size: 24px``` & ```font-weight: 400```
-  - subheader text: ```font-size: 14px```
-
-Line wrap and overflow are usually configured with the following attributes:
-
-- `overflow: hidden`
-- `text-overflow: ellipsis`
-- `white-space: nowrap`
 
 ## Scripts
 

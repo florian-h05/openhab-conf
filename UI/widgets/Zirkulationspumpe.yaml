@@ -96,7 +96,7 @@ slots:
         style:
           left: 17px
           position: absolute
-          top: 50px
+          top: 45px
           width: calc(100% - 30px)
         visible: "=vars.show_manual_time == true || vars.show_stats === true ? false : true"
       slots:
