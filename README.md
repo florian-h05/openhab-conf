@@ -222,6 +222,17 @@ slots:
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
               text: "=props.header ? props.header : 'Set header!'"
+          - component: Label
+            config:
+              style:
+                font-size: 14px
+                margin-top: -0.25em
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+              text: =props.subheader
+              visible: "=props.subheader ? true : false"
 ...
 ```
 
@@ -278,6 +289,7 @@ Text size and weight follows these guidelines:
 - standard text: no extra settings
 - small title (used at the top of the card): ```font-size: 12px```
 - header text (used at card heading, state representation etc.): ```font-size: 24px``` & ```font-weight: 400```
+  - subheader text: ```font-size: 14px```
 
 Line wrap and overflow are usually configured with the following attributes:
 
