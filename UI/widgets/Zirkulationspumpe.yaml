@@ -58,7 +58,7 @@ timestamp: Oct 14, 2022, 6:08:27 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -113,10 +113,12 @@ slots:
           - component: Label
             config:
               style:
+                font-size: 14px
+                margin-top: -0.25em
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: =items[props.item_ontime24h].displayState +' in den letzten 24h an'
+              text: =@props.item_ontime24h +' in den letzten 24h an'
               visible: "=props.item_ontime24h ? true : false"
     - component: f7-block
       config:
@@ -136,8 +138,8 @@ slots:
               action: toggle
               actionCommand: ON
               actionCommandAlt: OFF
-              actionItem: "=props.item_manualControl ? (items[props.item_control].state === 'ON' ? props.item_manualControl : props.item_control) : props.item_control"
-              iconColor: "=items[props.item_control].state === 'ON' ? 'green' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+              actionItem: "=props.item_manualControl ? (@@props.item_control === 'ON' ? props.item_manualControl : props.item_control) : props.item_control"
+              iconColor: "=@@props.item_control === 'ON' ? 'green' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
               iconF7: power
               iconSize: 30px
               style:
@@ -176,24 +178,24 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionCommand: "=Number(items[props.item_timeSelection].state) > 25 ? Number(items[props.item_timeSelection].state) - 5 : 25"
+                    actionCommand: "=Number(@@props.item_timeSelection) > 25 ? Number(@@props.item_timeSelection) - 5 : 25"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_left_circle
                     iconSize: 30
                 - component: Label
                   config:
                     style:
-                      color: "#dd4124"
+                      color: var(--f7-theme-color)
                       font-size: 16px
                       margin-left: -0.5em
                       margin-right: -0.5em
                       margin-top: 3px
                       white-space: nowrap
-                    text: =items[props.item_timeSelection].displayState
+                    text: =@props.item_timeSelection
                 - component: oh-button
                   config:
                     action: command
-                    actionCommand: "=Number(items[props.item_timeSelection].state) < 90 ? Number(items[props.item_timeSelection].state) + 5 : 90"
+                    actionCommand: "=Number(@@props.item_timeSelection) < 90 ? Number(@@props.item_timeSelection) + 5 : 90"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_right_circle
                     iconSize: 30
