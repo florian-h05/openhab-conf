@@ -123,7 +123,7 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Mar 4, 2023, 5:35:30 PM
+timestamp: Jun 11, 2023, 4:07:30 PM
 component: f7-card
 config:
   style:
@@ -239,6 +239,7 @@ slots:
                     default:
                       - component: oh-sipclient
                         config:
+                          disableRegister: true
                           domain: =props.domain
                           enableSIPDebug: =props.enableSIPDebug
                           enableTones: false
