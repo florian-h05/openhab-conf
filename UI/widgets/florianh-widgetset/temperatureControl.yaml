@@ -65,7 +65,7 @@ props:
       description: Action to perform when the widget is clicked on the left third
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 6:01:52 PM
+timestamp: Jan 3, 2023, 1:51:33 PM
 component: f7-card
 config:
   style:
@@ -107,8 +107,8 @@ slots:
         style:
           left: 17px
           position: absolute
-          width: 100%
           top: 50px
+          width: 100%
       slots:
         default:
           - component: Label
@@ -252,7 +252,6 @@ slots:
     - component: oh-link
       config:
         action: analyzer
-        actionAnalyzerChartType: day
         actionAnalyzerCoordSystem: time
         actionAnalyzerItems: "=props.humidity_item ? [props.temp_item, props.humidity_item, props.set_temp_item, props.outside_temp_item] : (props.set_temp_item ? [props.temp_item, props.set_temp_item, props.outside_temp_item] : (props.humidity_item ? [props.temp_item, props.humidity_item, props.outside_temp_item] : [props.temp_item, props.outside_temp_item]))"
         style:
