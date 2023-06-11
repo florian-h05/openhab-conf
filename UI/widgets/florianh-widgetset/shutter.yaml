@@ -62,7 +62,7 @@ timestamp: Dec 16, 2022, 7:05:57 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -85,7 +85,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon ? props.icon : 'text_justify'"
+              f7: "=props.icon || 'text_justify'"
               size: 18
               style:
                 margin-right: 10px
@@ -94,7 +94,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: "=props.title || ''"
     - component: f7-block
       config:
         style:
@@ -112,14 +112,16 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=props.header ? props.header : 'Set header!'"
+              text: "=props.header || 'Set header!'"
           - component: Label
             config:
               style:
-                font-size: 12px
+                font-size: 14px
                 margin-top: -0.25em
-              text: "=items[props.itemShading].state === 'ON' ? items[props.item].state === '100' ? 'Geschlossen - Verschattung' :  items[props.item].displayState + ' - Verschattung' : items[props.item].state === '0' ? 'Geöffnet' : items[props.item].state === '100' ? 'Geschlossen' :  items[props.item].displayState"
-              visible: "=props.itemShading ? true : false"
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+              text: "=@@props.itemShading === 'ON' ? (@@props.item === '100' ? 'Geschlossen - Verschattung' :  @props.item + ' - Verschattung') : (@@props.item === '0' ? 'Geöffnet' : @@props.item === '100' ? 'Geschlossen' : @props.item)"
     - component: f7-block
       config:
         style:
@@ -137,7 +139,7 @@ slots:
               actionCommand: UP
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=items[props.item].state === '0' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+              iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
               iconF7: arrow_up_circle
               iconSize: 34
               style:
@@ -161,7 +163,7 @@ slots:
               actionCommand: DOWN
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=items[props.item].state === '100' ? themeOptions.dark === 'dark' ? 'white' : 'black' : 'red'"
+              iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
               iconF7: arrow_down_circle
               iconSize: 34
               style:
@@ -184,7 +186,7 @@ slots:
           position: absolute
           top: 75px
           width: calc(100% - 80px)
-        visible: "=props.sliderEnable == true ? true : false"
+        visible: "=props.sliderEnable === true ? true : false"
     - component: oh-link
       config:
         actionPropsParameterGroup: widgetAction
