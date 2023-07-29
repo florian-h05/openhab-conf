@@ -64,10 +64,10 @@ For the light mode I take the normal color or the dark color variation, for dark
 
 Which color pairs do I use for which color?
 
-- Green: ```(themeOptions.dark === ‚dark‘ ? ‚#76d275‘ : ‚#00701a‘)```
-- Yellow: ```(themeOptions.dark === ‚dark‘ ? ‚#ffff6b‘ : ‚#c5a600‘)```
-- Orange: ```(themeOptions.dark === ‚dark‘ ? ‚#ffbc45‘ : ‚#c25e00‘)```
-- Red: ```(themeOptions.dark === ‚dark‘ ? ‚#e53735‘ : ‚#ab000d‘)```
+- Green: ```(themeOptions.dark === 'dark' ? '#76d275' : '#00701a')```
+- Yellow: ```(themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600')```
+- Orange: ```(themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00')```
+- Red: ```(themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')```
 - openHAB orange: ```var(—-f7-theme-color)```
 
 These color pairs are all from color series __600__.
@@ -82,7 +82,7 @@ _Framework7_ icons normally use these sizes:
 - small icon (with small text, e.g. upper left corner): __18__
 - standard icon (with standard text): __20__
 
-_openHAB_ icons‘ size varies.
+_openHAB_ icons' size varies.
 
 #### Text
 
@@ -97,9 +97,9 @@ Text size and weight follows these guidelines:
 Line wrap and overflow are usually configured with the following CSS style attributes:
 
 ```yaml
-`overflow: hidden`
-`text-overflow: ellipsis`
-`white-space: nowrap`
+overflow: hidden
+text-overflow: ellipsis
+white-space: nowrap
 ```
 
 ### Switch Widget
@@ -162,7 +162,7 @@ props:
       required: false
       type: TEXT
       groupName: appearance
-    - description: word (e.g. ‚red‘), rgba or HEX
+    - description: word (e.g. 'red'), rgba or HEX
       label: Background Color
       name: bgcolor
       required: false
