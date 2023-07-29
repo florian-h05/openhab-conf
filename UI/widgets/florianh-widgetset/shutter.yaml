@@ -198,9 +198,9 @@ slots:
       config:
         actionPropsParameterGroup: widgetAction
         style:
-          height: 120px
+          height: "=props.sliderEnable === true ? '70px' : '120px'"
           left: 0px
           position: absolute
           top: 0px
-          width: 100%
+          width: calc(100% - 60px)
         visible: "=props.widget_action ? true : false"
