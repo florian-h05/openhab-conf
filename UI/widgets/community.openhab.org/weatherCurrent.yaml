@@ -1,4 +1,4 @@
-# description: shows current weather data, requires items from Astro - Sun_Elevation, Sunrise_Time, Sunset_Starttime
+# description: shows current weather data
 # community thread: https://community.openhab.org/t/oh3-main-ui-examples/117928/22
 # community author: @Integer Mike P
 # changes made: style changes, added weather warnings, added sunrise/sunset time
@@ -6,58 +6,71 @@ uid: weatherCurrent
 tags: []
 props:
   parameters:
-    - description: Small title on top of the card
-      label: Title
-      name: title
-      required: false
-      type: TEXT
-    - description: Page ID of page to be opened
-      label: page
-      name: page
-      required: false
     - context: item
-      description: Item of outside Temperature
-      label: Outsidetemperature
+      label: Temperature Item
       name: item_temp
       required: false
       type: TEXT
     - context: item
-      description: Item of outside Humidity
-      label: Humidity
+      label: Humidity Item
       name: item_hum
       required: false
       type: TEXT
     - context: item
-      description: Item of Rain
-      label: Rain
+      label: Rain Item
       name: item_rain
       required: false
       type: TEXT
     - context: item
-      description: Item of Strikes
-      label: Strike Count
+      label: Strike Count Item
       name: item_strike
       required: false
       type: TEXT
     - context: item
-      description: Item of Illuminance
-      label: Illuminance
+      label: Illuminance Item
       name: item_ill
       required: false
       type: TEXT
     - context: item
-      description: Item of Wind
-      label: Wind
-      name: item_wind
+      label: Windspeed Item
+      name: item_wind_speed
       required: false
       type: TEXT
     - context: item
-      description: Item of Wind Direction
-      label: Wind Dir
+      label: Wind Direction Item
       name: item_wind_dir
       required: false
       type: TEXT
-  parameterGroups: []
+    - context: item
+      label: Sun Elevation Item
+      name: item_sun_elv
+      required: false
+      type: TEXT
+    - context: item
+      label: Sunrise Time Item
+      name: item_sun_rise
+      required: false
+      type: TEXT
+    - context: item
+      label: Sunset Time Item
+      name: item_sun_set
+      required: false
+      type: TEXT
+    - context: item
+      label: Weather Warning 1 Item
+      name: item_warn_1
+      required: false
+      type: TEXT
+    - context: item
+      label: Weather Warning 2 Item
+      name: item_warn_2
+      required: false
+      type: TEXT
+  parameterGroups:
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked
 timestamp: Jul 8, 2022, 2:54:41 PM
 component: f7-card
 config:
@@ -91,7 +104,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: "Wetter"
     - component: f7-block
       config:
         style:
@@ -110,7 +123,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_temp].displayState
+              text: =@props.item_temp
               visible: "=props.item_temp ? true : false"
           - component: f7-chip
             config:
@@ -121,7 +134,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_hum].displayState
+              text: =@props.item_hum
               visible: "=props.item_hum ? true : false"
           - component: f7-chip
             config:
@@ -132,7 +145,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_ill].displayState
+              text: =@props.item_ill
               visible: "=props.item_ill ? true : false"
           - component: f7-chip
             config:
@@ -143,9 +156,9 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_rain].displayState
+              text: =@props.item_rain
               textColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
-              visible: "=props.item_rain ? true: false"
+              visible: "=props.item_rain ? true : false"
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -155,7 +168,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_strike].state
+              text: =@props.item_strike
               visible: "=props.item_strike ? true : false"
           - component: f7-chip
             config:
@@ -166,8 +179,8 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_wind].displayState
-              visible: "=props.item_wind ? true : false"
+              text: =@props.item_wind_speed
+              visible: "=props.item_wind_speed ? true : false"
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -177,7 +190,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items[props.item_wind_dir].state
+              text: =@props.item_wind_dir
               visible: "=props.item_wind_dir ? true : false"
           - component: f7-chip
             config:
@@ -188,7 +201,8 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: "=Number(items.Sun_Elevation.state) <= 0 ? items.Sunrise_Time.displayState : items.Sunset_Starttime.displayState"
+              text: "=Number(@@props.item_sun_elv) <= 0 ? @props.item_sun_rise : @props.item_sun_set"
+              visible: "=props.item_sun_elv ? true : false"
           - component: f7-chip
             config:
               iconColor: red
@@ -198,9 +212,9 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items.WetterWarnung_1Titel.displayState
+              text: =@props.item_warn_1
               textColor: red
-              visible: "=items.WetterWarnung_1.state == 'ON' ? true : false"
+              visible: "=props.item_warn_1 && @@props.item_warn_1 !== 'UNDEF' ? true : false"
           - component: f7-chip
             config:
               iconColor: red
@@ -210,17 +224,17 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =items.WetterWarnung_2Titel.displayState
+              text: =@props.item_warn_2
               textColor: red
-              visible: "=items.WetterWarnung_2.state == 'ON' ? true : false"
+              visible: "=props.item_warn_2 && @@props.item_warn_2 !== 'UNDEF' ? true : false"
     - component: oh-link
       config:
-        action: navigate
-        actionPage: ='page:' + props.page
+        actionFeedback: Erledigt!
+        actionPropsParameterGroup: widgetAction
         style:
-          height: 150px
+          height: "=props.selectorEnable === true || props.sliderEnable === true ? '80px' : '120px'"
           left: 0px
           position: absolute
           top: 0px
-          width: 100%
-        visible: "=props.page ? true : false"
+          width: "=props.selectorEnable === true || props.toggleHide === true ? '100%' : 'calc(100% - 60px)'"
+        visible: "=props.widget_action ? true : false"
