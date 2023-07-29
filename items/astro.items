@@ -1,0 +1,25 @@
+Group       gAstro             "Astronomische Daten"                                   <sun_clouds>    (gHome, gWetterdaten)                    ["WeatherService"]
+
+String      Day_Phase          "Tageszeit [MAP(astro.map):%s]"                                         (gAstro)                                 ["Measurement"]       {channel="astro:sun:home:phase#name"}
+String      Season_Name        "Jahreszeit [MAP(astro.map):%s]"                                        (gAstro)                                 ["Measurement"]       {channel="astro:sun:home:season#name"}
+String      Zodiac_Sign        "Sternzeichen [MAP(astro.map):%s]"                                      (gAstro)                                 ["Measurement"]       {channel="astro:sun:home:zodiac#sign"}
+
+// Sonne
+Group       gAstro_Sun         "Sonne"                                                 <sun>           (gAstro)
+Number      Sun_Elevation      "Sonne Elevation [%.1f °]"                              <sun>           (gAstro_Sun, Persist)                    ["Measurement"]       {channel="astro:sun:home:position#elevation"}
+Number      Sun_Azimuth        "Sonne Azimut [%.1f °]"                                 <sun>           (gAstro_Sun, Persist)                    ["Measurement"]       {channel="astro:sun:home:position#azimuth"}
+DateTime    Sunset_Time        "Sonnenuntergang [%1$tH:%1$tM]"                         <sunset>        (gAstro_Sun, Persist)                    ["Measurement"]       {channel="astro:sun:home:set#start"}
+DateTime    Sunrise_Time       "Sonnenaufgang [%1$tH:%1$tM]"                           <sunrise>       (gAstro_Sun, Persist)                    ["Measurement"]       {channel="astro:sun:home:rise#end"}
+// durch Regeln kalkuliert/geschrieben
+Number      Sunrise_Azimuth    "Sonnenaufgang Azimut [%.1f °]"                         <sunrise>       (gAstro_Sun, Persist, PersistRestore)
+Number      Sunset_Azimuth     "Sonnenuntergang Azimut [%.1f °]"                       <sunset>        (gAstro_Sun, Persist, PersistRestore)
+
+// Mond
+Group       gAstro_Moon        "Mond"                                                  <moon>          (gAstro)
+Number      Moon_Elevation     "Mond Elevation [%.1f °]"                               <moon>          (gAstro_Moon, Persist)                   ["Measurement"]       {channel="astro:moon:home:position#elevation"}
+Number      Moon_Azimuth       "Mond Azimut [%.1f °]"                                  <moon>          (gAstro_Moon, Persist)                   ["Measurement"]       {channel="astro:moon:home:position#azimuth"}
+DateTime    Moonset_Time       "Monduntergang [%1$tH:%1$tM]"                           <moon>          (gAstro_Moon, Persist)                   ["Measurement"]       {channel="astro:moon:home:set#end"}
+DateTime    Moonrise_Time      "Mondaufgang [%1$tH:%1$tM]"                             <moon>          (gAstro_Moon, Persist)                   ["Measurement"]       {channel="astro:moon:home:rise#start"}
+String      Moon_Phase         "Mond Phase [MAP(astro.map):%s]"                        <moon>          (gAstro_Moon)                            ["Measurement"]       {channel="astro:moon:home:phase#name"}
+DateTime    Moon_Next_Full     "Nächster Vollmond [%1$td.%1$tm.%1$tY, %1$tH:%1$tM]"    <moon>          (gAstro_Moon)                            ["Measurement"]       {channel="astro:moon:home:phase#full"}
+DateTime    Moon_Next_New      "Nächster Neumond [%1$td.%1$tm.%1$tY, %1$tH:%1$tM]"     <moon>          (gAstro_Moon)                            ["Measurement"]       {channel="astro:moon:home:phase#new"}
