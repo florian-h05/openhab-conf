@@ -71,7 +71,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked
-timestamp: Jul 8, 2022, 2:54:41 PM
+timestamp: Sep 17, 2023, 5:02:42 PM
 component: f7-card
 config:
   style:
@@ -104,7 +104,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "Wetter"
+              text: Wetter
     - component: f7-block
       config:
         style:
@@ -232,7 +232,7 @@ slots:
         actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:
-          height: "=props.selectorEnable === true || props.sliderEnable === true ? '80px' : '120px'"
+          height: 192.5px
           left: 0px
           position: absolute
           top: 0px
