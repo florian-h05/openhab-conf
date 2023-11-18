@@ -319,7 +319,7 @@ In the `Loggers` section:
 
 Because of an issue in Apache Karaf, make sure that the last logger is a `<Logger ...>`.
 This means, you should not add your custom loggers to the end of the `Loggers` section, but rather to the beginning.
-For more details see the corresponding [openHAB Core issue](https://github.com/openhab/openhab-core/issues/3818#event-10587799117).
+For more details see the corresponding [openHAB Core issue](https://github.com/openhab/openhab-core/issues/3818#issuecomment-1752504240).
 
 To use this custom logger in JS Scripting, set the according logger name, e.g.:
 
