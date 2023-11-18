@@ -292,9 +292,9 @@ Please look at [this guide](/scripts/SHADDOW.md).
 
 openHAB is using [log4j2](https://logging.apache.org/log4j/2.x/) as logger library, which allows the user to add custom loggers for writing into separate log files.
 
-To enable a custom logger, you have to add something like the following example to _$openhab-userdata/etc/log4j2.xml_:
+You can create a custom logger by using the following scheme in _$openhab-userdata/etc/log4j2.xml_:
 
-To the `Appenders` section:
+In the `Appenders` section:
 
 ```xml
 		<!— KNX appender (custom) —>
@@ -307,7 +307,7 @@ To the `Appenders` section:
 		</RollingFile>
 ```
 
-To the `Loggers` section:
+In the `Loggers` section:
 
 ```xml
 		<!— Custom loggers —>
@@ -316,6 +316,10 @@ To the `Loggers` section:
 			<AppenderRef ref="KNX"/>
 		</Logger>
 ```
+
+Because of an issue in Apache Karaf, make sure that the last logger is a `<Logger ...>`.
+This means, you should not add your custom loggers to the end of the `Loggers` section, but rather to the beginning.
+For more details see the corresponding [openHAB Core issue](https://github.com/openhab/openhab-core/issues/3818#event-10587799117).
 
 To use this custom logger in JS Scripting, set the according logger name, e.g.:
 
