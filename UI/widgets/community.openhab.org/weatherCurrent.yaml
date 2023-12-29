@@ -236,5 +236,5 @@ slots:
           left: 0px
           position: absolute
           top: 0px
-          width: "=props.selectorEnable === true || props.toggleHide === true ? '100%' : 'calc(100% - 60px)'"
+          width: 100%
         visible: "=props.widget_action ? true : false"
