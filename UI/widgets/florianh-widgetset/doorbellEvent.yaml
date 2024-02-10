@@ -29,18 +29,19 @@ props:
   parameterGroups:
     - name: widgetSettings
       label: Widget settings
-timestamp: Nov 1, 2023, 3:38:26 PM
+timestamp: Feb 10, 2024, 7:45:26 PM
 component: oh-image-card
 config:
-  footer: "=props.eventDescription ? props.eventDescription + ': ' + items[props.item_eventTimestamp].displayState : items[props.item_eventTimestamp].displayState"
+  footer: "=props.eventDescription ? props.eventDescription + ': ' +
+    items[props.item_eventTimestamp].displayState :
+    items[props.item_eventTimestamp].displayState"
   item: =props.item_eventImage
   lazy: true
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     footer-font-size: 24px
-    margin-left: 0.35em
-    margin-top: 0.35em
+    max-height: ='calc(' + screen.viewAreaHeight + 'px -
+      2*var(--f7-block-padding-vertical))'
+    max-width: ='calc((' + screen.viewAreaHeight + 'px -
+      2*var(--f7-block-padding-vertical)) * (4/3))'
     text-align: center
-    max-height: ='calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical))'
-    max-width: ='calc((' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'
