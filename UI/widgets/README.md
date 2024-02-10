@@ -11,6 +11,7 @@
   - [Control Configuration](#control-configuration)
   - [Style Configuration](#style-configuration)
   - [State Configuration](#state-configuration)
+- [`mlscControl`](#mlsccontrol)
 - [`doorbellPageWidget`](#doorbellpagewidget)
   - [Control Elements](#control-elements)
   - [Configuration](#configuration-2)
@@ -64,7 +65,7 @@ The scheme applies to the base Item name:
 ## [`contact`](./florianh-widgetset/contact.yaml)
 
 This widget represents the state of a contact with a configurable openHAB icon and a textual state representation.
-The textual state representation changes the color based on the contact‘s state.
+The textual state representation changes the color based on the contact's state.
 
 ![](./doc/contact/dark.jpeg)
 
@@ -103,10 +104,31 @@ Enable this „x of y are on“ feature with thia configuration steps:
 1. Set the `header` prop.
 2. Set the `item` prop to the group Item.
 3. Set the `item_counter` prop to the Item that holds the number of group members ON.
-4. Set the `items_total` prop the the total number of group members.
+4. Set the `items_total` prop the total number of group members.
 
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
+
+## [`mlscControl`](./florianh-widgetset/mlscControl.yaml)
+
+This widget allows to control effect, brightness and (optionally) color of [music_led_strip_control](https://github.com/TobKra96/music_led_strip_control).
+It is meant to be opened by the widget action of a widget on the user-control page:
+
+![](./doc/mlscControl/dark.png)
+
+The widget consists of a selector for the active effect and a slider for brightness.
+The color wheel is only displayed if the single color effect is selected.
+
+To open this widget as popup from another widget, edit the YAML of that widget (there is an `Edit YAML` button):
+
+```yaml
+  action: popup
+  actionModal: widget:mlscControl
+  actionModalConfig:
+    item_color: Florian_LED_Stripes_Farbe
+    item_dimmer: Florian_LED_Stripes
+    item_effect: Florian_LED_Stripes_Effekt
+```
 
 ## [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
 
@@ -117,7 +139,7 @@ Most importantly, it displays the live video, provides a speech connection to th
 ![Landscape mode](./doc/doorbellPageWidget/dark_landscape.jpeg)
 ![Portrait/mobile mode](./doc/doorbellPageWidget/dark_iphone.jpeg)
 
-Depending on the screen orientation, the control elements are either displayed in an vertical arrangement on or besides the upper left of the live view, or displayed in a horizonal arrangement at the bottom of the screen.
+Depending on the screen orientation, the control elements are either displayed vertically arranged on or besides the upper left of the live view, or displayed in a horizontal arrangement at the bottom of the screen.
 
 ### Control Elements
 
@@ -139,15 +161,15 @@ Next to the status, three control buttons follow:
 This widget depends on the [`doorbellEvent` widget](./florianh-widgetset/doorbellEvent.yaml), so add this one as well!
 
 Create a new layout page, add a block, then add a row, next add a column.
-Open the column options and set it's width to 100%.
+Open the column options and set its width to 100%.
 Finally, choose `doorbellPageWidget` from the personal widgets.
 
 Configuration of the widget itself is self-explaining.
 
 ## [`label`](./florianh-widgetset/label.yaml)
 
-Display any Item‘s state or just a simple text.
-For numeric Items, you can display a trendline and open an analyzer.
+Display any Item's state or just a simple text.
+For numeric Items, you can display a trend line and open an analyzer.
 If any action is enabled, the analyzer will open on a left-side click and the action on a right-side click.
 
 ![](./doc/label/dark.jpeg)
@@ -165,7 +187,7 @@ Color scheme and opacity is fully configurable for the columns.
 ![](./doc/roomCard/complete.png)
 ![](./doc/roomCard/reduced.png)
 
-Note that this widget requires the [`mygaragedoor`](/icons/classic) icons for the garagedoor state.
+Note that this widget requires the [`mygaragedoor`](/icons/classic) icons for the garage door state.
 
 ### Displayed Data
 
@@ -220,7 +242,7 @@ If the on-click action is enabled, the action will be available at the left half
 ## [`trigger`](./florianh-widgetset/trigger.yaml)
 
 Send one command to an Item on click, e.g. for calling scenes.
-Bring some color to your MainUI pages with different background colors for light- and darkmode.
+Bring some color to your MainUI pages with different background colors for light- and dark mode.
 
 ![](./doc/trigger/light.jpeg)
 ![](./doc/trigger/dark.jpeg)

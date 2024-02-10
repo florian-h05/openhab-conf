@@ -1,0 +1,86 @@
+# description: Control effect, brightness and (optionally) color of music_led_strip_control (https://github.com/TobKra96/music_led_strip_control)
+# author: Copyright (c) 2024 Florian Hotze under MIT License
+uid: mlscControl
+tags:
+  - florianh-widgetset
+props:
+  parameters:
+    - context: item
+      description: Dimmer Item to control brightness
+      label: Dimmer Item
+      name: item_dimmer
+      required: true
+      type: TEXT
+      groupName: widgetSettings
+    - context: item
+      description: String Item to control effect
+      label: Effect Item
+      name: item_effect
+      required: true
+      type: TEXT
+      groupName: widgetSettings
+    - context: item
+      description: Color Item to control color of "effect_single"
+      label: Color Item
+      name: item_color
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+  parameterGroups:
+    - name: widgetSettings
+      label: Widget settings
+timestamp: Feb 10, 2024, 7:49:47 PM
+component: f7-card
+config:
+  style:
+    border-radius: var(--f7-card-expandable-border-radius)
+    height: "=props.item_color && @@props.item_effect === 'effect_single' ? '470px'
+      : '100px'"
+    minWidth: 180px
+    noShadow: false
+    padding: 0px
+slots:
+  content:
+    - component: oh-button
+      config:
+        action: options
+        actionFeedback: Erledigt!
+        actionItem: =props.item_effect
+        item: =props.item_effect
+        large: true
+        round: false
+        style:
+          bottom: -20px
+          font-size: 30px
+          height: 40px
+          position: absolute
+          width: calc(100% - 30px)
+        text: =@props.item_effect
+        vertical: false
+    - component: oh-slider
+      config:
+        item: =props.item_dimmer
+        max: 100
+        min: 0
+        releaseOnly: true
+        style:
+          --f7-range-bar-border-radius: 8px
+          --f7-range-bar-size: 8px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+          --f7-range-knob-size: 20px
+          bottom: -55px
+          left: 20px
+          position: absolute
+          width: calc(100% - 40px)
+    - component: oh-colorpicker
+      config:
+        item: =props.item_color
+        modules:
+          - wheel
+        style:
+          top: 120px
+          margin-left: 0px
+          position: absolute
+          width: calc(100% - 30px)
+        visible: "=props.item_color && @@props.item_effect === 'effect_single' ? true :
+          false"
