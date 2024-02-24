@@ -17,7 +17,8 @@ props:
       required: false
       type: TEXT
       groupName: appearance
-    - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify or arrow_up_arrow_down
+    - description: Icon on top of the card (only f7 icons (without f7:)). e.g.
+        text_justify or arrow_up_arrow_down
       label: Icon
       name: icon
       required: false
@@ -37,7 +38,8 @@ props:
       type: TEXT
       groupName: widgetSettings
     - context: item
-      description: Item whose state should be shown as a subheader, e.g. for "x % to y %" state
+      description: Item whose state should be shown as a subheader, e.g. for "x % to y
+        %" state
       label: Subheader Value Item
       name: item_subheader
       required: false
@@ -65,11 +67,11 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Dec 16, 2022, 7:05:57 PM
+timestamp: Feb 24, 2024, 3:21:46 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || ''"
+    background-color: =props.bgcolor || ''
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -92,7 +94,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon || 'text_justify'"
+              f7: =props.icon || 'text_justify'
               size: 18
               style:
                 margin-right: 10px
@@ -101,7 +103,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title || ''"
+              text: =props.title || ''
     - component: f7-block
       config:
         style:
@@ -119,7 +121,7 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=props.header || 'Set header!'"
+              text: =props.header || 'Set header!'
           - component: Label
             config:
               style:
@@ -128,7 +130,10 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=props.item_subheader ? @props.item_subheader : (@@props.item === '100' ? 'Geschlossen' : @@props.item === '0' ? 'Geöffnet' : @props.item) + (props.itemShading ? @@props.itemShading === 'ON' ? ' - Verschattung' : '' : '')"
+              text: "=props.item_subheader ? @props.item_subheader : (@@props.item === '100' ?
+                'Geschlossen' : @@props.item === '0' ? 'Geöffnet' : @props.item)
+                + (props.itemShading ? @@props.itemShading === 'ON' ? ' -
+                Verschattung' : '' : '')"
     - component: f7-block
       config:
         style:
@@ -146,7 +151,8 @@ slots:
               actionCommand: UP
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
+              iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' :
+                'black') : 'red'"
               iconF7: arrow_up_circle
               iconSize: 34
               style:
@@ -170,7 +176,8 @@ slots:
               actionCommand: DOWN
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
+              iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' :
+                'black') : 'red'"
               iconF7: arrow_down_circle
               iconSize: 34
               style:
@@ -178,6 +185,7 @@ slots:
                 height: 36px
     - component: oh-slider
       config:
+        ignoreDisplayState: true
         item: =props.item
         max: 100
         min: 0
