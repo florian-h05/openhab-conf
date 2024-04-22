@@ -58,7 +58,7 @@ The CSS style _height_ attribute usually varies between these three sizes:
 
 #### Colors
 
-For colors, I usually use the [Material Design color palette](https://material.io/resources/color/).
+For colors, I usually use the [Material Design color palette](https://m2.material.io/design/color/the-color-system.html#color-theme-creation).
 I choose colors from the __400__ or the __600__ series.
 For the light mode I take the normal color or the dark color variation, for dark mode the light color variation.
 
