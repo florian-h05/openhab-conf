@@ -61,17 +61,12 @@ props:
       name: item_warn_1
       required: false
       type: TEXT
-    - context: item
-      label: Weather Warning 2 Item
-      name: item_warn_2
-      required: false
-      type: TEXT
   parameterGroups:
     - name: widgetAction
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked
-timestamp: Sep 17, 2023, 5:02:42 PM
+timestamp: May 17, 2024, 9:10:42 AM
 component: f7-card
 config:
   style:
@@ -215,18 +210,6 @@ slots:
               text: =@props.item_warn_1
               textColor: red
               visible: "=props.item_warn_1 && @@props.item_warn_1 !== 'UNDEF' ? true : false"
-          - component: f7-chip
-            config:
-              iconColor: red
-              iconF7: bolt
-              iconSize: 20
-              style:
-                --f7-chip-bg-color: rgba(255, 255, 255, 0)
-                font-size: 16px
-                margin-bottom: 10px
-              text: =@props.item_warn_2
-              textColor: red
-              visible: "=props.item_warn_2 && @@props.item_warn_2 !== 'UNDEF' ? true : false"
     - component: oh-link
       config:
         actionFeedback: Erledigt!
