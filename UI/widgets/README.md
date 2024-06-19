@@ -217,13 +217,6 @@ Display current power and today’s as well as total production and last refresh
 
 ![](./doc/solar/dark.jpeg)
 
-### Items
-
-- `pv_Power`: Current power of solar inverter.
-- `pv_EToday`: Today‘s energy production
-- `pv_ETotal`: Total energy production
-- `pv_lastRefresh`: Last refresh of data from inverter (optional)
-
 ### Configuration
 
 Configuration is self-explaining.

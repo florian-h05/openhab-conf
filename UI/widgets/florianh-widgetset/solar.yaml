@@ -1,26 +1,43 @@
-# description: Display current power and today's as well as total production and last refresh of solar inverter, requires some Items (see docs)
+# description: Display current power and today's as well as total production and last refresh of solar inverter
 # author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: solar
 tags:
   - florianh-widgetset
 props:
   parameters:
+    - context: item
+      label: Power Item
+      name: item_power
+      required: true
+      type: TEXT
+    - context: item
+      label: Energy Today Item
+      name: item_energy_today
+      required: true
+      type: TEXT
+    - context: item
+      label: Energy Total Item
+      name: item_energy_total
+      required: true
+      type: TEXT
     - description: Page ID of page to be opened
       label: page
       name: page
       required: false
       type: TEXT
-    - description: Display the last update timestamp
-      label: Display last update
-      name: displayLastUpdate
+    - context: item
+      description: Set the last refresh Item to show the last refresh time, leave
+        empty to hide the timestamp
+      label: Last Refresh Item
+      name: item_lastrefresh
       required: false
-      type: BOOLEAN
+      type: TEXT
   parameterGroups:
     - name: widgetAction
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jun 11, 2023, 2:40:25 PM
+timestamp: Jun 19, 2024, 3:47:30 PM
 component: f7-card
 config:
   style:
@@ -74,7 +91,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =@'pv_Power'
+              text: =@props.item_power
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -84,7 +101,7 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =@'pv_EToday' + ' | ' + @'pv_ETotal'
+              text: =@props.item_energy_today + ' | ' + @props.item_energy_total
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -94,8 +111,8 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: =@'pv_lastRefresh'
-              visible: "=props.displayLastUpdate === true ? true : false"
+              text: =@props.item_lastrefresh
+              visible: "=props.item_lastrefresh !== undefined ? true : false"
     - component: oh-icon
       config:
         icon: solarplant
@@ -110,8 +127,8 @@ slots:
         actionPage: ='page:' + props.page
         style:
           height: 150px
-          right: 0px
           position: absolute
+          right: 0px
           top: 0px
           width: "=props.widget_action ? '65%' : '100%'"
         visible: "=props.page ? true : false"
