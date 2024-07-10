@@ -51,7 +51,7 @@ props:
       groupName: amplifier
   parameterGroups:
     - name: appearance
-      label: Appearence settings
+      label: Appearance settings
     - name: amplifier
       label: Amplifier settings
 timestamp: Jan 10, 2023, 2:52:14 PM

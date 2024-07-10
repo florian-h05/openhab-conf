@@ -76,7 +76,7 @@ props:
       advanced: true
   parameterGroups:
     - name: appearance
-      label: Appearence settings
+      label: Appearance settings
     - name: widgetAction
       context: action
       label: Action settings
