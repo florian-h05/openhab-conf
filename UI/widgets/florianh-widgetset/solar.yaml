@@ -5,6 +5,12 @@ tags:
   - florianh-widgetset
 props:
   parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+      groupName: appearance
     - context: item
       label: Power Item
       name: item_power
@@ -33,11 +39,13 @@ props:
       required: false
       type: TEXT
   parameterGroups:
+    - name: appearance
+      label: Appearance settings
     - name: widgetAction
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jun 19, 2024, 3:47:30 PM
+timestamp: Jul 10, 2024, 1:08:37 AM
 component: f7-card
 config:
   style:
@@ -72,7 +80,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: Photovoltaik
+              text: "=props.title ? props.title : 'Photovoltaik'"
     - component: f7-block
       config:
         style:
