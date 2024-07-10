@@ -4,7 +4,7 @@
 # credits: this widget is based on the animated energy widget by Sebastian Neu, but has received a complete overhaul
 # community thread: https://community.openhab.org/t/animated-energy-widget/133510
 # community author: Sebastian Neu (https://community.openhab.org/u/sebastian_neu)
-uid: ems_energyflow
+uid: emsEnergyflow
 tags:
   - florianh-widgetset
 props:
