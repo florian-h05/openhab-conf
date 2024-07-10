@@ -34,13 +34,14 @@ props:
       required: true
       type: TEXT
     - context: item
-      description: Current state of charge of the battery connected to the inverter in percent
+      description: Current state of charge of the battery connected to the inverter in
+        percent
       label: Battery State of Charge
       name: batterylevel
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Jul 10, 2024, 10:13:16 AM
+timestamp: Jul 10, 2024, 11:09:45 AM
 component: f7-card
 config:
   style:
@@ -101,7 +102,9 @@ slots:
                             margin-top: -10px
                             text-align: center
                             width: 100px
-                          text: =(items[props.gridpower].displayState || items[props.gridpower].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+                          text: =(items[props.gridpower].displayState ||
+                            items[props.gridpower].state).replace('-',
+                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
                           visible: "=props.gridpower ? true : false"
           - component: f7-col
             config:
@@ -126,12 +129,15 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=#props.solarpower === 0 ? 'gray' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+                            color: "=#props.solarpower === 0 ? 'gray' : (themeOptions.dark === 'dark' ?
+                              'white' : 'black')"
                             font-size: 25px
                             font-weight: bold
                             text-align: center
                             width: 100px
-                          text: =(items[props.solarpower].displayState || items[props.solarpower].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+                          text: =(items[props.solarpower].displayState ||
+                            items[props.solarpower].state).replace('-',
+                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
                           visible: "=props.solarpower ? true : false"
                       - component: oh-icon
                         config:
@@ -299,7 +305,8 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && #props.batterypower < 0"
+                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
+                                  #props.batterypower < 0"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -307,7 +314,8 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && #props.batterypower < 0"
+                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
+                                  #props.batterypower < 0"
                               slots:
                                 default:
                                   - component: f7-row
@@ -378,7 +386,9 @@ slots:
                             margin-top: -10px
                             text-align: center
                             width: 100px
-                          text: =(items[props.loadpower].displayState || items[props.loadpower].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+                          text: =(items[props.loadpower].displayState ||
+                            items[props.loadpower].state).replace('-',
+                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
                           visible: "=props.loadpower ? true : false"
           - component: f7-col
             config:
@@ -404,8 +414,10 @@ slots:
                           action: analyzer
                           actionAnalyzerCoordSystem: time
                           actionAnalyzerItems: =[props.batterylevel]
-                          iconColor: "=#props.batterylevel < 75 ? (#props.batterylevel < 10 ? 'red' : 'orange') : 'green'"
-                          iconF7: "=#props.batterylevel < 75 ? (#props.batterylevel < 10 ? 'battery_0' : 'battery_25') : 'battery_100'"
+                          iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' :
+                            'orange') : 'green'"
+                          iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' :
+                            'battery_25') : 'battery_100'"
                           iconSize: 30px
                           style:
                             font-size: 20px
@@ -421,7 +433,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=#props.batterypower === 0 ? 'gray' : (#props.batterypower > 0 ? 'red' : 'green')"
+                            color: "=#props.batterypower === 0 ? 'gray' : (#props.batterypower > 0 ? 'red' :
+                              'green')"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px
