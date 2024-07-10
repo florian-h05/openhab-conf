@@ -85,6 +85,7 @@ slots:
                       flex-direction: column
                       height: 110px
                       justify-content: center
+                      margin-top: -5px
                       width: 110px
                   slots:
                     default:
@@ -406,6 +407,7 @@ slots:
                       flex-direction: column
                       height: 110px
                       justify-content: center
+                      margin-top: -5px
                       width: 110px
                   slots:
                     default:
