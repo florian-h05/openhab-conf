@@ -63,7 +63,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jul 11, 2024, 5:19:41 PM
+timestamp: Jul 11, 2024, 6:00:03 PM
 component: oh-context
 config:
   constants: {}
@@ -180,7 +180,7 @@ slots:
               action: navigate
               actionPage: ='page:' + props.page
               style:
-                height: 150px
+                height: 230px
                 position: absolute
                 right: 0px
                 top: 0px
@@ -191,7 +191,7 @@ slots:
               actionFeedback: Erledigt!
               actionPropsParameterGroup: widgetAction
               style:
-                height: 150px
+                height: 230px
                 left: 0px
                 position: absolute
                 top: 0px
