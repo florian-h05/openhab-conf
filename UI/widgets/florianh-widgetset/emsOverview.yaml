@@ -1,0 +1,193 @@
+# description: Displays several metrics of an energy management system, e.g. electricity supply, self-consumption, feed-in, cost & savings
+# author: Copyright (c) 2024 Florian Hotze under MIT License
+uid: emsOverview
+tags:
+  - florianh-widgetset
+props:
+  parameters:
+    - description: Small title on top of the card
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+      groupName: appearance
+    - context: item
+      label: Electricy Self-Consumption Day
+      name: item_electricity_selfconsumption_day
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Self-Consumption Month
+      name: item_electricity_selfconsumption_month
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Feed-In Day
+      name: item_electricity_feedin_day
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Feed-In Month
+      name: item_electricity_feedin_month
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Supply Day
+      name: item_electricity_supply_day
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Supply Month
+      name: item_electricity_supply_month
+      required: true
+      type: TEXT
+    - context: item
+      label: Electricy Cost
+      name: item_electricity_cost
+      required: false
+      type: TEXT
+    - context: item
+      label: Electricy Savings
+      name: item_electricity_savings
+      required: false
+      type: TEXT
+    - description: Page ID of page to be opened
+      label: page
+      name: page
+      required: false
+      type: TEXT
+  parameterGroups:
+    - name: appearance
+      label: Appearance settings
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked on the left third
+timestamp: Jul 11, 2024, 5:19:41 PM
+component: oh-context
+config:
+  constants: {}
+  functions:
+    formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] + ' | ' + @item2"
+    formatCurrency: "=(label, item) => label + ': ' + (@item).replace('EUR', '€')"
+  variable: {}
+slots:
+  default:
+    - component: f7-card
+      config:
+        style:
+          border-radius: var(--f7-card-expandable-border-radius)
+          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          class:
+            - padding: 0px
+          height: 230px
+          margin-left: 5px
+          margin-right: 5px
+          noShadow: false
+      slots:
+        content:
+          - component: f7-block
+            config:
+              style:
+                display: flex
+                flex-direction: row
+                left: 16px
+                position: absolute
+                top: -5px
+            slots:
+              default:
+                - component: f7-icon
+                  config:
+                    f7: square_grid_3x2
+                    size: 18
+                    style:
+                      margin-right: 10px
+                - component: Label
+                  config:
+                    style:
+                      font-size: 12px
+                      margin-top: 0px
+                    text: "=props.title ? props.title : 'EMS'"
+          - component: f7-block
+            config:
+              style:
+                left: 12px
+                position: absolute
+                top: 55px
+                width: calc(100% - 75px)
+            slots:
+              default:
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: gauge
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-bottom: 10px
+                    text: =fn.formatEnergy('Netzbezug', props.item_electricity_supply_day, props.item_electricity_supply_month)
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: gauge
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-bottom: 10px
+                    text: =fn.formatEnergy('Eigenverbrauch', props.item_electricity_selfconsumption_day, props.item_electricity_selfconsumption_month)
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: gauge
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-bottom: 10px
+                    text: =fn.formatEnergy('Einspeisung', props.item_electricity_feedin_day, props.item_electricity_feedin_month)
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: money_euro_circle
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-bottom: 10px
+                    text: =fn.formatCurrency('Monatliche Stromkosten', props.item_electricity_cost)
+                    visible: "=props.item_electricity_cost ? true : false"
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: money_euro_circle
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-bottom: 10px
+                    text: =fn.formatCurrency('Monatliche Einsparungen', props.item_electricity_savings)
+                    visible: "=props.item_electricity_savings ? true : false"
+          - component: oh-link
+            config:
+              action: navigate
+              actionPage: ='page:' + props.page
+              style:
+                height: 150px
+                position: absolute
+                right: 0px
+                top: 0px
+                width: "=props.widget_action ? '65%' : '100%'"
+              visible: "=props.page ? true : false"
+          - component: oh-link
+            config:
+              actionFeedback: Erledigt!
+              actionPropsParameterGroup: widgetAction
+              style:
+                height: 150px
+                left: 0px
+                position: absolute
+                top: 0px
+                width: 35%
+              visible: "=props.widget_action ? true : false"
