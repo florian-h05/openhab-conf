@@ -1,7 +1,7 @@
-# description: Display current energy flow of an energy management system
+# description: Display current energy flow of an energy management system (designed for Fronius Symo Gen24 Plus)
 # dependencies: SMA icons from https://community.openhab.org/t/animated-energy-widget/133510
 # author: Copyright (c) 2024 Florian Hotze under MIT License
-# credits: this widget is based on the animated energy widget by Sebastian Neu, but has received a complete overhaul
+# credits: this widget is based on the animated energy widget by Sebastian Neu, but has received a major overhaul
 # community thread: https://community.openhab.org/t/animated-energy-widget/133510
 # community author: Sebastian Neu (https://community.openhab.org/u/sebastian_neu)
 uid: emsEnergyflow
@@ -42,408 +42,403 @@ props:
       type: TEXT
   parameterGroups: []
 timestamp: Jul 10, 2024, 11:09:45 AM
-component: f7-card
+component: oh-context
 config:
-  style:
-    border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    class:
-      - display-flex
-      - flex-direction-column
-      - align-items-center
-    height: 350px
-    margin-left: 5px
-    margin-right: 5px
-    min-width: 350px
-    noShadow: false
-    padding: 0
+  constants: {}
+  functions:
+    isPositive: "=(item) => Number((@item).split(' ')[0]) > 0"
+    isNegative: "=(item) => Number((@item).split(' ')[0]) < 0"
+    getFormattedState: "=(item) => (items[item].displayState || items[item].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')"
+  variable: {}
 slots:
-  content:
-    - component: f7-block
+  default:
+    - component: f7-card
       config:
         style:
-          --f7-theme-color: var(--f7-text-color)
-          display: flex
-          justify-content: center
+          border-radius: var(--f7-card-expandable-border-radius)
+          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          class:
+            - display-flex
+            - flex-direction-column
+            - align-items-center
+          height: 350px
+          margin-left: 5px
+          margin-right: 5px
+          min-width: 350px
+          noShadow: false
           padding: 0
-          margin: 0
       slots:
-        default:
-          - component: f7-col
+        content:
+          - component: f7-block
             config:
               style:
-                align-items: center
+                --f7-theme-color: var(--f7-text-color)
                 display: flex
-                flex-direction: row
+                justify-content: center
+                padding: 0
+                margin: 0
             slots:
               default:
-                - component: f7-block
+                - component: f7-col
+                  config:
+                    style:
+                      align-items: center
+                      display: flex
+                      flex-direction: row
+                  slots:
+                    default:
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            height: 110px
+                            justify-content: center
+                            margin-top: -5px
+                            width: 110px
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                height: 110px
+                                icon: sma_grid_2
+                            - component: Label
+                              config:
+                                style:
+                                  color: "=fn.isNegative(props.gridpower) ? 'green' : fn.isPositive(props.gridpower) ? 'red' : 'gray'"
+                                  font-size: 25px
+                                  font-weight: bold
+                                  margin-top: -10px
+                                  text-align: center
+                                  width: 100px
+                                text: =fn.getFormattedState(props.gridpower)
+                                visible: "=props.gridpower ? true : false"
+                - component: f7-col
                   config:
                     style:
                       align-items: center
                       display: flex
                       flex-direction: column
-                      height: 110px
-                      justify-content: center
-                      margin-top: -5px
-                      width: 110px
                   slots:
                     default:
-                      - component: oh-icon
-                        config:
-                          height: 110px
-                          icon: sma_grid_2
-                      - component: Label
+                      - component: f7-block
                         config:
                           style:
-                            color: "=#props.gridpower === 0 ? 'gray' : (#props.gridpower < 0 ? 'green' :
-                              'red')"
-                            font-size: 25px
-                            font-weight: bold
-                            margin-top: -10px
-                            text-align: center
-                            width: 100px
-                          text: =(items[props.gridpower].displayState ||
-                            items[props.gridpower].state).replace('-',
-                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-                          visible: "=props.gridpower ? true : false"
-          - component: f7-col
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: column
-            slots:
-              default:
-                - component: f7-block
-                  config:
-                    style:
-                      align-items: center
-                      display: flex
-                      flex-direction: column
-                      height: 110px
-                      justify-content: center
-                      margin-top: 0
-                      width: 110px
-                  slots:
-                    default:
-                      - component: Label
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            height: 110px
+                            justify-content: center
+                            margin-top: 0
+                            width: 110px
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                style:
+                                  color: "=fn.isPositive(props.solarpower) ? (themeOptions.dark === 'dark' ? 'white' : 'black') 'gray'"
+                                  font-size: 25px
+                                  font-weight: bold
+                                  text-align: center
+                                  width: 100px
+                                text: =fn.getFormattedState(props.solarpower)
+                                visible: "=props.solarpower ? true : false"
+                            - component: oh-icon
+                              config:
+                                height: 110px
+                                icon: sma_pv_2
+                                style:
+                                  margin-top: -20px
+                      - component: f7-block
                         config:
                           style:
-                            color: "=#props.solarpower === 0 ? 'gray' : (themeOptions.dark === 'dark' ?
-                              'white' : 'black')"
-                            font-size: 25px
-                            font-weight: bold
-                            text-align: center
-                            width: 100px
-                          text: =(items[props.solarpower].displayState ||
-                            items[props.solarpower].state).replace('-',
-                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-                          visible: "=props.solarpower ? true : false"
-                      - component: oh-icon
-                        config:
-                          height: 110px
-                          icon: sma_pv_2
-                          style:
-                            margin-top: -20px
-                - component: f7-block
-                  config:
-                    style:
-                      display: flex
-                      height: 100px
-                      justify-content: center
-                      margin: 0
-                      padding: 0
-                      width: 100px
-                  slots:
-                    default:
-                      - component: f7-row
-                        config:
-                          preserveAspectRatio: xMidYMid slice
-                          style:
+                            display: flex
                             height: 100px
+                            justify-content: center
+                            margin: 0
+                            padding: 0
                             width: 100px
-                          tag: svg
-                          viewBox: 0 0 100 100
-                          xmlns: http://www.w3.org/2000/svg
                         slots:
                           default:
                             - component: f7-row
                               config:
-                                d: M60 -10 v10 c0 40  10 35  30  35  h20
-                                fill: none
-                                id: pv_to_battery
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.batterypower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
+                                preserveAspectRatio: xMidYMid slice
                                 style:
-                                  stroke-width: 4
-                                tag: circle
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.batterypower < 0"
+                                  height: 100px
+                                  width: 100px
+                                tag: svg
+                                viewBox: 0 0 100 100
+                                xmlns: http://www.w3.org/2000/svg
                               slots:
                                 default:
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
-                                    slots:
-                                      default:
-                                        - component: f7-row
-                                          config:
-                                            tag: mpath
-                                            xlink:href: "#pv_to_battery"
-                            - component: f7-row
-                              config:
-                                d: M40 -10 v10 c0 40 -10 35 -30 35 h-20
-                                fill: none
-                                id: pv_to_grid
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.gridpower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
-                                strokeWidth: 10
-                                tag: circle
-                                vectorEffect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.gridpower < 0"
-                              slots:
-                                default:
+                                      d: M60 -10 v10 c0 40  10 35  30  35  h20
+                                      fill: none
+                                      id: pv_to_battery
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)"
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      style:
+                                        stroke-width: 4
+                                      tag: circle
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)"
                                     slots:
                                       default:
                                         - component: f7-row
                                           config:
-                                            tag: mpath
-                                            xlink:href: "#pv_to_grid"
-                            - component: f7-row
-                              config:
-                                d: M50, 0 v100
-                                fill: none
-                                id: pv_to_load
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.loadpower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
-                                strokeWidth: 10
-                                tag: circle
-                                vectorEffect: non-scaling-stroke
-                                visible: "=#props.solarpower > 0 && #props.loadpower < 0"
-                              slots:
-                                default:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#pv_to_battery"
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
-                                    slots:
-                                      default:
-                                        - component: f7-row
-                                          config:
-                                            tag: mpath
-                                            xlink:href: "#pv_to_load"
-                            - component: f7-row
-                              config:
-                                d: M-5 55 l10 0 c40 0 35 10 35 50 l0 20
-                                fill: none
-                                id: grid_to_load
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.gridpower > 0  && #props.loadpower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
-                                strokeWidth: 10
-                                tag: circle
-                                vectorEffect: non-scaling-stroke
-                                visible: "=#props.gridpower > 0  && #props.loadpower < 0"
-                              slots:
-                                default:
+                                      d: M40 -10 v10 c0 40 -10 35 -30 35 h-20
+                                      fill: none
+                                      id: pv_to_grid
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)"
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)"
                                     slots:
                                       default:
                                         - component: f7-row
                                           config:
-                                            tag: mpath
-                                            xlink:href: "#grid_to_load"
-                            - component: f7-row
-                              config:
-                                d: M0, 45 h100
-                                fill: none
-                                id: grid_to_battery
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  #props.batterypower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
-                                strokeWidth: 10
-                                tag: circle
-                                vectorEffect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  #props.batterypower < 0"
-                              slots:
-                                default:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#pv_to_grid"
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
-                                    slots:
-                                      default:
-                                        - component: f7-row
-                                          config:
-                                            tag: mpath
-                                            xlink:href: "#grid_to_battery"
-                            - component: f7-row
-                              config:
-                                d: M 105 55 l-10 0 c-40 0 -35 10 -35 50 l0 20
-                                fill: none
-                                id: battery_to_load
-                                stroke: rgba(100, 150, 200, 0.8)
-                                stroke-width: 2
-                                tag: path
-                                vector-effect: non-scaling-stroke
-                                visible: "=#props.batterypower > 0 && #props.loadpower < 0"
-                            - component: f7-row
-                              config:
-                                fill: rgba(100, 150, 200, 0.8)
-                                r: 6
-                                strokeWidth: 10
-                                tag: circle
-                                vectorEffect: non-scaling-stroke
-                                visible: "=#props.batterypower > 0 && #props.loadpower < 0"
-                              slots:
-                                default:
+                                      d: M50, 0 v100
+                                      fill: none
+                                      id: pv_to_load
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)"
                                   - component: f7-row
                                     config:
-                                      calcMode: linear
-                                      dur: 4s
-                                      repeatCount: indefinite
-                                      tag: animateMotion
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)"
                                     slots:
                                       default:
                                         - component: f7-row
                                           config:
-                                            tag: mpath
-                                            xlink:href: "#battery_to_load"
-                - component: f7-block
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#pv_to_load"
+                                  - component: f7-row
+                                    config:
+                                      d: M-5 55 l10 0 c40 0 35 10 35 50 l0 20
+                                      fill: none
+                                      id: grid_to_load
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)"
+                                  - component: f7-row
+                                    config:
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)"
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#grid_to_load"
+                                  - component: f7-row
+                                    config:
+                                      d: M0, 45 h100
+                                      fill: none
+                                      id: grid_to_battery
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && fn.isNegative(props.batterypower)"
+                                  - component: f7-row
+                                    config:
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && fn.isNegative(props.batterypower)"
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#grid_to_battery"
+                                  - component: f7-row
+                                    config:
+                                      d: M 105 55 l-10 0 c-40 0 -35 10 -35 50 l0 20
+                                      fill: none
+                                      id: battery_to_load
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)"
+                                  - component: f7-row
+                                    config:
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)"
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#battery_to_load"
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            height: 120px
+                            justify-content: center
+                            margin-top: -10px
+                            width: 110px
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                height: 110px
+                                icon: sma_consumption_2
+                            - component: Label
+                              config:
+                                style:
+                                  font-size: 25px
+                                  font-weight: bold
+                                  margin-top: -10px
+                                  text-align: center
+                                  width: 100px
+                                text: =fn.getFormattedState(props.loadpower)
+                                visible: "=props.loadpower ? true : false"
+                - component: f7-col
                   config:
                     style:
                       align-items: center
                       display: flex
-                      flex-direction: column
-                      height: 120px
-                      justify-content: center
-                      margin-top: -10px
-                      width: 110px
+                      flex-direction: row
                   slots:
                     default:
-                      - component: oh-icon
-                        config:
-                          height: 110px
-                          icon: sma_consumption_2
-                      - component: Label
+                      - component: f7-block
                         config:
                           style:
-                            font-size: 25px
-                            font-weight: bold
-                            margin-top: -10px
-                            text-align: center
-                            width: 100px
-                          text: =(items[props.loadpower].displayState ||
-                            items[props.loadpower].state).replace('-',
-                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-                          visible: "=props.loadpower ? true : false"
-          - component: f7-col
-            config:
-              style:
-                align-items: center
-                display: flex
-                flex-direction: row
-            slots:
-              default:
-                - component: f7-block
-                  config:
-                    style:
-                      align-items: center
-                      display: flex
-                      flex-direction: column
-                      height: 110px
-                      justify-content: center
-                      margin-top: -5px
-                      width: 110px
-                  slots:
-                    default:
-                      - component: oh-link
-                        config:
-                          action: analyzer
-                          actionAnalyzerCoordSystem: time
-                          actionAnalyzerItems: =[props.batterylevel]
-                          iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' :
-                            'orange') : 'green'"
-                          iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' :
-                            'battery_25') : 'battery_100'"
-                          iconSize: 30px
-                          style:
-                            font-size: 20px
-                            font-weight: bold
-                            position: absolute
-                            top: -25px
-                            white-space: nowrap
-                          text: =Math.round(#props.batterylevel) + '%'
-                      - component: oh-icon
-                        config:
-                          height: 110px
-                          icon: sma_battery_2
-                      - component: Label
-                        config:
-                          style:
-                            color: "=#props.batterypower === 0 ? 'gray' : (#props.batterypower > 0 ? 'red' :
-                              'green')"
-                            font-size: 25px
-                            font-weight: bold
-                            margin-top: -10px
-                            text-align: center
-                            white-space: nowrap
-                            width: 100px
-                          text: =(items[props.batterypower].displayState ||
-                            items[props.batterypower].state).replace('-',
-                            '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-                          visible: "=props.batterypower ? true : false"
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            height: 110px
+                            justify-content: center
+                            margin-top: -5px
+                            width: 110px
+                        slots:
+                          default:
+                            - component: oh-link
+                              config:
+                                action: analyzer
+                                actionAnalyzerCoordSystem: time
+                                actionAnalyzerItems: =[props.batterylevel]
+                                iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' : 'orange') : 'green'"
+                                iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' : 'battery_25') : 'battery_100'"
+                                iconSize: 30px
+                                style:
+                                  font-size: 20px
+                                  font-weight: bold
+                                  position: absolute
+                                  top: -25px
+                                  white-space: nowrap
+                                text: =Math.round(#props.batterylevel) + '%'
+                            - component: oh-icon
+                              config:
+                                height: 110px
+                                icon: sma_battery_2
+                            - component: Label
+                              config:
+                                style:
+                                  color: "=fn.isNegative(props.batterypower) ? 'green' : fn.isPositive(props.batterypower) ? 'red' : 'gray'"
+                                  font-size: 25px
+                                  font-weight: bold
+                                  margin-top: -10px
+                                  text-align: center
+                                  white-space: nowrap
+                                  width: 100px
+                                text: =fn.getFormattedState(props.batterypower)
+                                visible: "=props.batterypower ? true : false"
