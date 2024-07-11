@@ -135,7 +135,7 @@ Configuration of the widget itself is self-explaining.
 
 Displays the current energy flow monitored by an energy management system (EMS) similar to the SMA Energy App.
 
-![](./doc/emsEnergyflow/dark.jpeg)
+![](./doc/emsEnergyflow/dark.png)
 
 Credits to [Sebastian Neu](https://community.openhab.org/u/Sebastian_Neu) for sharing the [initial version of this widget](https://community.openhab.org/t/animated-energy-widget/133510).
 This version published here is a complete overhaul of his version.
@@ -158,7 +158,7 @@ It depends on the SMA Energy App icons, which can be downloaded from the openHAB
 
 Displays several metrics of an energy management system, e.g. electricity supply, self-consumption, feed-in, cost & savings.
 
-![](./doc/emsOverview/dark.jpeg)
+![](./doc/emsOverview/dark.png)
 
 Configuration is straight forward - just set the required Items.
 
