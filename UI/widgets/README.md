@@ -3,32 +3,18 @@
 **Control and monitor many different types of devices with custom widgets following a consistent design language.**
 
 - [`amplifier`](#amplifier)
-  - [Configuration](#configuration)
-  - [Item Naming Scheme](#item-naming-scheme)
 - [`contact`](#contact)
-  - [Configuration](#configuration-1)
 - [`control`](#control)
-  - [Control Configuration](#control-configuration)
-  - [Style Configuration](#style-configuration)
-  - [State Configuration](#state-configuration)
-- [`mlscControl`](#mlsccontrol)
 - [`doorbellPageWidget`](#doorbellpagewidget)
-  - [Control Elements](#control-elements)
-  - [Configuration](#configuration-2)
+- [`emsEnergyflow`](#emsenergyflow)
+- [`emsOverview`](#emsoverview)
 - [`label`](#label)
-  - [Configuration](#configuration-3)
+- [`mlscControl`](#mlsccontrol)
 - [`roomCard`](#roomcard)
-  - [Displayed Data](#displayed-data)
-  - [Configuration](#configuration-4)
 - [`shutter`](#shutter)
-  - [Configuration](#configuration-5)
 - [`solar`](#solar)
-  - [Items](#items)
-  - [Configuration](#configuration-6)
 - [`temperatureControl`](#temperaturecontrol)
-  - [Configuration](#configuration-7)
 - [`trigger`](#trigger)
-  - [Configuration](#configuration-8)
 
 You can add these widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
 
@@ -109,27 +95,6 @@ Enable this „x of y are on“ feature with thia configuration steps:
 Together with this feature, you might want to have a popup to control the whole group?
 No problem, the widget got you covered.
 
-## [`mlscControl`](./florianh-widgetset/mlscControl.yaml)
-
-This widget allows to control effect, brightness and (optionally) color of [music_led_strip_control](https://github.com/TobKra96/music_led_strip_control).
-It is meant to be opened by the widget action of a widget on the user-control page:
-
-![](./doc/mlscControl/dark.png)
-
-The widget consists of a selector for the active effect and a slider for brightness.
-The color wheel is only displayed if the single color effect is selected.
-
-To open this widget as popup from another widget, edit the YAML of that widget (there is an `Edit YAML` button):
-
-```yaml
-  action: popup
-  actionModal: widget:mlscControl
-  actionModalConfig:
-    item_color: Florian_LED_Stripes_Farbe
-    item_dimmer: Florian_LED_Stripes
-    item_effect: Florian_LED_Stripes_Effekt
-```
-
 ## [`doorbellPageWidget`](./florianh-widgetset/doorbellPageWidget.yaml)
 
 A very special widget to provide a full-page, responsive doorbell UI for different screen sizes and screen orientations.
@@ -166,6 +131,37 @@ Finally, choose `doorbellPageWidget` from the personal widgets.
 
 Configuration of the widget itself is self-explaining.
 
+## [`emsEnergyflow`](./florianh-widgetset/emsEnergyflow.yaml)
+
+Displays the current energy flow monitored by an energy management system (EMS) similar to the SMA Energy App.
+
+![](./doc/emsEnergyflow/dark.jpeg)
+
+Credits to [Sebastian Neu](https://community.openhab.org/u/Sebastian_Neu) for sharing the [initial version of this widget](https://community.openhab.org/t/animated-energy-widget/133510).
+This version published here is a complete overhaul of his version.
+
+### Configuration
+
+It requires Items for the following values:
+
+- Grid Power: + from grid, - to grid
+- Power from load: + generator, - consumer
+- Power from solar plant
+- Power from battery: + discharge, - charge
+- Battery State of Charge
+
+Please note that the widget is designed for use with Fronius Symo Gen24 Plus inverters and therefore uses Fronius-specific value sign interpretation.
+
+It depends on the SMA Energy App icons, which can be downloaded from the openHAB Community: <https://community.openhab.org/t/animated-energy-widget/133510>
+
+## [`emsOverview`](./florianh-widgetset/emsOverview.yaml)
+
+Displays several metrics of an energy management system, e.g. electricity supply, self-consumption, feed-in, cost & savings.
+
+![](./doc/emsOverview/dark.jpeg)
+
+Configuration is straight forward - just set the required Items.
+
 ## [`label`](./florianh-widgetset/label.yaml)
 
 Display any Item's state or just a simple text.
@@ -177,6 +173,27 @@ If any action is enabled, the analyzer will open on a left-side click and the ac
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
+
+## [`mlscControl`](./florianh-widgetset/mlscControl.yaml)
+
+This widget allows to control effect, brightness and (optionally) color of [music_led_strip_control](https://github.com/TobKra96/music_led_strip_control).
+It is meant to be opened by the widget action of a widget on the user-control page:
+
+![](./doc/mlscControl/dark.png)
+
+The widget consists of a selector for the active effect and a slider for brightness.
+The color wheel is only displayed if the single color effect is selected.
+
+To open this widget as popup from another widget, edit the YAML of that widget (there is an `Edit YAML` button):
+
+```yaml
+  action: popup
+  actionModal: widget:mlscControl
+  actionModalConfig:
+    item_color: Florian_LED_Stripes_Farbe
+    item_dimmer: Florian_LED_Stripes
+    item_effect: Florian_LED_Stripes_Effekt
+```
 
 ## [`roomCard`](./florianh-widgetset/roomCard.yaml)
 
