@@ -68,7 +68,8 @@ component: oh-context
 config:
   constants: {}
   functions:
-    formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] + ' | ' + @item2"
+    formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] +
+      ' | ' + @item2"
     formatCurrency: "=(label, item) => label + ': ' + (@item).replace('EUR', '€')"
   variable: {}
 slots:
@@ -126,7 +127,8 @@ slots:
                       --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Netzbezug', props.item_electricity_supply_day, props.item_electricity_supply_month)
+                    text: =fn.formatEnergy('Netzbezug', props.item_electricity_supply_day,
+                      props.item_electricity_supply_month)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -136,7 +138,9 @@ slots:
                       --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Eigenverbrauch', props.item_electricity_selfconsumption_day, props.item_electricity_selfconsumption_month)
+                    text: =fn.formatEnergy('Eigenverbrauch',
+                      props.item_electricity_selfconsumption_day,
+                      props.item_electricity_selfconsumption_month)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -146,7 +150,8 @@ slots:
                       --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Einspeisung', props.item_electricity_feedin_day, props.item_electricity_feedin_month)
+                    text: =fn.formatEnergy('Einspeisung', props.item_electricity_feedin_day,
+                      props.item_electricity_feedin_month)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -167,7 +172,8 @@ slots:
                       --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-bottom: 10px
-                    text: =fn.formatCurrency('Monatliche Einsparungen', props.item_electricity_savings)
+                    text: =fn.formatCurrency('Monatliche Einsparungen',
+                      props.item_electricity_savings)
                     visible: "=props.item_electricity_savings ? true : false"
           - component: oh-link
             config:

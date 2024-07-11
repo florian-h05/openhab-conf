@@ -41,14 +41,15 @@ props:
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Jul 10, 2024, 11:09:45 AM
+timestamp: Jul 11, 2024, 4:54:15 PM
 component: oh-context
 config:
   constants: {}
   functions:
-    isPositive: "=(item) => Number((@item).split(' ')[0]) > 0"
-    isNegative: "=(item) => Number((@item).split(' ')[0]) < 0"
-    getFormattedState: "=(item) => (items[item].displayState || items[item].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')"
+    isPositive: =(item) => Number((@item).split(' ')[0]) > 0
+    isNegative: =(item) => Number((@item).split(' ')[0]) < 0
+    getFormattedState: =(item) => (items[item].displayState ||
+      items[item].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
   variable: {}
 slots:
   default:
@@ -106,7 +107,9 @@ slots:
                             - component: Label
                               config:
                                 style:
-                                  color: "=fn.isNegative(props.gridpower) ? 'green' : fn.isPositive(props.gridpower) ? 'red' : 'gray'"
+                                  color: "=fn.isNegative(props.gridpower) ? 'green' :
+                                    fn.isPositive(props.gridpower) ? 'red' :
+                                    'gray'"
                                   font-size: 25px
                                   font-weight: bold
                                   margin-top: -10px
@@ -137,7 +140,8 @@ slots:
                             - component: Label
                               config:
                                 style:
-                                  color: "=fn.isPositive(props.solarpower) ? (themeOptions.dark === 'dark' ? 'white' : 'black') 'gray'"
+                                  color: "=fn.isPositive(props.solarpower) ? (themeOptions.dark === 'dark' ?
+                                    'white' : 'black') 'gray'"
                                   font-size: 25px
                                   font-weight: bold
                                   text-align: center
@@ -181,7 +185,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -190,7 +194,7 @@ slots:
                                         stroke-width: 4
                                       tag: circle
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -214,7 +218,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -222,7 +226,7 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -246,7 +250,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -254,7 +258,7 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -278,7 +282,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -286,7 +290,7 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -310,7 +314,8 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && fn.isNegative(props.batterypower)"
+                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
+                                        fn.isNegative(props.batterypower)"
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -318,7 +323,8 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 && fn.isNegative(props.batterypower)"
+                                      visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
+                                        fn.isNegative(props.batterypower)"
                                     slots:
                                       default:
                                         - component: f7-row
@@ -342,7 +348,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -350,7 +356,7 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: "=fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)"
+                                      visible: =fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -416,8 +422,10 @@ slots:
                                 action: analyzer
                                 actionAnalyzerCoordSystem: time
                                 actionAnalyzerItems: =[props.batterylevel]
-                                iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' : 'orange') : 'green'"
-                                iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' : 'battery_25') : 'battery_100'"
+                                iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' :
+                                  'orange') : 'green'"
+                                iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' :
+                                  'battery_25') : 'battery_100'"
                                 iconSize: 30px
                                 style:
                                   font-size: 20px
@@ -433,7 +441,9 @@ slots:
                             - component: Label
                               config:
                                 style:
-                                  color: "=fn.isNegative(props.batterypower) ? 'green' : fn.isPositive(props.batterypower) ? 'red' : 'gray'"
+                                  color: "=fn.isNegative(props.batterypower) ? 'green' :
+                                    fn.isPositive(props.batterypower) ? 'red' :
+                                    'gray'"
                                   font-size: 25px
                                   font-weight: bold
                                   margin-top: -10px
