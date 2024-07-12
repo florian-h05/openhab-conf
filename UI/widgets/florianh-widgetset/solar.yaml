@@ -45,7 +45,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jul 10, 2024, 1:08:37 AM
+timestamp: Jul 10, 2024, 11:40:10 AM
 component: f7-card
 config:
   style:
@@ -98,6 +98,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_power
           - component: f7-chip
@@ -108,6 +109,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_energy_today + ' | ' + @props.item_energy_total
           - component: f7-chip
@@ -118,6 +120,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_lastrefresh
               visible: "=props.item_lastrefresh !== undefined ? true : false"

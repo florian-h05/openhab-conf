@@ -66,7 +66,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked
-timestamp: May 17, 2024, 9:10:42 AM
+timestamp: Jul 12, 2024, 5:08:08 PM
 component: f7-card
 config:
   style:
@@ -117,6 +117,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_temp
               visible: "=props.item_temp ? true : false"
@@ -128,6 +129,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_hum
               visible: "=props.item_hum ? true : false"
@@ -139,20 +141,24 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_ill
               visible: "=props.item_ill ? true : false"
           - component: f7-chip
             config:
-              iconColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
+              iconColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark ===
+                'dark' ? 'white' : 'black') : 'red'"
               iconF7: cloud_drizzle
               iconSize: 20
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_rain
-              textColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'red'"
+              textColor: "=items[props.item_rain].state === 'CLOSED' ? (themeOptions.dark ===
+                'dark' ? 'white' : 'black') : 'red'"
               visible: "=props.item_rain ? true : false"
           - component: f7-chip
             config:
@@ -162,6 +168,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_strike
               visible: "=props.item_strike ? true : false"
@@ -173,6 +180,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_wind_speed
               visible: "=props.item_wind_speed ? true : false"
@@ -184,6 +192,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_wind_dir
               visible: "=props.item_wind_dir ? true : false"
@@ -196,7 +205,8 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 margin-bottom: 10px
-              text: "=Number(@@props.item_sun_elv) <= 0 ? @props.item_sun_rise : @props.item_sun_set"
+              text: "=Number(@@props.item_sun_elv) <= 0 ? @props.item_sun_rise :
+                @props.item_sun_set"
               visible: "=props.item_sun_elv ? true : false"
           - component: f7-chip
             config:
@@ -206,6 +216,7 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
+                margin-top: 0
                 margin-bottom: 10px
               text: =@props.item_warn_1
               textColor: red
