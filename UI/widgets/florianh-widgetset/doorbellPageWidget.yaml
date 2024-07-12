@@ -9,7 +9,7 @@ tags:
 props:
   parameters:
     - context: item
-      description: Swicth Item that controls the night vision
+      description: Switch Item that controls the night vision
       label: Night vision
       name: item_light
       required: true
@@ -64,13 +64,17 @@ props:
       required: true
       type: TEXT
       groupName: doorbellMotionState
-    - description: Full URL of the image providing the liveview (the image is updated several times a second). Use the image if the MJPEG video stream is not stable
+    - description: Full URL of the image providing the liveview (the image is updated
+        several times a second). Use the image if the MJPEG video stream is not
+        stable
       label: Live image URL
       name: imageUrl
       required: true
       type: TEXT
       groupName: video
-    - description: Full URL of the WebRTC SIP websocket, e.g. 'wss://siphost:8089/ws' or relative path, e.g. '/ws', for Android & iOS, you need wss (WebSocket secured)
+    - description: Full URL of the WebRTC SIP websocket, e.g. 'wss://siphost:8089/ws'
+        or relative path, e.g. '/ws', for Android & iOS, you need wss (WebSocket
+        secured)
       label: WebSocket URL
       name: websocketUrl
       required: true
@@ -94,12 +98,22 @@ props:
       required: true
       type: TEXT
       groupName: sipClient
-    - description: Single SIP Address (phone number) for a single call target or a comma-separated list of 'phoneNumber=name' for multiple call targets
+    - description: Single SIP Address (phone number) for a single call target or a
+        comma-separated list of 'phoneNumber=name' for multiple call targets
       label: Phonebook
       name: phonebook
       required: false
       type: TEXT
       groupName: sipClient
+    - context: item
+      description: String Item to publish the SIP connection state to the openHAB server
+        and make it accessible from rules etc.
+      label: SIP State Item
+      name: item_sipState
+      required: false
+      type: TEXT
+      groupName: sipClient
+      advanced: true
     - description: Enable SIP debugging to the console
       label: Enable SIP Debugging
       name: enableSIPDebug
@@ -123,14 +137,15 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Jun 11, 2023, 4:07:30 PM
+timestamp: Jul 5, 2024, 12:51:23 PM
 component: f7-card
 config:
   style:
     background-color: rgba(0,0,0,0.0)
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
-    height: ='calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical))'
+    height: ='calc(' + screen.viewAreaHeight + 'px -
+      2*var(--f7-block-padding-vertical))'
     margin: 0px
     padding: 0px
     width: 100%
@@ -143,8 +158,12 @@ slots:
         style:
           border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-          margin-left: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '0' : 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
-          width: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '100%' : 'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+          margin-left: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '0' :
+            'calc(calc(100% - calc(96vh - var(--f7-navbar-height) -
+            var(--f7-toolbar-height)) * (4/3)) / 2)'"
+          width: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '100%' :
+            'calc(calc(95vh - var(--f7-navbar-height) -
+            var(--f7-toolbar-height)) * (4/3))'"
         url: =props.imageUrl
     - component: f7-card
       config:
@@ -153,7 +172,10 @@ slots:
           bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '-10px'"
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '330px' : '150px'"
-          left: "=screen.viewAreaWidth >= screen.viewAreaHeight ? (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 - 175px)' : '-10px') : '-10px'"
+          left: "=screen.viewAreaWidth >= screen.viewAreaHeight ? (screen.viewAreaWidth -
+            (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh
+            - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 -
+            175px)' : '-10px') : '-10px'"
           min-width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '300px'"
           padding: 0px
           position: absolute
@@ -166,7 +188,8 @@ slots:
               style:
                 align-content: space-around
                 display: flex
-                flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'column' : 'row'"
+                flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'column' :
+                  'row'"
                 height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '298px' : '115px'"
                 justify-content: space-around
                 left: 0px
@@ -181,7 +204,8 @@ slots:
                     style:
                       align-content: space-around
                       display: flex
-                      flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'row' : 'column'"
+                      flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'row' :
+                        'column'"
                       height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '40px' : '100%'"
                       justify-content: space-around
                       margin: 0 0 0 0
@@ -197,11 +221,15 @@ slots:
                             eventDescription: Letztes Klingeln
                             item_eventImage: =props.item_buttonLastPressedImage
                             item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                          iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
+                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ?
+                            (themeOptions.dark === 'dark' ? 'white' : 'black') :
+                            'gray'"
+                          iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' :
+                            'bell_slash'"
                           iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
-                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
+                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' :
+                              '30'"
                             width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
                       - component: oh-button
                         config:
@@ -211,11 +239,13 @@ slots:
                             eventDescription: Letzte Bewegung
                             item_eventImage: =props.item_lastMotionImage
                             item_eventTimestamp: =props.item_lastMotionTimestamp
-                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark ===
+                            'dark' ? 'white' : 'black') : 'gray'"
                           iconF7: arrow_right_arrow_left
                           iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
                           style:
-                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
+                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' :
+                              '30'"
                             width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
                 - component: oh-button
                   config:
@@ -225,7 +255,8 @@ slots:
                     iconF7: lightbulb_fill
                     iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' :
+                        '115px'"
                       padding-left: 0px
                       padding-right: 0px
                       width: 100%
@@ -248,6 +279,7 @@ slots:
                           iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '80' : '60'"
                           password: =props.password
                           phonebook: =props.phonebook
+                          sipStateItem: =props.item_sipState
                           username: =props.username
                           websocketUrl: =props.websocketUrl
                 - component: oh-button
@@ -258,7 +290,8 @@ slots:
                     iconF7: lock_open_fill
                     iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' :
+                        '115px'"
                       padding-left: 0px
                       padding-right: 0px
                       width: 100%
