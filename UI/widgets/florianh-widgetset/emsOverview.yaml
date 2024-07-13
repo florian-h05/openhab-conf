@@ -51,6 +51,11 @@ props:
       name: item_electricity_savings
       required: false
       type: TEXT
+    - context: item
+      label: Electricy Feed-In Earnings
+      name: item_electricity_feedin_earnings
+      required: false
+      type: TEXT
     - description: Page ID of page to be opened
       label: page
       name: page
@@ -63,7 +68,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jul 11, 2024, 10:15:28 PM
+timestamp: Jul 12, 2024, 5:04:15 PM
 component: oh-context
 config:
   constants: {}
@@ -81,7 +86,7 @@ slots:
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           class:
             - padding: 0px
-          height: 250px
+          height: 290px
           margin-left: 5px
           margin-right: 5px
           noShadow: false
@@ -180,12 +185,25 @@ slots:
                     text: =fn.formatCurrency('Monatliche Einsparungen',
                       props.item_electricity_savings)
                     visible: "=props.item_electricity_savings ? true : false"
+                - component: f7-chip
+                  config:
+                    iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    iconF7: money_euro_circle
+                    iconSize: 20
+                    style:
+                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
+                      font-size: 16px
+                      margin-top: 0
+                      margin-bottom: 10px
+                    text: =fn.formatCurrency('Monatliche Einspeisevergütung',
+                      props.item_electricity_feedin_earnings)
+                    visible: "=props.item_electricity_feedin_earnings ? true : false"
           - component: oh-link
             config:
               action: navigate
               actionPage: ='page:' + props.page
               style:
-                height: 250px
+                height: 290px
                 position: absolute
                 right: 0px
                 top: 0px
@@ -196,7 +214,7 @@ slots:
               actionFeedback: Erledigt!
               actionPropsParameterGroup: widgetAction
               style:
-                height: 250px
+                height: 290px
                 left: 0px
                 position: absolute
                 top: 0px
