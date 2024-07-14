@@ -7,6 +7,11 @@
 uid: weatherForecast
 tags:
   - florianh-widgetset
+  - OpenWeatherMap
+  - expandable
+  - weather
+  - hourly forecast
+  - daily forecast
 props:
   parameters:
     - context: item
