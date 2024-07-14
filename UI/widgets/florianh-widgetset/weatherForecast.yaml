@@ -10,8 +10,8 @@ tags:
 props:
   parameters:
     - context: item
-      description: The item that holds the JSON data of the forecast
-      label: Forecast JSON Item
+      description: The item that holds the JSON data of the current weather and forecast
+      label: JSON Item
       name: jsonItem
       required: true
       type: TEXT
@@ -20,13 +20,13 @@ props:
       label: Number of hours to forecast
       name: forecastHours
       required: false
-      type: TEXT
+      type: INTEGER
       groupName: general
     - description: The number of days you want to forecast (<u>default:</u> <b>3</b>)
       label: Number of days to forecast
       name: forecastDays
       required: false
-      type: TEXT
+      type: INTEGER
       groupName: general
     - description: Overwrite the station location name
       label: Location title
@@ -523,7 +523,7 @@ slots:
                           sourceType: range
                           for: hour
                           rangeStart: 0
-                          rangeStop: "=Number(props.forecastHours) || 12"
+                          rangeStop: "=Number(props.forecastHours) || 24"
                           fragment: true
                         slots:
                           default:
@@ -734,7 +734,7 @@ slots:
                           sourceType: range
                           for: hour
                           rangeStart: 0
-                          rangeStop: "=Number(props.forecastHours) || 12"
+                          rangeStop: "=Number(props.forecastHours) || 24"
                           fragment: true
                         slots:
                           default:
