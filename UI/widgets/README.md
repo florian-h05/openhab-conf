@@ -15,6 +15,7 @@
 - [`solar`](#solar)
 - [`temperatureControl`](#temperaturecontrol)
 - [`trigger`](#trigger)
+- [`weatherForecast`](#weatherforecast)
 
 You can add these widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
 
@@ -261,3 +262,26 @@ Bring some color to your MainUI pages with different background colors for light
 
 Configuration is self-explaining.
 For the color, I recommend to read my [Color design guideline](/README.md#color-design).
+
+## [`weatherForecast`](./florianh-widgetset/weatherForecast.yaml)
+
+Shows the current- and apparent temperature, condition (including icon), humidity, wind-speed as well as slide-able hourly-, daily- and %-precipitation-forecasts.
+
+![](./doc/weatherForecast/paris.png)
+![](./doc/weatherForecast/saint-merri.png)
+
+This is a major refactoring of the `weatherCard` widget created by [Rainer](https://community.openhab.org/u/RGroll) on the [openHAB Community](https://community.openhab.org/t/ui-widget-weather/106842).
+This new version does not depend on the huge amount of hourly and daily forecast Items anymore, but instead utilizes the forecast support in persistence/TimeSeries support of the OpenWeatherMap binding.
+This way, it is much more efficient to use and easier to set up - it just needs a few Items and a rule to generate a JSON that holds the current weather and forecast data.
+
+To learn more about this widget's features, head over to <https://community.openhab.org/t/ui-widget-weather/106842> and please leave a like there for Rainer's original work!
+
+### Configuration
+
+This widget depends on a JavaScript rule that generates the JSON string that holds the data.
+Please install the [JavaScript Scripting automation add-on](https://www.openhab.org/addons/automation/jsscripting) and drop the [`openweathermap.js`](/automation/js/openweathermap.js) file into the `$OPENHAB_CONF/automation/js` folder.
+
+`openweathermap.js` depends on a few Items which are defined in [`openweathermap.items`](/items/openweathermap.items).
+Make sure you either have these Items in your openHAB (the easiest way is to drop the .items file into your items folder) or adjust the rule to match your Item names.
+
+Once you have taken care of these dependencies, you can add the widget - just set the JSON Item and the location name, and you are good to go!

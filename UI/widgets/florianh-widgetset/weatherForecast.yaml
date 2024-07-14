@@ -1,8 +1,8 @@
 # description: Displays the weather forecast from OpenWeatherMap
 # dependencies: the JavaScript rule to build the JSON data source from the persisted forecast
 # author: Copyright (c) 2024 Florian Hotze under MIT License
-# credits: this widget is based on the weather card widget by @RGroll Rainer, but has received a major refactoring including the use of oh-context and a rule-built JSON data source
-# community author: @RGroll Rainer
+# credits: this widget is based on the weather card widget by Rainer, but has received a major refactoring including the use of oh-context and a rule-built JSON data source
+# community author: Rainer (https://community.openhab.org/u/RGroll)
 # community source: https://github.com/rgrollfitz/oh3-widgets/blob/master/weatherCard.yaml
 uid: weatherForecast
 tags:
