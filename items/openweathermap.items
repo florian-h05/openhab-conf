@@ -1,143 +1,28 @@
-Group                 gOWM                                                            "Open Weather Map"
+Group                 gOWM                                              "OpenWeatherMap Current Weather & Forecast"
 
-// OneCall API Thing
-DateTime              OneCallAPIweatherandforecast_ObservationTime                    "Observation Time"                         <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#time-stamp"}
-// Current
-DateTime              OneCallAPIweatherandforecast_Current_Sunrise                    "Sunrise Time"                             <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#sunrise"}
-DateTime              OneCallAPIweatherandforecast_Current_Sunset                     "Sunset Time"                              <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#sunset"}
-String                OneCallAPIweatherandforecast_Current_Condition                  "Weather Condition"                        <Sun_Clouds>   (gOWM)             {channel="openweathermap:onecall:bridge:local:current#condition"}
-String                OneCallAPIweatherandforecast_Current_Conditionid                "Weather Condition Id"                                    (gOWM)             {channel="openweathermap:onecall:bridge:local:current#condition-id"}
-String                OneCallAPIweatherandforecast_Current_Iconid                     "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:current#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_Current_Temperature                "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:current#temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_Current_Apparenttemperature        "Apparent Temperature"                     <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:current#apparent-temperature"}
-Number:Pressure       OneCallAPIweatherandforecast_Current_Pressure                   "Barometric Pressure"                      <Pressure>     (gOWM)             {channel="openweathermap:onecall:bridge:local:current#pressure"}
-Number:Dimensionless  OneCallAPIweatherandforecast_Current_Humidity                   "Atmospheric Humidity"                     <Humidity>     (gOWM)             {channel="openweathermap:onecall:bridge:local:current#humidity", unit="%"}
-Number:Speed          OneCallAPIweatherandforecast_Current_Windspeed                  "Wind Speed"                               <Wind>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#wind-speed"}
+String                OneCall_JSON
+// Current weather
+DateTime              OneCall_Current_Sunrise                           "Sonnenaufgang [%1$tH:%1$tM]"                <time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#sunrise"}
+DateTime              OneCall_Current_Sunset                            "Sonnenuntergang [%1$tH:%1$tM]"              <time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#sunset"}
+Number:Temperature    OneCall_Current_Temperature                       "Temperatur [%.1f °C]"                       <temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:current#temperature", unit="°C"}
+Number:Temperature    OneCall_Current_ApparentTemperature               "Gefühlte Temperatur [%.1f °C]"              <temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:current#apparent-temperature", unit="°C"}
+String                OneCall_Current_Condition                         "Wolken [%s]"                                <sun_clouds>   (gOWM)             {channel="openweathermap:onecall:bridge:local:current#condition"}
+Number:Dimensionless  OneCall_Current_Humidity                          "Luftfeuchtigkeit [%d %%]"                   <humidity>     (gOWM)             {channel="openweathermap:onecall:bridge:local:current#humidity", unit="%"}
+Number:Speed          OneCall_Current_Windspeed                         "Windgeschwindigkeit [%.1f m/s]"             <wind>         (gOWM)             {channel="openweathermap:onecall:bridge:local:current#wind-speed", unit="km/h"}
+String                OneCall_Current_IconId                                                                                        (gOWM)             {channel="openweathermap:onecall:bridge:local:current#icon-id"}
 
-// Forecast TimeSeries
-Group                 gOWM_TimeSeries                                                                                                           (gOWM)
+// Forecast as time series
+Group                 gOWM_TimeSeries                                                                                               (gOWM)
 // Hourly
-String                OneCall_Forecast_Hourly_IconId                                                                                            (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#icon-id"}
-Number:Temperature    OneCall_Forecast_Hourly_Temperature                             "Temperatur [%.1f °C]"                     <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#temperature"}
-Number:Dimensionless  OneCall_Forecast_Hourly_Cloudiness                              "Bewölkung [%d %%]"                        <sun_clouds>   (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#cloudiness", unit="%"}
-Number:Dimensionless  OneCall_Forecast_Hourly_PrecipitationProbability                "Niederschlagswahrscheinlichkeit [%d %%]"  <rain>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#precip-probability", unit="%"}
+Number:Temperature    OneCall_Forecast_Hourly_Temperature               "Temperatur [%.1f °C]"                       <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#temperature", unit="°C"}
+Number:Dimensionless  OneCall_Forecast_Hourly_Cloudiness                "Bewölkung [%d %%]"                          <sun_clouds>   (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#cloudiness", unit="%"}
+Number:Dimensionless  OneCall_Forecast_Hourly_PrecipitationProbability  "Niederschlagswahrscheinlichkeit [%d %%]"    <rain>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#precip-probability", unit="%"}
+String                OneCall_Forecast_Hourly_IconId                                                                                (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastHourly#icon-id"}
 // Daily
-DateTime              OneCall_Forecast_Daily_Sunrise                                  "Sonnenaufang [%1$tH:%1$tM]"               <time>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#sunrise"}
-DateTime              OneCall_Forecast_Daily_Sunset                                   "Sonnenuntergang [%1$tH:%1$tM]"            <time>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#sunset"}
-String                OneCall_Forecast_Daily_IconId                                                                                             (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#icon-id"}
-Number:Temperature    OneCall_Forecast_Daily_MinTemperature                           "Min. Temperatur [%.1f °C]"                <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#min-temperature"}
-Number:Temperature    OneCall_Forecast_Daily_MaxTemperature                           "Max. Temperatur [%.1f °C]"                <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#max-temperature"}
-Number:Dimensionless  OneCall_Forecast_Daily_Cloudiness                               "Bewölkung [%d %%]"                        <sun_clouds>   (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#cloudiness", unit="%"}
-Number:Dimensionless  OneCall_Forecast_Daily_PrecipitationProbability                 "Niederschlagswahrscheinlichkeit [%d %%]"  <rain>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#precip-probability", unit="%"}
-
-// Hourly forecast
-// Hour 01
-String                OneCallAPIweatherandforecast_ForecastHours01_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours01#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours01_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours01#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours01_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours01#precip-probability"}
-// Hour 02
-String                OneCallAPIweatherandforecast_ForecastHours02_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours02#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours02_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours02#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours02_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours02#precip-probability"}
-// Hour 03
-String                OneCallAPIweatherandforecast_ForecastHours03_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours03#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours03_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours03#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours03_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours03#precip-probability"}
-// Hour 04
-String                OneCallAPIweatherandforecast_ForecastHours04_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours04#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours04_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours04#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours04_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours04#precip-probability"}
-// Hour 05
-String                OneCallAPIweatherandforecast_ForecastHours05_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours05#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours05_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours05#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours05_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours05#precip-probability"}
-// Hour 06
-String                OneCallAPIweatherandforecast_ForecastHours06_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours06#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours06_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours06#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours06_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours06#precip-probability"}
-// Hour 07
-String                OneCallAPIweatherandforecast_ForecastHours07_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours07#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours07_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours07#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours07_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours07#precip-probability"}
-// Hour 08
-String                OneCallAPIweatherandforecast_ForecastHours08_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours08#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours08_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours08#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours08_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours08#precip-probability"}
-// Hour 09
-String                OneCallAPIweatherandforecast_ForecastHours09_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours09#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours09_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours09#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours09_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours09#precip-probability"}
-// Hour 10
-String                OneCallAPIweatherandforecast_ForecastHours10_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours10#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours10_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours10#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours10_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours10#precip-probability"}
-// Hour 11
-String                OneCallAPIweatherandforecast_ForecastHours11_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours11#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours11_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours11#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours11_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours11#precip-probability"}
-// Hour 12
-String                OneCallAPIweatherandforecast_ForecastHours12_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours12#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours12_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours12#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours12_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours12#precip-probability"}
-// Hour 13
-String                OneCallAPIweatherandforecast_ForecastHours13_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours13#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours13_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours13#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours13_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours13#precip-probability"}
-// Hour 14
-String                OneCallAPIweatherandforecast_ForecastHours14_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours14#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours14_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours14#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours14_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours14#precip-probability"}
-// Hour 15
-String                OneCallAPIweatherandforecast_ForecastHours15_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours15#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours15_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours15#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours15_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours15#precip-probability"}
-// Hour 16
-String                OneCallAPIweatherandforecast_ForecastHours16_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours16#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours16_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours16#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours16_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours16#precip-probability"}
-// Hour 17
-String                OneCallAPIweatherandforecast_ForecastHours17_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours17#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours17_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours17#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours17_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours17#precip-probability"}
-// Hour 18
-String                OneCallAPIweatherandforecast_ForecastHours18_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours18#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours18_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours18#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours18_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours18#precip-probability"}
-// Hour 19
-String                OneCallAPIweatherandforecast_ForecastHours19_Iconid             "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours19#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastHours19_Temperature        "Outdoor Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours19#temperature"}
-Number:Dimensionless  OneCallAPIweatherandforecast_ForecastHours19_Precipprobability  "Probability"                                             (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastHours19#precip-probability"}
-
-// Daily forecast
-// Today
-DateTime              OneCallAPIweatherandforecast_ForecastToday_Sunrise              "Sunrise Time"                             <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastToday#sunrise"}
-DateTime              OneCallAPIweatherandforecast_ForecastToday_Sunset               "Sunset Time"                              <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastToday#sunset"}
-String                OneCallAPIweatherandforecast_ForecastToday_Iconid               "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastToday#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastToday_Mintemperature       "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastToday#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastToday_Maxtemperature       "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastToday#max-temperature"}
-// Tomorrow
-DateTime              OneCallAPIweatherandforecast_ForecastTomorrow_Sunrise           "Sunrise Time"                             <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastTomorrow#sunrise"}
-DateTime              OneCallAPIweatherandforecast_ForecastTomorrow_Sunset            "Sunset Time"                              <Time>         (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastTomorrow#sunset"}
-String                OneCallAPIweatherandforecast_ForecastTomorrow_Iconid            "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastTomorrow#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastTomorrow_Mintemperature    "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastTomorrow#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastTomorrow_Maxtemperature    "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastTomorrow#max-temperature"}
-// Day 2
-String                OneCallAPIweatherandforecast_ForecastDay2_Iconid                "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay2#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay2_Mintemperature        "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay2#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay2_Maxtemperature        "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay2#max-temperature"}
-// Day 3
-String                OneCallAPIweatherandforecast_ForecastDay3_Iconid                "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay3#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay3_Mintemperature        "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay3#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay3_Maxtemperature        "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay3#max-temperature"}
-// Day 4
-String                OneCallAPIweatherandforecast_ForecastDay4_Iconid                "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay4#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay4_Mintemperature        "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay4#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay4_Maxtemperature        "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay4#max-temperature"}
-// Day 5
-String                OneCallAPIweatherandforecast_ForecastDay5_Iconid                "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay5#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay5_Mintemperature        "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay5#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay5_Maxtemperature        "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay5#max-temperature"}
-// Day 6
-String                OneCallAPIweatherandforecast_ForecastDay6_Iconid                "Icon Id"                                                 (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay6#icon-id"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay6_Mintemperature        "Minimum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay6#min-temperature"}
-Number:Temperature    OneCallAPIweatherandforecast_ForecastDay6_Maxtemperature        "Maximum Temperature"                      <Temperature>  (gOWM)             {channel="openweathermap:onecall:bridge:local:forecastDay6#max-temperature"}
+DateTime              OneCall_Forecast_Daily_Sunrise                    "Sonnenaufgang [%1$tH:%1$tM]"                <time>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#sunrise"}
+DateTime              OneCall_Forecast_Daily_Sunset                     "Sonnenuntergang [%1$tH:%1$tM]"              <time>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#sunset"}
+Number:Temperature    OneCall_Forecast_Daily_MinTemperature             "Min. Temperatur [%.1f °C]"                  <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#min-temperature", unit="°C"}
+Number:Temperature    OneCall_Forecast_Daily_MaxTemperature             "Max. Temperatur [%.1f °C]"                  <temperature>  (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#max-temperature", unit="°C"}
+Number:Dimensionless  OneCall_Forecast_Daily_Cloudiness                 "Bewölkung [%d %%]"                          <sun_clouds>   (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#cloudiness", unit="%"}
+Number:Dimensionless  OneCall_Forecast_Daily_PrecipitationProbability   "Niederschlagswahrscheinlichkeit [%d %%]"    <rain>         (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#precip-probability", unit="%"}
+String                OneCall_Forecast_Daily_IconId                                                                                 (gOWM_TimeSeries)  {channel="openweathermap:onecall:bridge:local:forecastDaily#icon-id"}

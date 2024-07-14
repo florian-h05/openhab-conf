@@ -183,7 +183,6 @@ function createJSON() {
   addDailyValues('MinTemperature', json, createTemperatureFormatter());
   addDailyValues('MaxTemperature', json, createTemperatureFormatter());
 
-  console.log(json)
   return JSON.stringify(json);
 }
 
