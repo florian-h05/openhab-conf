@@ -5,13 +5,13 @@ This script generates the JSON string for the weatherCard widget from OpenWeathe
 It depends on the Items defined in the openweathermap.items file in this repository.
 
 Hosted at: https://github.com/florian-h05/openhab-conf
- */
+*/
 
 const { items, rules, time } = require('openhab');
 
 const PERSISTENCE = 'inmemory'; // Configure the ID of you persistence service here
-const HOURS = 23; // the number of hours to generate the forecast JSON for - set this to the number of hours you want to display in the forecast - 1
-const DAYS = 4; // the number of days to generate the forecast JSON for - set this to the number of days you want to display in the forecast (including today's forecast)
+const HOURS = 24; // the number of hours to generate the forecast JSON for - set this to the same number as in the widget
+const DAYS = 3; // the number of days to generate the forecast JSON for - set this to the same number as in the widget
 
 const PREFIX = "OneCall_";
 const CURRENT = 'Current_';
@@ -90,9 +90,9 @@ function addHourlyValues (field, json, formatter = (state) => state, hours = HOU
  * @param {string} field
  * @param {object} json the JSON object to add the value to
  * @param {function(*): string} [formatter] the optional function to format the Item state
- * @param {number} [days=HOURS] the number of days to add the daily forecast values for
+ * @param {number} [days=DAYS + 1] the number of days to add the daily forecast values for
  */
-function addDailyValues (field, json, formatter = (state) => state, days = DAYS) {
+function addDailyValues (field, json, formatter = (state) => state, days = DAYS + 1) {
   const beginOfDay = time.toZDT().withHour(0).withMinute(0).withSecond(0).withNano(0);
   items.getItem(PREFIX + FORECAST + DAILY + field).persistence.getAllStatesBetween(beginOfDay, beginOfDay.plusDays(days), PERSISTENCE).forEach((s, i) => {
     // Today is included in the forecast
