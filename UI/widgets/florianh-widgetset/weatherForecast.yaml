@@ -1,0 +1,815 @@
+# description: Displays the weather forecast from OpenWeatherMap
+# dependencies: the JavaScript rule to build the JSON data source from the persisted forecast
+# author: Copyright (c) 2024 Florian Hotze under MIT License
+# credits: this widget is based on the weather card widget by @RGroll Rainer, but has received a major refactoring including the use of oh-context and a rule-built JSON data source
+# community author: @RGroll Rainer
+# community source: https://github.com/rgrollfitz/oh3-widgets/blob/master/weatherCard.yaml
+uid: weatherForecast
+tags:
+  - florianh-widgetset
+props:
+  parameters:
+    - context: item
+      description: The item that holds the JSON data of the forecast
+      label: Forecast JSON Item
+      name: jsonItem
+      required: true
+      type: TEXT
+      groupName: general
+    - description: The number of hours you want to forecast (<u>default:</u> <b>12</b>)
+      label: Number of hours to forecast
+      name: forecastHours
+      required: false
+      type: TEXT
+      groupName: general
+    - description: The number of days you want to forecast (<u>default:</u> <b>3</b>)
+      label: Number of days to forecast
+      name: forecastDays
+      required: false
+      type: TEXT
+      groupName: general
+    - description: Overwrite the station location name
+      label: Location title
+      name: locationTitle
+      required: true
+      type: TEXT
+      groupName: localization
+    - description: Show all informations at once (increases height)
+      label: Big card
+      name: bigCard
+      required: false
+      type: BOOLEAN
+      groupName: lookandfeel
+    - description: Use this only on screens with a very small view-width
+      label: Mobile optimized
+      name: mobile
+      required: false
+      type: BOOLEAN
+      groupName: lookandfeel
+      advanced: true
+    - description: Set a background-image which will be shown during the day (if empty it will fall back to the linear-gradient)
+      label: Background image-url (day-cycle)
+      name: backgroundUrlDay
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+    - description: Set a background-image which will be shown during the night (if empty it will fall back to the linear-gradient)
+      label: Background image-url (night-cycle)
+      name: backgroundUrlNight
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+    - description: Activate day & night Indication on hourly forecast (background color & sunrise / sunset indicator icon)
+      label: Show sunrise & sunset
+      name: sunIndicator
+      required: false
+      type: BOOLEAN
+      groupName: lookandfeel
+    - description: Overwrite the global font-color as rgb (<u>default:</u> <b>255,255,255<b>)
+      label: Font color (rgb)
+      name: fontColor
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+    - description: Overwrite the global text shadow color as rgb (<u>default:</u> <b>0,0,0<b>)
+      label: Text shadow color(rgb)
+      name: textShadowColor
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+    - label: Daytime background indication color
+      name: sunIndicatorColorDay
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+      advanced: true
+    - label: Nighttime background indication color
+      name: sunIndicatorColorNight
+      required: false
+      type: TEXT
+      groupName: lookandfeel
+      advanced: true
+    - description: Format of the timestamp below the location-name (<u>default:</u> <b>DD. MMMM YYYY</b>)<br>Visit <a 'https://day.js.org/docs/en/display/format'>https://day.js.org/docs/en/display/format</a> for more informations.
+      label: Timestamp format
+      name: dateScheme
+      required: false
+      type: TEXT
+      groupName: localization
+    - description: Acitvate 24-hour time-format (<u>default:</u> <b>12-hour clock-format</b>)
+      label: 24h hour-format
+      name: dateFormat
+      required: false
+      type: BOOLEAN
+      groupName: localization
+    - description: Add suffix to the hourly-forecast timestamp
+      label: Custom hour suffix
+      name: timestampSuffix
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Feel'
+      name: wordingFeel
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Hourly'
+      name: wordingForecastHours
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Daily'
+      name: wordingForecastDays
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation '%-Precipitation'
+      name: wordingForecastPrecib
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Now'
+      name: wordingNow
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Today'
+      name: wordingToday
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Sunrise at'
+      name: wordingSunrise
+      required: false
+      type: TEXT
+      groupName: localization
+    - label: Translation 'Sunset at'
+      name: wordingSunset
+      required: false
+      type: TEXT
+      groupName: localization
+  parameterGroups:
+    - name: general
+      label: General settings
+    - name: widgetAction
+      context: action
+      label: Action
+      description: Action to perform when the element is clicked (<b>Experimental</b>)
+    - name: lookandfeel
+      label: Look & Feel
+      description: Everything that influences the look & feel of the widget
+    - name: localization
+      label: Localization settings
+      description: Set alternative wordings & date pattern
+timestamp: Mar 28, 2022, 8:02:37 PM
+component: oh-context
+config:
+  constants: {}
+  functions:
+    formatTemperatureState: "=(state, decimals) => Number.parseFloat(state.split(' ')[0]).toFixed(decimals || 0) + '°'"
+    getBackgroundForHour: "=(hour) => props.sunIndicator ? (hour === 0 ? JSON.parse(items[props.jsonItem].state).current.day : JSON.parse(items[props.jsonItem].state).hourly[hour - 1].day) ? (!props.sunIndicatorColorDay ? 'rgba(255,255,255,.2)' : props.sunIndicatorColorDay) : (!props.sunIndicatorColorNight ? 'rgba(41,109,152,.2)' : props.sunIndicatorColorNight) : 'none'"
+    getSunriseForHour: "=(hour) => hour === 0 ? JSON.parse(items[props.jsonItem].state).current.sunrise : JSON.parse(items[props.jsonItem].state).hourly[hour - 1].sunrise"
+    getSunsetForHour: "=(hour) => hour === 0 ? JSON.parse(items[props.jsonItem].state).current.sunset : JSON.parse(items[props.jsonItem].state).hourly[hour - 1].sunset"
+    getForecastJson: "=() => JSON.parse(items[props.jsonItem].state)"
+  variables: {}
+slots:
+  default:
+    - component: f7-card
+      config:
+        class:
+          - padding
+        style:
+          overflow: hidden
+          height: "=(props.bigCard) ? '' : '160px'"
+          -ms-user-select: none
+          -moz-user-select: none
+          -webkit-user-select: none
+          user-select: none
+          background: "=items[props.jsonItem] !== '-' && fn.getForecastJson().current.day ? 'linear-gradient(to bottom, #355b8e, #c0d4f0)' : 'linear-gradient(to bottom, #413D8F, #CE9FC8)'"
+          border-radius: var(--f7-card-expandable-border-radius)
+          margin-left: 5px
+          margin-right: 5px
+          --weather-card-color: "=(!props.fontColor) ? '255,255,255' : props.fontColor"
+          --weather-card-text-shadow-color: "=(!props.textShadowColor) ? '0,0,0' : props.textShadowColor"
+          --weather-card-text-color: rgba(var(--weather-card-color),1)
+          color: var(--weather-card-text-color)
+          --weather-card-border-radius: 20px
+          --weather-font-size-xxsmall: 12px
+          --weather-font-size-xsmall: 14px
+          --weather-font-size-small: 16px
+          --weather-font-size-normal: 18px
+          --weather-font-size-large: 26px
+          --weather-font-size-xlarge: 55px
+          --weather-font-size-xxlarge: 70px
+          --weather-text-shadow-light: 2px 2px rgba(var(--weather-card-text-shadow-color),.15)
+          --weather-text-shadow-strong: 2px 2px rgba(var(--weather-card-text-shadow-color),.35)
+          --weather-text-transform-time: uppercase
+      slots:
+        default:
+          - component: oh-link
+            config:
+              visible: "=props.widget_action && (vars.moreInfo === false || !vars.moreInfo) ? true : false"
+              actionPropsParameterGroup: widgetAction
+              color: white
+              class:
+                - no-padding
+                - no-margin
+              style:
+                max-height: 192px
+                width: 100%
+                height: 100%
+                position: absolute
+                top: 0
+                left: 0
+                z-index: 98
+          - component: f7-block
+            config:
+              class:
+                - no-padding
+                - no-margin
+              style:
+                background: "=items[props.jsonItem] !== '-' && fn.getForecastJson().current.day ? 'no-repeat 100% / cover url(' + props.backgroundUrlDay + ')' : 'no-repeat 100% / cover url(' + props.backgroundUrlNight + ')'"
+                width: 100%
+                height: 100%
+                position: absolute
+                top: 0
+                left: 0
+          - component: f7-row
+            config:
+              visible: "=(!vars.moreInfo) ? true : false"
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      z-index: 95
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: "=props.locationTitle ? props.locationTitle : '-'"
+                          style:
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            letter-spacing: .75px
+                            font-size: var(--weather-font-size-large)
+                            text-shadow: var(--weather-text-shadow-strong)
+                            font-weight: 600
+                      - component: Label
+                        config:
+                          text: "=dayjs().format(props.dateScheme ? props.dateScheme : 'DD. MMMM YYYY')"
+                          style:
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            color: rgba(var(--weather-card-color),.7)
+                            letter-spacing: .75px
+                            font-size: var(--weather-font-size-xxsmall)
+                            text-shadow: var(--weather-text-shadow-light)
+                      - component: f7-row
+                        config:
+                          class:
+                            - align-items-center
+                          style:
+                            flex-wrap: nowrap
+                        slots:
+                          default:
+                            - component: f7-icon
+                              config:
+                                f7: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.iconid : '-'"
+                                style:
+                                  text-shadow: var(--weather-text-shadow-strong)
+                                  font-size: var(--weather-font-size-xxlarge)
+                                  padding-top: 5px
+                                  padding-bottom: 5px
+                            - component: f7-col
+                              config:
+                                visible: =props.mobile === true
+                              slots:
+                                default:
+                                  - component: Label
+                                    config:
+                                      text: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.temperature : '-'"
+                                      class:
+                                        - padding-left
+                                      style:
+                                        white-space: nowrap
+                                        overflow: hidden
+                                        text-overflow: ellipsis
+                                        text-shadow: var(--weather-text-shadow-strong)
+                                        font-size: 31px
+                                        line-height: 31px
+                                        font-weight: 600
+                                  - component: Label
+                                    config:
+                                      text: "=((!props.wordingFeel) ? 'Feel: ' : props.wordingFeel + ': ') + (items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.apparenttemperature : '-')"
+                                      class:
+                                        - padding-left
+                                      style:
+                                        white-space: nowrap
+                                        overflow: hidden
+                                        text-overflow: ellipsis
+                                        text-shadow: var(--weather-text-shadow-light)
+                                        font-size: var(--weather-font-size-small)
+                      - component: Label
+                        config:
+                          text: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.condition : '-'"
+                          style:
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            font-size: var(--weather-font-size-small)
+                - component: f7-col
+                  config:
+                    visible: =!props.mobile
+                    class:
+                      - text-align-right
+                    style:
+                      align-self: "=props.bigCard ? 'flex-start' : 'flex-end'"
+                      z-index: 95
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.temperature : '-'"
+                          style:
+                            white-space: nowrap
+                            overflow: hidden
+                            text-overflow: ellipsis
+                            text-shadow: var(--weather-text-shadow-strong)
+                            font-size: var(--weather-font-size-xlarge)
+                            line-height: var(--weather-font-size-xlarge)
+                            font-weight: 600
+                      - component: Label
+                        config:
+                          text: "=((!props.wordingFeel) ? 'Feel: ' : props.wordingFeel + ': ') + (items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.apparenttemperature : '-')"
+                          style:
+                            white-space: nowrap
+                            text-overflow: ellipsis
+                            overflow: hidden
+                            font-size: var(--weather-font-size-normal)
+                            text-shadow: var(--weather-text-shadow-light)
+                      - component: f7-row
+                        config:
+                          class:
+                            - justify-content-flex-end
+                          style:
+                            flex-wrap: nowrap
+                            font-size: var(--weather-font-size-xsmall)
+                            text-shadow: var(--weather-text-shadow-light)
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.humidity : '-'"
+                                tooltip: Humidity
+                                style:
+                                  white-space: nowrap
+                                  overflow: hidden
+                                  text-overflow: ellipsis
+                                  text-shadow: var(--weather-text-shadow-light)
+                            - component: Label
+                              config:
+                                text: =" | "
+                                style:
+                                  color: rgba(var(--weather-card-color),.25)
+                                  text-shadow: var(--weather-text-shadow-light)
+                            - component: Label
+                              config:
+                                text: "=items[props.jsonItem].state !== '-' ? fn.getForecastJson().current.windspeed : '-'"
+                                tooltip: Windspeed
+                                style:
+                                  white-space: nowrap
+                                  overflow: hidden
+                                  text-overflow: ellipsis
+                                  text-shadow: var(--weather-text-shadow-light)
+          - component: oh-button
+            config:
+              colorTheme: white
+              color: white
+              iconMaterial: more_horiz
+              iconSize: 20px
+              action: variable
+              actionVariable: moreInfo
+              actionVariableValue: true
+              visible: "=(props.bigCard) ? false : ((!vars.moreInfo || vars.moreInfo === false) ? true : false)"
+              class:
+                - margin-top
+                - margin-right
+              style:
+                position: absolute
+                top: 0
+                right: 0
+                font-weight: 600
+                z-index: 99
+                color: var(--weather-card-text-color)
+          - component: oh-button
+            config:
+              colorTheme: white
+              color: white
+              iconMaterial: close
+              iconSize: 20px
+              action: variable
+              actionVariable: moreInfo
+              actionVariableValue: false
+              visible: "=(props.bigCard) ? false : ((vars.moreInfo || vars.moreInfo === true) ? true : false)"
+              class:
+                - margin-top
+                - margin-right
+              style:
+                position: absolute
+                top: 0
+                right: 0
+                font-weight: 600
+                z-index: 99
+                color: var(--weather-card-text-color)
+          - component: f7-block
+            config:
+              visible: =vars.moreInfo || props.bigCard === true
+              class:
+                - no-padding
+                - no-margin
+                - align-items-space-between
+            slots:
+              default:
+                - component: f7-segmented
+                  config:
+                    strong: true
+                    textColor: white
+                    style:
+                      --f7-segmented-strong-button-active-box-shadow: 0px 4px 0 -1px rgba(var(--weather-card-color),1)
+                      --f7-segmented-strong-button-active-text-color: rgba(var(--weather-card-color),1)
+                      --f7-button-text-color: rgba(var(--weather-card-color),.5)
+                      --f7-segmented-strong-text-color: rgba(var(--weather-card-color),.5)
+                      --f7-segmented-strong-padding: 3px
+                      --f7-button-active-text-color: rgba(var(--weather-card-color),1)
+                      --f7-button-raised-box-shadow: none
+                      --f7-segmented-strong-button-active-bg-color: transparent
+                      --f7-button-border-radius: 0
+                      width: "=(props.bigCard) ? '100%' : 'calc(100% - 38px)'"
+                      padding-top: "=(props.bigCard) ? '16px' : '0'"
+                      background: transparent
+                      z-index: 999
+                      align-items: flex-end
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          text: "=(!props.wordingForecastHours) ? 'Hourly' : props.wordingForecastHours"
+                          color: var(--weather-card-text-color)
+                          active: =vars.tab === 'hourly_forecast'
+                          action: variable
+                          actionVariable: tab
+                          actionVariableValue: hourly_forecast
+                      - component: oh-button
+                        config:
+                          text: "=(!props.wordingForecastDays) ? 'Daily' : props.wordingForecastDays"
+                          color: var(--weather-card-text-color)
+                          active: =vars.tab === 'daily_forecast'
+                          action: variable
+                          actionVariable: tab
+                          actionVariableValue: daily_forecast
+                      - component: oh-button
+                        config:
+                          text: "=(!props.wordingForecastPrecib) ? '%-Precipitation' : props.wordingForecastPrecib"
+                          color: var(--weather-card-text-color)
+                          active: =vars.tab === 'precip_forecast'
+                          action: variable
+                          actionVariable: tab
+                          actionVariableValue: precip_forecast
+                - component: f7-block
+                  config:
+                    class:
+                      - no-padding
+                    style:
+                      border-bottom: 4px solid rgba(var(--weather-card-color),.5)
+                      margin-left: 4px
+                      margin-right: 4px
+                - component: f7-swiper
+                  config:
+                    visible: =vars.tab === 'hourly_forecast' || !vars.tab
+                    navigation: true
+                    class:
+                      - padding-top
+                    params:
+                      initalSlide: 0
+                      runCallbacksOnInit: true
+                      grabCursor: true
+                      observer: true
+                      observeSlideChildren: true
+                      updateOnWindowResize: true
+                      spaceBetween: 5
+                      mousewheel: true
+                      keyboard: true
+                      watchOverflow: true
+                      breakpoints:
+                        "0":
+                          slidesPerView: 1
+                        "240":
+                          slidesPerView: 2
+                        "320":
+                          slidesPerView: 3
+                        "480":
+                          slidesPerView: 4
+                        "640":
+                          slidesPerView: 5
+                    style:
+                      --swiper-navigation-size: 30px
+                      --swiper-navigation-color: var(--weather-card-text-color)
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          sourceType: range
+                          for: hour
+                          rangeStart: 0
+                          rangeStop: "=Number(props.forecastHours) || 12"
+                          fragment: true
+                        slots:
+                          default:
+                            - component: f7-swiper-slide
+                              config:
+                                expandable: true
+                                style:
+                                  background: "=fn.getBackgroundForHour(loop.hour)"
+                                  border-radius: 5px
+                              slots:
+                                default:
+                                  - component: f7-icon
+                                    config:
+                                      visible: "=fn.getSunriseForHour(loop.hour) !== undefined && props.sunIndicator === true"
+                                      f7: sun_max_fill
+                                      size: 17px
+                                      tooltip: "=((!props.wordingSunrise) ? 'Sunrise at ' : props.wordingSunrise + ' ') + ((!props.dateFormat) ? dayjs(fn.getSunriseForHour(loop.hour)).format('h:mm A') : dayjs(fn.getSunriseForHour(loop.hour)).format('H:mm') + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix) ) + '<br><b>' + dayjs(fn.getSunriseForHour(loop.hour)).fromNow() + '</b>'"
+                                      style:
+                                        position: absolute
+                                        right: 3px
+                                        top: 3px
+                                        cursor: pointer
+                                        z-index: 998
+                                        color: var(--weather-card-text-color)
+                                  - component: f7-icon
+                                    config:
+                                      visible: "=fn.getSunsetForHour(loop.hour) !== undefined && props.sunIndicator === true"
+                                      f7: moon_fill
+                                      size: 17px
+                                      tooltip: "=((!props.wordingSunset) ? 'Sunset at ' : props.wordingSunset + ' ') + ((!props.dateFormat) ? dayjs(fn.getSunsetForHour(loop.hour)).format('h:mm A') : dayjs(fn.getSunsetForHour(loop.hour)).format('H:mm') + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix) ) + '<br><b>' + dayjs(fn.getSunsetForHour(loop.hour)).fromNow() + '</b>'"
+                                      style:
+                                        position: absolute
+                                        right: 3px
+                                        top: 3px
+                                        cursor: pointer
+                                        z-index: 998
+                                        color: var(--weather-card-text-color)
+                                  - component: f7-row
+                                    config:
+                                      class:
+                                        - justify-content-center
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: "=(loop.hour === 0) ? ((!props.wordingNow) ? 'Now' : props.wordingNow) : ((!props.dateFormat) ? dayjs(fn.getForecastJson().hourly[loop.hour - 1].ts).startOf('hour').format('h A') : dayjs(fn.getForecastJson().hourly[loop.hour - 1].ts).startOf('hour').format('H')) + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix)"
+                                            style:
+                                              color: var(--weather-card-text-color)
+                                              text-transform: var(--weather-text-transform-time)
+                                              font-size: var(--weather-font-size-xsmall)
+                                              text-shadow: var(--weather-text-shadow-light)
+                                              font-weight: 700
+                                  - component: f7-col
+                                    config:
+                                      class:
+                                        - text-align-center
+                                    slots:
+                                      default:
+                                        - component: f7-icon
+                                          config:
+                                            f7: "=loop.hour === 0 ? fn.getForecastJson().current.iconid : fn.getForecastJson().hourly[loop.hour - 1].iconid"
+                                            size: 48
+                                            style:
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-strong)
+                                              padding-top: 5px
+                                              padding-bottom: 5px
+                                        - component: Label
+                                          config:
+                                            text: "=loop.hour === 0 ? fn.formatTemperatureState(fn.getForecastJson().current.temperature) : fn.getForecastJson().hourly[loop.hour - 1].temperature"
+                                            style:
+                                              font-size: var(--weather-font-size-normal)
+                                              font-weight: 400
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-light)
+                - component: f7-swiper
+                  config:
+                    visible: =vars.tab === 'daily_forecast'
+                    navigation: true
+                    class:
+                      - padding-top
+                    params:
+                      initalSlide: 0
+                      grabCursor: true
+                      observer: true
+                      spaceBetween: 5
+                      observeSlideChildren: true
+                      updateOnWindowResize: true
+                      watchOverflow: true
+                      mousewheel: true
+                      keyboard: true
+                      breakpoints:
+                        "0":
+                          slidesPerView: 1
+                        "210":
+                          slidesPerView: "=(!props.forecastDays) ? 2 : ((props.forecastDays < 2) ? Math.round(Number(props.forecastDays) + 1) : 2)"
+                        "480":
+                          slidesPerView: "=(!props.forecastDays) ? 3 : ((props.forecastDays < 3) ? Math.round(Number(props.forecastDays) + 1) : 3)"
+                        "640":
+                          slidesPerView: "=(!props.forecastDays) ? 4 : ((props.forecastDays < 4) ? Math.round(Number(props.forecastDays) + 1) : 4)"
+                    style:
+                      --swiper-navigation-size: 30px
+                      --swiper-navigation-color: var(--weather-card-text-color)
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          sourceType: range
+                          for: day
+                          rangeStart: 0
+                          rangeStop: "=Number(props.forecastDays) || 3"
+                          fragment: true
+                        slots:
+                          default:
+                            - component: f7-swiper-slide
+                              config:
+                                class: text-align-center
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      class:
+                                        - justify-content-center
+                                        - align-items-center
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: "=(loop.day === 0) ? ((!props.wordingToday) ? 'Today' : props.wordingToday) : dayjs(fn.getForecastJson().daily[loop.day].ts).startOf('day').format('dddd')"
+                                            style:
+                                              color: var(--weather-card-text-color)
+                                              text-transform: var(--weather-text-transform-time)
+                                              font-size: var(--weather-font-size-xsmall)
+                                              text-shadow: var(--weather-text-shadow-light)
+                                              font-weight: 700
+                                  - component: f7-icon
+                                    config:
+                                      f7: "=fn.getForecastJson().daily[loop.day].iconid"
+                                      size: 48
+                                      style:
+                                        color: var(--weather-card-text-color)
+                                        text-shadow: var(--weather-text-shadow-strong)
+                                        padding-top: 5px
+                                        padding-bottom: 5px
+                                  - component: f7-row
+                                    config:
+                                      class:
+                                        - justify-content-center
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: "=fn.getForecastJson().daily[loop.day].maxtemperature"
+                                            style:
+                                              font-size: var(--weather-font-size-normal)
+                                              font-weight: 400
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-light)
+                                        - component: Label
+                                          config:
+                                            text: =" | "
+                                            style:
+                                              font-size: var(--weather-font-size-normal)
+                                              color: rgba(255,255,255,.2)
+                                        - component: Label
+                                          config:
+                                            text: "=fn.getForecastJson().daily[loop.day].mintemperature"
+                                            style:
+                                              font-size: var(--weather-font-size-normal)
+                                              font-weight: 400
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-light)
+                - component: f7-swiper
+                  config:
+                    visible: =vars.tab === 'precip_forecast'
+                    navigation: true
+                    class:
+                      - padding-top
+                    params:
+                      initalSlide: 0
+                      runCallbacksOnInit: true
+                      grabCursor: true
+                      observer: true
+                      observeSlideChildren: true
+                      updateOnWindowResize: true
+                      spaceBetween: 5
+                      mousewheel: true
+                      keyboard: true
+                      watchOverflow: true
+                      breakpoints:
+                        "0":
+                          slidesPerView: 1
+                        "240":
+                          slidesPerView: 2
+                        "320":
+                          slidesPerView: 3
+                        "480":
+                          slidesPerView: 4
+                        "640":
+                          slidesPerView: 5
+                    style:
+                      --swiper-navigation-size: 30px
+                      --swiper-navigation-color: var(--weather-card-text-color)
+                  slots:
+                    default:
+                      - component: oh-repeater
+                        config:
+                          sourceType: range
+                          for: hour
+                          rangeStart: 0
+                          rangeStop: "=Number(props.forecastHours) || 12"
+                          fragment: true
+                        slots:
+                          default:
+                            - component: f7-swiper-slide
+                              config:
+                                expandable: true
+                                style:
+                                  background: "=fn.getBackgroundForHour(loop.hour)"
+                                  border-radius: 5px
+                              slots:
+                                default:
+                                  - component: f7-icon
+                                    config:
+                                      visible: "=fn.getSunriseForHour(loop.hour) !== undefined && props.sunIndicator === true"
+                                      f7: sun_max_fill
+                                      size: 17px
+                                      tooltip: "=((!props.wordingSunrise) ? 'Sunrise at ' : props.wordingSunrise + ' ') + ((!props.dateFormat) ? dayjs(fn.getSunriseForHour(loop.hour)).format('h:mm A') : dayjs(fn.getSunriseForHour(loop.hour)).format('H:mm') + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix) ) + '<br><b>' + dayjs(fn.getSunriseForHour(loop.hour)).fromNow() + '</b>'"
+                                      style:
+                                        position: absolute
+                                        right: 3px
+                                        top: 3px
+                                        cursor: pointer
+                                        z-index: 998
+                                        color: var(--weather-card-text-color)
+                                  - component: f7-icon
+                                    config:
+                                      visible: "=fn.getSunsetForHour(loop.hour) !== undefined && props.sunIndicator === true"
+                                      f7: moon_fill
+                                      size: 17px
+                                      tooltip: "=((!props.wordingSunset) ? 'Sunset at ' : props.wordingSunset + ' ') + ((!props.dateFormat) ? dayjs(fn.getSunsetForHour(loop.hour)).format('h:mm A') : dayjs(fn.getSunsetForHour(loop.hour)).format('H:mm') + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix) ) + '<br><b>' + dayjs(fn.getSunsetForHour(loop.hour)).fromNow() + '</b>'"
+                                      style:
+                                        position: absolute
+                                        right: 3px
+                                        top: 3px
+                                        cursor: pointer
+                                        z-index: 998
+                                        color: var(--weather-card-text-color)
+                                  - component: f7-row
+                                    config:
+                                      class:
+                                        - justify-content-center
+                                        - align-items-center
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: "=((!props.dateFormat) ? dayjs(fn.getForecastJson().hourly[loop.hour].ts).startOf('hour').format('h A') : dayjs(fn.getForecastJson().hourly[loop.hour].ts).startOf('hour').format('H')) + (!props.timestampSuffix ? '' : ' ' + props.timestampSuffix)"
+                                            style:
+                                              color: var(--weather-card-text-color)
+                                              text-transform: var(--weather-text-transform-time)
+                                              font-size: var(--weather-font-size-xsmall)
+                                              font-weight: 700
+                                              text-shadow: var(--weather-text-shadow-light)
+                                  - component: f7-col
+                                    config:
+                                      class:
+                                        - justify-content-center
+                                        - align-items-center
+                                        - text-align-center
+                                    slots:
+                                      default:
+                                        - component: f7-icon
+                                          config:
+                                            f7: umbrella_fill
+                                            size: 48
+                                            style:
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-strong)
+                                              padding-top: 5px
+                                              padding-bottom: 5px
+                                        - component: Label
+                                          config:
+                                            text: "=fn.getForecastJson().hourly[loop.hour].precipitationprobability"
+                                            style:
+                                              font-size: var(--weather-font-size-normal)
+                                              font-weight: 400
+                                              color: var(--weather-card-text-color)
+                                              text-shadow: var(--weather-text-shadow-light)
