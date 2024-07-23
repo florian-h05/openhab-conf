@@ -141,7 +141,7 @@ slots:
                               config:
                                 style:
                                   color: "=fn.isPositive(props.solarpower) ? (themeOptions.dark === 'dark' ?
-                                    'white' : 'black') 'gray'"
+                                    'white' : 'black') : 'gray'"
                                   font-size: 25px
                                   font-weight: bold
                                   text-align: center
