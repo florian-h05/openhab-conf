@@ -170,7 +170,7 @@ function createJSON() {
   calculateCurrentDayData(json);
   addCurrentValue('IconId', json, getF7Icon);
   addCurrentValue('Temperature', json, createTemperatureFormatter(1));
-  addCurrentValue('ApparentTemperature', json, formatPrecipitationProbability);
+  addCurrentValue('ApparentTemperature', json, createTemperatureFormatter(0));
   addCurrentValue('Condition', json);
   addCurrentValue('Humidity', json, (state) => Number.parseFloat(state.split(' ')[0]).toFixed(0) + ' ' + state.split(' ')[1]);
   addCurrentValue('Windspeed', json, (state) => Number.parseFloat(state.split(' ')[0]).toFixed(0) + ' ' + state.split(' ')[1]);
