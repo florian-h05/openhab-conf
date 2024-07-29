@@ -75,6 +75,7 @@ slots:
           display: flex
           flex-direction: row
           left: 16px
+          padding: 0 16px 0 16px
           position: absolute
           top: -5px
       slots:
@@ -97,6 +98,7 @@ slots:
           display: flex
           flex-direction: row
           justify-content: center
+          padding: 0 16px 0 16px
           position: absolute
           right: 5px
           text-align: right
@@ -155,6 +157,7 @@ slots:
           display: flex
           flex-direction: column
           left: 18.5px
+          padding: 0 16px 0 16px
           position: absolute
           width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 45px)' : '100%'"
         visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
@@ -196,6 +199,7 @@ slots:
           display: flex
           flex-direction: column
           left: 17px
+          padding: 0 16px 0 16px
           position: absolute
           top: 60px
           width: calc(100% - 40px)
@@ -237,6 +241,7 @@ slots:
           display: flex
           flex-direction: row
           justify-content: center
+          padding: 0 16px 0 16px
           position: absolute
           right: 10px
           text-align: right

@@ -162,6 +162,7 @@ slots:
           background: =props.bgcolor
           border-radius: 7px
           opacity: =props.bgopacity
+          padding: 0 16px 0 16px
           position: absolute
           right: 16px
           top: -5px
@@ -185,6 +186,7 @@ slots:
           bottom: -75px
           left: 16px
           opacity: =props.bgopacity
+          padding: 0 16px 0 16px
           position: absolute
       slots:
         default:
@@ -256,6 +258,7 @@ slots:
           bottom: -45px
           left: 16px
           opacity: =props.bgopacity
+          padding: 0 16px 0 16px
           position: absolute
       slots:
         default:
@@ -286,6 +289,7 @@ slots:
           bottom: -15px
           left: 16px
           opacity: =props.bgopacity
+          padding: 0 16px 0 16px
           position: absolute
       slots:
         default:

@@ -98,6 +98,7 @@ slots:
                 display: flex
                 flex-direction: row
                 left: 16px
+                padding: 0 16px 0 16px
                 position: absolute
                 top: -5px
             slots:
@@ -118,6 +119,7 @@ slots:
             config:
               style:
                 left: 12px
+                padding: 0 16px 0 16px
                 position: absolute
                 top: 55px
                 width: calc(100% - 75px)

@@ -75,6 +75,7 @@ slots:
           display: flex
           flex-direction: row
           left: 16px
+          padding: 0 16px 0 16px
           position: absolute
           top: -5px
       slots:
@@ -95,6 +96,7 @@ slots:
       config:
         style:
           left: 17px
+          padding: 0 16px 0 16px
           position: absolute
           top: 45px
           width: calc(100% - 30px)
@@ -127,6 +129,7 @@ slots:
           flex-direction: column
           height: 90px
           justify-content: space-between
+          padding: 0 16px 0 16px
           position: absolute
           right: 5px
           text-align: right
@@ -160,6 +163,7 @@ slots:
           flex-direction: column
           justify-content: space-between
           left: 15px
+          padding: 0 16px 0 16px
           position: absolute
           text-align: center
           width: calc(100% - 45px)
@@ -172,6 +176,7 @@ slots:
                 display: flex
                 flex-direction: row
                 justify-content: center
+                padding: 0 16px 0 16px
                 text-align: right
             slots:
               default:
