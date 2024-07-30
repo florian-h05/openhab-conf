@@ -113,7 +113,7 @@ slots:
                 font-size: 16px
                 margin-top: 0
                 margin-bottom: 10px
-              text: =@props.item_energy_today + ' | ' + @props.item_energy_total
+              text: =(@props.item_energy_today).split(' ')[0] + ' | ' + @props.item_energy_total
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
