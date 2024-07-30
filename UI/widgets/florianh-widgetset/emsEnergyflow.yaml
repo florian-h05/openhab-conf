@@ -282,7 +282,7 @@ slots:
                                       stroke-width: 2
                                       tag: path
                                       vector-effect: non-scaling-stroke
-                                      visible: =fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)
+                                      visible: =fn.isPositive(props.gridpower) && fn.isNegative(props.loadpower)
                                   - component: f7-row
                                     config:
                                       fill: rgba(100, 150, 200, 0.8)
@@ -290,7 +290,7 @@ slots:
                                       strokeWidth: 10
                                       tag: circle
                                       vectorEffect: non-scaling-stroke
-                                      visible: =fn.isPositive(props.gridpower)  && fn.isNegative(props.loadpower)
+                                      visible: =fn.isPositive(props.gridpower) && fn.isNegative(props.loadpower)
                                     slots:
                                       default:
                                         - component: f7-row
@@ -371,6 +371,40 @@ slots:
                                                 config:
                                                   tag: mpath
                                                   xlink:href: "#battery_to_load"
+                                  - component: f7-row
+                                    config:
+                                      d: M 105 45 h-110
+                                      fill: none
+                                      id: battery_to_grid
+                                      stroke: rgba(100, 150, 200, 0.8)
+                                      stroke-width: 2
+                                      tag: path
+                                      vector-effect: non-scaling-stroke
+                                      visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
+                                        fn.isNegative(props.gridpower)"
+                                  - component: f7-row
+                                    config:
+                                      fill: rgba(100, 150, 200, 0.8)
+                                      r: 6
+                                      strokeWidth: 10
+                                      tag: circle
+                                      vectorEffect: non-scaling-stroke
+                                      visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
+                                        fn.isNegative(props.gridpower)"
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            calcMode: linear
+                                            dur: 4s
+                                            repeatCount: indefinite
+                                            tag: animateMotion
+                                          slots:
+                                            default:
+                                              - component: f7-row
+                                                config:
+                                                  tag: mpath
+                                                  xlink:href: "#battery_to_grid"
                       - component: f7-block
                         config:
                           style:
