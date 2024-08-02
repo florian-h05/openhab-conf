@@ -189,7 +189,7 @@ slots:
           -moz-user-select: none
           -webkit-user-select: none
           user-select: none
-          background: "=props.jsonItem && items[props.jsonItem].startsWith('{') ? (fn.getForecastJson().current.day ? 'linear-gradient(to bottom, #355b8e, #c0d4f0)' : 'linear-gradient(to bottom, #413D8F, #CE9FC8)') : 'linear-gradient(to bottom, #355b8e, #c0d4f0)'"
+          background: "=items[props.jsonItem] !== '-' && fn.getForecastJson().current.day ? 'linear-gradient(to bottom, #355b8e, #c0d4f0)' : 'linear-gradient(to bottom, #413D8F, #CE9FC8)'"
           border-radius: var(--f7-card-expandable-border-radius)
           margin-left: 5px
           margin-right: 5px
