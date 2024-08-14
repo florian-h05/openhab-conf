@@ -43,19 +43,6 @@ props:
       required: false
       type: TEXT
       groupName: widgetSettings
-    - context: item
-      description: Group:Number:COUNT(OPEN) Item for numbers of contacts open
-      label: Contacts open Item
-      name: contacts_open
-      required: false
-      type: TEXT
-      groupName: widgetSettings
-    - description: Number of total contacts (in room, house, ...)
-      label: Contacts total number
-      name: contacts_total
-      required: false
-      type: INTEGER
-      groupName: widgetSettings
   parameterGroups:
     - name: appearance
       label: Appearance settings
@@ -69,7 +56,7 @@ timestamp: Oct 2, 2022, 4:31:52 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -93,7 +80,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon ? props.icon : 'square'"
+              f7: "=props.icon || 'square'"
               size: 18
               style:
                 margin-right: 10px
@@ -102,7 +89,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: =props.title
     - component: f7-block
       config:
         style:
@@ -124,7 +111,7 @@ slots:
                 text-overflow: ellipsis
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
-              text: "=props.header ? props.header : 'Set header!'"
+              text: "=props.header || 'Set header!'"
           - component: Label
             config:
               style:
@@ -136,7 +123,7 @@ slots:
                 text-align: center
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=items[props.item].displayState ? items[props.item].displayState : items[props.item].state"
+              text: =@props.item
     - component: oh-icon
       config:
         icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
