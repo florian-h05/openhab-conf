@@ -10,56 +10,56 @@ props:
   parameters:
     - context: item
       description: Switch Item that controls the night vision
-      label: Night vision
+      label: Night Vision
       name: item_light
       required: true
       type: TEXT
       groupName: doorbellControl
     - context: item
       description: Switch Item that controls the relay to open the door
-      label: Door relay
+      label: Door Relay
       name: item_doorRelay
       required: true
       type: TEXT
       groupName: doorbellControl
     - context: item
       description: Switch Item that indicates whether the doorbell is currently pressed
-      label: Doorbell pressed state
+      label: Doorbell Pressed
       name: item_doorbellPressed
       required: true
       type: TEXT
       groupName: doorbellPressedState
     - context: item
       description: Image Item that holds the event image when the doorbell was pressed
-      label: Doorbell last pressed image
+      label: Doorbell Last Pressed Image
       name: item_buttonLastPressedImage
       required: true
       type: TEXT
       groupName: doorbellPressedState
     - context: item
       description: DateTime Item that holds the timestamp when the doorbell was pressed
-      label: Doorbell last pressed timestamp
+      label: Doorbell Last Pressed Timestamp
       name: item_buttonLastPressedTimestamp
       required: true
       type: TEXT
       groupName: doorbellPressedState
     - context: item
       description: Switch Item that indicates whether motion is currently detected
-      label: Motion state
+      label: Motion State
       name: item_motion
       required: true
       type: TEXT
       groupName: doorbellMotionState
     - context: item
       description: Image Item that holds the event image when motion was detected
-      label: Last motion image
+      label: Last Motion Image
       name: item_lastMotionImage
       required: true
       type: TEXT
       groupName: doorbellMotionState
     - context: item
       description: DateTime Item that holds the timestamp when motion was detected
-      label: Last motion timestamp
+      label: Last Motion Timestamp
       name: item_lastMotionTimestamp
       required: true
       type: TEXT
@@ -67,7 +67,7 @@ props:
     - description: Full URL of the image providing the liveview (the image is updated
         several times a second). Use the image if the MJPEG video stream is not
         stable
-      label: Live image URL
+      label: Live Image URL
       name: imageUrl
       required: true
       type: TEXT
