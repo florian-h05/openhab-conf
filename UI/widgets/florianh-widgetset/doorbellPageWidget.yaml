@@ -311,6 +311,7 @@ slots:
                 - component: oh-button
                   config:
                     action: command
+                    actionCommand: ON
                     actionConfirmation:
                       text: Tür öffnen
                       type: sheet
@@ -326,6 +327,7 @@ slots:
                 - component: oh-button
                   config:
                     action: "=props.url_lockUnlock ? 'http' : 'command'"
+                    actionCommand: ON
                     actionConfirmation:
                       text: Soll die Tür aufgeschlossen werden?
                       type: dialog
