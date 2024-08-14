@@ -22,6 +22,30 @@ props:
       required: true
       type: TEXT
       groupName: doorbellControl
+    - advanced: true
+      context: item
+      description: Contact Item that signals whether the door is locked (CLOSED) or unlocked (OPEN)
+      label: Lock State
+      name: item_lockState
+      required: false
+      type: TEXT
+      groupName: lockControl
+    - advanced: true
+      context: item
+      description: Switch Item to unlock the door
+      label: Lock Unlock
+      name: item_lockUnlock
+      required: false
+      type: TEXT
+      groupName: lockControl
+    - advanced: true
+      context: url
+      description: Webhook URL to send a HTTP GET request to to open the door (alternative to the unlock door Item)
+      label: Lock Unlock Webhook URL
+      name: url_lockUnlock
+      required: false
+      type: TEXT
+      groupName: lockControl
     - context: item
       description: Switch Item that indicates whether the doorbell is currently pressed
       label: Doorbell Pressed
@@ -106,8 +130,7 @@ props:
       type: TEXT
       groupName: sipClient
     - context: item
-      description: String Item to publish the SIP connection state to the openHAB server
-        and make it accessible from rules etc.
+      description: String Item to publish the SIP connection state to the openHAB server and make it accessible from rules etc.
       label: SIP State Item
       name: item_sipState
       required: false
@@ -125,6 +148,9 @@ props:
     - name: doorbellControl
       label: Doorbell Control
       description: Configuration for controlling the doorbell and the door
+    - name: lockControl
+      label: Lock Control
+      description: Configuration for controlling the door lock
     - name: video
       label: Video Configuration
       description: Configuration of the live video
@@ -137,7 +163,7 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Jul 5, 2024, 12:51:23 PM
+timestamp: Jul 29, 2024, 2:55:58 PM
 component: f7-card
 config:
   style:
@@ -284,14 +310,32 @@ slots:
                           websocketUrl: =props.websocketUrl
                 - component: oh-button
                   config:
-                    action: options
+                    action: command
+                    actionConfirmation:
+                      text: Tür öffnen
+                      type: sheet
                     actionItem: =props.item_doorRelay
-                    actionOptions: ON=Tür öffnen
                     iconF7: lock_open_fill
                     iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' :
-                        '115px'"
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
                       padding-left: 0px
                       padding-right: 0px
                       width: 100%
+                    visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'false' : 'true'"
+                - component: oh-button
+                  config:
+                    action: "=props.url_lockUnlock ? 'http' : 'command'"
+                    actionConfirmation:
+                      text: Soll die Tür aufgeschlossen werden?
+                      type: dialog
+                    actionItem: =props.item_doorRelay
+                    actionUrl: =props.url_lockUnlock
+                    iconF7: lock_fill
+                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
+                    style:
+                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
+                      padding-left: 0px
+                      padding-right: 0px
+                      width: 100%
+                    visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'true' : 'false'"
