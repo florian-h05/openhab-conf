@@ -135,7 +135,7 @@ props:
       name: garagedoor_state
       required: false
       type: TEXT
-timestamp: Jun 11, 2023, 12:45:55 PM
+timestamp: Aug 14, 2024, 12:55:22 PM
 component: f7-card
 config:
   style:
@@ -143,7 +143,7 @@ config:
     --f7-chip-height: 22px
     --f7-chip-padding-horizontal: 10px
     --f7-chip-text-color: =props.color
-    background-image: ='url(' + props.image + ')'
+    background-image: "=props.image ? 'url(' + props.image + ')' : ''"
     background-position: center
     background-size: cover
     border-radius: var(--f7-card-expandable-border-radius)
@@ -195,7 +195,8 @@ slots:
               iconColor: =props.color
               iconF7: "=@@props.light == 'ON' ? 'lightbulb_fill' : 'lightbulb_slash'"
               iconSize: 18
-              text: "=props.lights_number ? ((@@props.light == 'ON') ? @@props.lights_number : '') : ''"
+              text: "=props.lights_number ? ((@@props.light == 'ON') ? @@props.lights_number :
+                '') : ''"
               visible: "=props.light ? true : false"
           - component: f7-chip
             config:
@@ -204,7 +205,8 @@ slots:
               media:
                 - component: oh-icon
                   config:
-                    icon: "=@@props.garagedoor_state === 'CLOSED' ? 'mygaragedoor-closed' : 'mygaragedoor-open'"
+                    icon: "=@@props.garagedoor_state === 'CLOSED' ? 'mygaragedoor-closed' :
+                      'mygaragedoor-open'"
                     iconSize: 24
                     style:
                       height: 24px
@@ -221,7 +223,8 @@ slots:
                       height: 24px
           - component: f7-chip
             config:
-              text: "=(@@props.window == 'OPEN') ? (props.windows_number ? @@props.windows_number : '') : ''"
+              text: "=(@@props.window == 'OPEN') ? (props.windows_number ?
+                @@props.windows_number : '') : ''"
               visible: "=props.window ? true : false"
             slots:
               media:
