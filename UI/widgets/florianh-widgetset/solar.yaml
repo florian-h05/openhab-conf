@@ -12,19 +12,34 @@ props:
       type: TEXT
       groupName: appearance
     - context: item
+      description: Realtime solar plant power Item
       label: Power Item
       name: item_power
       required: true
       type: TEXT
     - context: item
-      label: Energy Today Item
-      name: item_energy_today
+      description: Daily energy production of solar plant
+      label: Energy Day
+      name: item_energy_day
       required: true
       type: TEXT
     - context: item
-      label: Energy Total Item
+      description: Monthly energy production of solar plant
+      label: Energy Month
+      name: item_energy_month
+      required: false
+      type: TEXT
+    - context: item
+      description: Total energy production of solar plant
+      label: Energy Total
       name: item_energy_total
-      required: true
+      required: false
+      type: TEXT
+    - default: kWh
+      description: Unit of the energy values
+      label: Energy Unit
+      name: unit_energy
+      required: false
       type: TEXT
     - description: Page ID of page to be opened
       label: page
@@ -45,7 +60,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Jul 10, 2024, 11:40:10 AM
+timestamp: Aug 15, 2024, 1:58:41 PM
 component: f7-card
 config:
   style:
@@ -81,7 +96,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title ? props.title : 'Photovoltaik'"
+              text: =props.title || 'Photovoltaik'
     - component: f7-block
       config:
         style:
@@ -100,8 +115,8 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-top: 0
                 margin-bottom: 10px
+                margin-top: 0
               text: =@props.item_power
           - component: f7-chip
             config:
@@ -111,9 +126,12 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-top: 0
                 margin-bottom: 10px
-              text: =(@props.item_energy_today).split(' ')[0] + ' | ' + @props.item_energy_total
+                margin-top: 0
+              text: "=(@props.item_energy_day).split(' ')[0]
+                + (props.item_energy_month ? ' | ' + (@props.item_energy_month).split(' ')[0] : '')
+                + (props.item_energy_total ? ' | ' + (@props.item_energy_total).split(' ')[0] : '')
+                + ' ' + props.unit_energy"
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -122,8 +140,8 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-top: 0
                 margin-bottom: 10px
+                margin-top: 0
               text: =@props.item_lastrefresh
               visible: "=props.item_lastrefresh !== undefined ? true : false"
     - component: oh-icon
