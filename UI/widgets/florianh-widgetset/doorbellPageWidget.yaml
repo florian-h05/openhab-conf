@@ -1,5 +1,6 @@
-# description: Doorbell widget (designed for DoorBird video doorbells) with live video and speach support (SIP based), as well as light and relay controls, and doorbell pressed and motion state indicators with access the last event's image and timestamp
-# note: The widget is updating it's style depending on the screen's dimensions. It's designed to be the only one on a full page!
+# description: Doorbell widget (designed for DoorBird video doorbells) with live video and speech support (SIP based), as well as light
+#              and door/lock controls, and doorbell pressed and motion state indicators with access the last event's image and timestamp
+# note: The widget is updating it's style depending on the screen's dimensions. It's designed to be the only one on a full page with 100% column width!
 # dependencies: "doorbellEvent" widget
 # author: Copyright (c) 2022 Florian Hotze under MIT License
 uid: doorbellPageWidget
@@ -16,9 +17,9 @@ props:
       type: TEXT
       groupName: doorbellControl
     - context: item
-      description: Switch Item that controls the relay to open the door
-      label: Door Relay
-      name: item_doorRelay
+      description: String Item that controls the door/lock, must have commandDescription metadata defined
+      label: Door/Lock Control
+      name: item_doorControl
       required: true
       type: TEXT
       groupName: doorbellControl
@@ -310,12 +311,8 @@ slots:
                           websocketUrl: =props.websocketUrl
                 - component: oh-button
                   config:
-                    action: command
-                    actionCommand: ON
-                    actionConfirmation:
-                      text: Tür öffnen
-                      type: sheet
-                    actionItem: =props.item_doorRelay
+                    action: options
+                    actionItem: =props.item_doorControl
                     iconF7: lock_open_fill
                     iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
                     style:

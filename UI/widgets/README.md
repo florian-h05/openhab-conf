@@ -130,7 +130,7 @@ Create a new layout page, add a block, then add a row, next add a column.
 Open the column options and set its width to 100%.
 Finally, choose `doorbellPageWidget` from the personal widgets.
 
-Configuration of the widget itself is self-explaining.
+Configuration of the widget itself should be self-explaining through the parameter descriptions.
 
 ## [`emsEnergyflow`](./florianh-widgetset/emsEnergyflow.yaml)
 
