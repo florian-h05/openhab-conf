@@ -153,7 +153,7 @@ It requires Items for the following values:
 
 Please note that the widget is designed for use with Fronius Symo Gen24 Plus inverters and therefore uses Fronius-specific value sign interpretation.
 
-It depends on the SMA Energy App icons, which can be downloaded from the openHAB Community: <https://community.openhab.org/t/animated-energy-widget/133510>
+It depends on the SMA Energy App icons, which can be found in the [icons/classic](/icons/classic) folder.
 
 ## [`emsOverview`](./florianh-widgetset/emsOverview.yaml)
 
