@@ -16,6 +16,12 @@ props:
       required: true
       type: TEXT
     - context: item
+      description: Backup Power (OPEN/ON on backup power, CLOSED/OFF on grid)
+      label: Backup Power
+      name: backuppower
+      required: false
+      type: TEXT
+    - context: item
       description: Power from load (+ generator, - consumer)
       label: Load Power
       name: loadpower
@@ -48,8 +54,9 @@ config:
   functions:
     isPositive: =(item) => Number((@item).split(' ')[0]) > 0
     isNegative: =(item) => Number((@item).split(' ')[0]) < 0
-    getFormattedState: =(item) => (items[item].displayState ||
-      items[item].state).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+    isOnBackupPower: =() => props.backuppower &&
+      (@@props.backuppower === 'OPEN' || @@props.backuppower === 'ON')
+    getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
   variable: {}
 slots:
   default:
@@ -103,7 +110,7 @@ slots:
                             - component: oh-icon
                               config:
                                 height: 110px
-                                icon: sma_grid_2
+                                icon: "=fn.isOnBackupPower() ? 'sma_no-grid_2' : 'sma_grid_2'"
                             - component: Label
                               config:
                                 style:
