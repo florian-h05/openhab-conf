@@ -56,11 +56,6 @@ props:
       name: item_electricity_feedin_earnings
       required: false
       type: TEXT
-    - description: Page ID of page to be opened
-      label: page
-      name: page
-      required: false
-      type: TEXT
   parameterGroups:
     - name: appearance
       label: Appearance settings
@@ -200,17 +195,6 @@ slots:
                     visible: "=props.item_electricity_feedin_earnings ? true : false"
           - component: oh-link
             config:
-              action: navigate
-              actionPage: ='page:' + props.page
-              style:
-                height: 290px
-                position: absolute
-                right: 0px
-                top: 0px
-                width: "=props.widget_action ? '65%' : '100%'"
-              visible: "=props.page ? true : false"
-          - component: oh-link
-            config:
               actionFeedback: Erledigt!
               actionPropsParameterGroup: widgetAction
               style:
@@ -218,5 +202,5 @@ slots:
                 left: 0px
                 position: absolute
                 top: 0px
-                width: 35%
+                width: 100%
               visible: "=props.widget_action ? true : false"
