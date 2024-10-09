@@ -14,7 +14,6 @@
 - [`shutter`](#shutter)
 - [`solar`](#solar)
 - [`temperatureControl`](#temperaturecontrol)
-- [`trigger`](#trigger)
 - [`weatherForecast`](#weatherforecast)
 
 You can add these widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
@@ -249,19 +248,6 @@ Shows current temperature with analyzer, heating/cooling state and controls targ
 
 Configuration is straight forward and requires no further explanation.
 If the on-click action is enabled, the analyzer will be available at the left half (where the icon is) and the action at the right half of the widget.
-
-## [`trigger`](./florianh-widgetset/trigger.yaml)
-
-Send one command to an Item on click, e.g. for calling scenes.
-Bring some color to your MainUI pages with different background colors for light- and dark mode.
-
-![](./doc/trigger/light.jpeg)
-![](./doc/trigger/dark.jpeg)
-
-### Configuration
-
-Configuration is self-explaining.
-For the color, I recommend to read my [Color design guideline](/README.md#color-design).
 
 ## [`weatherForecast`](./florianh-widgetset/weatherForecast.yaml)
 

@@ -104,7 +104,7 @@ white-space: nowrap
 
 ### Switch Widget
 
-For switching lights, outlets etc. I prefer to use a super simple card Apple Home App like card:
+For switching lights, outlets etc. I prefer to use a super simple Apple Home App like card:
 
 ![](./doc/switch_widget.jpeg)
 
@@ -133,6 +133,44 @@ This card depends on my [Custom CSS for Pages](#custom-css-for-pages), paste thi
                         iconColor: "=items.Item.state === 'ON' ? 'yellow' : ''"
                         iconSize: 40
 ```
+
+### Scene Trigger Widget
+
+For activating scenes on my scenes page, I use a simple card with a big icon and a small title:
+
+![](./doc/scene_widget.png)
+
+This card depends on my [Custom CSS for Pages](#custom-css-for-pages), paste this code into a layout page under the `slots`->`default` section:
+
+```yaml
+              - component: oh-grid-col
+                config:
+                  width: "50"
+                  xsmall: "33"
+                  medium: "25"
+                  large: "20"
+                  xlarge: "15"
+                slots:
+                  default:
+                    - component: oh-label-card
+                      config:
+                        action: command
+                        actionItem: gLicht
+                        actionCommand: OFF
+                        label: Licht
+                        icon: f7:lightbulb_slash
+                        vertical: true
+                        iconSize: 70
+                        fontSize: 17px
+                        fontWeight: "600"
+                        style:
+                          background-color: "=themeOptions.dark === 'dark' ? '#76d275' : '#00701a'"
+                          color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
+                        actionFeedback: Erledigt!
+```
+
+This example card is used for turning off all lights in the house.
+The background colors are from the Material Design color palette, see [Colors](#colors) above.
 
 ### Custom Widget Template
 
