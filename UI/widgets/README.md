@@ -248,7 +248,7 @@ Shows current temperature with analyzer, heating/cooling state and controls targ
 ### Configuration
 
 Configuration is straight forward and requires no further explanation.
-If the on-click action is enabled, the action will be available at the left half and the analyzer at the right half of the widget.
+If the on-click action is enabled, the analyzer will be available at the left half (where the icon is) and the action at the right half of the widget.
 
 ## [`trigger`](./florianh-widgetset/trigger.yaml)
 

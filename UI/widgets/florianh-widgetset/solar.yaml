@@ -155,9 +155,9 @@ slots:
         action: navigate
         actionPage: ='page:' + props.page
         style:
-          height: 150px
+          height: 120px
           position: absolute
-          right: 0px
+          left: 0px
           top: 0px
           width: "=props.widget_action ? '65%' : '100%'"
         visible: "=props.page ? true : false"
@@ -166,8 +166,8 @@ slots:
         actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:
-          height: 150px
-          left: 0px
+          height: 120px
+          right: 0px
           position: absolute
           top: 0px
           width: 35%
