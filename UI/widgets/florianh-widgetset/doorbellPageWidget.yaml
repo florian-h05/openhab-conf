@@ -221,7 +221,6 @@ slots:
                 justify-content: space-around
                 left: 0px
                 margin-bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '16px' : ''"
-                padding: 0 16px 0 16px
                 position: absolute
                 top: 0px
                 width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '150px' : '100%'"
@@ -291,7 +290,8 @@ slots:
                 - component: f7-block
                   config:
                     style:
-                      padding: 0 0 0 0
+                      padding-left: 0px
+                      padding-right: 0px
                       width: 100%
                   slots:
                     default:

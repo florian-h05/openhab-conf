@@ -86,7 +86,6 @@ slots:
           display: flex
           flex-direction: row
           left: 14px
-          padding: 0 16px 0 16px
           position: absolute
           top: -5px
       slots:
@@ -107,7 +106,6 @@ slots:
       config:
         style:
           left: 17px
-          padding: 0 16px 0 16px
           position: absolute
           top: 45px
           width: 100%
@@ -129,7 +127,6 @@ slots:
           display: flex
           flex-direction: row
           left: 15px
-          padding: 0 16px 0 16px
           position: absolute
         visible: "=props.humidity_item ? true : false"
       slots:
@@ -152,7 +149,6 @@ slots:
           display: flex
           flex-direction: row
           left: 15px
-          padding: 0 16px 0 16px
           position: absolute
       slots:
         default:
@@ -189,7 +185,6 @@ slots:
           display: flex
           flex-direction: column
           justify-content: between
-          padding: 0 16px 0 16px
           position: absolute
           right: 5px
           text-align: center
@@ -231,7 +226,6 @@ slots:
         style:
           height: 120px
           left: 15px
-          padding: 0 16px 0 16px
           position: absolute
           top: 15px
           width: "=props.set_temp_item ? 'calc(100% - 55px)' : '100%' "
