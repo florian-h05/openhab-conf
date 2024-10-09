@@ -29,6 +29,13 @@ props:
       required: false
       type: TEXT
       groupName: appearance
+    - advanced: true
+      description: Card height in pixels (default 120px)
+      label: Card height
+      name: cardHeight
+      required: false
+      type: INTEGER
+      groupName: appearance
     - context: item
       description: Item whosee state should be displayed
       label: Item
@@ -64,7 +71,7 @@ config:
     background-color: "=props.bgcolor ? props.bgcolor : ''"
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-    height: 120px
+    height: "=props.cardHeight ? props.cardHeight + 'px' : '120px'"
     margin-left: 5px
     margin-right: 5px
     min-width: 180px
