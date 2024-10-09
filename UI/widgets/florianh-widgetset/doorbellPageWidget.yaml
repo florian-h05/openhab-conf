@@ -237,7 +237,7 @@ slots:
                       justify-content: space-around
                       margin: 0 0 0 0
                       padding: 0 0 0 0
-                      width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '118px' : ''"
+                      width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '118px' : '60%'"
                   slots:
                     default:
                       - component: oh-button
