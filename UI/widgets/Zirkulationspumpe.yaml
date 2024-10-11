@@ -54,11 +54,15 @@ props:
       label: Manual time control
     - name: stats
       label: Statistics
-timestamp: Oct 14, 2022, 6:08:27 PM
+    - name: widgetAction
+      context: action
+      label: Action settings
+      description: Action to perform when the widget is clicked and not in manual time control mode.
+timestamp: Oct 11, 2024, 11:35:18 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || ''"
+    background-color: =props.bgcolor || ''
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -98,7 +102,7 @@ slots:
           position: absolute
           top: 45px
           width: calc(100% - 30px)
-        visible: "=vars.show_manual_time == true || vars.show_stats === true ? false : true"
+        visible: "=vars.show_manual_time == true ? false : true"
       slots:
         default:
           - component: Label
@@ -138,8 +142,12 @@ slots:
               action: toggle
               actionCommand: ON
               actionCommandAlt: OFF
-              actionItem: "=props.item_manualControl ? (@@props.item_control === 'ON' ? props.item_manualControl : props.item_control) : props.item_control"
-              iconColor: "=@@props.item_control === 'ON' ? 'green' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+              actionItem: "=props.item_manualControl ? (@@props.item_control === 'ON'
+                ? props.item_manualControl : props.item_control)
+                : props.item_control"
+              iconColor: "=@@props.item_control === 'ON'
+                ? 'green'
+                : (themeOptions.dark === 'dark' ? 'white' : 'black')"
               iconF7: power
               iconSize: 30px
               style:
@@ -178,7 +186,9 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionCommand: "=Number(@@props.item_timeSelection) > 25 ? Number(@@props.item_timeSelection) - 5 : 25"
+                    actionCommand: "=Number(@@props.item_timeSelection) > 25
+                      ? Number(@@props.item_timeSelection) - 5
+                      : 25"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_left_circle
                     iconSize: 30
@@ -195,7 +205,9 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionCommand: "=Number(@@props.item_timeSelection) < 90 ? Number(@@props.item_timeSelection) + 5 : 90"
+                    actionCommand: "=Number(@@props.item_timeSelection) < 90
+                      ? Number(@@props.item_timeSelection) + 5 
+                      : 90"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_right_circle
                     iconSize: 30
@@ -208,3 +220,13 @@ slots:
               style:
                 margin-top: 0.5em
               text: Für Zeit anschalten
+    - component: oh-link
+      config:
+        actionPropsParameterGroup: widgetAction
+        style:
+          height: 120px
+          left: 0px
+          position: absolute
+          top: 0px
+          width: calc(100% - 60px)
+        visible: "=vars.show_manual_time !== true ? true : false"
