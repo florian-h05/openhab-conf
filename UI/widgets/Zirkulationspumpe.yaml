@@ -186,9 +186,9 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionCommand: "=Number(@@props.item_timeSelection) > 25
-                      ? Number(@@props.item_timeSelection) - 5
-                      : 25"
+                    actionCommand: "=Number(@@props.item_timeSelection) > 30
+                      ? Number(@@props.item_timeSelection) - 10
+                      : 30"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_left_circle
                     iconSize: 30
@@ -206,7 +206,7 @@ slots:
                   config:
                     action: command
                     actionCommand: "=Number(@@props.item_timeSelection) < 90
-                      ? Number(@@props.item_timeSelection) + 5 
+                      ? Number(@@props.item_timeSelection) + 10
                       : 90"
                     actionItem: =props.item_timeSelection
                     iconF7: arrow_right_circle
