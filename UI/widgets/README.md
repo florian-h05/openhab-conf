@@ -266,8 +266,10 @@ To learn more about this widget's features, head over to <https://community.open
 
 This widget depends on a JavaScript rule that generates the JSON string that holds the data.
 Please install the [JavaScript Scripting automation add-on](https://www.openhab.org/addons/automation/jsscripting) and drop the [`openweathermap.js`](/automation/js/openweathermap.js) file into the `$OPENHAB_CONF/automation/js` folder.
+Finally, create a rule that triggers the `openweathermap.js` script every 15 minutes or so.
 
 `openweathermap.js` depends on a few Items which are defined in [`openweathermap.items`](/items/openweathermap.items).
 Make sure you either have these Items in your openHAB (the easiest way is to drop the .items file into your items folder) or adjust the rule to match your Item names.
+You need a persistence service installed that supports the `forecast` strategy (I recommend [InMemory persistence](https://www.openhab.org/addons/persistence/inmemory) for this) and have a persistence configuration created to persist the `gOWM_TimeSeries` group using the `forecast` strategy.
 
 Once you have taken care of these dependencies, you can add the widget - just set the JSON Item and the location name, and you are good to go!
