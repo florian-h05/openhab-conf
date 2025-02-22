@@ -42,18 +42,33 @@ props:
       required: true
       type: TEXT
     - context: item
-      label: Electricy Cost
-      name: item_electricity_cost
+      label: Electricy Cost Month
+      name: item_electricity_cost_month
       required: false
       type: TEXT
     - context: item
-      label: Electricy Savings
-      name: item_electricity_savings
+      label: Electricy Cost Total
+      name: item_electricity_cost_total
       required: false
       type: TEXT
     - context: item
-      label: Electricy Feed-In Earnings
-      name: item_electricity_feedin_earnings
+      label: Electricy Savings Month
+      name: item_electricity_savings_month
+      required: false
+      type: TEXT
+    - context: item
+      label: Electricy Savings Total
+      name: item_electricity_savings_total
+      required: false
+      type: TEXT
+    - context: item
+      label: Electricy Feed-In Earnings Month
+      name: item_electricity_feedin_earnings_month
+      required: false
+      type: TEXT
+    - context: item
+      label: Electricy Feed-In Earnings Total
+      name: item_electricity_feedin_earnings_total
       required: false
       type: TEXT
   parameterGroups:
@@ -70,7 +85,8 @@ config:
   functions:
     formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] +
       ' | ' + @item2"
-    formatCurrency: "=(label, item) => label + ': ' + (@item).replace('EUR', '€')"
+    formatCurrency: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] +
+      ' | ' + (@item2).replace('EUR', '€')"
   variable: {}
 slots:
   default:
@@ -128,7 +144,7 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Netzbezug', props.item_electricity_supply_day,
+                    text: =fn.formatEnergy('Netzbezug (D | M)', props.item_electricity_supply_day,
                       props.item_electricity_supply_month)
                 - component: f7-chip
                   config:
@@ -140,7 +156,7 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Eigenverbrauch',
+                    text: =fn.formatEnergy('Eigenverbrauch (D | M)',
                       props.item_electricity_selfconsumption_day,
                       props.item_electricity_selfconsumption_month)
                 - component: f7-chip
@@ -153,7 +169,7 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatEnergy('Einspeisung', props.item_electricity_feedin_day,
+                    text: =fn.formatEnergy('Einspeisung (D | M)', props.item_electricity_feedin_day,
                       props.item_electricity_feedin_month)
                 - component: f7-chip
                   config:
@@ -165,8 +181,9 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatCurrency('Monatliche Stromkosten', props.item_electricity_cost)
-                    visible: "=props.item_electricity_cost ? true : false"
+                    text: =fn.formatCurrency('Stromkosten (M | T)', props.item_electricity_cost_month,
+                      props.item_electricity_cost_total)
+                    visible: "=props.item_electricity_cost_month ? true : false"
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -177,9 +194,9 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatCurrency('Monatliche Einsparungen',
-                      props.item_electricity_savings)
-                    visible: "=props.item_electricity_savings ? true : false"
+                    text: =fn.formatCurrency('Einsparungen (M | T)',
+                      props.item_electricity_savings_month, props.item_electricity_savings_total)
+                    visible: "=props.item_electricity_savings_month ? true : false"
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -190,9 +207,9 @@ slots:
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
-                    text: =fn.formatCurrency('Monatliche Einspeisevergütung',
-                      props.item_electricity_feedin_earnings)
-                    visible: "=props.item_electricity_feedin_earnings ? true : false"
+                    text: =fn.formatCurrency('Einspeisung  (M | T)',
+                      props.item_electricity_feedin_earnings_month, props.item_electricity_feedin_earnings_total)
+                    visible: "=props.item_electricity_feedin_earnings_month ? true : false"
           - component: oh-link
             config:
               actionFeedback: Erledigt!
