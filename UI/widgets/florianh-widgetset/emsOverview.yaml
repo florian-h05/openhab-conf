@@ -93,11 +93,13 @@ slots:
     - component: f7-card
       config:
         style:
+          --f7-chip-height: 28px
+          --f7-chip-bg-color: rgba(255, 255, 255, 0)
           border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           class:
             - padding: 0px
-          height: 290px
+          height: 270px
           margin-left: 5px
           margin-right: 5px
           noShadow: false
@@ -140,7 +142,6 @@ slots:
                     iconF7: gauge
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
@@ -152,7 +153,6 @@ slots:
                     iconF7: gauge
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
@@ -165,7 +165,6 @@ slots:
                     iconF7: gauge
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
@@ -177,7 +176,6 @@ slots:
                     iconF7: money_euro_circle
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
@@ -190,7 +188,6 @@ slots:
                     iconF7: money_euro_circle
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
@@ -203,7 +200,6 @@ slots:
                     iconF7: money_euro_circle
                     iconSize: 20
                     style:
-                      --f7-chip-bg-color: rgba(255, 255, 255, 0)
                       font-size: 16px
                       margin-top: 0
                       margin-bottom: 10px
