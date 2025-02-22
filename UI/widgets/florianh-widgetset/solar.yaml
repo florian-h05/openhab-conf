@@ -64,6 +64,7 @@ timestamp: Aug 15, 2024, 1:58:41 PM
 component: f7-card
 config:
   style:
+    --f7-chip-height: 28px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     class:
