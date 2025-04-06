@@ -46,7 +46,15 @@ props:
       name: batterylevel
       required: true
       type: TEXT
-  parameterGroups: []
+  parameterGroups:
+    - name: solarAction
+      context: action
+      label: Solar Action
+      description: Action to perform when the solar icon is clicked
+    - name: consumptionAction
+      context: action
+      label: Consumption Action
+      description: Action to perform when the consumption icon is clicked
 timestamp: Jul 11, 2024, 4:54:15 PM
 component: oh-context
 config:
@@ -157,6 +165,7 @@ slots:
                                 visible: "=props.solarpower ? true : false"
                             - component: oh-icon
                               config:
+                                actionPropsParameterGroup: solarAction
                                 height: 110px
                                 icon: sma_pv_2
                                 style:
@@ -426,6 +435,7 @@ slots:
                           default:
                             - component: oh-icon
                               config:
+                                actionPropsParameterGroup: consumptionAction
                                 height: 110px
                                 icon: sma_consumption_2
                             - component: Label
