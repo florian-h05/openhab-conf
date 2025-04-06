@@ -120,6 +120,7 @@ slots:
                               'white' : 'black') : 'gray'"
                             font-size: 25px
                             font-weight: bold
+                            margin-bottom: -10px
                             text-align: center
                             width: 100px
                           text: =fn.getFormattedState(props.solarpower)
@@ -127,10 +128,10 @@ slots:
                       - component: oh-icon
                         config:
                           actionPropsParameterGroup: solarAction
-                          height: 110px
-                          icon: sma_pv_2
+                          height: 85px
+                          icon: oh:sma-energy:pv
                           style:
-                            margin-top: -20px
+                            margin-bottom: 10px
                 - component: div
                   config:
                     style:
@@ -150,8 +151,11 @@ slots:
                     default:
                       - component: oh-icon
                         config:
-                          height: 110px
-                          icon: "=fn.isOnBackupPower() ? 'sma_no-grid_2' : 'sma_grid_2'"
+                          height: 85px
+                          icon: "=fn.isOnBackupPower() ? 'oh:sma-energy:grid-offline' : 'oh:sma-energy:grid'"
+                          style:
+                            margin-top: 10px
+                            margin-bottom: 10px
                       - component: Label
                         config:
                           style:
@@ -446,8 +450,11 @@ slots:
                           text: =Math.round(#props.batterylevel) + '%'
                       - component: oh-icon
                         config:
-                          height: 110px
-                          icon: sma_battery_2
+                          height: 85px
+                          icon: oh:sma-energy:battery
+                          style:
+                            margin-top: 10px
+                            margin-bottom: 10px
                       - component: Label
                         config:
                           style:
@@ -482,14 +489,16 @@ slots:
                       - component: oh-icon
                         config:
                           actionPropsParameterGroup: consumptionAction
-                          height: 110px
-                          icon: sma_consumption_2
+                          height: 85px
+                          icon: oh:sma-energy:house
+                          style:
+                            margin-top: 20px
                       - component: Label
                         config:
                           style:
                             font-size: 25px
                             font-weight: bold
-                            margin-top: -10px
+                            margin-top: -5px
                             text-align: center
                             width: 100px
                           text: =fn.getFormattedState(props.loadpower)
