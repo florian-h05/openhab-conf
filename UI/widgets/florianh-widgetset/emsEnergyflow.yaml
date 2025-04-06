@@ -46,6 +46,12 @@ props:
       name: batterylevel
       required: true
       type: TEXT
+    - context: item
+      description: Charging power of EV charger
+      label: EV Charging Power
+      name: evChargerPower
+      required: false
+      type: TEXT
   parameterGroups:
     - name: solarAction
       context: action
@@ -55,7 +61,11 @@ props:
       context: action
       label: Consumption Action
       description: Action to perform when the consumption icon is clicked
-timestamp: Apr 6, 2025, 11:54:33 PM
+    - name: evChargerAction
+      context: action
+      label: EV Charger Action
+      description: Action to perform when the EV charger icon is clicked
+timestamp: Apr 7, 2025, 1:47:58 AM
 component: oh-context
 config:
   constants: {}
@@ -152,7 +162,8 @@ slots:
                       - component: oh-icon
                         config:
                           height: 85px
-                          icon: "=fn.isOnBackupPower() ? 'oh:sma-energy:grid-offline' : 'oh:sma-energy:grid'"
+                          icon: "=fn.isOnBackupPower() ? 'oh:sma-energy:grid-offline' :
+                            'oh:sma-energy:grid'"
                           style:
                             margin-top: 10px
                             margin-bottom: 10px
@@ -503,8 +514,87 @@ slots:
                             width: 100px
                           text: =fn.getFormattedState(props.loadpower)
                           visible: "=props.loadpower ? true : false"
-                - component: div
+                - component: f7-block
                   config:
                     style:
-                      height: 110px
-                      width: 110px
+                      display: flex
+                      height: 100px
+                      justify-content: center
+                      margin: 0
+                      padding: 0
+                      width: 120px
+                  slots:
+                    default:
+                      - component: f7-row
+                        config:
+                          preserveAspectRatio: xMidYMid slice
+                          style:
+                            height: 100px
+                            width: 30px
+                          tag: svg
+                          viewBox: 0 0 30 100
+                          xmlns: http://www.w3.org/2000/svg
+                          visible: =fn.isPositive(props.evChargerPower)
+                        slots:
+                          default:
+                            - component: f7-row
+                              config:
+                                d: M0, 50 h30
+                                fill: none
+                                id: house_to_ev
+                                stroke: rgba(100, 150, 200, 0.8)
+                                stroke-width: 2
+                                tag: path
+                                vector-effect: non-scaling-stroke
+                            - component: f7-row
+                              config:
+                                fill: rgba(100, 150, 200, 0.8)
+                                r: 6
+                                strokeWidth: 10
+                                tag: circle
+                                vectorEffect: non-scaling-stroke
+                              slots:
+                                default:
+                                  - component: f7-row
+                                    config:
+                                      calcMode: linear
+                                      dur: 2.5s
+                                      repeatCount: indefinite
+                                      tag: animateMotion
+                                    slots:
+                                      default:
+                                        - component: f7-row
+                                          config:
+                                            tag: mpath
+                                            xlink:href: "#house_to_ev"
+                      - component: f7-block
+                        config:
+                          style:
+                            align-items: center
+                            display: flex
+                            flex-direction: column
+                            height: 120px
+                            justify-content: center
+                            padding: 0
+                            margin-top: -10px
+                            width: 80px
+                            transform: scale(0.7)
+                          visible: "=props.evChargerPower ? true : false"
+                        slots:
+                          default:
+                            - component: oh-icon
+                              config:
+                                actionPropsParameterGroup: evChargerAction
+                                height: 85px
+                                icon: oh:sma-energy:ev-charger
+                                style:
+                                  margin-top: 20px
+                            - component: Label
+                              config:
+                                style:
+                                  font-size: 25px
+                                  font-weight: bold
+                                  margin-top: -5px
+                                  text-align: center
+                                  width: 100px
+                                text: =fn.getFormattedState(props.evChargerPower)
