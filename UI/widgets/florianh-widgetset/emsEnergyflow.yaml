@@ -57,10 +57,10 @@ props:
       context: action
       label: Solar Action
       description: Action to perform when the solar icon is clicked
-    - name: consumptionAction
+    - name: loadAction
       context: action
-      label: Consumption Action
-      description: Action to perform when the consumption icon is clicked
+      label: Load Action
+      description: Action to perform when the load icon is clicked
     - name: evChargerAction
       context: action
       label: EV Charger Action
@@ -499,7 +499,7 @@ slots:
                     default:
                       - component: oh-icon
                         config:
-                          actionPropsParameterGroup: consumptionAction
+                          actionPropsParameterGroup: loadAction
                           height: 85px
                           icon: oh:sma-energy:house
                           style:

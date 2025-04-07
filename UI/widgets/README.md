@@ -150,9 +150,17 @@ It requires Items for the following values:
 - Power from battery: + discharge, - charge
 - Battery State of Charge
 
+Optionally, you can configure the following values to enable additional features:
+
+- Backup Power: `OPEN`/`ON` on backup power, `CLOSED`/`OFF` on grid -> Displays a cross above the grid icon if the grid is offline
+- EV Charging Power: Enables displaying the current energy flow to a EV charger station
+- Solar Action: Action to perform when the solar icon is clicked
+- Load Action: Action to perform when the load icon is clicked
+- EV Charger Action: Action to perform when the EV charger icon is clicked (if EV Charging Power is configured)
+
 Please note that the widget is designed for use with Fronius Symo Gen24 Plus inverters and therefore uses Fronius-specific value sign interpretation.
 
-It depends on the SMA Energy App icons, which can be found in the [icons/classic](/icons/classic) folder.
+It depends on the SMA Energy App icons, which can be found in the [icons/sma-energy](/icons/sma-energy) folder.
 
 ## [`emsOverview`](./florianh-widgetset/emsOverview.yaml)
 
