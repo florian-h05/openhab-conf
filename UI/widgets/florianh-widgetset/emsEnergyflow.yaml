@@ -1,5 +1,5 @@
 # description: Displays current energy flow of an energy management system (designed for Fronius Symo Gen24 Plus)
-# dependencies: SMA icons from https://community.openhab.org/t/animated-energy-widget/133510
+# dependencies: SMA icons from https://github.com/florian-h05/openhab-conf/tree/main/icons/sma-energy
 # author: Copyright (c) 2024 Florian Hotze under MIT License
 # credits: this widget is based on the animated energy widget by Sebastian Neu, but has received a major overhaul
 # community thread: https://community.openhab.org/t/animated-energy-widget/133510
