@@ -70,11 +70,13 @@ component: oh-context
 config:
   constants: {}
   functions:
-    isPositive: =(item) => @item !== undefined && Number((@item).split(' ')[0]) > 0
-    isNegative: =(item) => @item !== undefined && Number((@item).split(' ')[0]) < 0
+    getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+    isNegative: =(item) => @item !== undefined && Number((@item).split('
+      ')[0].replace(',', '.')) < 0
     isOnBackupPower: =() => props.backuppower && (@@props.backuppower === 'OPEN' ||
       @@props.backuppower === 'ON')
-    getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
+    isPositive: =(item) => @item !== undefined && Number((@item).split('
+      ')[0].replace(',', '.')) > 0
   variable: {}
 slots:
   default:
