@@ -65,7 +65,7 @@ props:
       context: action
       label: EV Charger Action
       description: Action to perform when the EV charger icon is clicked
-timestamp: Apr 7, 2025, 11:39:44 AM
+timestamp: Apr 9, 2025, 2:58:11 PM
 component: oh-context
 config:
   constants: {}
@@ -83,17 +83,17 @@ slots:
     - component: f7-card
       config:
         style:
+          align-items: center
           border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           display: flex
           height: 350px
+          justify-content: center
           margin-left: 5px
           margin-right: 5px
           min-width: 350px
           noShadow: false
           padding: 0
-          align-items: center
-          justify-content: center
       slots:
         default:
           - component: f7-block
@@ -102,9 +102,9 @@ slots:
                 --f7-theme-color: var(--f7-text-color)
                 display: grid
                 grid-template-columns: repeat(3, 110px)
-                place-items: center
                 margin: 0
                 padding: 12px
+                place-items: center
                 width: 354px
             slots:
               default:
@@ -166,8 +166,8 @@ slots:
                           icon: "=fn.isOnBackupPower() ? 'oh:sma-energy:grid-offline' :
                             'oh:sma-energy:grid'"
                           style:
-                            margin-top: 10px
                             margin-bottom: 10px
+                            margin-top: 10px
                       - component: Label
                         config:
                           style:
@@ -465,8 +465,8 @@ slots:
                           height: 85px
                           icon: oh:sma-energy:battery
                           style:
-                            margin-top: 10px
                             margin-bottom: 10px
+                            margin-top: 10px
                       - component: Label
                         config:
                           style:
@@ -534,8 +534,8 @@ slots:
                             width: 30px
                           tag: svg
                           viewBox: 0 0 30 100
-                          xmlns: http://www.w3.org/2000/svg
                           visible: =fn.isPositive(props.evChargerPower)
+                          xmlns: http://www.w3.org/2000/svg
                         slots:
                           default:
                             - component: f7-row
@@ -576,10 +576,10 @@ slots:
                             flex-direction: column
                             height: 120px
                             justify-content: center
-                            padding: 0
                             margin-top: -10px
-                            width: 80px
+                            padding: 0
                             transform: scale(0.7)
+                            width: 80px
                           visible: "=props.evChargerPower ? true : false"
                         slots:
                           default:
