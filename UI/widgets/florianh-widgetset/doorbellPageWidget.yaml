@@ -170,6 +170,8 @@ config:
   constants: {}
   functions:
     isPortrait: =() => screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3))
+    imageWidth: "=(portrait) => portrait ? '100%' : 'calc(calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'"
+    imageLeft: "=(width) => 'calc(calc(100% - ' + width + ') / 2)'"
   variable: {}
 slots:
   default:
@@ -192,10 +194,8 @@ slots:
               style:
                 border-radius: var(--f7-card-expandable-border-radius)
                 box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-                margin-left: "=fn.isPortrait() ? '0' :
-                  'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
-                width: "=fn.isPortrait() ? '100%' :
-                  'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+                margin-left: "=fn.isPortrait() ? '0' : fn.imageLeft(fn.imageWidth(false))"
+                width: =fn.imageWidth(fn.isPortrait())
               url: =props.imageUrl
           - component: f7-card
             config:
@@ -204,10 +204,9 @@ slots:
                 bottom: "=fn.isPortrait() ? '-10px' : ''"
                 box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
                 height: "=fn.isPortrait() ? '150px' : '330px'"
-                left: "=fn.isPortrait() ? '-10px' : (screen.viewAreaWidth -
-                  (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh
-                  - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 -
-                  175px)' : '-10px')"
+                left: "=fn.isPortrait() ? '-10px' :
+                  (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360
+                  ? 'calc(' + fn.imageLeft(fn.imageHeight(false)) + ' - 175px)' : '-10px')"
                 min-width: "=fn.isPortrait() ? '300px' : ''"
                 padding: 0px
                 position: absolute
