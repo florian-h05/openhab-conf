@@ -165,65 +165,54 @@ props:
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
 timestamp: Jul 29, 2024, 2:55:58 PM
-component: f7-card
+component: oh-context
 config:
-  style:
-    background-color: rgba(0,0,0,0.0)
-    border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
-    height: ='calc(' + screen.viewAreaHeight + 'px -
-      2*var(--f7-block-padding-vertical))'
-    margin: 0px
-    padding: 0px
-    width: 100%
+  constants: {}
+  functions:
+    isPortrait: =() => screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3))
+  variable: {}
 slots:
   default:
-    - component: oh-image
-      config:
-        lazy: false
-        refreshInterval: 200
-        style:
-          border-radius: var(--f7-card-expandable-border-radius)
-          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-          margin-left: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '0' :
-            'calc(calc(100% - calc(96vh - var(--f7-navbar-height) -
-            var(--f7-toolbar-height)) * (4/3)) / 2)'"
-          width: "=screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3)) ? '100%' :
-            'calc(calc(95vh - var(--f7-navbar-height) -
-            var(--f7-toolbar-height)) * (4/3))'"
-        url: =props.imageUrl
     - component: f7-card
       config:
         style:
+          background-color: rgba(0,0,0,0.0)
           border-radius: var(--f7-card-expandable-border-radius)
-          bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '-10px'"
-          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-          height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '330px' : '150px'"
-          left: "=screen.viewAreaWidth >= screen.viewAreaHeight ? (screen.viewAreaWidth -
-            (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh
-            - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 -
-            175px)' : '-10px') : '-10px'"
-          min-width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '' : '300px'"
+          box-shadow: 0px 0px 0px 0px rgba(0,0,0,0)
+          height: ='calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical))'
+          margin: 0px
           padding: 0px
-          position: absolute
-          top: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '-10px' : ''"
-          width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '150px' : '100%'"
+          width: 100%
       slots:
         default:
-          - component: f7-block
+          - component: oh-image
+            config:
+              lazy: false
+              refreshInterval: 200
+              style:
+                border-radius: var(--f7-card-expandable-border-radius)
+                box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+                margin-left: "=fn.isPortrait() ? '0' :
+                  'calc(calc(100% - calc(96vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2)'"
+                width: "=fn.isPortrait() ? '100%' :
+                  'calc(calc(95vh - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3))'"
+              url: =props.imageUrl
+          - component: f7-card
             config:
               style:
-                align-content: space-around
-                display: flex
-                flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'column' :
-                  'row'"
-                height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '298px' : '115px'"
-                justify-content: space-around
-                left: 0px
-                margin-bottom: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '16px' : ''"
+                border-radius: var(--f7-card-expandable-border-radius)
+                bottom: "=fn.isPortrait() ? '-10px' : ''"
+                box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+                height: "=fn.isPortrait() ? '150px' : '330px'"
+                left: "=fn.isPortrait() ? '-10px' : (screen.viewAreaWidth -
+                  (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(calc(100% - calc(96vh
+                  - var(--f7-navbar-height) - var(--f7-toolbar-height)) * (4/3)) / 2 -
+                  175px)' : '-10px')"
+                min-width: "=fn.isPortrait() ? '300px' : ''"
+                padding: 0px
                 position: absolute
-                top: 0px
-                width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '150px' : '100%'"
+                top: "=fn.isPortrait() ? '' : '-10px'"
+                width: "=fn.isPortrait() ? '100%' : '150px'"
             slots:
               default:
                 - component: f7-block
@@ -231,110 +220,119 @@ slots:
                     style:
                       align-content: space-around
                       display: flex
-                      flex-direction: "=screen.viewAreaWidth >= screen.viewAreaHeight ? 'row' :
-                        'column'"
-                      height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '40px' : '100%'"
+                      flex-direction: "=fn.isPortrait() ? 'row' : 'column'"
+                      height: "=fn.isPortrait() ? '115px' : '298px'"
                       justify-content: space-around
-                      margin: 0 0 0 0
-                      padding: 0 0 0 0
-                      width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '118px' : '60%'"
-                  slots:
-                    default:
-                      - component: oh-button
-                        config:
-                          action: popup
-                          actionModal: widget:doorbellEvent
-                          actionModalConfig:
-                            eventDescription: Letztes Klingeln
-                            item_eventImage: =props.item_buttonLastPressedImage
-                            item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                          iconColor: "=items[props.item_doorbellPressed].state === 'ON' ?
-                            (themeOptions.dark === 'dark' ? 'white' : 'black') :
-                            'gray'"
-                          iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' :
-                            'bell_slash'"
-                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
-                          style:
-                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' :
-                              '30'"
-                            width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
-                      - component: oh-button
-                        config:
-                          action: popup
-                          actionModal: widget:doorbellEvent
-                          actionModalConfig:
-                            eventDescription: Letzte Bewegung
-                            item_eventImage: =props.item_lastMotionImage
-                            item_eventTimestamp: =props.item_lastMotionTimestamp
-                          iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark ===
-                            'dark' ? 'white' : 'black') : 'gray'"
-                          iconF7: arrow_right_arrow_left
-                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' : '30'"
-                          style:
-                            --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '35' :
-                              '30'"
-                            width: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '59px' : '100%'"
-                - component: oh-button
-                  config:
-                    action: command
-                    actionCommand: ON
-                    actionItem: =props.item_light
-                    iconF7: lightbulb_fill
-                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
-                    style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' :
-                        '115px'"
-                      padding-left: 0px
-                      padding-right: 0px
-                      width: 100%
-                - component: f7-block
-                  config:
-                    style:
-                      padding-left: 0px
-                      padding-right: 0px
+                      left: 0px
+                      margin-bottom: "=fn.isPortrait() ? '' : '16px'"
+                      position: absolute
+                      top: 0px
                       width: 100%
                   slots:
                     default:
-                      - component: oh-sipclient
+                      - component: f7-block
                         config:
-                          disableRegister: true
-                          domain: =props.domain
-                          enableSIPDebug: =props.enableSIPDebug
-                          enableTones: false
-                          enableVideo: false
-                          hideCallerId: true
-                          iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '80' : '60'"
-                          password: =props.password
-                          phonebook: =props.phonebook
-                          sipStateItem: =props.item_sipState
-                          username: =props.username
-                          websocketUrl: =props.websocketUrl
-                - component: oh-button
-                  config:
-                    action: options
-                    actionItem: =props.item_doorControl
-                    iconF7: lock_open_fill
-                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
-                    style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
-                      padding-left: 0px
-                      padding-right: 0px
-                      width: 100%
-                    visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'false' : 'true'"
-                - component: oh-button
-                  config:
-                    action: "=props.url_lockUnlock ? 'http' : 'command'"
-                    actionCommand: ON
-                    actionConfirmation:
-                      text: Soll die Tür aufgeschlossen werden?
-                      type: dialog
-                    actionItem: =props.item_doorRelay
-                    actionUrl: =props.url_lockUnlock
-                    iconF7: lock_fill
-                    iconSize: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60' : '40'"
-                    style:
-                      --f7-button-height: "=screen.viewAreaWidth >= screen.viewAreaHeight ? '60px' : '115px'"
-                      padding-left: 0px
-                      padding-right: 0px
-                      width: 100%
-                    visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'true' : 'false'"
+                          style:
+                            align-content: space-around
+                            display: flex
+                            flex-direction: "=fn.isPortrait() ? 'column' : 'row'"
+                            height: "=fn.isPortrait() ? '100%' : '40px'"
+                            justify-content: space-around
+                            margin: 0 0 0 0
+                            padding: 0 0 0 0
+                            width: "=fn.isPortrait() ? '60%' : '118px'"
+                        slots:
+                          default:
+                            - component: oh-button
+                              config:
+                                action: popup
+                                actionModal: widget:doorbellEvent
+                                actionModalConfig:
+                                  eventDescription: Letztes Klingeln
+                                  item_eventImage: =props.item_buttonLastPressedImage
+                                  item_eventTimestamp: =props.item_buttonLastPressedTimestamp
+                                iconColor: "=items[props.item_doorbellPressed].state === 'ON' ?
+                                  (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                                iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
+                                iconSize: "=fn.isPortrait() ? '30' : '35'"
+                                style:
+                                  --f7-button-height: "=fn.isPortrait() ? '30' : '35'"
+                                  width: "=fn.isPortrait() ? '100%' : '59px'"
+                            - component: oh-button
+                              config:
+                                action: popup
+                                actionModal: widget:doorbellEvent
+                                actionModalConfig:
+                                  eventDescription: Letzte Bewegung
+                                  item_eventImage: =props.item_lastMotionImage
+                                  item_eventTimestamp: =props.item_lastMotionTimestamp
+                                iconColor: "=items[props.item_motion].state === 'ON' ?
+                                  (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                                iconF7: arrow_right_arrow_left
+                                iconSize: "=fn.isPortrait() ? '30' : '35'"
+                                style:
+                                  --f7-button-height: "=fn.isPortrait() ? '30' : '35'"
+                                  width: "=fn.isPortrait() ? '100%' : '59px'"
+                      - component: oh-button
+                        config:
+                          action: command
+                          actionCommand: ON
+                          actionItem: =props.item_light
+                          iconF7: lightbulb_fill
+                          iconSize: "=fn.isPortrait() ? '40' : '60'"
+                          style:
+                            --f7-button-height: "=fn.isPortrait() ? '115px' : '60px'"
+                            padding-left: 0px
+                            padding-right: 0px
+                            width: 100%
+                      - component: f7-block
+                        config:
+                          style:
+                            padding-left: 0px
+                            padding-right: 0px
+                            width: 100%
+                        slots:
+                          default:
+                            - component: oh-sipclient
+                              config:
+                                disableRegister: true
+                                domain: =props.domain
+                                enableSIPDebug: =props.enableSIPDebug
+                                enableTones: false
+                                enableVideo: false
+                                hideCallerId: true
+                                iconSize: "=fn.isPortrait() ? '60' : '80'"
+                                password: =props.password
+                                phonebook: =props.phonebook
+                                sipStateItem: =props.item_sipState
+                                username: =props.username
+                                websocketUrl: =props.websocketUrl
+                      - component: oh-button
+                        config:
+                          action: options
+                          actionItem: =props.item_doorControl
+                          iconF7: lock_open_fill
+                          iconSize: "=fn.isPortrait() ? '40' : '60'"
+                          style:
+                            --f7-button-height: "=fn.isPortrait() ? '115px' : '60px'"
+                            padding-left: 0px
+                            padding-right: 0px
+                            width: 100%
+                          visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'false' : 'true'"
+                      - component: oh-button
+                        config:
+                          action: "=props.url_lockUnlock ? 'http' : 'command'"
+                          actionCommand: ON
+                          actionConfirmation:
+                            text: Soll die Tür aufgeschlossen werden?
+                            type: dialog
+                          actionItem: =props.item_doorRelay
+                          actionUrl: =props.url_lockUnlock
+                          iconF7: lock_fill
+                          iconSize: "=fn.isPortrait() ? '40' : '60'"
+                          style:
+                            --f7-button-height: "=fn.isPortrait() ? '115px' : '60px'"
+                            padding-left: 0px
+                            padding-right: 0px
+                            width: 100%
+                          visible: "=props.item_lockState && (items[props.item_lockState].state === 'CLOSED') ? 'true' : 'false'"
