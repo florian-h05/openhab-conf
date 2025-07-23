@@ -71,12 +71,10 @@ config:
   constants: {}
   functions:
     getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-    isNegative: =(item) => @item !== undefined && Number((@item).split('
-      ')[0].replace(',', '.')) < 0
+    flowsTo: =(item) => @item !== undefined && (#item) < 0
     isOnBackupPower: =() => props.backuppower && (@@props.backuppower === 'OPEN' ||
       @@props.backuppower === 'ON')
-    isPositive: =(item) => @item !== undefined && Number((@item).split('
-      ')[0].replace(',', '.')) > 0
+    flowsFrom: =(item) => @item !== undefined && (#item) > 0
   variable: {}
 slots:
   default:
@@ -127,7 +125,7 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.isPositive(props.solarpower) ? (themeOptions.dark === 'dark' ?
+                            color: "=fn.flowsFrom(props.solarpower) ? (themeOptions.dark === 'dark' ?
                               'white' : 'black') : 'gray'"
                             font-size: 25px
                             font-weight: bold
@@ -171,8 +169,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.isNegative(props.gridpower) ? 'green' :
-                              fn.isPositive(props.gridpower) ? 'red' : 'gray'"
+                            color: "=fn.flowsTo(props.gridpower) ? 'green' :
+                              fn.flowsFrom(props.gridpower) ? 'red' : 'gray'"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px
@@ -211,7 +209,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.batterypower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -220,7 +218,7 @@ slots:
                                   stroke-width: 4
                                 tag: circle
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.batterypower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.batterypower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -244,7 +242,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.gridpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -252,7 +250,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.gridpower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.gridpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -276,7 +274,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.loadpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -284,7 +282,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.isPositive(props.solarpower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.loadpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -308,7 +306,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.gridpower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.gridpower) && fn.flowsTo(props.loadpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -316,7 +314,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.isPositive(props.gridpower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.gridpower) && fn.flowsTo(props.loadpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -341,7 +339,7 @@ slots:
                                 tag: path
                                 vector-effect: non-scaling-stroke
                                 visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.isNegative(props.batterypower)"
+                                  fn.flowsTo(props.batterypower)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -350,7 +348,7 @@ slots:
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
                                 visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.isNegative(props.batterypower)"
+                                  fn.flowsTo(props.batterypower)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -374,7 +372,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.batterypower) && fn.flowsTo(props.loadpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -382,7 +380,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.isPositive(props.batterypower) && fn.isNegative(props.loadpower)
+                                visible: =fn.flowsFrom(props.batterypower) && fn.flowsTo(props.loadpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -407,7 +405,7 @@ slots:
                                 tag: path
                                 vector-effect: non-scaling-stroke
                                 visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.isNegative(props.gridpower)"
+                                  fn.flowsTo(props.gridpower)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -416,7 +414,7 @@ slots:
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
                                 visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.isNegative(props.gridpower)"
+                                  fn.flowsTo(props.gridpower)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -470,8 +468,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.isNegative(props.batterypower) ? 'green' :
-                              fn.isPositive(props.batterypower) ? 'red' :
+                            color: "=fn.flowsTo(props.batterypower) ? 'green' :
+                              fn.flowsFrom(props.batterypower) ? 'red' :
                               'gray'"
                             font-size: 25px
                             font-weight: bold
@@ -534,7 +532,7 @@ slots:
                             width: 30px
                           tag: svg
                           viewBox: 0 0 30 100
-                          visible: =fn.isPositive(props.evChargerPower)
+                          visible: =fn.flowsFrom(props.evChargerPower)
                           xmlns: http://www.w3.org/2000/svg
                         slots:
                           default:
