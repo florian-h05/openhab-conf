@@ -274,7 +274,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.solarpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -282,7 +282,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.solarpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -306,7 +306,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.gridpower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.gridpower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -314,7 +314,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.gridpower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.gridpower)
                               slots:
                                 default:
                                   - component: f7-row
@@ -372,7 +372,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.batterypower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.batterypower)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -380,7 +380,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.batterypower) && fn.flowsTo(props.loadpower)
+                                visible: =fn.flowsFrom(props.batterypower)
                               slots:
                                 default:
                                   - component: f7-row
