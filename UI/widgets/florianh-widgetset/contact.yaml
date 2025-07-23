@@ -56,7 +56,7 @@ timestamp: Oct 2, 2022, 4:31:52 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || ''"
+    background-color: =props.bgcolor || ''
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     height: 120px
@@ -79,7 +79,7 @@ slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon || 'square'"
+              f7: =props.icon || 'square'
               size: 18
               style:
                 margin-right: 10px
@@ -109,11 +109,14 @@ slots:
                 text-overflow: ellipsis
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
-              text: "=props.header || 'Set header!'"
+              text: =props.header || 'Set header!'
           - component: Label
             config:
               style:
-                color: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') : items[props.item].state === '1' ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') : items[props.item].state === '2' ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
+                color: "=@@[props.item] === 'CLOSED' || #[props.item] === 0 ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') 
+                  : #[props.item] === 0.3 ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') 
+                  : #[props.item] === 0.5 ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') 
+                  : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
                 font-size: 24px
                 font-weight: 400
                 margin-top: 0.3em
