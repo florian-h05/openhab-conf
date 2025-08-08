@@ -71,10 +71,10 @@ config:
   constants: {}
   functions:
     getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-    flowsTo: =(item) => @item !== undefined && (#item) < 0
+    flowsTo: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) < 0
     isOnBackupPower: =() => props.backuppower && (@@props.backuppower === 'OPEN' ||
       @@props.backuppower === 'ON')
-    flowsFrom: =(item) => @item !== undefined && (#item) > 0
+    flowsFrom: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) > 0
   variable: {}
 slots:
   default:
