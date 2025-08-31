@@ -186,6 +186,11 @@ function createJSON() {
   return JSON.stringify(json);
 }
 
-rules.when().system().startLevel(100).or().cron('0 0 * ? * * *').or().item(PREFIX + CURRENT + 'Temperature').changed().then(() => {
-  items.getItem(PREFIX + 'JSON').postUpdate(createJSON());
-}).build('OpenWeatherMap One Call API Current Weather & Forecast JSON Generator', 'Creates the JSON string for the weatherCard widget.', ['florianh-widgetset'], 'owm-one-call-weather-forecast-json');
+rules.when()
+  .system().startLevel(100)
+  .or().cron('0 0 * ? * * *')
+  .or().item(PREFIX + CURRENT + 'Temperature').changed()
+  .or().item(PREFIX + 'JSON').receivedCommand().to('REFRESH')
+  .then(() => {
+    items.getItem(PREFIX + 'JSON').postUpdate(createJSON());
+  }).build('OpenWeatherMap One Call API Current Weather & Forecast JSON Generator', 'Creates the JSON string for the weatherCard widget.', ['florianh-widgetset'], 'owm-one-call-weather-forecast-json');
