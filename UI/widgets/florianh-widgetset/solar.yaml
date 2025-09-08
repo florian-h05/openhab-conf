@@ -171,5 +171,5 @@ slots:
           right: 0px
           position: absolute
           top: 0px
-          width: 35%
+          width: "=props.page ? '35%' : '100%'"
         visible: "=props.widget_action ? true : false"
