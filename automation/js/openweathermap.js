@@ -188,7 +188,7 @@ function createJSON() {
 
 rules.when()
   .system().startLevel(100)
-  .or().cron('0 0 * ? * * *')
+  .or().cron('0 */5 * ? * * *') // every 5 minutes
   .or().item(PREFIX + CURRENT + 'Temperature').changed()
   .or().item(PREFIX + 'JSON').receivedCommand().to('REFRESH')
   .then(() => {
