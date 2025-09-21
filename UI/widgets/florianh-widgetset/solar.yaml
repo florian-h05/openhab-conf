@@ -11,6 +11,13 @@ props:
       required: false
       type: TEXT
       groupName: appearance
+    - default: 120px
+      description: The height of the card
+      label: Height
+      name: height
+      required: false
+      type: TEXT
+      groupName: appearance
     - context: item
       description: Realtime solar plant power Item
       label: Power Item
@@ -69,7 +76,7 @@ config:
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     class:
       - padding: 0px
-    height: 120px
+    height: =props.height
     margin-left: 5px
     margin-right: 5px
     noShadow: false
