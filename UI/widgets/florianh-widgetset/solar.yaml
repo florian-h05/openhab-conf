@@ -67,7 +67,7 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Aug 15, 2024, 1:58:41 PM
+timestamp: Sep 21, 2025, 11:57:31 AM
 component: f7-card
 config:
   style:
@@ -103,7 +103,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: =props.title || 'Photovoltaik'
+              text: =props.title || 'Solar'
     - component: f7-block
       config:
         style:
@@ -134,10 +134,11 @@ slots:
                 font-size: 16px
                 margin-bottom: 10px
                 margin-top: 0
-              text: "=(@props.item_energy_day).split(' ')[0]
-                + (props.item_energy_month ? ' | ' + (@props.item_energy_month).split(' ')[0] : '')
-                + (props.item_energy_total ? ' | ' + (@props.item_energy_total).split(' ')[0] : '')
-                + ' ' + props.unit_energy"
+              text: "=(@props.item_energy_day).split(' ')[0] + (props.item_energy_month ? ' |
+                ' + (@props.item_energy_month).split(' ')[0] : '') +
+                (props.item_energy_total ? ' | ' +
+                (@props.item_energy_total).split(' ')[0] : '') + ' ' +
+                props.unit_energy"
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -164,8 +165,8 @@ slots:
         actionPage: ='page:' + props.page
         style:
           height: 120px
-          position: absolute
           left: 0px
+          position: absolute
           top: 0px
           width: "=props.widget_action ? '65%' : '100%'"
         visible: "=props.page ? true : false"
@@ -175,8 +176,8 @@ slots:
         actionPropsParameterGroup: widgetAction
         style:
           height: 120px
-          right: 0px
           position: absolute
+          right: 0px
           top: 0px
-          width: "=props.page ? '35%' : '100%'"
+          width: "=props.page_action ? '35%' : '100%'"
         visible: "=props.widget_action ? true : false"
