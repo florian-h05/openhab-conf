@@ -18,80 +18,119 @@ props:
       required: false
       type: TEXT
       groupName: appearance
+    - default: Eigenverbrauch (D | M)
+      label: Electricity Self-Consumption Label
+      name: label_electricity_selfconsumption
+      required: false
+      type: TEXT
+      groupName: labeling
+    - default: Einspeisung (D | M)
+      label: Electricity Feed-In Label
+      name: label_electricity_feedin
+      required: false
+      type: TEXT
+      groupName: labeling
+    - default: Netzbezug (D | M)
+      label: Electricity Feed-In Label
+      name: label_electricity_supply
+      required: false
+      type: TEXT
+      groupName: labeling
+    - default: Stromkosten (M | T)
+      label: Electricity Cost Label
+      name: label_electricity_cost
+      required: false
+      type: TEXT
+      groupName: labeling
+    - default: Einsparungen (M | T)
+      label: Electricity Cost Savings Label
+      name: label_electricity_savings
+      required: false
+      type: TEXT
+      groupName: labeling
+    - default: Einspeisung (M | T)
+      label: Electricity Feed-In Earnings Label
+      name: label_electricity_feedin_earnings
+      required: false
+      type: TEXT
+      groupName: labeling
     - context: item
-      label: Electricy Self-Consumption Day
+      label: Electricity Self-Consumption Day
       name: item_electricity_selfconsumption_day
       required: true
       type: TEXT
     - context: item
-      label: Electricy Self-Consumption Month
+      label: Electricity Self-Consumption Month
       name: item_electricity_selfconsumption_month
       required: true
       type: TEXT
     - context: item
-      label: Electricy Feed-In Day
+      label: Electricity Feed-In Day
       name: item_electricity_feedin_day
       required: true
       type: TEXT
     - context: item
-      label: Electricy Feed-In Month
+      label: Electricity Feed-In Month
       name: item_electricity_feedin_month
       required: true
       type: TEXT
     - context: item
-      label: Electricy Supply Day
+      label: Electricity Supply Day
       name: item_electricity_supply_day
       required: true
       type: TEXT
     - context: item
-      label: Electricy Supply Month
+      label: Electricity Supply Month
       name: item_electricity_supply_month
       required: true
       type: TEXT
     - context: item
-      label: Electricy Cost Month
+      label: Electricity Cost Month
       name: item_electricity_cost_month
       required: false
       type: TEXT
     - context: item
-      label: Electricy Cost Total
+      label: Electricity Cost Total
       name: item_electricity_cost_total
       required: false
       type: TEXT
     - context: item
-      label: Electricy Savings Month
+      label: Electricity Savings Month
       name: item_electricity_savings_month
       required: false
       type: TEXT
     - context: item
-      label: Electricy Savings Total
+      label: Electricity Savings Total
       name: item_electricity_savings_total
       required: false
       type: TEXT
     - context: item
-      label: Electricy Feed-In Earnings Month
+      label: Electricity Feed-In Earnings Month
       name: item_electricity_feedin_earnings_month
       required: false
       type: TEXT
     - context: item
-      label: Electricy Feed-In Earnings Total
+      label: Electricity Feed-In Earnings Total
       name: item_electricity_feedin_earnings_total
       required: false
       type: TEXT
   parameterGroups:
     - name: appearance
       label: Appearance settings
+    - name: labeling
+      label: Field labeling
     - name: widgetAction
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Sep 2, 2025, 10:27:34 PM
+timestamp: Sep 21, 2025, 2:41:12 PM
 component: oh-context
 config:
   constants: {}
   functions:
-    formatCurrency: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0]
-      + ' | ' + (@item2).replace('EUR', '€')"
+    formatCurrency: "=(label, item1, item2) => label + ': ' + (item2 ?
+      (@item1).split(' ')[0] + ' | ' + (@item2).replace('EUR', '€') :
+      (@item1).replace('EUR', '€'))"
     formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] +
       ' | ' + @item2"
   variable: {}
@@ -115,6 +154,7 @@ slots:
           - component: f7-block
             config:
               style:
+                width: 100%
                 display: flex
                 flex-direction: row
                 left: 16px
@@ -140,7 +180,7 @@ slots:
                 left: 12px
                 position: absolute
                 top: 55px
-                width: calc(100% - 75px)
+                width: 100%
             slots:
               default:
                 - component: f7-chip
@@ -152,7 +192,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatEnergy('Netzbezug (D | M)',
+                    text: =fn.formatEnergy(props.label_electricity_supply,
                       props.item_electricity_supply_day,
                       props.item_electricity_supply_month)
                 - component: f7-chip
@@ -164,7 +204,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatEnergy('Eigenverbrauch (D | M)',
+                    text: =fn.formatEnergy(props.label_electricity_selfconsumption,
                       props.item_electricity_selfconsumption_day,
                       props.item_electricity_selfconsumption_month)
                 - component: f7-chip
@@ -176,7 +216,8 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatEnergy('Einspeisung (D | M)', props.item_electricity_feedin_day,
+                    text: =fn.formatEnergy(props.label_electricity_feedin,
+                      props.item_electricity_feedin_day,
                       props.item_electricity_feedin_month)
                 - component: f7-chip
                   config:
@@ -187,7 +228,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatCurrency('Stromkosten (M | T)',
+                    text: =fn.formatCurrency(props.label_electricity_cost,
                       props.item_electricity_cost_month,
                       props.item_electricity_cost_total)
                     visible: "=props.item_electricity_cost_month ? true : false"
@@ -200,7 +241,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatCurrency('Einsparungen (M | T)',
+                    text: =fn.formatCurrency(props.label_electricity_savings,
                       props.item_electricity_savings_month,
                       props.item_electricity_savings_total)
                     visible: "=props.item_electricity_savings_month ? true : false"
@@ -213,7 +254,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 10px
                       margin-top: 0
-                    text: =fn.formatCurrency('Einspeisung  (M | T)',
+                    text: =fn.formatCurrency(props.label_electricity_feedin_earnings,
                       props.item_electricity_feedin_earnings_month,
                       props.item_electricity_feedin_earnings_total)
                     visible: "=props.item_electricity_feedin_earnings_month ? true : false"
