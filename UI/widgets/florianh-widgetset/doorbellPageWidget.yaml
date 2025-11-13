@@ -17,36 +17,39 @@ props:
       type: TEXT
       groupName: doorbellControl
     - context: item
-      description: String Item that controls the door/lock, must have commandDescription metadata defined
+      description: String Item that controls the door/lock, must have
+        commandDescription metadata defined
       label: Door/Lock Control
       name: item_doorControl
       required: true
       type: TEXT
       groupName: doorbellControl
-    - advanced: true
-      context: item
-      description: Contact Item that signals whether the door is locked (CLOSED) or unlocked (OPEN)
+    - context: item
+      description: Contact Item that signals whether the door is locked (CLOSED) or
+        unlocked (OPEN)
       label: Lock State
       name: item_lockState
       required: false
       type: TEXT
       groupName: lockControl
-    - advanced: true
-      context: item
+      advanced: true
+    - context: item
       description: Switch Item to unlock the door
       label: Lock Unlock
       name: item_lockUnlock
       required: false
       type: TEXT
       groupName: lockControl
-    - advanced: true
-      context: url
-      description: Webhook URL to send a HTTP GET request to to open the door (alternative to the unlock door Item)
+      advanced: true
+    - context: url
+      description: Webhook URL to send a HTTP GET request to to open the door
+        (alternative to the unlock door Item)
       label: Lock Unlock Webhook URL
       name: url_lockUnlock
       required: false
       type: TEXT
       groupName: lockControl
+      advanced: true
     - context: item
       description: Switch Item that indicates whether the doorbell is currently pressed
       label: Doorbell Pressed
@@ -131,7 +134,8 @@ props:
       type: TEXT
       groupName: sipClient
     - context: item
-      description: String Item to publish the SIP connection state to the openHAB server and make it accessible from rules etc.
+      description: String Item to publish the SIP connection state to the openHAB
+        server and make it accessible from rules etc.
       label: SIP State Item
       name: item_sipState
       required: false
@@ -164,14 +168,16 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Jul 29, 2024, 2:55:58 PM
+timestamp: Nov 13, 2025, 11:31:22 PM
 component: oh-context
 config:
   constants: {}
   functions:
+    imageLeft: =(width) => 'calc(calc(100% - ' + width + ') / 2)'
+    imageWidth: "=(portrait) => portrait
+      ? '100%'
+      : 'calc(calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'"
     isPortrait: =() => screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3))
-    imageWidth: "=(portrait) => portrait ? '100%' : 'calc(calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'"
-    imageLeft: "=(width) => 'calc(calc(100% - ' + width + ') / 2)'"
   variable: {}
 slots:
   default:
@@ -204,12 +210,16 @@ slots:
                 bottom: "=fn.isPortrait() ? '-10px' : ''"
                 box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
                 height: "=fn.isPortrait() ? '150px' : '330px'"
-                left: "=fn.isPortrait() ? '-10px' :
-                  (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360
-                  ? 'calc(' + fn.imageLeft(fn.imageHeight(false)) + ' - 175px)' : '-10px')"
+                left: "=fn.isPortrait() 
+                  ? '-10px' 
+                  : (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360
+                    ? 'calc(' + fn.imageLeft(fn.imageHeight(false)) + ' - 175px)'
+                    : '-10px')"
                 min-width: "=fn.isPortrait() ? '300px' : ''"
                 padding: 0px
                 position: absolute
+                transform-origin: top left
+                transform: ='scale(' + Math.min(screen.viewAreaHeight / 370, 1) + ')'
                 top: "=fn.isPortrait() ? '' : '-10px'"
                 width: "=fn.isPortrait() ? '100%' : '150px'"
             slots:
@@ -250,9 +260,12 @@ slots:
                                   eventDescription: Letztes Klingeln
                                   item_eventImage: =props.item_buttonLastPressedImage
                                   item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                                iconColor: "=items[props.item_doorbellPressed].state === 'ON' ?
-                                  (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
-                                iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
+                                iconColor: "=items[props.item_doorbellPressed].state === 'ON'
+                                  ? (themeOptions.dark === 'dark' ? 'white'
+                                  : 'black') : 'gray'"
+                                iconF7: "=items[props.item_doorbellPressed].state === 'ON'
+                                  ? 'bell'
+                                  : 'bell_slash'"
                                 iconSize: "=fn.isPortrait() ? '30' : '35'"
                                 style:
                                   --f7-button-height: "=fn.isPortrait() ? '30' : '35'"
@@ -265,8 +278,9 @@ slots:
                                   eventDescription: Letzte Bewegung
                                   item_eventImage: =props.item_lastMotionImage
                                   item_eventTimestamp: =props.item_lastMotionTimestamp
-                                iconColor: "=items[props.item_motion].state === 'ON' ?
-                                  (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                                iconColor: "=items[props.item_motion].state === 'ON'
+                                  ? (themeOptions.dark === 'dark' ? 'white' : 'black')
+                                  : 'gray'"
                                 iconF7: arrow_right_arrow_left
                                 iconSize: "=fn.isPortrait() ? '30' : '35'"
                                 style:
