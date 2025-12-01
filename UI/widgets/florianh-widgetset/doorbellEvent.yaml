@@ -29,21 +29,27 @@ props:
   parameterGroups:
     - name: widgetSettings
       label: Widget settings
-timestamp: Nov 13, 2025, 11:33:20 PM
-component: oh-image-card
+timestamp: Nov 29, 2025, 10:51:21 PM
+component: div
 config:
-  footer: "=props.eventDescription ? props.eventDescription + ': ' +
-    items[props.item_eventTimestamp].displayState :
-    items[props.item_eventTimestamp].displayState"
-  item: =props.item_eventImage
-  lazy: true
   style:
-    border-radius: var(--f7-card-expandable-border-radius)
-    footer-font-size: 24px
-    margin-left: auto
-    margin-right: auto
-    max-height: ='calc(' + screen.viewAreaHeight + 'px -
-      2*var(--f7-block-padding-vertical))'
-    max-width: ='calc((' + screen.viewAreaHeight + 'px -
-      2*var(--f7-block-padding-vertical)) * (4/3))'
-    text-align: center
+    display: flex
+    justify-content: center
+    width: 100%
+slots:
+  default:
+    - component: oh-image-card
+      config:
+        footer: "=props.eventDescription ? props.eventDescription + ': ' +
+          items[props.item_eventTimestamp].displayState :
+          items[props.item_eventTimestamp].displayState"
+        item: =props.item_eventImage
+        lazy: true
+        style:
+          border-radius: var(--f7-card-expandable-border-radius)
+          footer-font-size: 24px
+          --view-area-height: calc(100dvh - var(--f7-navbar-height) - var(--f7-safe-area-top))
+          max-height: calc(var(--view-area-height) - 2*var(--f7-card-margin-vertical))
+          max-width: ='calc((' + screen.viewAreaHeight + 'px -
+            2*var(--f7-block-padding-vertical)) * (4/3))'
+          text-align: center

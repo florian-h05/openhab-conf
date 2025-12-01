@@ -218,9 +218,10 @@ slots:
                 min-width: "=fn.isPortrait() ? '300px' : ''"
                 padding: 0px
                 position: absolute
-                transform-origin: top left
-                transform: ='scale(' + Math.min(screen.viewAreaHeight / 370, 1) + ')'
                 top: "=fn.isPortrait() ? '' : '-10px'"
+                --scale-ratio: ='min(1, calc(' + screen.viewAreaHeight + ' / (330 + 32)))'
+                transform: scale(var(--scale-ratio))
+                transform-origin: top left
                 width: "=fn.isPortrait() ? '100%' : '150px'"
             slots:
               default:
