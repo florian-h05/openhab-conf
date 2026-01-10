@@ -1,0 +1,98 @@
+# description: A drop-in replacement for Main UI's default list item widget for controlling Dimmer or Color Items.
+#              This widget displays a toggle, a colorpicker if the Item is a Color Item, and a slider if the accordion is opened.
+# author: Copyright (c) 2026 Florian Hotze under MIT License
+# also available on the marketplace:
+uid: light-control-list-item
+tags:
+  - list-item
+  - light control
+  - toggle
+  - dimmer
+  - color
+props:
+  parameters:
+    - context: item
+      description: Dimmer or Color Item to control
+      label: Item
+      name: item
+      required: true
+      type: TEXT
+      groupName: widgetSettings
+    - description: Title of the <code>oh-list-item</code>
+      label: Title
+      name: title
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - description: Footer of the <code>oh-list-item</code>
+      label: Footer
+      name: footer
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - description: Icon name (e.g. <code>oh:light</code>)
+      label: Icon
+      name: icon
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - description: Use the state of the Item to get a dynamic icon (for openHAB icons only)
+      label: Icon Use State
+      name: iconUseState
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+  parameterGroups:
+    - name: widgetSettings
+      label: Widget settings
+      description: When using as "Default List Item Widget", leave all properties empty; Main UI will populate them automatically.
+timestamp: Jan 10, 2026, 11:50:06 AM
+component: oh-list-item
+config:
+  title: =props.title || props.item
+  item: =props.item
+  icon: =props.icon
+  iconUseState: =props.iconUseState
+  footer: =props.footer
+  accordionItem: true
+slots:
+  after:
+    - component: div
+      config:
+        style:
+          display: flex
+          gap: 0.5rem
+      slots:
+        default:
+          - component: oh-colorpicker
+            config:
+              item: =props.item
+              openIn: auto
+              visible: "=items[props.item].type === 'HSB' ? true : false"
+          - component: oh-toggle
+            config:
+              item: =props.item
+  accordion:
+    - component: oh-list
+      config:
+        style:
+          margin-left: calc(2*var(--f7-list-item-padding-horizontal) +
+            3*var(--f7-typography-padding))
+          margin-right: calc(var(--f7-list-item-padding-horizontal) +
+            var(--f7-typography-padding))
+      slots:
+        default:
+          - component: oh-slider
+            config:
+              item: =props.item
+              min: 0
+              max: 100
+              step: 1
+              label: true
+              scale: true
+              scaleSteps: 5
+              scaleSubSteps: 5
+              unit: "%"
+              style:
+                height: 80px
+                overflow: visible
