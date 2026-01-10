@@ -1,7 +1,7 @@
 # description: A drop-in replacement for Main UI's default list item widget for controlling Dimmer or Color Items.
 #              This widget displays a toggle, a colorpicker if the Item is a Color Item, and a slider if the accordion is opened.
 # author: Copyright (c) 2026 Florian Hotze under MIT License
-# also available on the marketplace:
+# also available on the marketplace: https://community.openhab.org/t/light-dimmer-color-control-list-widget/167937
 uid: light-control-list-item
 tags:
   - list-item
