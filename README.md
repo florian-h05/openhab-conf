@@ -23,10 +23,12 @@ I can also recommend having a look at [rkoshak/openhab-rules-tools](https://gith
 
 ## Widgets
 
-My custom widget set for the openHAB MainUI (introduced with the 3.0 Release).
+My custom widget-set for the openHAB MainUI (introduced with the 3.0 Release).
 Feel free to use and/or modify [my widgets](/UI/widgets), just keep a copyright notice.
 
-Please note that those widgets are written for openHAB 3.4 or newer and might not work properly on older versions.
+Please note that those widgets are written only tested on the current openHAB release version,
+but since no breaking changes were made to the widget system, most of them should work with openHAB 3.4 or newer.
+If they don't work, they most likely use new functionality that is not available on older openHAB versions.
 
 ### Custom CSS for Pages
 
@@ -71,7 +73,7 @@ These color pairs are all from color series __600__.
 #### Icons
 
 Most icons are from [Framework7](https://framework7.io/icons/).
-Sometimes, openHAB icons are used, e.g. for state representation.
+Sometimes, openHAB icons are used, e.g., for state representation.
 
 _Framework7_ icons normally use these sizes:
 
