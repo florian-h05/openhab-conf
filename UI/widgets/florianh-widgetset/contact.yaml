@@ -1,5 +1,3 @@
-# description: Represent state of a contact with icon and colored text (color depends on state)
-# author: Copyright (c) 2021 Florian Hotze under MIT License
 uid: contact
 tags:
   - florianh-widgetset
@@ -52,7 +50,7 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Oct 2, 2022, 4:31:52 PM
+timestamp: Dec 4, 2025, 1:54:45 AM
 component: f7-card
 config:
   style:
@@ -127,7 +125,9 @@ slots:
               text: =@props.item
     - component: oh-icon
       config:
-        icon: "=items[props.item].state === 'CLOSED' || items[props.item].state === '100' ? props.bigOhIcon + '-closed' : props.bigOhIcon + '-open'"
+        icon: "=items[props.item].state === 'CLOSED' || #props.item === 0 
+          ? props.bigOhIcon + '-closed' 
+          : props.bigOhIcon + '-open'"
         style:
           position: absolute
           right: 10px
