@@ -333,7 +333,7 @@ You can create a custom logger by using the following scheme in _$openhab-userda
 In the `Appenders` section:
 
 ```xml
-		<!— KNX appender (custom) —>
+		<!-- KNX appender (custom) -->
 		<RollingFile fileName="${sys:openhab.logdir}/knx.log" filePattern="${sys:openhab.logdir}/knx.log.%i.gz" name="KNX">
 			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5.5p] [%-36.36c] - %m%n"/>
 			<Policies>
@@ -346,8 +346,8 @@ In the `Appenders` section:
 In the `Loggers` section:
 
 ```xml
-		<!— Custom loggers —>
-		<!— KNX logger —>
+		<!-- Custom loggers -->
+		<!-- KNX logger -->
 		<Logger additivity="false" level="DEBUG" name="org.openhab.logging.knx">
 			<AppenderRef ref="KNX"/>
 		</Logger>
