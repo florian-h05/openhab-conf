@@ -114,19 +114,21 @@ slots:
           justify-content: center
           margin-left: 5px
           margin-right: 5px
-          min-width: 350px
+          container-type: inline-size
       slots:
         default:
           - component: f7-block
             config:
               style:
-                --f7-theme-color: var(--f7-text-color)
+                '--f7-theme-color': var(--f7-text-color)
                 display: grid
                 grid-template-columns: repeat(3, 110px)
                 margin: 0
                 padding: 12px
                 place-items: center
-                width: 354px
+                '--scale-factor': min(1, calc(100cqw / 354px)
+                transform: scale(var(--scale-factor))
+                transform-origin: center center
             slots:
               default:
                 - component: div
