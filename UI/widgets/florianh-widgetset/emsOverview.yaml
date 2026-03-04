@@ -11,13 +11,6 @@ props:
       required: false
       type: TEXT
       groupName: appearance
-    - default: 270px
-      description: The height of the card
-      label: Height
-      name: height
-      required: false
-      type: TEXT
-      groupName: appearance
     - default: Eigenverbrauch (D | M)
       label: Electricity Self-Consumption Label
       name: label_electricity_selfconsumption
@@ -143,10 +136,10 @@ slots:
           --f7-chip-height: 28px
           border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
-          height: =props.height
           margin-left: 5px
           margin-right: 5px
           container-type: inline-size
+          position: relative
       slots:
         content:
           - component: f7-block
@@ -155,9 +148,8 @@ slots:
                 width: 100%
                 display: flex
                 flex-direction: row
-                left: 16px
-                position: absolute
-                top: -5px
+                margin: -5px 0 10px 0
+                padding: 0
             slots:
               default:
                 - component: f7-icon
@@ -170,14 +162,13 @@ slots:
                   config:
                     style:
                       font-size: 12px
-                      margin-top: 0px
+                      margin-top: 0
                     text: "=props.title ? props.title : 'EMS'"
           - component: f7-block
             config:
               style:
-                left: 12px
-                position: absolute
-                top: 55px
+                margin: 0 0 0 -4px
+                padding: 0
                 '--scale-factor': min(1, calc(100cqw / 360px)
                 transform: scale(var(--scale-factor))
                 transform-origin: left top
@@ -190,7 +181,7 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
+                      margin-bottom: 0
                       margin-top: 0
                     text: =fn.formatEnergy(props.label_electricity_supply,
                       props.item_electricity_supply_day,
@@ -202,8 +193,8 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
-                      margin-top: 0
+                      margin-bottom: 0
+                      margin-top: 10px
                     text: =fn.formatEnergy(props.label_electricity_selfconsumption,
                       props.item_electricity_selfconsumption_day,
                       props.item_electricity_selfconsumption_month)
@@ -214,8 +205,8 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
-                      margin-top: 0
+                      margin-bottom: 0
+                      margin-top: 10px
                     text: =fn.formatEnergy(props.label_electricity_feedin,
                       props.item_electricity_feedin_day,
                       props.item_electricity_feedin_month)
@@ -226,8 +217,8 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
-                      margin-top: 0
+                      margin-bottom: 0
+                      margin-top: 10px
                     text: =fn.formatCurrency(props.label_electricity_cost,
                       props.item_electricity_cost_month,
                       props.item_electricity_cost_total)
@@ -239,8 +230,8 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
-                      margin-top: 0
+                      margin-bottom: 0
+                      margin-top: 10px
                     text: =fn.formatCurrency(props.label_electricity_savings,
                       props.item_electricity_savings_month,
                       props.item_electricity_savings_total)
@@ -252,8 +243,8 @@ slots:
                     iconSize: 20
                     style:
                       font-size: 16px
-                      margin-bottom: 10px
-                      margin-top: 0
+                      margin-bottom: 0
+                      margin-top: 10px
                     text: =fn.formatCurrency(props.label_electricity_feedin_earnings,
                       props.item_electricity_feedin_earnings_month,
                       props.item_electricity_feedin_earnings_total)
@@ -263,9 +254,9 @@ slots:
               actionFeedback: Erledigt!
               actionPropsParameterGroup: widgetAction
               style:
-                height: 290px
-                left: 0px
                 position: absolute
-                top: 0px
-                width: 100%
+                top: 0
+                bottom: 0
+                left: 0
+                right: 0
               visible: "=props.widget_action ? true : false"
