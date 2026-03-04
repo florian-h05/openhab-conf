@@ -13,98 +13,98 @@ props:
       groupName: appearance
     - default: Eigenverbrauch (D | M)
       label: Electricity Self-Consumption Label
-      name: label_electricity_selfconsumption
+      name: selfConsumptionLabel
       required: false
       type: TEXT
       groupName: labeling
     - default: Einspeisung (D | M)
       label: Electricity Feed-In Label
-      name: label_electricity_feedin
+      name: feedInLabel
       required: false
       type: TEXT
       groupName: labeling
     - default: Netzbezug (D | M)
       label: Electricity Feed-In Label
-      name: label_electricity_supply
+      name: supplyLabel
       required: false
       type: TEXT
       groupName: labeling
     - default: Stromkosten (M | T)
       label: Electricity Cost Label
-      name: label_electricity_cost
+      name: costLabel
       required: false
       type: TEXT
       groupName: labeling
     - default: Einsparungen (M | T)
       label: Electricity Cost Savings Label
-      name: label_electricity_savings
+      name: savingLabel
       required: false
       type: TEXT
       groupName: labeling
     - default: Einspeisung (M | T)
       label: Electricity Feed-In Earnings Label
-      name: label_electricity_feedin_earnings
+      name: earningsLabel
       required: false
       type: TEXT
       groupName: labeling
     - context: item
       label: Electricity Self-Consumption Day
-      name: item_electricity_selfconsumption_day
+      name: selfConsumptionItemDay
       required: true
       type: TEXT
     - context: item
       label: Electricity Self-Consumption Month
-      name: item_electricity_selfconsumption_month
+      name: selfConsumptionItemMonth
       required: true
       type: TEXT
     - context: item
       label: Electricity Feed-In Day
-      name: item_electricity_feedin_day
+      name: feedInItemDay
       required: true
       type: TEXT
     - context: item
       label: Electricity Feed-In Month
-      name: item_electricity_feedin_month
+      name: feedInItemMonth
       required: true
       type: TEXT
     - context: item
       label: Electricity Supply Day
-      name: item_electricity_supply_day
+      name: supplyItemDay
       required: true
       type: TEXT
     - context: item
       label: Electricity Supply Month
-      name: item_electricity_supply_month
+      name: supplyItemMonth
       required: true
       type: TEXT
     - context: item
       label: Electricity Cost Month
-      name: item_electricity_cost_month
+      name: costItemMonth
       required: false
       type: TEXT
     - context: item
       label: Electricity Cost Total
-      name: item_electricity_cost_total
+      name: costItemTotal
       required: false
       type: TEXT
     - context: item
       label: Electricity Savings Month
-      name: item_electricity_savings_month
+      name: savingsItemMonth
       required: false
       type: TEXT
     - context: item
       label: Electricity Savings Total
-      name: item_electricity_savings_total
+      name: savingsItemTotal
       required: false
       type: TEXT
     - context: item
       label: Electricity Feed-In Earnings Month
-      name: item_electricity_feedin_earnings_month
+      name: earningsItemMonth
       required: false
       type: TEXT
     - context: item
       label: Electricity Feed-In Earnings Total
-      name: item_electricity_feedin_earnings_total
+      name: earningsItemTotal
       required: false
       type: TEXT
   parameterGroups:
@@ -183,9 +183,9 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 0
-                    text: =fn.formatEnergy(props.label_electricity_supply,
-                      props.item_electricity_supply_day,
-                      props.item_electricity_supply_month)
+                    text: =fn.formatEnergy(props.supplyLabel,
+                      props.supplyItemDay,
+                      props.supplyItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -195,9 +195,9 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatEnergy(props.label_electricity_selfconsumption,
-                      props.item_electricity_selfconsumption_day,
-                      props.item_electricity_selfconsumption_month)
+                    text: =fn.formatEnergy(props.selfConsumptionLabel,
+                      props.selfConsumptionItemDay,
+                      props.selfConsumptionItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -207,9 +207,9 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatEnergy(props.label_electricity_feedin,
-                      props.item_electricity_feedin_day,
-                      props.item_electricity_feedin_month)
+                    text: =fn.formatEnergy(props.feedInLabel,
+                      props.feedInItemDay,
+                      props.feedInItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -219,10 +219,10 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.label_electricity_cost,
-                      props.item_electricity_cost_month,
-                      props.item_electricity_cost_total)
-                    visible: "=props.item_electricity_cost_month ? true : false"
+                    text: =fn.formatCurrency(props.costLabel,
+                      props.costItemMonth,
+                      props.costItemTotal)
+                    visible: "=props.costItemMonth ? true : false"
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -232,10 +232,10 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.label_electricity_savings,
-                      props.item_electricity_savings_month,
-                      props.item_electricity_savings_total)
-                    visible: "=props.item_electricity_savings_month ? true : false"
+                    text: =fn.formatCurrency(props.savingLabel,
+                      props.savingsItemMonth,
+                      props.savingsItemTotal)
+                    visible: "=props.savingsItemMonth ? true : false"
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -245,10 +245,10 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.label_electricity_feedin_earnings,
-                      props.item_electricity_feedin_earnings_month,
-                      props.item_electricity_feedin_earnings_total)
-                    visible: "=props.item_electricity_feedin_earnings_month ? true : false"
+                    text: =fn.formatCurrency(props.earningsLabel,
+                      props.earningsItemMonth,
+                      props.earningsItemTotal)
+                    visible: "=props.earningsItemMonth ? true : false"
           - component: oh-link
             config:
               actionFeedback: Erledigt!
