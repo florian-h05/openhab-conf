@@ -1,0 +1,203 @@
+# description: Display forecasted solar production and actual production for the current week in a minimalistic chart
+# author: Copyright (c) 2026 Florian Hotze under MIT License
+uid: solarForecast
+tags:
+  - florianh-widgetset
+  - solar
+  - chart
+props:
+  parameters:
+    # Item & Persistence Configuration
+    - context: item
+      description: Item for forecasted energy (stored in persistence)
+      label: Item
+      name: forecastItem
+      required: true
+      type: TEXT
+      groupName: forecast
+    - context: persistenceService
+      description: Persistence service for forecasted energy Item
+      label: Persistence Service
+      name: forecastService
+      required: false
+      type: TEXT
+      groupName: forecast
+    - context: item
+      description: Item for actual energy produced (stored in persistence)
+      label: Item
+      name: actualItem
+      required: true
+      type: TEXT
+      groupName: actual
+    - context: persistenceService
+      description: Persistence service for actual energy Item
+      label: Persistence Service
+      name: actualService
+      required: false
+      type: TEXT
+      groupName: actual
+    # Chart Configuration
+    - default: kWh
+      description: Y-Axis Unit
+      name: yAxisName
+      required: false
+      type: TEXT
+    # Appearance Configuration
+    - default: 250px
+      description: Height of the widget (any CSS height value supported, but <code>px</code> is recommended)
+      label: Height
+      name: height
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: Vorhersage
+      description: Chart label (will be displayed in the legend and on tooltip hover) for forecasted production
+      label: Forecast Label
+      name: forecastLabel
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: Tatsächlich
+      description: Chart label (will be displayed in the legend and on tooltip hover) for actual produced energy
+      label: Actual Label
+      name: actualLabel
+      required: false
+      type: TEXT
+      groupName: appearance
+    - context: color
+      default: "#ff9800"
+      description: Color for produced energy bar
+      name: colorProduced
+      required: false
+      type: TEXT
+      groupName: appearance
+    - context: color
+      default: "#999999"
+      description: Color for forecasted energy bar (light mode)
+      name: colorForecastLight
+      required: false
+      type: TEXT
+      groupName: appearance
+    - context: color
+      default: "#e0e0e0"
+      description: Color for forecasted energy bar (dark mode)
+      name: colorForecastDark
+      required: false
+      type: TEXT
+      groupName: appearance
+  parameterGroups:
+    - name: forecast
+      label: Forecasted Production
+    - name: actual
+      label: Actual Production
+    - name: appearance
+      label: Appearance
+timestamp: Mar 4, 2026, 5:59:04 PM
+component: oh-context
+config:
+  constants:
+    backgroundColor: "=themeOptions.dark === 'dark' ? '#1c1c1d' : '#fff'"
+    aggregateDimension1: isoWeekday
+  functions:
+    tooltipFormatter: =(value, index) => Number(value).toFixed(1).toString().replace('.', ',')
+    forecastFormatter: "=(params) => Number(params.value[1]) ? Number(params.value[1]).toFixed(0) : ''"
+    producedFormatter: =(params) => Number(params.value[1]).toFixed(0)
+slots:
+  default:
+    - component: f7-card
+      config:
+        style:
+          border-radius: var(--f7-card-expandable-border-radius)
+          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          margin-left: 5px
+          margin-right: 5px
+          noShadow: false
+      slots:
+        content:
+          - component: oh-chart
+            config:
+              chartType: isoWeek
+              height: =props.height
+              periodVisible: false
+              options:
+                backgroundColor: =const.backgroundColor
+            slots:
+              tooltip:
+                - component: oh-chart-tooltip
+                  config:
+                    show: true
+                    trigger: axis
+                    valueFormatter: =fn.tooltipFormatter
+              legend:
+                - component: oh-chart-legend
+                  config:
+                    bottom: 0
+                    show: true
+              grid:
+                - component: oh-chart-grid
+                  config:
+                    bottom: 30
+                    containLabel: true
+                    left: 5
+                    right: 5
+                    top: 10
+              xAxis:
+                - component: oh-category-axis
+                  config:
+                    categoryType: week
+                    axisLine:
+                      show: false
+                    axisTick:
+                      show: false
+                    weekdayFormat: short
+              yAxis:
+                - component: oh-value-axis
+                  config:
+                    axisLabel:
+                      show: false
+                    splitLine:
+                      show: false
+              series:
+                - component: oh-aggregate-series
+                  config:
+                    aggregationFunction: max
+                    barWidth: 50%
+                    dimension1: =const.aggregateDimension1
+                    item: =props.forecastItem
+                    service: =props.forecastService
+                    itemStyle:
+                      borderRadius:
+                        - 8
+                        - 8
+                        - 8
+                        - 8
+                      color: "=themeOptions.dark === 'dark' ? props.colorForecastDark : props.colorForecastLight"
+                    label:
+                      show: true
+                      position: insideBottom
+                      color: =const.backgroundColor
+                      formatter: =fn.forecastFormatter
+                    name: =props.forecastLabel + ' (' + props.yAxisName + ')'
+                    type: bar
+                - component: oh-aggregate-series
+                  config:
+                    aggregationFunction: max
+                    barGap: -60%
+                    barWidth: 50%
+                    dimension1: =const.aggregateDimension1
+                    item: =props.actualItem
+                    service: =props.actualService
+                    itemStyle:
+                      borderRadius:
+                        - 8
+                        - 8
+                        - 8
+                        - 8
+                      color: =props.colorProduced
+                    label:
+                      show: true
+                      position: top
+                      color: =props.colorProduced
+                      formatter: =fn.producedFormatter
+                    name: =props.actualLabel + ' (' + props.yAxisName + ')'
+                    type: bar
