@@ -1,5 +1,4 @@
 # description: Displays current energy flow of an energy management system (designed for Fronius Symo Gen24 Plus)
-# dependencies: SMA icons from https://github.com/florian-h05/openhab-conf/tree/main/icons/sma-energy
 # author: Copyright (c) 2024 Florian Hotze under MIT License
 # credits: this widget is based on the animated energy widget by Sebastian Neu, but has received a major overhaul
 # community thread: https://community.openhab.org/t/animated-energy-widget/133510
@@ -9,17 +8,12 @@ tags:
   - florianh-widgetset
 props:
   parameters:
+    # Items
     - context: item
       description: Grid Power (+ from grid, - to grid)
       label: Grid Power
       name: gridpower
       required: true
-      type: TEXT
-    - context: item
-      description: Backup Power (OPEN/ON on backup power, CLOSED/OFF on grid)
-      label: Backup Power
-      name: backuppower
-      required: false
       type: TEXT
     - context: item
       description: Power from load (+ generator, - consumer)
@@ -52,7 +46,40 @@ props:
       name: evChargerPower
       required: false
       type: TEXT
+    # Appearance (e.g., Icons)
+    - default: iconify:lucide:utility-pole
+      label: Grid Icon
+      name: gridIcon
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: iconify:lucide:house
+      label: Load Icon
+      name: loadIcon
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: iconify:material-symbols-light:solar-power-rounded
+      label: Solar Icon
+      name: solarIcon
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: iconify:lucide:battery-charging
+      label: Battery Icon
+      name: batteryIcon
+      required: false
+      type: TEXT
+      groupName: appearance
+    - default: iconify:ic:round-ev-station
+      label: EV Charger Icon
+      name: evChargerIcon
+      required: false
+      type: TEXT
+      groupName: appearance
   parameterGroups:
+    - name: appearance
+      label: Appearance
     - name: solarAction
       context: action
       label: Solar Action
@@ -72,8 +99,6 @@ config:
   functions:
     getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
     flowsTo: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) < 0
-    isOnBackupPower: =() => props.backuppower && (@@props.backuppower === 'OPEN' ||
-      @@props.backuppower === 'ON')
     flowsFrom: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) > 0
   variable: {}
 slots:
@@ -138,7 +163,7 @@ slots:
                         config:
                           actionPropsParameterGroup: solarAction
                           height: 85px
-                          icon: oh:sma-energy:pv
+                          icon: =props.solarIcon
                           style:
                             margin-bottom: 10px
                 - component: div
@@ -161,8 +186,7 @@ slots:
                       - component: oh-icon
                         config:
                           height: 85px
-                          icon: "=fn.isOnBackupPower() ? 'oh:sma-energy:grid-offline' :
-                            'oh:sma-energy:grid'"
+                          icon: =props.gridIcon
                           style:
                             margin-bottom: 10px
                             margin-top: 10px
@@ -461,7 +485,7 @@ slots:
                       - component: oh-icon
                         config:
                           height: 85px
-                          icon: oh:sma-energy:battery
+                          icon: =props.batteryIcon
                           style:
                             margin-bottom: 10px
                             margin-top: 10px
@@ -500,7 +524,7 @@ slots:
                         config:
                           actionPropsParameterGroup: loadAction
                           height: 85px
-                          icon: oh:sma-energy:house
+                          icon: =props.loadIcon
                           style:
                             margin-top: 20px
                       - component: Label
@@ -585,7 +609,7 @@ slots:
                               config:
                                 actionPropsParameterGroup: evChargerAction
                                 height: 85px
-                                icon: oh:sma-energy:ev-charger
+                                icon: =props.evChargerIcon
                                 style:
                                   margin-top: 20px
                             - component: Label
