@@ -170,8 +170,7 @@ slots:
                 margin: 0 0 0 -4px
                 padding: 0
                 '--scale-factor': min(1, calc(100cqw / 360px)
-                transform: scale(var(--scale-factor))
-                transform-origin: left top
+                zoom: var(--scale-factor)
             slots:
               default:
                 - component: f7-chip
