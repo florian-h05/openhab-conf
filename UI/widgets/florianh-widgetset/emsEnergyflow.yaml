@@ -12,38 +12,38 @@ props:
     - context: item
       description: Grid Power (+ from grid, - to grid)
       label: Grid Power
-      name: gridpower
+      name: gridPowerItem
       required: true
       type: TEXT
     - context: item
       description: Power from load (+ generator, - consumer)
       label: Load Power
-      name: loadpower
+      name: loadPowerItem
       required: true
       type: TEXT
     - context: item
       description: Power from solar plant
       label: Solar Power
-      name: solarpower
+      name: solarPowerItem
       required: true
       type: TEXT
     - context: item
       description: Power from battery (+ discharge, - charge)
       label: Battery Power
-      name: batterypower
+      name: batteryPowerItem
       required: true
       type: TEXT
     - context: item
       description: Current state of charge of the battery connected to the inverter in
         percent
       label: Battery State of Charge
-      name: batterylevel
+      name: batteryLevelItem
       required: true
       type: TEXT
     - context: item
       description: Charging power of EV charger
       label: EV Charging Power
-      name: evChargerPower
+      name: evChargerPowerItem
       required: false
       type: TEXT
     # Appearance (e.g., Icons)
@@ -150,15 +150,15 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsFrom(props.solarpower) ? (themeOptions.dark === 'dark' ?
+                            color: "=fn.flowsFrom(props.solarPowerItem) ? (themeOptions.dark === 'dark' ?
                               'white' : 'black') : 'gray'"
                             font-size: 25px
                             font-weight: bold
                             margin-bottom: -10px
                             text-align: center
                             width: 100px
-                          text: =fn.getFormattedState(props.solarpower)
-                          visible: "=props.solarpower ? true : false"
+                          text: =fn.getFormattedState(props.solarPowerItem)
+                          visible: "=props.solarPowerItem ? true : false"
                       - component: oh-icon
                         config:
                           actionPropsParameterGroup: solarAction
@@ -193,15 +193,15 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.gridpower) ? 'green' :
-                              fn.flowsFrom(props.gridpower) ? 'red' : 'gray'"
+                            color: "=fn.flowsTo(props.gridPowerItem) ? 'green' :
+                              fn.flowsFrom(props.gridPowerItem) ? 'red' : 'gray'"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px
                             text-align: center
                             width: 100px
-                          text: =fn.getFormattedState(props.gridpower)
-                          visible: "=props.gridpower ? true : false"
+                          text: =fn.getFormattedState(props.gridPowerItem)
+                          visible: "=props.gridPowerItem ? true : false"
                 - component: f7-block
                   config:
                     style:
@@ -233,7 +233,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.batterypower)
+                                visible: =fn.flowsFrom(props.solarPowerItem) && fn.flowsTo(props.batteryPowerItem)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -242,7 +242,7 @@ slots:
                                   stroke-width: 4
                                 tag: circle
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.batterypower)
+                                visible: =fn.flowsFrom(props.solarPowerItem) && fn.flowsTo(props.batteryPowerItem)
                               slots:
                                 default:
                                   - component: f7-row
@@ -266,7 +266,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.gridpower)
+                                visible: =fn.flowsFrom(props.solarPowerItem) && fn.flowsTo(props.gridPowerItem)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -274,7 +274,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower) && fn.flowsTo(props.gridpower)
+                                visible: =fn.flowsFrom(props.solarPowerItem) && fn.flowsTo(props.gridPowerItem)
                               slots:
                                 default:
                                   - component: f7-row
@@ -298,7 +298,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower)
+                                visible: =fn.flowsFrom(props.solarPowerItem)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -306,7 +306,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.solarpower)
+                                visible: =fn.flowsFrom(props.solarPowerItem)
                               slots:
                                 default:
                                   - component: f7-row
@@ -330,7 +330,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.gridpower)
+                                visible: =fn.flowsFrom(props.gridPowerItem)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -338,7 +338,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.gridpower)
+                                visible: =fn.flowsFrom(props.gridPowerItem)
                               slots:
                                 default:
                                   - component: f7-row
@@ -362,8 +362,8 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.flowsTo(props.batterypower)"
+                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
+                                  fn.flowsTo(props.batteryPowerItem)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -371,8 +371,8 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: "=#props.gridpower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.flowsTo(props.batterypower)"
+                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
+                                  fn.flowsTo(props.batteryPowerItem)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -396,7 +396,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.batterypower)
+                                visible: =fn.flowsFrom(props.batteryPowerItem)
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -404,7 +404,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: =fn.flowsFrom(props.batterypower)
+                                visible: =fn.flowsFrom(props.batteryPowerItem)
                               slots:
                                 default:
                                   - component: f7-row
@@ -428,8 +428,8 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.flowsTo(props.gridpower)"
+                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
+                                  fn.flowsTo(props.gridPowerItem)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -437,8 +437,8 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: "=#props.batterypower - #props.solarpower + #props.loadpower > 0 &&
-                                  fn.flowsTo(props.gridpower)"
+                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
+                                  fn.flowsTo(props.gridPowerItem)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -469,10 +469,10 @@ slots:
                         config:
                           action: analyzer
                           actionAnalyzerCoordSystem: time
-                          actionAnalyzerItems: =[props.batterylevel]
-                          iconColor: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'red' :
+                          actionAnalyzerItems: =[props.batteryLevelItem]
+                          iconColor: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'red' :
                             'orange') : 'green'"
-                          iconF7: "=#props.batterylevel < 65 ? (#props.batterylevel < 10 ? 'battery_0' :
+                          iconF7: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'battery_0' :
                             'battery_25') : 'battery_100'"
                           iconSize: 30px
                           style:
@@ -481,7 +481,7 @@ slots:
                             position: absolute
                             top: -25px
                             white-space: nowrap
-                          text: =Math.round(#props.batterylevel) + '%'
+                          text: =Math.round(#props.batteryLevelItem) + '%'
                       - component: oh-icon
                         config:
                           height: 85px
@@ -492,8 +492,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.batterypower) ? 'green' :
-                              fn.flowsFrom(props.batterypower) ? 'red' :
+                            color: "=fn.flowsTo(props.batteryPowerItem) ? 'green' :
+                              fn.flowsFrom(props.batteryPowerItem) ? 'red' :
                               'gray'"
                             font-size: 25px
                             font-weight: bold
@@ -501,8 +501,8 @@ slots:
                             text-align: center
                             white-space: nowrap
                             width: 100px
-                          text: =fn.getFormattedState(props.batterypower)
-                          visible: "=props.batterypower ? true : false"
+                          text: =fn.getFormattedState(props.batteryPowerItem)
+                          visible: "=props.batteryPowerItem ? true : false"
                 - component: div
                   config:
                     style:
@@ -535,8 +535,8 @@ slots:
                             margin-top: -5px
                             text-align: center
                             width: 100px
-                          text: =fn.getFormattedState(props.loadpower)
-                          visible: "=props.loadpower ? true : false"
+                          text: =fn.getFormattedState(props.loadPowerItem)
+                          visible: "=props.loadPowerItem ? true : false"
                 - component: f7-block
                   config:
                     style:
@@ -556,7 +556,7 @@ slots:
                             width: 30px
                           tag: svg
                           viewBox: 0 0 30 100
-                          visible: =fn.flowsFrom(props.evChargerPower)
+                          visible: =fn.flowsFrom(props.evChargerPowerItem)
                           xmlns: http://www.w3.org/2000/svg
                         slots:
                           default:
@@ -602,7 +602,7 @@ slots:
                             padding: 0
                             transform: scale(0.7)
                             width: 80px
-                          visible: "=props.evChargerPower ? true : false"
+                          visible: "=props.evChargerPowerItem ? true : false"
                         slots:
                           default:
                             - component: oh-icon
@@ -620,4 +620,4 @@ slots:
                                   margin-top: -5px
                                   text-align: center
                                   width: 100px
-                                text: =fn.getFormattedState(props.evChargerPower)
+                                text: =fn.getFormattedState(props.evChargerPowerItem)
