@@ -34,9 +34,6 @@ timestamp: Apr 16, 2022, 8:48:28 PM
 component: f7-card
 config:
   style:
-    noShadow: false
-    class:
-      - padding: 0px
     border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
     background-color: "=props.bgcolor ? props.bgcolor : ''"

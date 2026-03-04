@@ -111,7 +111,6 @@ slots:
           box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
           margin-left: 5px
           margin-right: 5px
-          noShadow: false
       slots:
         content:
           - component: oh-chart

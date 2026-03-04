@@ -37,8 +37,6 @@ config:
     height: "=props.item_color && @@props.item_effect === 'effect_single' ? '470px'
       : '100px'"
     minWidth: 180px
-    noShadow: false
-    padding: 0px
 slots:
   content:
     - component: oh-button

@@ -94,8 +94,6 @@ config:
     margin-left: 5px
     margin-right: 5px
     minWidth: 180px
-    noShadow: false
-    padding: 0px
 slots:
   content:
     - component: f7-block
