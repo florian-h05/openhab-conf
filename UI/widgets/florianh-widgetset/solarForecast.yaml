@@ -50,14 +50,14 @@ props:
       required: false
       type: TEXT
       groupName: appearance
-    - default: Vorhersage
+    - default: Forecast
       description: Chart label (will be displayed in the legend and on tooltip hover) for forecasted production
       label: Forecast Label
       name: forecastLabel
       required: false
       type: TEXT
       groupName: appearance
-    - default: Tatsächlich
+    - default: Actual
       description: Chart label (will be displayed in the legend and on tooltip hover) for actual produced energy
       label: Actual Label
       name: actualLabel

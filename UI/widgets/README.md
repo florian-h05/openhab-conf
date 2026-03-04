@@ -230,6 +230,12 @@ Display current power and today’s as well as total production and last refresh
 
 ![](./doc/solar/dark.jpeg)
 
+## [`solarForecast`](./florianh-widgetset/solarForecast.yaml)
+
+Display forecasted solar production and actual production for the current week in a minimalistic chart.
+
+![](./doc/solarForecast/dark.jpg)
+
 ## [`temperatureControl`](./florianh-widgetset/temperatureControl.yaml)
 
 Shows current temperature with analyzer, heating/cooling state and controls target temperature.
