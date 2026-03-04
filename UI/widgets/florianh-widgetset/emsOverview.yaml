@@ -37,7 +37,7 @@ props:
       groupName: labeling
     - default: Einsparungen (M | T)
       label: Electricity Cost Savings Label
-      name: savingLabel
+      name: savingsLabel
       required: false
       type: TEXT
       groupName: labeling
@@ -231,7 +231,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.savingLabel,
+                    text: =fn.formatCurrency(props.savingsLabel,
                       props.savingsItemMonth,
                       props.savingsItemTotal)
                     visible: "=props.savingsItemMonth ? true : false"
