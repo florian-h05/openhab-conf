@@ -55,10 +55,6 @@ The textual state representation changes the color based on the contact's state.
 
 ![](./doc/contact/dark.jpeg)
 
-### Configuration
-
-Configuration is straight forward and requires no further explanation.
-
 ## [`control`](./florianh-widgetset/control.yaml)
 
 This is probably the most universal widget in this collection, as it provides multiple ways of controlling an Item as well as state representation for groups and on-click actions.
@@ -178,10 +174,6 @@ If any action is enabled, the analyzer will open on a left-side click and the ac
 
 ![](./doc/label/dark.jpeg)
 
-### Configuration
-
-Configuration is straight forward and requires no further explanation.
-
 ## [`mlscControl`](./florianh-widgetset/mlscControl.yaml)
 
 This widget allows to control effect, brightness and (optionally) color of [music_led_strip_control](https://github.com/TobKra96/music_led_strip_control).
@@ -232,19 +224,11 @@ Control a shutter with buttons and optional slider, display the shutter’s posi
 
 ![](./doc/shutter/dark.jpeg)
 
-### Configuration
-
-Configuration is straight forward and requires no further explanation.
-
 ## [`solar`](./florianh-widgetset/solar.yaml)
 
 Display current power and today’s as well as total production and last refresh of solar inverter.
 
 ![](./doc/solar/dark.jpeg)
-
-### Configuration
-
-Configuration is self-explaining.
 
 ## [`temperatureControl`](./florianh-widgetset/temperatureControl.yaml)
 
