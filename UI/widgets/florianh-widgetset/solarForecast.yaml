@@ -180,7 +180,7 @@ slots:
                     type: bar
                 - component: oh-aggregate-series
                   config:
-                    aggregationFunction: max
+                    aggregationFunction: last
                     barGap: -60%
                     barWidth: 50%
                     dimension1: =const.aggregateDimension1
