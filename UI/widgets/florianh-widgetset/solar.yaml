@@ -71,16 +71,20 @@ timestamp: Sep 21, 2025, 11:57:31 AM
 component: f7-card
 config:
   style:
-    --f7-chip-height: 28px
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+    backdrop-filter: blur(6px)
     border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: =props.height
     margin-left: 5px
     margin-right: 5px
+    minWidth: 200px
 slots:
   content:
     - component: f7-block
       config:
+        visible: "=props.title ? true : false"
         style:
           display: flex
           flex-direction: row
@@ -100,13 +104,15 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: =props.title || 'Solar'
+              text: =props.title
     - component: f7-block
       config:
         style:
+          display: flex
+          flex-direction: column
           left: 12px
           position: absolute
-          top: 55px
+          top: "=props.title ? '55px' : '-5px'"
           width: calc(100% - 75px)
       slots:
         default:
@@ -118,8 +124,11 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-bottom: 10px
+                font-weight: 400
+                margin-bottom: 2px
                 margin-top: 0
+                height: auto
+                line-height: 1.2
               text: =@props.item_power
           - component: f7-chip
             config:
@@ -129,8 +138,11 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-bottom: 10px
+                font-weight: 400
+                margin-bottom: 2px
                 margin-top: 0
+                height: auto
+                line-height: 1.2
               text: "=(@props.item_energy_day).split(' ')[0] + (props.item_energy_month ? ' |
                 ' + (@props.item_energy_month).split(' ')[0] : '') +
                 (props.item_energy_total ? ' | ' +
@@ -144,8 +156,11 @@ slots:
               style:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
-                margin-bottom: 10px
+                font-weight: 400
+                margin-bottom: 0
                 margin-top: 0
+                height: auto
+                line-height: 1.2
               text: =@props.item_lastrefresh
               visible: "=props.item_lastrefresh !== undefined ? true : false"
     - component: oh-icon
@@ -153,15 +168,15 @@ slots:
         icon: solarplant
         style:
           position: absolute
-          right: 20px
+          right: 15px
           top: 15px
-          width: 60px
+          width: 80px
     - component: oh-link
       config:
         action: navigate
         actionPage: ='page:' + props.page
         style:
-          height: 120px
+          height: =props.height
           left: 0px
           position: absolute
           top: 0px
@@ -172,8 +187,7 @@ slots:
         actionFeedback: Erledigt!
         actionPropsParameterGroup: widgetAction
         style:
-          height: 120px
-          position: absolute
+          height: =props.height
           right: 0px
           top: 0px
           width: "=props.page_action ? '35%' : '100%'"

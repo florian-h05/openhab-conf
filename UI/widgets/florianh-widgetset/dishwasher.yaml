@@ -235,40 +235,18 @@ slots:
     - component: f7-card
       config:
         style:
-          background-color: "=props.bgcolor ? props.bgcolor : ''"
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+          backdrop-filter: blur(6px)
           border-radius: var(--f7-card-expandable-border-radius)
-          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           height: 120px
           margin-left: 5px
           margin-right: 5px
-          min-width: 280px
+          min-width: 180px
       slots:
         content:
-          # 1. Title Block (Top-left)
-          - component: f7-block
-            config:
-              style:
-                display: flex
-                flex-direction: row
-                left: 16px
-                position: absolute
-                top: -5px
-            slots:
-              default:
-                - component: oh-icon
-                  config:
-                    icon: iconify:mdi:dishwasher
-                    height: 18px
-                    style:
-                      margin-right: 10px
-                - component: Label
-                  config:
-                    style:
-                      font-size: 12px
-                      margin-top: 0px
-                    text: =props.title
-
-          # 2. State & Runtime Label
+          # 1. Title & Status Block
           - component: f7-block
             config:
               style:
@@ -276,31 +254,31 @@ slots:
                 flex-direction: column
                 left: 17px
                 position: absolute
-                top: 45px
-                width: calc(100% - 130px)
+                top: -5px
+                width: calc(100% - 100px)
             slots:
               default:
                 - component: Label
                   config:
+                    visible: "=props.title ? true : false"
                     style:
-                      font-size: 20px
+                      font-size: 22px
                       font-weight: 500
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                      color: "=!fn.isPowerOn() ? 'gray' : (fn.isRunning() ? '#0284c7' : (fn.isFinished() ? '#22c55e' : (themeOptions.dark === 'dark' ? 'white' : 'black')))"
-                    text: "=!fn.isPowerOn() ? (props.textStateOff || 'Aus') : (fn.isRunning() ? (props.textStateRunning || 'Aktiv') : (fn.isFinished() ? (props.textStateFinished || 'Fertig') : (fn.isReady() ? (props.textStateReady || 'Bereit') : @@props.itemState)))"
+                      color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+                    text: =props.title
                 - component: Label
                   config:
                     style:
-                      font-size: 14px
+                      font-size: 16px
                       margin-top: -0.25em
-                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d') : 'gray'"
+                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                    text: "=fn.isDoorOpen() ? (props.textDoorOpen || 'Tür geöffnet') : (fn.isRunning() && props.itemRuntime && items[props.itemRuntime] && items[props.itemRuntime].state !== 'NULL' && items[props.itemRuntime].state !== 'UNDEF' ? (props.textRemaining || 'Noch ') + (items[props.itemRuntime].displayState || items[props.itemRuntime].state) : (fn.isFinished() ? (props.textClean || 'Geschirr ist sauber') : (props.textReadyToStart || 'Bereit zum Starten')))"
-                    visible: "=fn.isPowerOn() || fn.isDoorOpen()"
+                    text: "=(!fn.isPowerOn() ? (props.textStateOff || 'Aus') : (fn.isRunning() ? (props.textStateRunning || 'Aktiv') : (fn.isFinished() ? (props.textStateFinished || 'Fertig') : (fn.isReady() ? (props.textStateReady || 'Bereit') : @@props.itemState)))) + (fn.isPowerOn() || fn.isDoorOpen() ? ' — ' + (fn.isDoorOpen() ? (props.textDoorOpen || 'Tür geöffnet') : (fn.isRunning() && props.itemRuntime && items[props.itemRuntime] && items[props.itemRuntime].state !== 'NULL' && items[props.itemRuntime].state !== 'UNDEF' ? (props.textRemaining || 'Noch ') + (items[props.itemRuntime].displayState || items[props.itemRuntime].state) : (fn.isFinished() ? (props.textClean || 'Geschirr ist sauber') : (props.textReadyToStart || 'Bereit zum Starten')))) : '')"
 
           # 3. Controls Row (Power, Program selector, Start/Pause/Resume, Stop action)
           - component: f7-block
@@ -313,7 +291,7 @@ slots:
                 left: 15px
                 position: absolute
                 top: 76px
-                width: calc(100% - 130px)
+                width: calc(100% - 100px - 2 * var(--f7-block-padding-horizontal))
                 margin: 0
                 padding: 0
             slots:

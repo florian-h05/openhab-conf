@@ -71,17 +71,20 @@ timestamp: Feb 24, 2024, 3:21:46 PM
 component: f7-card
 config:
   style:
-    background-color: =props.bgcolor || ''
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+    backdrop-filter: blur(6px)
     border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    minWidth: 180px
+    minWidth: 200px
 slots:
   content:
     - component: f7-block
       config:
+        visible: "=props.title || props.icon ? true : false"
         style:
           display: flex
           flex-direction: row
@@ -107,15 +110,15 @@ slots:
         style:
           left: 17px
           position: absolute
-          top: 45px
+          top: "=props.title || props.icon ? '45px' : '-5px'"
           width: calc(100% - 40px)
       slots:
         default:
           - component: Label
             config:
               style:
-                font-size: 24px
-                font-weight: 400
+                font-size: 22px
+                font-weight: 500
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
@@ -123,7 +126,7 @@ slots:
           - component: Label
             config:
               style:
-                font-size: 14px
+                font-size: 16px
                 margin-top: -0.25em
                 overflow: hidden
                 text-overflow: ellipsis
@@ -150,7 +153,7 @@ slots:
               actionFeedback: Erledigt!
               actionItem: =props.item
               iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : 'red'"
+                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
               iconF7: arrow_up_circle
               iconSize: 34
               style:
@@ -162,7 +165,7 @@ slots:
               actionCommand: STOP
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: red
+              iconColor: "=(themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
               iconF7: stop_circle
               iconSize: 30
               style:
@@ -175,7 +178,7 @@ slots:
               actionFeedback: Erledigt!
               actionItem: =props.item
               iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : 'red'"
+                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
               iconF7: arrow_down_circle
               iconSize: 34
               style:
@@ -188,16 +191,14 @@ slots:
         max: 100
         min: 0
         releaseOnly: true
-        scale: true
-        scaleSteps: 5
         style:
           --f7-range-bar-border-radius: 8px
           --f7-range-bar-size: 6px
-          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
           --f7-range-knob-size: 16px
-          left: 18.5px
+          left: 15px
           position: absolute
-          top: 75px
+          top: 82.5px
           width: calc(100% - 80px)
         visible: "=props.sliderEnable === true ? true : false"
     - component: oh-link

@@ -96,7 +96,8 @@ timestamp: Mar 4, 2026, 5:59:04 PM
 component: oh-context
 config:
   constants:
-    backgroundColor: "=themeOptions.dark === 'dark' ? '#1c1c1d' : '#fff'"
+    chartBackgroundColor: transparent
+    textColor: "=themeOptions.dark === 'dark' ? '#1c1c1d' : '#fff'"
     aggregateDimension1: isoWeekday
   functions:
     tooltipFormatter: =(value, index) => Number(value).toFixed(1).toString().replace('.', ',')
@@ -107,8 +108,11 @@ slots:
     - component: f7-card
       config:
         style:
+          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
+          backdrop-filter: blur(6px)
           border-radius: var(--f7-card-expandable-border-radius)
-          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           margin-left: 5px
           margin-right: 5px
       slots:
@@ -119,7 +123,7 @@ slots:
               height: =props.height
               periodVisible: false
               options:
-                backgroundColor: =const.backgroundColor
+                backgroundColor: =const.chartBackgroundColor
             slots:
               tooltip:
                 - component: oh-chart-tooltip
@@ -174,7 +178,7 @@ slots:
                     label:
                       show: true
                       position: insideBottom
-                      color: =const.backgroundColor
+                      color: =const.textColor
                       formatter: =fn.forecastFormatter
                     name: =props.forecastLabel + ' (' + props.yAxisName + ')'
                     type: bar

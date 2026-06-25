@@ -107,8 +107,11 @@ slots:
       config:
         style:
           align-items: center
+          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
+          backdrop-filter: blur(6px)
           border-radius: var(--f7-card-expandable-border-radius)
-          box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           display: flex
           justify-content: center
           margin-left: 5px
@@ -150,7 +153,7 @@ slots:
                         config:
                           style:
                             color: "=fn.flowsFrom(props.solarPowerItem) ? (themeOptions.dark === 'dark' ?
-                              'white' : 'black') : 'gray'"
+                              'white' : 'black') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-bottom: -10px
@@ -192,8 +195,9 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.gridPowerItem) ? 'green' :
-                              fn.flowsFrom(props.gridPowerItem) ? 'red' : 'gray'"
+                            color: "=fn.flowsTo(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') :
+                              fn.flowsFrom(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') :
+                              (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px
@@ -491,9 +495,9 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.batteryPowerItem) ? 'green' :
-                              fn.flowsFrom(props.batteryPowerItem) ? 'red' :
-                              'gray'"
+                            color: "=fn.flowsTo(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') :
+                              fn.flowsFrom(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') :
+                              (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px

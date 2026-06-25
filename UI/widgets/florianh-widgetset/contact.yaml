@@ -54,17 +54,20 @@ timestamp: Dec 4, 2025, 1:54:45 AM
 component: f7-card
 config:
   style:
-    background-color: =props.bgcolor || ''
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+    backdrop-filter: blur(6px)
     border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    minWidth: 180px
+    minWidth: 200px
 slots:
   content:
     - component: f7-block
       config:
+        visible: "=props.title || props.icon ? true : false"
         style:
           display: flex
           flex-direction: row
@@ -92,34 +95,34 @@ slots:
           flex-direction: column
           left: 17px
           position: absolute
-          top: 45px
+          top: "=props.title || props.icon ? '45px' : '-5px'"
           width: 100%
       slots:
         default:
           - component: Label
             config:
               style:
-                font-size: 24px
-                font-weight: 400
+                font-size: 22px
+                font-weight: 500
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-                width: "=props.bigOhIcon ? 'calc(100% - 80px)' : '100%'"
+                width: "=props.bigOhIcon ? 'calc(100% - 90px)' : '100%'"
               text: =props.header || 'Set header!'
           - component: Label
             config:
               style:
-                color: "=@@[props.item] === 'CLOSED' || #[props.item] === 0 ? (themeOptions.dark === 'dark' ? '#76d275' : '#00701a') 
-                  : #[props.item] === 0.3 ? (themeOptions.dark === 'dark' ? '#ffff6b' : '#c5a600') 
-                  : #[props.item] === 0.5 ? (themeOptions.dark === 'dark' ? '#ffbc45' : '#c25e00') 
-                  : (themeOptions.dark === 'dark' ? '#e53735' : '#ab000d')"
-                font-size: 24px
+                color: "=@@[props.item] === 'CLOSED' || #[props.item] === 0 ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') 
+                  : #[props.item] === 0.3 ? (themeOptions.dark === 'dark' ? '#ffd60a' : '#ffcc00') 
+                  : #[props.item] === 0.5 ? (themeOptions.dark === 'dark' ? '#ff9f0a' : '#ff9500') 
+                  : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                font-size: 16px
                 font-weight: 400
-                margin-top: 0.3em
+                margin-top: -0.25em
                 overflow: hidden
-                text-align: center
                 text-overflow: ellipsis
                 white-space: nowrap
+                width: "=props.bigOhIcon ? 'calc(100% - 90px)' : '100%'"
               text: =@props.item
     - component: oh-icon
       config:
@@ -130,7 +133,7 @@ slots:
           position: absolute
           right: 10px
           top: 5px
-          width: 80px
+          width: 90px
         visible: "=props.bigOhIcon ? true : false"
     - component: oh-link
       config:

@@ -199,16 +199,20 @@ slots:
               refreshInterval: 200
               style:
                 border-radius: var(--f7-card-expandable-border-radius)
-                box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+                border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+                box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
                 margin-left: "=fn.isPortrait() ? '0' : fn.imageLeft(fn.imageWidth(false))"
                 width: =fn.imageWidth(fn.isPortrait())
               url: =props.imageUrl
           - component: f7-card
             config:
               style:
+                background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
+                backdrop-filter: blur(6px)
                 border-radius: var(--f7-card-expandable-border-radius)
+                border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
                 bottom: "=fn.isPortrait() ? '-10px' : ''"
-                box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+                box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
                 height: "=fn.isPortrait() ? '150px' : '330px'"
                 left: "=fn.isPortrait() 
                   ? '-10px' 
