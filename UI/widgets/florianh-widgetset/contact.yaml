@@ -35,7 +35,7 @@ props:
       type: TEXT
       groupName: widgetSettings
     - default: window
-      description: Type of contact visualization to display (window, door, frontdoor)
+      description: Type of contact visualization to display (window, door, frontdoor, garage)
       label: SVG Type
       name: svgType
       required: false
@@ -48,6 +48,8 @@ props:
           value: door
         - label: Front Door
           value: frontdoor
+        - label: Garage Door
+          value: garage
       limitToOptions: true
     - description: State value for CLOSED state (default CLOSED or 0)
       label: Closed State
@@ -359,6 +361,103 @@ slots:
                                       rx: 1
                                       fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
 
+                      # 4. Garage Door SVG
+                      - component: g
+                        config:
+                          visible: "=props.svgType === 'garage'"
+                        slots:
+                          default:
+                            # Linker Rahmen
+                            - component: line
+                              config:
+                                x1: 5
+                                y1: 25
+                                x2: 5
+                                y2: 80
+                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke-width: 3
+                            # Oberer Rahmen
+                            - component: line
+                              config:
+                                x1: 5
+                                y1: 25
+                                x2: 95
+                                y2: 25
+                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke-width: 3
+                            # Rechter Rahmen
+                            - component: line
+                              config:
+                                x1: 95
+                                y1: 25
+                                x2: 95
+                                y2: 80
+                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke-width: 3
+                            # Animierte Sektionen-Gruppe
+                            - component: g
+                              config:
+                                style:
+                                  transform: "=fn.isClosed() ? 'translateY(0px)' : (fn.isTilted() ? 'translateY(-11px)' : 'translateY(-35px)')"
+                                  transition: transform 0.5s ease-in-out
+                              slots:
+                                default:
+                                  # Segment 1 (Top)
+                                  - component: rect
+                                    config:
+                                      x: 8
+                                      y: 28
+                                      width: 84
+                                      height: 11
+                                      fill: "#945e0f"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
+                                      stroke-width: 1.5
+                                      rx: 1
+                                      visible: =fn.isClosed()
+                                  # Segment 2
+                                  - component: rect
+                                    config:
+                                      x: 8
+                                      y: 40
+                                      width: 84
+                                      height: 11
+                                      fill: "#945e0f"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
+                                      stroke-width: 1.5
+                                      rx: 1
+                                      visible: =fn.isClosed() || fn.isTilted()
+                                  # Segment 3
+                                  - component: rect
+                                    config:
+                                      x: 8
+                                      y: 52
+                                      width: 84
+                                      height: 11
+                                      fill: "#945e0f"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
+                                      stroke-width: 1.5
+                                      rx: 1
+                                      visible: =fn.isClosed() || fn.isTilted()
+                                  # Segment 4 (Bottom)
+                                  - component: rect
+                                    config:
+                                      x: 8
+                                      y: 64
+                                      width: 84
+                                      height: 11
+                                      fill: "#945e0f"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
+                                      stroke-width: 1.5
+                                      rx: 1
+                                  # Zentrierter Torgriff ganz unten
+                                  - component: rect
+                                    config:
+                                      x: 43
+                                      y: 71
+                                      width: 14
+                                      height: 2
+                                      fill: "#333333"
+                                      rx: 0.5
           - component: oh-link
             config:
               actionPropsParameterGroup: widgetAction
