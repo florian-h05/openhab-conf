@@ -294,7 +294,7 @@ slots:
                       height: 100%
                   slots:
                     default:
-                      # Outer Cabinet / Square Casing (styled matching dishwasher)
+                      # Outer Cabinet / Square Casing
                       - component: f7-row
                         config:
                           tag: rect
@@ -303,18 +303,18 @@ slots:
                           width: 80
                           height: 80
                           rx: 12
-                          fill: "=!fn.isOff() ? '#4b5563' : '#2d3033'"
-                          stroke: "#1f2937"
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#4b5563' : '#e5e7eb') : (themeOptions.dark === 'dark' ? '#2d3033' : '#b1b5bc')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                           stroke-width: 2
 
-                      # Inner Circular Opening (grill frame boundary)
+                      # Inner Circular Opening
                       - component: circle
                         config:
                           cx: 50
                           cy: 50
                           r: 34
-                          fill: "=!fn.isOff() ? '#111827' : '#1a202c'"
-                          stroke: "#1f2937"
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#111827' : '#f3f4f6') : (themeOptions.dark === 'dark' ? '#1a202c' : '#d1d5db')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                           stroke-width: 1.5
 
                       # Grill / Support Lines (behind the blades)
@@ -324,7 +324,7 @@ slots:
                           y1: 26
                           x2: 74
                           y2: 74
-                          stroke: "#1f2937"
+                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                           stroke-width: 1
                       - component: line
                         config:
@@ -332,7 +332,7 @@ slots:
                           y1: 74
                           x2: 74
                           y2: 26
-                          stroke: "#1f2937"
+                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                           stroke-width: 1
 
                       # Rotating Fan Blades Group
@@ -348,32 +348,32 @@ slots:
                             - component: path
                               config:
                                 d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
-                                fill: "=!fn.isOff() ? '#9ca3af' : '#3a3f44'"
-                                stroke: "#1f2937"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
                             # Blade 2 (Right)
                             - component: path
                               config:
                                 d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
                                 transform: rotate(90 50 50)
-                                fill: "=!fn.isOff() ? '#9ca3af' : '#3a3f44'"
-                                stroke: "#1f2937"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
                             # Blade 3 (Down)
                             - component: path
                               config:
                                 d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
                                 transform: rotate(180 50 50)
-                                fill: "=!fn.isOff() ? '#9ca3af' : '#3a3f44'"
-                                stroke: "#1f2937"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
                             # Blade 4 (Left)
                             - component: path
                               config:
                                 d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
                                 transform: rotate(270 50 50)
-                                fill: "=!fn.isOff() ? '#9ca3af' : '#3a3f44'"
-                                stroke: "#1f2937"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
                             # Center Hub
                             - component: circle
@@ -381,8 +381,8 @@ slots:
                                 cx: 50
                                 cy: 50
                                 r: 8
-                                fill: "=!fn.isOff() ? '#d1d5db' : '#5a6066'"
-                                stroke: "#1f2937"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#d1d5db' : '#e5e7eb') : (themeOptions.dark === 'dark' ? '#5a6066' : '#7e848c')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
 
                       # Status LED dot (pulsing when active, red/solid when off)
