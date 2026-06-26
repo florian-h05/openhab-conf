@@ -341,7 +341,7 @@ slots:
                           tag: g
                           style:
                             transform-origin: 50px 50px
-                            animation: "=fn.isS2() ? 'spin 0.6s linear infinite' : (fn.isS1() ? 'spin 1.5s linear infinite' : 'none')"
+                            animation: "=fn.isS2() ? 'spin 0.6s linear infinite' : (fn.isS1() ? 'spin 1.5s linear infinite' : (fn.isAuto() ? 'spin 3.0s linear infinite' : 'none'))"
                         slots:
                           default:
                             # Blade 1 (Up)
