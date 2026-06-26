@@ -270,12 +270,9 @@ slots:
                         slots:
                           default:
                             # Outer frame
-                            - component: rect
+                            - component: path
                               config:
-                                x: 25
-                                y: 15
-                                width: 50
-                                height: 70
+                                d: M 25 85 L 25 15 L 75 15 L 75 85
                                 fill: none
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
@@ -314,12 +311,9 @@ slots:
                         slots:
                           default:
                             # Outer frame / thick casing
-                            - component: rect
+                            - component: path
                               config:
-                                x: 22
-                                y: 15
-                                width: 56
-                                height: 70
+                                d: M 22 85 L 22 15 L 78 15 L 78 85
                                 fill: none
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 4
@@ -371,7 +365,7 @@ slots:
                             - component: line
                               config:
                                 x1: 5
-                                y1: 25
+                                y1: 23.5
                                 x2: 5
                                 y2: 80
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
@@ -389,7 +383,7 @@ slots:
                             - component: line
                               config:
                                 x1: 95
-                                y1: 25
+                                y1: 23.5
                                 x2: 95
                                 y2: 80
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
