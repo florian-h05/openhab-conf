@@ -68,3 +68,25 @@ Use semantic values that dynamically adjust to dark and light modes:
   * Light: `#007aff` | Dark: `#0a84ff`
 * **Muted / Text Secondary:**
   * Light: `#8e8e93` | Dark: `#aeaeb2`
+
+---
+
+## SVG Color Palette
+
+To maintain a consistent style and reduce the variety of colors used in SVGs (e.g. `dishwasher.yaml`, `contact.yaml`, `fanControl.yaml`), use this highly unified color palette:
+
+### Core Color Roles
+
+| Role                            | Light Mode            | Dark Mode             | Example Uses                                       |
+|:--------------------------------|:----------------------|:----------------------|:---------------------------------------------------|
+| **Accent / Highlight Fill**     | `#ffffff` / `#f8fafc` | `#ffffff`             | Active doors, window panes, active highlights      |
+| **Active Base Fill**            | `#e2e8f0` (Slate 200) | `#e5e7eb` (Gray 200)  | Active cabinets, fan casing, active control panels |
+| **Inactive / Muted Fill**       | `#cbd5e1` (Slate 300) | `#cbd5e1` (Slate 300) | Inactive doors, hardware, inactive control panels  |
+| **Dark Inactive Base Fill**     | `#94a3b8` (Slate 400) | `#9ca3af` (Gray 400)  | Power OFF cabinets, inactive casing elements       |
+| **Strokes, Outlines & Details** | `#475569` (Slate 600) | `#94a3b8` (Slate 400) | Outer outlines, handles, framing, support lines    |
+| **Inner Dark Background**       | `#0f172a` (Slate 900) | `#0f172a` (Slate 900) | Open cabinets, inner chamber backgrounds           |
+
+### Component Specific Colors
+* **Glass Panes (Window/Door):**
+  * Light: `rgba(14, 165, 233, 0.12)` (Sky 500, 12% opacity)
+  * Dark: `rgba(56, 189, 248, 0.12)` (Sky 400, 12% opacity)

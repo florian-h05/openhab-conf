@@ -187,7 +187,7 @@ slots:
                                 height: 70
                                 rx: 1
                                 fill: none
-                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 2.5
                             # Middle divide line
                             - component: line
@@ -196,7 +196,7 @@ slots:
                                 y1: 15
                                 x2: 50
                                 y2: 85
-                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 2
                             # Left sash (tilt / Casement swing group)
                             - component: g
@@ -215,7 +215,7 @@ slots:
                                       width: 25
                                       height: 65
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
-                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
                                   # Handle
                                   - component: rect
@@ -225,7 +225,7 @@ slots:
                                       width: 2
                                       height: 6
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       style:
                                         transform-origin: 44px 50px
                                         transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(180deg)' : 'rotate(90deg)')"
@@ -247,7 +247,7 @@ slots:
                                       width: 25
                                       height: 65
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
-                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
                                   # Handle
                                   - component: rect
@@ -257,7 +257,7 @@ slots:
                                       width: 2
                                       height: 6
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       style:
                                         transform-origin: 56px 50px
                                         transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(-180deg)' : 'rotate(-90deg)')"
@@ -277,7 +277,7 @@ slots:
                                 width: 50
                                 height: 70
                                 fill: none
-                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
                             # Door Leaf group
                             - component: g
@@ -294,8 +294,8 @@ slots:
                                       y: 16.5
                                       width: 46
                                       height: 67
-                                      fill: "=themeOptions.dark === 'dark' ? '#374151' : '#f3f4f6'"
-                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#0f172a' : '#f8fafc'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
                                   # Door Handle
                                   - component: rect
@@ -305,7 +305,7 @@ slots:
                                       width: 7
                                       height: 2
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
 
                       # 3. Frontdoor SVG
                       - component: g
@@ -321,7 +321,7 @@ slots:
                                 width: 56
                                 height: 70
                                 fill: none
-                                stroke: "=themeOptions.dark === 'dark' ? '#4b5563' : '#9ca3af'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 4
                             # Front Door Leaf group
                             - component: g
@@ -338,8 +338,8 @@ slots:
                                       y: 17
                                       width: 51
                                       height: 66
-                                      fill: "=themeOptions.dark === 'dark' ? '#1f2937' : '#e5e7eb'"
-                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#0f172a' : '#e2e8f0'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 2
                                   # Panel design
                                   - component: rect
@@ -349,7 +349,7 @@ slots:
                                       width: 8
                                       height: 50
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.2)' : 'rgba(14, 165, 233, 0.2)'"
-                                      stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1
                                   # Long premium vertical pull bar handle
                                   - component: rect
@@ -359,7 +359,7 @@ slots:
                                       width: 2
                                       height: 25
                                       rx: 1
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
 
                       # 4. Garage Door SVG
                       - component: g
@@ -374,7 +374,7 @@ slots:
                                 y1: 25
                                 x2: 5
                                 y2: 80
-                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
                             # Oberer Rahmen
                             - component: line
@@ -383,7 +383,7 @@ slots:
                                 y1: 25
                                 x2: 95
                                 y2: 25
-                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
                             # Rechter Rahmen
                             - component: line
@@ -392,7 +392,7 @@ slots:
                                 y1: 25
                                 x2: 95
                                 y2: 80
-                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
                             # Animierte Sektionen-Gruppe
                             - component: g
@@ -456,7 +456,7 @@ slots:
                                       y: 71
                                       width: 14
                                       height: 2
-                                      fill: "#333333"
+                                      fill: "#475569"
                                       rx: 0.5
           - component: oh-link
             config:

@@ -463,8 +463,8 @@ slots:
                           width: 80
                           height: 86
                           rx: 4
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#4b5563') : (themeOptions.dark === 'dark' ? '#b1b5bc' : '#2d3033')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 2
 
                       # Control Panel Area
@@ -475,7 +475,7 @@ slots:
                           y: 7
                           width: 76
                           height: 15
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#f3f4f6' : '#1f2937') : (themeOptions.dark === 'dark' ? '#cbd5e1' : '#1a202c')"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#f3f4f6' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#cbd5e1' : '#cbd5e1')"
 
                       # LED Display Screen
                       - component: f7-row
@@ -608,8 +608,8 @@ slots:
                           width: 76
                           height: 66
                           rx: 2
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#9ca3af') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#3a3f44')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : 'transparent'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#f8fafc') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 0.5
                           visible: "=!fn.isDoorOpen()"
 
@@ -622,8 +622,8 @@ slots:
                           width: 36
                           height: 4
                           rx: 1
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#d1d5db') : (themeOptions.dark === 'dark' ? '#7e848c' : '#5a6066')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 0.5
                           visible: "=!fn.isDoorOpen()"
 
@@ -632,8 +632,8 @@ slots:
                         config:
                           tag: polygon
                           points: 12,89 88,89 92,97 8,97
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#9ca3af') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#3a3f44')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#f8fafc') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 0.5
                           visible: "=fn.isDoorOpen()"
 
@@ -646,8 +646,8 @@ slots:
                           width: 40
                           height: 2
                           rx: 0.5
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#d1d5db') : (themeOptions.dark === 'dark' ? '#7e848c' : '#5a6066')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 0.5
                           visible: "=fn.isDoorOpen()"
 
@@ -659,7 +659,7 @@ slots:
                           y1: 50
                           x2: 78
                           y2: 50
-                          stroke: "=fn.isPowerOn() ? '#4b5563' : '#374151'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-dasharray: 2,2
                           stroke-width: 0.8
                           visible: "=fn.isDoorOpen()"
@@ -670,7 +670,7 @@ slots:
                           y1: 70
                           x2: 78
                           y2: 70
-                          stroke: "=fn.isPowerOn() ? '#4b5563' : '#374151'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-dasharray: 2,2
                           stroke-width: 0.8
                           visible: "=fn.isDoorOpen()"
@@ -682,7 +682,7 @@ slots:
                           tag: path
                           d: M 36 22 C 34 18, 38 15, 36 11 C 34 8, 38 5, 36 2
                           fill: none
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"
@@ -710,7 +710,7 @@ slots:
                           tag: path
                           d: M 50 22 C 48 18, 52 15, 50 11 C 48 8, 52 5, 50 2
                           fill: none
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"
@@ -740,7 +740,7 @@ slots:
                           tag: path
                           d: M 64 22 C 62 18, 66 15, 64 11 C 62 8, 66 5, 64 2
                           fill: none
-                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"

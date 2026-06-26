@@ -303,8 +303,8 @@ slots:
                           width: 80
                           height: 80
                           rx: 12
-                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#4b5563' : '#e5e7eb') : (themeOptions.dark === 'dark' ? '#2d3033' : '#b1b5bc')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 2
 
                       # Inner Circular Opening
@@ -313,8 +313,8 @@ slots:
                           cx: 50
                           cy: 50
                           r: 34
-                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#111827' : '#f3f4f6') : (themeOptions.dark === 'dark' ? '#1a202c' : '#d1d5db')"
-                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#0f172a' : '#ffffff') : (themeOptions.dark === 'dark' ? '#0f172a' : '#cbd5e1')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1.5
 
                       # Grill / Support Lines (behind the blades)
@@ -324,7 +324,7 @@ slots:
                           y1: 26
                           x2: 74
                           y2: 74
-                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1
                       - component: line
                         config:
@@ -332,7 +332,7 @@ slots:
                           y1: 74
                           x2: 74
                           y2: 26
-                          stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1
 
                       # Rotating Fan Blades Group
@@ -348,32 +348,32 @@ slots:
                             - component: path
                               config:
                                 d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
-                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
-                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
                             # Blade 2 (Right)
                             - component: path
                               config:
                                 d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(90 50 50)
-                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
-                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
                             # Blade 3 (Down)
                             - component: path
                               config:
                                 d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(180 50 50)
-                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
-                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
                             # Blade 4 (Left)
                             - component: path
                               config:
                                 d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(270 50 50)
-                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
-                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
                             # Center Hub
                             - component: circle
@@ -381,8 +381,8 @@ slots:
                                 cx: 50
                                 cy: 50
                                 r: 8
-                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#d1d5db' : '#e5e7eb') : (themeOptions.dark === 'dark' ? '#5a6066' : '#7e848c')"
-                                stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
+                                fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1')"
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
 
                       # Status LED dot (pulsing when active, red/solid when off)
