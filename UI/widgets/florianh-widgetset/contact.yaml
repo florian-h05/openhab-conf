@@ -124,7 +124,7 @@ slots:
                 left: 17px
                 position: absolute
                 top: "=props.title || props.icon ? '45px' : '-5px'"
-                width: 100%
+                width: calc(100% - 80px)
             slots:
               default:
                 - component: Label
@@ -135,7 +135,6 @@ slots:
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                      width: calc(100% - 90px)
                     text: =props.header || 'Set header!'
                 - component: Label
                   config:
@@ -147,7 +146,6 @@ slots:
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                      width: calc(100% - 90px)
                     text: =@props.item
 
           # SVG Visualization Component
