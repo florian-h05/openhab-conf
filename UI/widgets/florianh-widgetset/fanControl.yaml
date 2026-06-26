@@ -58,7 +58,7 @@ props:
       type: TEXT
       groupName: commands
     # Localisation settings
-    - default: Automatisch
+    - default: Automatik
       description: Text for Auto mode
       label: Auto Mode Text
       name: textStateAuto
@@ -79,7 +79,7 @@ props:
       required: false
       type: TEXT
       groupName: localisation
-    - default: Auto-Off
+    - default: Auto-Aus
       description: Text for Off mode
       label: Off Mode Text
       name: textStateOff
@@ -133,7 +133,7 @@ slots:
           height: 120px
           margin-left: 5px
           margin-right: 5px
-          min-width: 280px
+          min-width: 200px
       slots:
         content:
           # 1. Main Value / Header Block
