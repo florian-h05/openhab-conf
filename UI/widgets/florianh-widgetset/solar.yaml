@@ -188,7 +188,8 @@ slots:
         actionPropsParameterGroup: widgetAction
         style:
           height: =props.height
+          position: absolute
           right: 0px
           top: 0px
-          width: "=props.page_action ? '35%' : '100%'"
+          width: "=props.page ? '35%' : '100%'"
         visible: "=props.widget_action ? true : false"
