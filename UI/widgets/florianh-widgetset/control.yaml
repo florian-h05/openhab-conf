@@ -127,7 +127,7 @@ slots:
           left: 17px
           position: absolute
           top: "=props.title || props.icon ? '45px' : '-5px'"
-          width: calc(100% - 70px)
+          width: "=props.item && props.selectorEnable !== true && props.toggleDisable !== true && !props.bigOhIcon ? 'calc(100% - 70px)' : '100%'"
       slots:
         default:
           - component: Label
