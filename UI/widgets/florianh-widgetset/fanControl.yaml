@@ -347,14 +347,14 @@ slots:
                             # Blade 1 (Up)
                             - component: path
                               config:
-                                d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
+                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
                                 stroke-width: 1
                             # Blade 2 (Right)
                             - component: path
                               config:
-                                d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
+                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(90 50 50)
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
@@ -362,7 +362,7 @@ slots:
                             # Blade 3 (Down)
                             - component: path
                               config:
-                                d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
+                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(180 50 50)
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
@@ -370,7 +370,7 @@ slots:
                             # Blade 4 (Left)
                             - component: path
                               config:
-                                d: "M 50 50 C 45 42, 42 30, 50 20 C 58 30, 55 42, 50 50"
+                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
                                 transform: rotate(270 50 50)
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#ffffff') : (themeOptions.dark === 'dark' ? '#3a3f44' : '#9ca3af')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#1f2937' : '#94a3b8'"
