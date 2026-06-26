@@ -24,7 +24,7 @@ props:
     - context: item
       description: String Item holding the current fan mode
       label: Mode Item
-      name: item_mode
+      name: item
       required: true
       type: TEXT
       groupName: widgetSettings
@@ -116,10 +116,10 @@ config:
       100% { opacity: 0.4; }
     }
   functions:
-    isAuto: "=() => props.item_mode && (@@props.item_mode === props.cmdAuto || #props.item_mode === Number(props.cmdAuto))"
-    isS1: "=() => props.item_mode && (@@props.item_mode === props.cmdS1 || #props.item_mode === Number(props.cmdS1))"
-    isS2: "=() => props.item_mode && (@@props.item_mode === props.cmdS2 || #props.item_mode === Number(props.cmdS2))"
-    isOff: "=() => !props.item_mode || (@@props.item_mode !== props.cmdAuto && #props.item_mode !== Number(props.cmdAuto) && @@props.item_mode !== props.cmdS1 && #props.item_mode !== Number(props.cmdS1) && @@props.item_mode !== props.cmdS2 && #props.item_mode !== Number(props.cmdS2))"
+    isAuto: "=() => props.item && (@@props.item === props.cmdAuto || #props.item === Number(props.cmdAuto))"
+    isS1: "=() => props.item && (@@props.item === props.cmdS1 || #props.item === Number(props.cmdS1))"
+    isS2: "=() => props.item && (@@props.item === props.cmdS2 || #props.item === Number(props.cmdS2))"
+    isOff: "=() => !props.item || (@@props.item !== props.cmdAuto && #props.item !== Number(props.cmdAuto) && @@props.item !== props.cmdS1 && #props.item !== Number(props.cmdS1) && @@props.item !== props.cmdS2 && #props.item !== Number(props.cmdS2))"
 slots:
   default:
     - component: f7-card
@@ -191,7 +191,7 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item_mode
+                    actionItem: =props.item
                     actionCommand: =props.cmdAuto
                     text: Auto
                     style:
@@ -212,7 +212,7 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item_mode
+                    actionItem: =props.item
                     actionCommand: =props.cmdS1
                     text: S1
                     style:
@@ -233,7 +233,7 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item_mode
+                    actionItem: =props.item
                     actionCommand: =props.cmdS2
                     text: S2
                     style:
@@ -254,7 +254,7 @@ slots:
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item_mode
+                    actionItem: =props.item
                     actionCommand: =props.cmdOff
                     text: =props.textButtonOff
                     style:
