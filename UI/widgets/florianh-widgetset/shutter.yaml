@@ -153,7 +153,7 @@ slots:
               actionFeedback: Erledigt!
               actionItem: =props.item
               iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
               iconF7: arrow_up_circle
               iconSize: 34
               style:
@@ -165,7 +165,7 @@ slots:
               actionCommand: STOP
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=(themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+              iconColor: "=(themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
               iconF7: stop_circle
               iconSize: 30
               style:
@@ -178,7 +178,7 @@ slots:
               actionFeedback: Erledigt!
               actionItem: =props.item
               iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
               iconF7: arrow_down_circle
               iconSize: 34
               style:

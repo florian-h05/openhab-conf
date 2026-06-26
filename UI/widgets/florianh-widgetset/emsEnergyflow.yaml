@@ -195,8 +195,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') :
-                              fn.flowsFrom(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') :
+                            color: "=fn.flowsTo(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') :
+                              fn.flowsFrom(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') :
                               (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
@@ -495,8 +495,8 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') :
-                              fn.flowsFrom(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') :
+                            color: "=fn.flowsTo(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') :
+                              fn.flowsFrom(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') :
                               (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold

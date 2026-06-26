@@ -57,11 +57,13 @@ To support overview dashboards, titles are optional and shift the layout dynamic
 Use semantic values that dynamically adjust to dark and light modes:
 
 * **Active / Normal (Green):**
-  * Light: `#34c759` | Dark: `#30d158` (iOS system green)
+  * Light: `#198754` | Dark: `#30d158`
 * **Alert / Warning (Orange):**
   * Light: `#ff9500` | Dark: `#ff9f0a`
+* **Tilted / Caution (Yellow):**
+  * Light: `#ca8a04` | Dark: `#ffd60a`
 * **Stopped / Danger / Off (Red):**
-  * Light: `#ff3b30` | Dark: `#ff453a`
+  * Light: `#d32f2f` | Dark: `#ff453a`
 * **Accent / Selected (Blue):**
   * Light: `#007aff` | Dark: `#0a84ff`
 * **Muted / Text Secondary:**

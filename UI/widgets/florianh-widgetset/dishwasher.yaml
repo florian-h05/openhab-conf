@@ -274,7 +274,7 @@ slots:
                     style:
                       font-size: 16px
                       margin-top: -0.25em
-                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
+                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap

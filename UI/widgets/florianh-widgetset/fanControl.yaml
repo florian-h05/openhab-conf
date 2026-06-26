@@ -165,7 +165,7 @@ slots:
                     style:
                       font-size: 16px
                       margin-top: -0.25em
-                      color: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93') : (themeOptions.dark === 'dark' ? '#30d158' : '#34c759')"
+                      color: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93') : (themeOptions.dark === 'dark' ? '#30d158' : '#198754')"
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
@@ -195,7 +195,7 @@ slots:
                     actionCommand: =props.cmdAuto
                     text: Auto
                     style:
-                      background: "=fn.isAuto() ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
+                      background: "=fn.isAuto() ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
                       color: "=fn.isAuto() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
                       height: 32px
@@ -258,7 +258,7 @@ slots:
                     actionCommand: =props.cmdOff
                     text: =props.textButtonOff
                     style:
-                      background: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
+                      background: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
                       color: "=fn.isOff() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
                       height: 32px
@@ -391,7 +391,7 @@ slots:
                           cx: 22
                           cy: 22
                           r: 3
-                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
                           style:
-                            filter: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? 'drop-shadow(0 0 2.5px #30d158)' : 'drop-shadow(0 0 2.5px #34c759)') : 'none'"
+                            filter: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? 'drop-shadow(0 0 2.5px #30d158)' : 'drop-shadow(0 0 2.5px #198754)') : 'none'"
                             animation: "=fn.isAuto() ? 'pulse-led 2s infinite' : 'none'"

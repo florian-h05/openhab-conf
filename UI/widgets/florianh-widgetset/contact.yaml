@@ -140,7 +140,7 @@ slots:
                 - component: Label
                   config:
                     style:
-                      color: "=fn.isClosed() ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') : fn.isTilted() ? (themeOptions.dark === 'dark' ? '#ffd60a' : '#ffcc00') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                      color: "=fn.isClosed() ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : fn.isTilted() ? (themeOptions.dark === 'dark' ? '#ffd60a' : '#ca8a04') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
                       font-size: 16px
                       font-weight: 400
                       margin-top: -0.25em
