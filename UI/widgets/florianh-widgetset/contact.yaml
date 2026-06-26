@@ -1,3 +1,5 @@
+# description: Visualize the state of a contact item (window, door, frontdoor, garage) with an animated SVG
+# author: Copyright (c) 2026 Florian Hotze under MIT License
 uid: contact
 tags:
   - florianh-widgetset
