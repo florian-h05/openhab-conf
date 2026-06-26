@@ -14,6 +14,13 @@ props:
       required: false
       type: TEXT
       groupName: appearance
+    - default: Verstärker
+      description: Header big sized
+      label: Header
+      name: header
+      required: false
+      type: TEXT
+      groupName: appearance
     - description: HEX or rgba
       label: Background Color
       name: bgcolor
@@ -54,21 +61,25 @@ props:
       label: Appearance settings
     - name: amplifier
       label: Amplifier settings
-timestamp: Jan 10, 2023, 2:52:14 PM
+timestamp: Jun 26, 2026, 3:30:00 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor ? props.bgcolor : ''"
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+    backdrop-filter: blur(6px)
     border-radius: var(--f7-card-expandable-border-radius)
-    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.1)
+    border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: 120px
     margin-left: 5px
     margin-right: 5px
-    min-width: 180px
+    min-width: 200px
 slots:
   content:
+    # 1. Top Title Block
     - component: f7-block
       config:
+        visible: "=props.title ? true : false"
         style:
           display: flex
           flex-direction: row
@@ -86,78 +97,52 @@ slots:
           - component: Label
             config:
               style:
-                font-size: 12px
+                font-size: 11px
+                font-weight: 600
+                text-transform: uppercase
+                letter-spacing: 0.05em
+                opacity: 0.6
                 margin-top: 0px
-              text: "=props.title ? props.title : ''"
+              text: =props.title
+
+    # 2. Main Value / Header & Status Block
     - component: f7-block
       config:
         style:
-          display: flex
-          flex-direction: row
-          justify-content: center
-          position: absolute
-          right: 5px
-          text-align: right
-          top: 27px
-      slots:
-        default:
-          - component: oh-button
-            config:
-              action: toggle
-              actionCommand: OFF
-              actionCommandAlt: ON
-              actionItem: =props.itemname + '_Mute'
-              iconColor: "=items[props.itemname + '_Mute'].state === 'ON' ? 'red' : themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: speaker_slash
-              iconSize: 30px
-              large: false
-              round: false
-              style:
-                height: 34px
-                margin: 0 -0.25em
-              visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Mute'].state !== '-' ? true : false) : false) : false"
-          - component: oh-button
-            config:
-              action: toggle
-              actionCommand: OFF
-              actionCommandAlt: ON
-              actionItem: =props.itemname + '_Power'
-              iconColor: "=items[props.itemname + '_Power'].state === 'ON' ? 'green' : themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: hifispeaker
-              iconSize: 30px
-              large: false
-              round: false
-              style:
-                height: 34px
-                margin: 0 -0.25em
-              visible: "=vars.show_player_controls !== true ? true : (items[props.itemname + '_Power'].state === 'ON' ? false : true)"
-    - component: oh-button
-      config:
-        action: variable
-        actionVariable: show_player_controls
-        actionVariableValue: "=vars.show_player_controls !== true ? true : false"
-        iconF7: "=vars.show_player_controls !== true ? 'player' : 'xmark'"
-        iconSize: 30px
-        large: false
-        round: false
-        style:
-          margin: 0 -0.25em
-          position: absolute
-          right: 5px
-          top: 80px
-        visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? true : false) : false"
-    - component: f7-block
-      config:
-        style:
-          bottom: -55px
           display: flex
           flex-direction: column
-          left: 18.5px
+          left: 17px
           position: absolute
-          width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 45px)' : '100%'"
-        visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
+          top: "=props.title ? '32px' : '12px'"
+          width: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 110px)' : 'calc(100% - 70px)') : 'calc(100% - 70px)') : 'calc(100% - 34px)'"
+          margin: 0
+          padding: 0
       slots:
         default:
+          # Header (either Song Title or Default Header)
+          - component: Label
+            config:
+              style:
+                font-size: 22px
+                font-weight: 500
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+              text: "=vars.show_player_controls === true && items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback_Song'].state !== '-' ? items[props.itemname + '_Playback_Song'].state : 'Musik') : (props.header || 'Verstärker')"
+          # Case A: Power is OFF
+          - component: Label
+            config:
+              style:
+                font-size: 16px
+                margin-top: -0.25em
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+                color: "=themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93'"
+              text: Aus
+              visible: "=items[props.itemname + '_Power'].state !== 'ON'"
+          # Case B: Power is ON, Input control mode
           - component: oh-button
             config:
               action: options
@@ -167,79 +152,132 @@ slots:
               large: false
               round: false
               style:
-                font-size: 17px
-                font-weight: 600
-                margin-bottom: -0.275em
-              text: "='Eingang: ' + (items[props.itemname + '_Input'].displayState ? items[props.itemname + '_Input'].displayState : items[props.itemname + '_Input'].state)"
-              vertical: false
-              visible: "=items[props.itemname + '_Input'].state !== '-' ? true : false"
-          - component: oh-slider
-            config:
-              item: =props.itemname + '_Volume'
-              max: "=props.volumeMax ? props.volumeMax : -20"
-              min: "=props.volumeMin ? props.volumeMin : -80"
-              releaseOnly: true
-              scale: true
-              scaleSteps: 6
-              style:
-                --f7-range-bar-border-radius: 8px
-                --f7-range-bar-size: 8px
-                --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
-                --f7-range-knob-size: 18px
-                margin-top: 0.25em
-              visible: "=items[props.itemname + '_Volume'].state !== '-' ? true : false"
-    - component: f7-block
-      config:
-        style:
-          display: flex
-          flex-direction: column
-          left: 17px
-          position: absolute
-          top: 60px
-          width: calc(100% - 40px)
-        visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
-      slots:
-        default:
-          - component: Label
-            config:
-              style:
-                color: "#dd4124"
-                font-size: 17px
-                font-weight: 600
-                overflow: hidden
-                text-overflow: ellipsis
-                white-space: nowrap
-              text: =items[props.itemname + '_Playback_Song'].state
+                --f7-button-font-size: 16px
+                --f7-button-font-weight: 400
+                --f7-button-text-color: var(--f7-theme-color)
+                --f7-button-height: 20px
+                --f7-button-padding-horizontal: 0px
+                --f7-button-padding-vertical: 0px
+                margin-top: -0.25em
+                display: flex
+                justify-content: flex-start
+                text-transform: none
+                background: transparent
+              text: "=(items[props.itemname + '_Input'].displayState ? items[props.itemname + '_Input'].displayState : items[props.itemname + '_Input'].state)"
+              visible: "=vars.show_player_controls !== true && items[props.itemname + '_Power'].state === 'ON' && items[props.itemname + '_Input'].state !== '-'"
+          # Case C: Power is ON, Playback Metadata Mode
           - component: Label
             config:
               style:
                 font-size: 13px
-                font-weight: 400
-                margin-top: 0.5em
+                margin-top: -0.25em
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: =items[props.itemname + '_Playback_Album'].state
-          - component: Label
-            config:
-              style:
-                font-size: 13px
-                font-weight: 400
-                overflow: hidden
-                text-overflow: ellipsis
-                white-space: nowrap
-              text: =items[props.itemname + '_Playback_Artist'].state
+                color: "=themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93'"
+              text: "=items[props.itemname + '_Playback_Artist'].state + (items[props.itemname + '_Playback_Album'].state && items[props.itemname + '_Playback_Album'].state !== '-' ? ' - ' + items[props.itemname + '_Playback_Album'].state : '')"
+              visible: "=vars.show_player_controls === true && items[props.itemname + '_Power'].state === 'ON'"
+
+    # 3. Top Right Controls (Power & Mute)
     - component: f7-block
       config:
         style:
           display: flex
           flex-direction: row
           justify-content: center
+          align-items: center
           position: absolute
-          right: 10px
-          text-align: right
-          top: 25px
-        visible: "=vars.show_player_controls === true ? (items[props.itemname + '_Power'].state === 'ON' ? true : false) : false"
+          right: 15px
+          top: 15px
+          margin: 0
+          padding: 0
+        visible: "=vars.show_player_controls !== true || items[props.itemname + '_Power'].state !== 'ON'"
+      slots:
+        default:
+          - component: oh-button
+            config:
+              action: toggle
+              actionCommand: OFF
+              actionCommandAlt: ON
+              actionItem: =props.itemname + '_Mute'
+              iconColor: "=items[props.itemname + '_Mute'].state === 'ON' ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+              iconF7: "=items[props.itemname + '_Mute'].state === 'ON' ? 'speaker_slash' : 'speaker_2'"
+              iconSize: 16px
+              large: false
+              round: true
+              style:
+                background: "=items[props.itemname + '_Mute'].state === 'ON' ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
+                margin-right: 8px
+              visible: "=items[props.itemname + '_Power'].state === 'ON' && items[props.itemname + '_Mute'].state !== '-'"
+          - component: oh-button
+            config:
+              action: toggle
+              actionCommand: OFF
+              actionCommandAlt: ON
+              actionItem: =props.itemname + '_Power'
+              large: false
+              round: true
+              style:
+                background: "=items[props.itemname + '_Power'].state === 'ON' ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
+              visible: true
+            slots:
+              default:
+                - component: oh-icon
+                  config:
+                    icon: "=items[props.itemname + '_Power'].state === 'ON' ? 'f7:hifispeaker' : 'f7:hifispeaker_slash'"
+                    style:
+                      font-size: 18px
+                      color: "=items[props.itemname + '_Power'].state === 'ON' ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+
+    # 4. Volume Slider (Bottom)
+    - component: oh-slider
+      config:
+        item: =props.itemname + '_Volume'
+        max: "=props.volumeMax ? props.volumeMax : -20"
+        min: "=props.volumeMin ? props.volumeMin : -80"
+        releaseOnly: true
+        scale: true
+        scaleSteps: 6
+        style:
+          --f7-range-bar-border-radius: 8px
+          --f7-range-bar-size: 8px
+          --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+          --f7-range-knob-size: 18px
+          position: absolute
+          top: 80px
+          left: 17px
+          width: "=items[props.itemname + '_Playback'].state !== '-' ? 'calc(100% - 90px)' : 'calc(100% - 34px)'"
+        visible: "=vars.show_player_controls !== true ? (items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Volume'].state !== '-' ? true : false) : false) : false"
+
+    # 5. Playback Mode Active Controls (Bottom Left)
+    - component: f7-block
+      config:
+        style:
+          display: flex
+          flex-direction: row
+          justify-content: center
+          align-items: center
+          gap: 6px
+          position: absolute
+          left: 17px
+          top: 80px
+          margin: 0
+          padding: 0
+        visible: "=vars.show_player_controls === true && items[props.itemname + '_Power'].state === 'ON'"
       slots:
         default:
           - component: oh-button
@@ -248,26 +286,38 @@ slots:
               actionCommand: "=props.playback_control_yamahaAV === true ? 'Previous' : 'PREVIOUS'"
               actionItem: =props.itemname + '_Playback'
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: lessthan_circle
-              iconSize: 30px
+              iconF7: backward_fill
+              iconSize: 14px
               large: false
               round: true
               style:
-                --f7-button-height: 30px
-                margin: 0 -0.25em
+                background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0'"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
           - component: oh-button
             config:
               action: command
               actionCommand: "=props.playback_control_yamahaAV == true ? 'Pause' : 'PAUSE'"
               actionItem: =props.itemname + '_Playback'
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: pause_circle
-              iconSize: 30px
+              iconF7: pause_fill
+              iconSize: 14px
               large: false
               round: true
               style:
-                --f7-button-height: 30px
-                margin: 0 -0.25em
+                background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0'"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
               visible: "=items[props.itemname + '_Playback'].state === 'Play' ? true : (items[props.itemname + '_Playback'].state === 'PLAY' ? true : false)"
           - component: oh-button
             config:
@@ -275,13 +325,19 @@ slots:
               actionCommand: "=props.playback_control_yamahaAV == true ? 'Play' : 'PLAY'"
               actionItem: =props.itemname + '_Playback'
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: play_circle
-              iconSize: 30px
+              iconF7: play_fill
+              iconSize: 14px
               large: false
               round: true
               style:
-                --f7-button-height: 30px
-                margin: 0 -0.25em
+                background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0'"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
               visible: "=items[props.itemname + '_Playback'].state !== 'Play' ? (items[props.itemname + '_Playback'].state !== 'PLAY' ? true : false) : false"
           - component: oh-button
             config:
@@ -289,10 +345,41 @@ slots:
               actionCommand: "=props.playback_control_yamahaAV == true ? 'Next' : 'NEXT'"
               actionItem: =props.itemname + '_Playback'
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-              iconF7: greaterthan_circle
-              iconSize: 30px
+              iconF7: forward_fill
+              iconSize: 14px
               large: false
               round: true
               style:
-                --f7-button-height: 30px
-                margin: 0 -0.25em
+                background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0'"
+                width: 32px
+                height: 32px
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                padding: 0
+
+    # 6. Playback Control Toggle Button (Bottom Right)
+    - component: oh-button
+      config:
+        action: variable
+        actionVariable: show_player_controls
+        actionVariableValue: "=vars.show_player_controls !== true ? true : false"
+        iconF7: "=vars.show_player_controls !== true ? 'music_note' : 'xmark'"
+        iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
+        iconSize: 16px
+        large: false
+        round: true
+        style:
+          position: absolute
+          right: 15px
+          top: 80px
+          background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0'"
+          width: 32px
+          height: 32px
+          display: flex
+          align-items: center
+          justify-content: center
+          box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+          padding: 0
+        visible: "=items[props.itemname + '_Power'].state === 'ON' ? (items[props.itemname + '_Playback'].state !== '-' ? true : false) : false"
