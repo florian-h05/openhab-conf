@@ -39,6 +39,11 @@ To support overview dashboards, titles are optional and shift the layout dynamic
   * Title Block: Hidden (`visible: false` or omitted)
   * Header/Value Block: `top: -5px` (shifted up to fill the card top area)
 
+### 4. Standard Button Specs
+* **Size:** Buttons in multi-control widgets (such as `amplifier.yaml`, `fanControl.yaml`, and `dishwasher.yaml`) are standardized to `32px` height (and `32px` width for square/circular controls).
+* **Border Radius:** `16px` for standard rounded controls, `50%` or `round: true` for circular buttons.
+* **Shadow:** `box-shadow: 0 1px 3px rgba(0,0,0,0.15)` for clean visual depth.
+
 ---
 
 ## Typography Specs
