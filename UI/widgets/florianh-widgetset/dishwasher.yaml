@@ -225,11 +225,11 @@ config:
       100% { opacity: 0.4; }
     }
   functions:
-    isPowerOn: "=() => props.itemPower && items[props.itemPower].state === 'ON'"
-    isDoorOpen: "=() => props.itemDoor && items[props.itemDoor].state === 'OPEN'"
-    isRunning: "=() => props.itemState && items[props.itemState].state === props.stateRunning"
-    isFinished: "=() => props.itemState && items[props.itemState].state === props.stateFinished"
-    isReady: "=() => props.itemState && items[props.itemState].state === props.stateReady"
+    isPowerOn: "=() => @@props.itemPower === 'ON'"
+    isDoorOpen: "=() => @@props.itemDoor === 'OPEN'"
+    isRunning: "=() => @@props.itemState === props.stateRunning"
+    isFinished: "=() => @@props.itemState === props.stateFinished"
+    isReady: "=() => @@props.itemState === props.stateReady"
 slots:
   default:
     - component: f7-card
@@ -278,7 +278,7 @@ slots:
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                    text: "=(!fn.isPowerOn() ? (props.textStateOff || 'Aus') : (fn.isRunning() ? (props.textStateRunning || 'Aktiv') : (fn.isFinished() ? (props.textStateFinished || 'Fertig') : (fn.isReady() ? (props.textStateReady || 'Bereit') : @@props.itemState)))) + (fn.isPowerOn() || fn.isDoorOpen() ? ' — ' + (fn.isDoorOpen() ? (props.textDoorOpen || 'Tür geöffnet') : (fn.isRunning() && props.itemRuntime && items[props.itemRuntime] && items[props.itemRuntime].state !== 'NULL' && items[props.itemRuntime].state !== 'UNDEF' ? (props.textRemaining || 'Noch ') + (items[props.itemRuntime].displayState || items[props.itemRuntime].state) : (fn.isFinished() ? (props.textClean || 'Geschirr ist sauber') : (props.textReadyToStart || 'Bereit zum Starten')))) : '')"
+                    text: "=(!fn.isPowerOn() ? props.textStateOff : (fn.isRunning() ? props.textStateRunning : (fn.isFinished() ? props.textStateFinished : (fn.isReady() ? props.textStateReady : @@props.itemState)))) + (fn.isPowerOn() || fn.isDoorOpen() ? ' — ' + (fn.isDoorOpen() ? props.textDoorOpen : (fn.isRunning() && @@props.itemRuntime && @@props.itemRuntime !== 'NULL' && @@props.itemRuntime !== 'UNDEF' ? props.textRemaining + @props.itemRuntime : (fn.isFinished() ? props.textClean : props.textReadyToStart))) : '')"
 
           # 3. Controls Row (Power, Program selector, Start/Pause/Resume, Stop action)
           - component: f7-block
@@ -323,7 +323,7 @@ slots:
                     action: options
                     actionItem: =props.itemProgram
                     actionOptions: =props.programOptions
-                    text: "=@props.itemProgram ? @props.itemProgram : (props.textProgram || 'Programm')"
+                    text: "=@props.itemProgram ? @props.itemProgram : props.textProgram"
                     disabled: =fn.isRunning()
                     style:
                       background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#f0f0f5'"
@@ -463,8 +463,8 @@ slots:
                           width: 80
                           height: 86
                           rx: 4
-                          fill: "=fn.isPowerOn() ? '#4b5563' : '#2d3033'"
-                          stroke: "#1f2937"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#4b5563') : (themeOptions.dark === 'dark' ? '#b1b5bc' : '#2d3033')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
                           stroke-width: 2
 
                       # Control Panel Area
@@ -475,7 +475,7 @@ slots:
                           y: 7
                           width: 76
                           height: 15
-                          fill: "=fn.isPowerOn() ? '#1f2937' : '#1a202c'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#f3f4f6' : '#1f2937') : (themeOptions.dark === 'dark' ? '#cbd5e1' : '#1a202c')"
 
                       # LED Display Screen
                       - component: f7-row
@@ -500,7 +500,7 @@ slots:
                           font-size: 6
                           fill: "#06b6d4"
                           text-anchor: middle
-                          content: "=props.textSvgReady || 'Bereit'"
+                          content: =props.textSvgReady
                           visible: "=fn.isPowerOn() && fn.isReady() && !fn.isDoorOpen()"
 
                       # LED Display: Running state message (Remaining Runtime or "Wash")
@@ -513,7 +513,7 @@ slots:
                           font-size: 7
                           fill: "#f43f5e"
                           text-anchor: middle
-                          content: "=props.itemRuntime && items[props.itemRuntime] && items[props.itemRuntime].state !== 'NULL' && items[props.itemRuntime].state !== 'UNDEF' ? (items[props.itemRuntime].displayState || items[props.itemRuntime].state) : (props.textSvgWash || 'Wash')"
+                          content: "=@@props.itemRuntime && @@props.itemRuntime !== 'NULL' && @@props.itemRuntime !== 'UNDEF' ? @props.itemRuntime : props.textSvgWash"
                           visible: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()"
 
                       # LED Display: Finished checkmark
@@ -537,7 +537,7 @@ slots:
                           font-size: 6
                           fill: "#f43f5e"
                           text-anchor: middle
-                          content: "=props.textSvgOpen || 'OPEN'"
+                          content: =props.textSvgOpen
                           visible: "=fn.isDoorOpen() && fn.isPowerOn()"
 
                       # Power Indicator LED on panel
@@ -546,7 +546,7 @@ slots:
                           cx: 20
                           cy: 14.5
                           r: 1.5
-                          fill: "=!fn.isPowerOn() ? '#4a5568' : (fn.isRunning() ? '#22c55e' : '#06b6d4')"
+                          fill: "=!fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568') : (fn.isRunning() ? '#22c55e' : '#06b6d4')"
                           style:
                             filter: "=fn.isPowerOn() ? (fn.isRunning() ? 'drop-shadow(0 0 1.5px #22c55e)' : ((fn.isReady() || fn.isDoorOpen()) ? 'drop-shadow(0 0 1.5px #06b6d4)' : 'none')) : 'none'"
                             animation: "=fn.isPowerOn() ? (fn.isRunning() || fn.isReady() || fn.isDoorOpen() ? 'pulse-led 2s infinite' : 'none') : 'none'"
@@ -559,7 +559,7 @@ slots:
                           y: 12.5
                           width: 1.5
                           height: 4
-                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : '#4a5568'"
+                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568')"
                           style:
                             filter: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? 'drop-shadow(0 0 1.5px #f97316)' : 'none'"
                       - component: f7-row
@@ -569,7 +569,7 @@ slots:
                           y: 12.5
                           width: 1.5
                           height: 4
-                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : '#4a5568'"
+                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568')"
                           style:
                             filter: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? 'drop-shadow(0 0 1.5px #f97316)' : 'none'"
 
@@ -599,7 +599,7 @@ slots:
                           fill: url(#lightBeamGlow)
                           visible: "=fn.isDoorOpen() && fn.isPowerOn()"
 
-                      # Door Front Panel
+                      # Door Front Panel (Closed state)
                       - component: f7-row
                         config:
                           tag: rect
@@ -608,7 +608,9 @@ slots:
                           width: 76
                           height: 66
                           rx: 2
-                          fill: "=fn.isPowerOn() ? '#9ca3af' : '#3a3f44'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#9ca3af') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#3a3f44')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : 'transparent'"
+                          stroke-width: 0.5
                           visible: "=!fn.isDoorOpen()"
 
                       # Door Handle
@@ -620,20 +622,18 @@ slots:
                           width: 36
                           height: 4
                           rx: 1
-                          fill: "=fn.isPowerOn() ? '#d1d5db' : '#5a6066'"
-                          stroke: "=fn.isPowerOn() ? '#4b5563' : '#374151'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#d1d5db') : (themeOptions.dark === 'dark' ? '#7e848c' : '#5a6066')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
                           stroke-width: 0.5
                           visible: "=!fn.isDoorOpen()"
-
-
 
                       # Open Door Front Panel (perspective view)
                       - component: f7-row
                         config:
                           tag: polygon
                           points: 12,89 88,89 92,97 8,97
-                          fill: "=fn.isPowerOn() ? '#9ca3af' : '#3a3f44'"
-                          stroke: "#4b5563"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#9ca3af') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#3a3f44')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
                           stroke-width: 0.5
                           visible: "=fn.isDoorOpen()"
 
@@ -646,8 +646,8 @@ slots:
                           width: 40
                           height: 2
                           rx: 0.5
-                          fill: "=fn.isPowerOn() ? '#d1d5db' : '#5a6066'"
-                          stroke: "=fn.isPowerOn() ? '#4b5563' : '#374151'"
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#d1d5db') : (themeOptions.dark === 'dark' ? '#7e848c' : '#5a6066')"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#4b5563'"
                           stroke-width: 0.5
                           visible: "=fn.isDoorOpen()"
 
@@ -682,7 +682,7 @@ slots:
                           tag: path
                           d: M 36 22 C 34 18, 38 15, 36 11 C 34 8, 38 5, 36 2
                           fill: none
-                          stroke: "#f1f5f9"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"
@@ -710,7 +710,7 @@ slots:
                           tag: path
                           d: M 50 22 C 48 18, 52 15, 50 11 C 48 8, 52 5, 50 2
                           fill: none
-                          stroke: "#f1f5f9"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"
@@ -740,7 +740,7 @@ slots:
                           tag: path
                           d: M 64 22 C 62 18, 66 15, 64 11 C 62 8, 66 5, 64 2
                           fill: none
-                          stroke: "#f1f5f9"
+                          stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#f1f5f9'"
                           stroke-width: 1
                           opacity: 0
                           visible: "=fn.isPowerOn() && fn.isFinished()"
