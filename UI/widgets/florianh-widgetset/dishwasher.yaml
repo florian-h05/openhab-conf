@@ -8,9 +8,9 @@ props:
   parameters:
     # Appearance settings
     - default: Geschirrspüler
-      description: Small title on top of the card
-      label: Title
-      name: title
+      description: Header big sized
+      label: Header
+      name: header
       required: false
       type: TEXT
       groupName: appearance
@@ -246,7 +246,7 @@ slots:
           min-width: 180px
       slots:
         content:
-          # 1. Title & Status Block
+          # 1. Header & Status Block
           - component: f7-block
             config:
               style:
@@ -260,7 +260,7 @@ slots:
               default:
                 - component: Label
                   config:
-                    visible: "=props.title ? true : false"
+                    visible: "=props.header ? true : false"
                     style:
                       font-size: 22px
                       font-weight: 500
@@ -268,7 +268,7 @@ slots:
                       text-overflow: ellipsis
                       white-space: nowrap
                       color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
-                    text: =props.title
+                    text: =props.header
                 - component: Label
                   config:
                     style:
