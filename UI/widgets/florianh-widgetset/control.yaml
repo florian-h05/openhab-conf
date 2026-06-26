@@ -127,7 +127,6 @@ slots:
           left: 17px
           position: absolute
           top: "=props.title || props.icon ? '45px' : '-5px'"
-          width: 100%
       slots:
         default:
           - component: Label
@@ -213,5 +212,5 @@ slots:
           left: 0px
           position: absolute
           top: 0px
-          width: "=props.selectorEnable === true || props.toggleHide === true ? '100%' : 'calc(100% - 60px)'"
+          width: "=props.selectorEnable === true || props.toggleDisable === true ? '100%' : 'calc(100% - 60px)'"
         visible: "=props.widget_action ? true : false"
