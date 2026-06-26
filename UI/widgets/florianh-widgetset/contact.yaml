@@ -394,7 +394,7 @@ slots:
                             - component: g
                               config:
                                 style:
-                                  transform: "=fn.isClosed() ? 'translateY(0px)' : (fn.isTilted() ? 'translateY(-11px)' : 'translateY(-35px)')"
+                                  transform: "=fn.isClosed() ? 'translateY(0px)' : (fn.isTilted() ? 'translateY(-12px)' : 'translateY(-38px)')"
                                   transition: transform 0.5s ease-in-out
                               slots:
                                 default:
@@ -404,7 +404,7 @@ slots:
                                       x: 8
                                       y: 28
                                       width: 84
-                                      height: 11
+                                      height: 12
                                       fill: "#945e0f"
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
@@ -414,9 +414,9 @@ slots:
                                   - component: rect
                                     config:
                                       x: 8
-                                      y: 40
+                                      y: 41
                                       width: 84
-                                      height: 11
+                                      height: 12
                                       fill: "#945e0f"
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
@@ -426,9 +426,9 @@ slots:
                                   - component: rect
                                     config:
                                       x: 8
-                                      y: 52
+                                      y: 54
                                       width: 84
-                                      height: 11
+                                      height: 12
                                       fill: "#945e0f"
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
@@ -438,9 +438,9 @@ slots:
                                   - component: rect
                                     config:
                                       x: 8
-                                      y: 64
+                                      y: 67
                                       width: 84
-                                      height: 11
+                                      height: 12
                                       fill: "#945e0f"
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
