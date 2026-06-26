@@ -127,6 +127,7 @@ slots:
           left: 17px
           position: absolute
           top: "=props.title || props.icon ? '45px' : '-5px'"
+          width: calc(100% - 70px)
       slots:
         default:
           - component: Label
