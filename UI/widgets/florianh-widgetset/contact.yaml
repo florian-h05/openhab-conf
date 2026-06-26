@@ -35,9 +35,29 @@ props:
       type: TEXT
       groupName: widgetSettings
     - default: window
-      description: Big icon shown in the upper right corner for state representation
-      label: Big openHAB Icon
-      name: bigOhIcon
+      description: Type of contact visualization to display (window, door, frontdoor)
+      label: SVG Type
+      name: svgType
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+      options:
+        - label: Window
+          value: window
+        - label: Door
+          value: door
+        - label: Front Door
+          value: frontdoor
+      limitToOptions: true
+    - description: State value for CLOSED state (default CLOSED or 0)
+      label: Closed State
+      name: closedState
+      required: false
+      type: TEXT
+      groupName: widgetSettings
+    - description: State value for OPEN state (default OPEN or 1)
+      label: Open State
+      name: openState
       required: false
       type: TEXT
       groupName: widgetSettings
@@ -50,98 +70,304 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Dec 4, 2025, 1:54:45 AM
-component: f7-card
+timestamp: Jun 26, 2026, 12:00:00 PM
+component: oh-context
 config:
-  style:
-    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
-    backdrop-filter: blur(6px)
-    border-radius: var(--f7-card-expandable-border-radius)
-    border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
-    box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
-    height: 120px
-    margin-left: 5px
-    margin-right: 5px
-    minWidth: 200px
+  functions:
+    isClosed: "=() => !props.item || @@props.item === (props.closedState || 'CLOSED') || #props.item === Number(props.closedState || 0)"
+    isTilted: "=() => props.item && (@@props.item !== (props.closedState || 'CLOSED') && #props.item > Number(props.closedState || 0)) && (@@props.item !== (props.openState || 'OPEN') && #props.item < Number(props.openState || 1))"
+    isOpen: "=() => props.item && (@@props.item === (props.openState || 'OPEN') || #props.item === Number(props.openState || 1))"
 slots:
-  content:
-    - component: f7-block
-      config:
-        visible: "=props.title || props.icon ? true : false"
-        style:
-          display: flex
-          flex-direction: row
-          left: 16px
-          position: absolute
-          top: -5px
-      slots:
-        default:
-          - component: f7-icon
-            config:
-              f7: =props.icon || 'square'
-              size: 18
-              style:
-                margin-right: 10px
-          - component: Label
-            config:
-              style:
-                font-size: 12px
-                margin-top: 0px
-              text: =props.title
-    - component: f7-block
+  default:
+    - component: f7-card
       config:
         style:
-          display: flex
-          flex-direction: column
-          left: 17px
-          position: absolute
-          top: "=props.title || props.icon ? '45px' : '-5px'"
-          width: 100%
-      slots:
-        default:
-          - component: Label
-            config:
-              style:
-                font-size: 22px
-                font-weight: 500
-                overflow: hidden
-                text-overflow: ellipsis
-                white-space: nowrap
-                width: "=props.bigOhIcon ? 'calc(100% - 90px)' : '100%'"
-              text: =props.header || 'Set header!'
-          - component: Label
-            config:
-              style:
-                color: "=@@[props.item] === 'CLOSED' || #[props.item] === 0 ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') 
-                  : #[props.item] === 0.3 ? (themeOptions.dark === 'dark' ? '#ffd60a' : '#ffcc00') 
-                  : #[props.item] === 0.5 ? (themeOptions.dark === 'dark' ? '#ff9f0a' : '#ff9500') 
-                  : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
-                font-size: 16px
-                font-weight: 400
-                margin-top: -0.25em
-                overflow: hidden
-                text-overflow: ellipsis
-                white-space: nowrap
-                width: "=props.bigOhIcon ? 'calc(100% - 90px)' : '100%'"
-              text: =@props.item
-    - component: oh-icon
-      config:
-        icon: "=items[props.item].state === 'CLOSED' || #props.item === 0 
-          ? props.bigOhIcon + '-closed' 
-          : props.bigOhIcon + '-open'"
-        style:
-          position: absolute
-          right: 10px
-          top: 5px
-          width: 90px
-        visible: "=props.bigOhIcon ? true : false"
-    - component: oh-link
-      config:
-        actionPropsParameterGroup: widgetAction
-        style:
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
+          backdrop-filter: blur(6px)
+          border-radius: var(--f7-card-expandable-border-radius)
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           height: 120px
-          left: 0px
-          position: absolute
-          top: 0px
-          width: 100%
-        visible: "=props.widget_action ? true : false"
+          margin-left: 5px
+          margin-right: 5px
+          minWidth: 200px
+      slots:
+        content:
+          - component: f7-block
+            config:
+              visible: "=props.title || props.icon ? true : false"
+              style:
+                display: flex
+                flex-direction: row
+                left: 16px
+                position: absolute
+                top: -5px
+            slots:
+              default:
+                - component: f7-icon
+                  config:
+                    f7: =props.icon || 'square'
+                    size: 18
+                    style:
+                      margin-right: 10px
+                - component: Label
+                  config:
+                    style:
+                      font-size: 12px
+                      margin-top: 0px
+                    text: =props.title
+          - component: f7-block
+            config:
+              style:
+                display: flex
+                flex-direction: column
+                left: 17px
+                position: absolute
+                top: "=props.title || props.icon ? '45px' : '-5px'"
+                width: 100%
+            slots:
+              default:
+                - component: Label
+                  config:
+                    style:
+                      font-size: 22px
+                      font-weight: 500
+                      overflow: hidden
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                      width: calc(100% - 90px)
+                    text: =props.header || 'Set header!'
+                - component: Label
+                  config:
+                    style:
+                      color: "=fn.isClosed() ? (themeOptions.dark === 'dark' ? '#30d158' : '#34c759') : fn.isTilted() ? (themeOptions.dark === 'dark' ? '#ffd60a' : '#ffcc00') : (themeOptions.dark === 'dark' ? '#ff453a' : '#ff3b30')"
+                      font-size: 16px
+                      font-weight: 400
+                      margin-top: -0.25em
+                      overflow: hidden
+                      text-overflow: ellipsis
+                      white-space: nowrap
+                      width: calc(100% - 90px)
+                    text: =@props.item
+
+          # SVG Visualization Component
+          - component: f7-block
+            config:
+              style:
+                position: absolute
+                right: 10px
+                top: 15px
+                width: 90px
+                height: 90px
+                margin: 0
+                padding: 0
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    tag: svg
+                    viewBox: 0 0 100 100
+                    style:
+                      width: 100%
+                      height: 100%
+                  slots:
+                    default:
+                      # 1. Window SVG
+                      - component: g
+                        config:
+                          visible: "=props.svgType === 'window' || !props.svgType"
+                        slots:
+                          default:
+                            # Outer frame
+                            - component: rect
+                              config:
+                                x: 20
+                                y: 15
+                                width: 60
+                                height: 70
+                                rx: 1
+                                fill: none
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                stroke-width: 2.5
+                            # Middle divide line
+                            - component: line
+                              config:
+                                x1: 50
+                                y1: 15
+                                x2: 50
+                                y2: 85
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                stroke-width: 2
+                            # Left sash (tilt / Casement swing group)
+                            - component: g
+                              config:
+                                style:
+                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '22.5px 50px'"
+                                  transform: "=fn.isTilted() ? 'scaleY(0.85) skewX(10deg)' : (fn.isOpen() ? 'scaleX(0.45) skewY(22deg)' : 'none')"
+                                  transition: transform 0.5s ease-in-out
+                              slots:
+                                default:
+                                  # Left pane glass and frame
+                                  - component: rect
+                                    config:
+                                      x: 22.5
+                                      y: 17.5
+                                      width: 25
+                                      height: 65
+                                      fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke-width: 1.5
+                                  # Handle
+                                  - component: rect
+                                    config:
+                                      x: 43
+                                      y: 47
+                                      width: 2
+                                      height: 6
+                                      rx: 0.5
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      style:
+                                        transform-origin: 44px 50px
+                                        transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(180deg)' : 'rotate(90deg)')"
+                                        transition: transform 0.5s ease-in-out
+                            # Right sash (tilt / Casement swing group)
+                            - component: g
+                              config:
+                                style:
+                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '77.5px 50px'"
+                                  transform: "=fn.isTilted() ? 'scaleY(0.85) skewX(10deg)' : (fn.isOpen() ? 'scaleX(0.45) skewY(-22deg)' : 'none')"
+                                  transition: transform 0.5s ease-in-out
+                              slots:
+                                default:
+                                  # Right pane glass and frame
+                                  - component: rect
+                                    config:
+                                      x: 52.5
+                                      y: 17.5
+                                      width: 25
+                                      height: 65
+                                      fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke-width: 1.5
+                                  # Handle
+                                  - component: rect
+                                    config:
+                                      x: 55
+                                      y: 47
+                                      width: 2
+                                      height: 6
+                                      rx: 0.5
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+                                      style:
+                                        transform-origin: 56px 50px
+                                        transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(-180deg)' : 'rotate(-90deg)')"
+                                        transition: transform 0.5s ease-in-out
+
+                      # 2. Door SVG
+                      - component: g
+                        config:
+                          visible: "=props.svgType === 'door'"
+                        slots:
+                          default:
+                            # Outer frame
+                            - component: rect
+                              config:
+                                x: 25
+                                y: 15
+                                width: 50
+                                height: 70
+                                fill: none
+                                stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                stroke-width: 3
+                            # Door Leaf group
+                            - component: g
+                              config:
+                                style:
+                                  transform-origin: 27px 50px
+                                  transform: "=fn.isOpen() ? 'perspective(150px) rotateY(-60deg)' : 'none'"
+                                  transition: transform 0.5s ease-in-out
+                              slots:
+                                default:
+                                  - component: rect
+                                    config:
+                                      x: 27
+                                      y: 16.5
+                                      width: 46
+                                      height: 67
+                                      fill: "=themeOptions.dark === 'dark' ? '#374151' : '#f3f4f6'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke-width: 1.5
+                                  # Door Handle
+                                  - component: rect
+                                    config:
+                                      x: 63
+                                      y: 48
+                                      width: 7
+                                      height: 2
+                                      rx: 0.5
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+
+                      # 3. Frontdoor SVG
+                      - component: g
+                        config:
+                          visible: "=props.svgType === 'frontdoor'"
+                        slots:
+                          default:
+                            # Outer frame / thick casing
+                            - component: rect
+                              config:
+                                x: 22
+                                y: 15
+                                width: 56
+                                height: 70
+                                fill: none
+                                stroke: "=themeOptions.dark === 'dark' ? '#4b5563' : '#9ca3af'"
+                                stroke-width: 4
+                            # Front Door Leaf group
+                            - component: g
+                              config:
+                                style:
+                                  transform-origin: 24.5px 50px
+                                  transform: "=fn.isOpen() ? 'perspective(150px) rotateY(-55deg)' : 'none'"
+                                  transition: transform 0.5s ease-in-out
+                              slots:
+                                default:
+                                  - component: rect
+                                    config:
+                                      x: 24.5
+                                      y: 17
+                                      width: 51
+                                      height: 66
+                                      fill: "=themeOptions.dark === 'dark' ? '#1f2937' : '#e5e7eb'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#1f2937'"
+                                      stroke-width: 2
+                                  # Panel design
+                                  - component: rect
+                                    config:
+                                      x: 32
+                                      y: 25
+                                      width: 8
+                                      height: 50
+                                      fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.2)' : 'rgba(14, 165, 233, 0.2)'"
+                                      stroke: "=themeOptions.dark === 'dark' ? '#64748b' : '#4b5563'"
+                                      stroke-width: 1
+                                  # Long premium vertical pull bar handle
+                                  - component: rect
+                                    config:
+                                      x: 67
+                                      y: 35
+                                      width: 2
+                                      height: 25
+                                      rx: 1
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#4b5563'"
+
+          - component: oh-link
+            config:
+              actionPropsParameterGroup: widgetAction
+              style:
+                height: 120px
+                left: 0px
+                position: absolute
+                top: 0px
+                width: 100%
+              visible: "=props.widget_action ? true : false"
