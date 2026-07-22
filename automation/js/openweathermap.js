@@ -25,8 +25,16 @@ const DAILY = "Daily_";
  * @param {object} json the JSON object to add the value to
  * */
 function calculateCurrentDayData (json) {
-  const sunrise = time.toZDT(items.getItem(PREFIX + CURRENT + 'Sunrise'));
-  const sunset = time.toZDT(items.getItem(PREFIX + CURRENT + 'Sunset'));
+  const sunriseItem = items.getItem(PREFIX + CURRENT + 'Sunrise');
+  const sunsetItem = items.getItem(PREFIX + CURRENT + 'Sunset');
+
+  const sunrise = sunriseItem.isInitialized ? time.toZDT(sunriseItem) : null;
+  const sunset = sunsetItem.isInitialized ? time.toZDT(sunsetItem) : null;
+  if (!sunrise || !sunset) {
+    json.current.day = '';
+    return;
+  }
+
   json.current.day = time.toZDT().isBetweenDateTimes(sunrise, sunset);
 
   const beginOfHour = time.toZDT().withMinute(0).withSecond(0).withNano(0);
@@ -43,7 +51,8 @@ function calculateCurrentDayData (json) {
  * @param {function(*): string} [formatter] the optional function to format the Item state
  */
 function addCurrentValue (field, json, formatter = (state) => state) {
-  json.current[field.toLowerCase()] = formatter(items.getItem(PREFIX + CURRENT + field).state).toString();
+  const item = items.getItem(PREFIX + CURRENT + field);
+  json.current[field.toLowerCase()] = item.isInitialized ? formatter(item.state).toString() : '';
 }
 
 /**
