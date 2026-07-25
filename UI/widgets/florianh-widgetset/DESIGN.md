@@ -105,3 +105,86 @@ To maintain a consistent style and reduce the variety of colors used in SVGs (e.
 * **Glass Panes (Window/Door):**
   * Light: `rgba(14, 165, 233, 0.12)` (Sky 500, 12% opacity)
   * Dark: `rgba(56, 189, 248, 0.12)` (Sky 400, 12% opacity)
+
+---
+
+## Page Integration & Templates
+
+### 1. Custom CSS for Layout Pages
+
+To make all standard openHAB Cards match the styling of the custom widget-set, add the following style block to the `config` of your layout page:
+
+```yaml
+version: 1
+pages:
+  <page_id>:
+    config:
+      style:
+        --f7-card-border-radius: var(--f7-card-expandable-border-radius, 12px)
+        --f7-card-box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
+        --f7-card-margin-horizontal: 5px
+        --f7-card-padding: 0px
+      stylesheet: |
+        .card {
+          backdrop-filter: blur(6px);
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06));
+        }
+```
+
+### 2. Switch Widget Template
+
+For simple, Home App-like switch cards on a layout page:
+
+```yaml
+                - component: oh-grid-col
+                  config:
+                    width: "50"
+                    xsmall: "33"
+                    medium: "25"
+                    large: "20"
+                    xlarge: "15"
+                  slots:
+                    default:
+                      - component: oh-label-card
+                        config:
+                          action: toggle
+                          actionItem: Item
+                          actionCommand: ON
+                          actionCommandAlt: OFF
+                          label: Lightbulb
+                          icon: "=items.Item.state === 'ON' ? 'f7:lightbulb' : 'f7:lightbulb_slash'"
+                          vertical: true
+                          iconColor: "=items.Item.state === 'ON' ? 'yellow' : ''"
+                          iconSize: 40
+```
+
+### 3. Scene Trigger Widget Template
+
+For triggering scenes with a full-color card:
+
+```yaml
+                - component: oh-grid-col
+                  config:
+                    width: "50"
+                    xsmall: "33"
+                    medium: "25"
+                    large: "20"
+                    xlarge: "15"
+                  slots:
+                    default:
+                      - component: oh-label-card
+                        config:
+                          action: command
+                          actionItem: gLicht
+                          actionCommand: OFF
+                          label: Licht
+                          icon: f7:lightbulb_slash
+                          vertical: true
+                          iconSize: 70
+                          fontSize: 17px
+                          fontWeight: "600"
+                          style:
+                            background-color: "=themeOptions.dark === 'dark' ? '#30d158' : '#198754'"
+                            color: "=themeOptions.dark === 'dark' ? 'black' : 'white'"
+                          actionFeedback: Erledigt!
+```
