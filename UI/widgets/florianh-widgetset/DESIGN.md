@@ -55,6 +55,16 @@ To support overview dashboards, titles are optional and shift the layout dynamic
 | **Subheader / Status**     | `16px`    | `400`       | Secondary metadata/text, nested under header             |
 | **Chips / Auxiliary Text** | `12px`    | `500`       | Compact status indicators                                |
 
+### Text Wrap & Overflow Handling
+
+To prevent text clipping or wrapping issues in compact card layouts, configure overflow and line wrapping with the following CSS attributes:
+
+```yaml
+overflow: hidden
+text-overflow: ellipsis
+white-space: nowrap
+```
+
 ---
 
 ## Semantic Color Palette
