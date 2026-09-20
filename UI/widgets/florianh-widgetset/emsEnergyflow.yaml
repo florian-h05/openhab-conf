@@ -84,6 +84,10 @@ props:
       context: action
       label: Solar Action
       description: Action to perform when the solar icon is clicked
+    - name: batteryAction
+      context: action
+      label: Battery Action
+      description: Action to perform when the battery icon is clicked
     - name: loadAction
       context: action
       label: Load Action
@@ -487,6 +491,7 @@ slots:
                           text: =Math.round(#props.batteryLevelItem) + '%'
                       - component: oh-icon
                         config:
+                          actionPropsParameterGroup: batteryAction
                           height: 85px
                           icon: =props.batteryIcon
                           style:
