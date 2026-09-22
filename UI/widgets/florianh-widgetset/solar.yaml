@@ -54,8 +54,7 @@ props:
       required: false
       type: TEXT
     - context: item
-      description: Set the last refresh Item to show the last refresh time, leave
-        empty to hide the timestamp
+      description: Set the last refresh Item to show the last refresh time, leave empty to hide the timestamp
       label: Last Refresh Item
       name: item_lastrefresh
       required: false
@@ -67,14 +66,13 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Sep 21, 2025, 11:57:31 AM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     backdrop-filter: blur(6px)
-    border-radius: var(--f7-card-expandable-border-radius)
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: =props.height
     margin-left: 5px
@@ -84,13 +82,13 @@ slots:
   content:
     - component: f7-block
       config:
-        visible: "=props.title ? true : false"
         style:
           display: flex
           flex-direction: row
           left: 16px
           position: absolute
           top: -5px
+        visible: "=props.title ? true : false"
       slots:
         default:
           - component: f7-icon
@@ -125,10 +123,10 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 font-weight: 400
-                margin-bottom: 2px
-                margin-top: 0
                 height: auto
                 line-height: 1.2
+                margin-bottom: 2px
+                margin-top: 0
               text: =@props.item_power
           - component: f7-chip
             config:
@@ -139,15 +137,11 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 font-weight: 400
-                margin-bottom: 2px
-                margin-top: 0
                 height: auto
                 line-height: 1.2
-              text: "=(@props.item_energy_day).split(' ')[0] + (props.item_energy_month ? ' |
-                ' + (@props.item_energy_month).split(' ')[0] : '') +
-                (props.item_energy_total ? ' | ' +
-                (@props.item_energy_total).split(' ')[0] : '') + ' ' +
-                props.unit_energy"
+                margin-bottom: 2px
+                margin-top: 0
+              text: "=(@props.item_energy_day).split(' ')[0] + (props.item_energy_month ? ' | ' + (@props.item_energy_month).split(' ')[0] : '') + (props.item_energy_total ? ' | ' + (@props.item_energy_total).split(' ')[0] : '') + ' ' + props.unit_energy"
           - component: f7-chip
             config:
               iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -157,10 +151,10 @@ slots:
                 --f7-chip-bg-color: rgba(255, 255, 255, 0)
                 font-size: 16px
                 font-weight: 400
-                margin-bottom: 0
-                margin-top: 0
                 height: auto
                 line-height: 1.2
+                margin-bottom: 0
+                margin-top: 0
               text: =@props.item_lastrefresh
               visible: "=props.item_lastrefresh !== undefined ? true : false"
     - component: oh-icon

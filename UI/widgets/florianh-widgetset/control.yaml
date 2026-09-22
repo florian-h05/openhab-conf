@@ -83,14 +83,13 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Jun 11, 2023, 9:36:33 AM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     backdrop-filter: blur(6px)
-    border-radius: var(--f7-card-expandable-border-radius)
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: 120px
     margin-left: 5px
@@ -100,18 +99,18 @@ slots:
   content:
     - component: f7-block
       config:
-        visible: "=props.title || props.icon ? true : false"
         style:
           display: flex
           flex-direction: row
           left: 16px
           position: absolute
           top: -5px
+        visible: "=props.title || props.icon ? true : false"
       slots:
         default:
           - component: f7-icon
             config:
-              f7: "=props.icon || 'lightbulb'"
+              f7: =props.icon || 'lightbulb'
               size: 18
               style:
                 margin-right: 10px
@@ -120,7 +119,7 @@ slots:
               style:
                 font-size: 12px
                 margin-top: 0px
-              text: "=props.title || ''"
+              text: =props.title || ''
     - component: f7-block
       config:
         style:
@@ -139,7 +138,7 @@ slots:
                 text-overflow: ellipsis
                 white-space: nowrap
                 width: "=props.bigOhIcon ? 'calc(100% - 90px)' : '100%'"
-              text: "=props.header || 'Set header!'"
+              text: =props.header || 'Set header!'
           - component: Label
             config:
               style:

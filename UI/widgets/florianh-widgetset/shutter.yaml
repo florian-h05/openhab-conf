@@ -17,8 +17,7 @@ props:
       required: false
       type: TEXT
       groupName: appearance
-    - description: Icon on top of the card (only f7 icons (without f7:)). e.g.
-        text_justify or arrow_up_arrow_down
+    - description: Icon on top of the card (only f7 icons (without f7:)). e.g. text_justify or arrow_up_arrow_down
       label: Icon
       name: icon
       required: false
@@ -38,8 +37,7 @@ props:
       type: TEXT
       groupName: widgetSettings
     - context: item
-      description: Item whose state should be shown as a subheader, e.g. for "x % to y
-        %" state
+      description: Item whose state should be shown as a subheader, e.g. for "x % to y %" state
       label: Subheader Value Item
       name: item_subheader
       required: false
@@ -67,14 +65,13 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Feb 24, 2024, 3:21:46 PM
 component: f7-card
 config:
   style:
-    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     backdrop-filter: blur(6px)
-    border-radius: var(--f7-card-expandable-border-radius)
+    background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
     border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+    border-radius: var(--f7-card-expandable-border-radius)
     box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
     height: 120px
     margin-left: 5px
@@ -84,13 +81,13 @@ slots:
   content:
     - component: f7-block
       config:
-        visible: "=props.title || props.icon ? true : false"
         style:
           display: flex
           flex-direction: row
           left: 16px
           position: absolute
           top: -5px
+        visible: "=props.title || props.icon ? true : false"
       slots:
         default:
           - component: f7-icon
@@ -131,10 +128,7 @@ slots:
                 overflow: hidden
                 text-overflow: ellipsis
                 white-space: nowrap
-              text: "=props.item_subheader ? @props.item_subheader : (@@props.item === '100' ?
-                'Geschlossen' : @@props.item === '0' ? 'Geöffnet' : @props.item)
-                + (props.itemShading ? @@props.itemShading === 'ON' ? ' -
-                Verschattung' : '' : '')"
+              text: "=props.item_subheader ? @props.item_subheader : (@@props.item === '100' ? 'Geschlossen' : @@props.item === '0' ? 'Geöffnet' : @props.item) + (props.itemShading ? @@props.itemShading === 'ON' ? ' - Verschattung' : '' : '')"
     - component: f7-block
       config:
         style:
@@ -152,8 +146,7 @@ slots:
               actionCommand: UP
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
+              iconColor: "=@@props.item === '0' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
               iconF7: arrow_up_circle
               iconSize: 34
               style:
@@ -177,8 +170,7 @@ slots:
               actionCommand: DOWN
               actionFeedback: Erledigt!
               actionItem: =props.item
-              iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' :
-                'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
+              iconColor: "=@@props.item === '100' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
               iconF7: arrow_down_circle
               iconSize: 34
               style:

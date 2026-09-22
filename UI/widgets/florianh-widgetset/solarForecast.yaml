@@ -92,26 +92,25 @@ props:
       label: Actual Production
     - name: appearance
       label: Appearance
-timestamp: Mar 4, 2026, 5:59:04 PM
 component: oh-context
 config:
   constants:
+    aggregateDimension1: isoWeekday
     chartBackgroundColor: transparent
     textColor: "=themeOptions.dark === 'dark' ? '#1c1c1d' : '#fff'"
-    aggregateDimension1: isoWeekday
   functions:
-    tooltipFormatter: =(value, index) => Number(value).toFixed(1).toString().replace('.', ',')
     forecastFormatter: "=(params) => Number(params.value[1]) ? Number(params.value[1]).toFixed(0) : ''"
     producedFormatter: =(params) => Number(params.value[1]).toFixed(0)
+    tooltipFormatter: =(value, index) => Number(value).toFixed(1).toString().replace('.', ',')
 slots:
   default:
     - component: f7-card
       config:
         style:
-          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           margin-left: 5px
           margin-right: 5px
@@ -121,21 +120,10 @@ slots:
             config:
               chartType: isoWeek
               height: =props.height
-              periodVisible: false
               options:
                 backgroundColor: =const.chartBackgroundColor
+              periodVisible: false
             slots:
-              tooltip:
-                - component: oh-chart-tooltip
-                  config:
-                    show: true
-                    trigger: axis
-                    valueFormatter: =fn.tooltipFormatter
-              legend:
-                - component: oh-chart-legend
-                  config:
-                    bottom: 0
-                    show: true
               grid:
                 - component: oh-chart-grid
                   config:
@@ -144,22 +132,11 @@ slots:
                     left: 5
                     right: 5
                     top: 10
-              xAxis:
-                - component: oh-category-axis
+              legend:
+                - component: oh-chart-legend
                   config:
-                    categoryType: week
-                    axisLine:
-                      show: false
-                    axisTick:
-                      show: false
-                    weekdayFormat: short
-              yAxis:
-                - component: oh-value-axis
-                  config:
-                    axisLabel:
-                      show: false
-                    splitLine:
-                      show: false
+                    bottom: 0
+                    show: true
               series:
                 - component: oh-aggregate-series
                   config:
@@ -167,7 +144,6 @@ slots:
                     barWidth: 50%
                     dimension1: =const.aggregateDimension1
                     item: =props.forecastItem
-                    service: =props.forecastService
                     itemStyle:
                       borderRadius:
                         - 8
@@ -176,11 +152,12 @@ slots:
                         - 8
                       color: "=themeOptions.dark === 'dark' ? props.colorForecastDark : props.colorForecastLight"
                     label:
-                      show: true
-                      position: insideBottom
                       color: =const.textColor
                       formatter: =fn.forecastFormatter
+                      position: insideBottom
+                      show: true
                     name: =props.forecastLabel + ' (' + props.yAxisName + ')'
+                    service: =props.forecastService
                     type: bar
                 - component: oh-aggregate-series
                   config:
@@ -189,7 +166,6 @@ slots:
                     barWidth: 50%
                     dimension1: =const.aggregateDimension1
                     item: =props.actualItem
-                    service: =props.actualService
                     itemStyle:
                       borderRadius:
                         - 8
@@ -198,9 +174,32 @@ slots:
                         - 8
                       color: =props.colorProduced
                     label:
-                      show: true
-                      position: top
                       color: =props.colorProduced
                       formatter: =fn.producedFormatter
+                      position: top
+                      show: true
                     name: =props.actualLabel + ' (' + props.yAxisName + ')'
+                    service: =props.actualService
                     type: bar
+              tooltip:
+                - component: oh-chart-tooltip
+                  config:
+                    show: true
+                    trigger: axis
+                    valueFormatter: =fn.tooltipFormatter
+              xAxis:
+                - component: oh-category-axis
+                  config:
+                    axisLine:
+                      show: false
+                    axisTick:
+                      show: false
+                    categoryType: week
+                    weekdayFormat: short
+              yAxis:
+                - component: oh-value-axis
+                  config:
+                    axisLabel:
+                      show: false
+                    splitLine:
+                      show: false

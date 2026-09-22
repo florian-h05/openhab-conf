@@ -34,8 +34,7 @@ props:
       required: true
       type: TEXT
     - context: item
-      description: Current state of charge of the battery connected to the inverter in
-        percent
+      description: Current state of charge of the battery connected to the inverter in percent
       label: Battery State of Charge
       name: batteryLevelItem
       required: true
@@ -96,14 +95,13 @@ props:
       context: action
       label: EV Charger Action
       description: Action to perform when the EV charger icon is clicked
-timestamp: Apr 9, 2025, 2:58:11 PM
 component: oh-context
 config:
   constants: {}
   functions:
-    getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
-    flowsTo: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) < 0
     flowsFrom: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) > 0
+    flowsTo: =(item) => @item !== undefined && Number((@item).split(' ')[0].replace(',', '.')) < 0
+    getFormattedState: =(item) => (@item).replace('-', '').replace('kW', 'ᵏᵂ').replace('W', 'ᵂ')
   variable: {}
 slots:
   default:
@@ -111,29 +109,29 @@ slots:
       config:
         style:
           align-items: center
-          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
+          container-type: inline-size
           display: flex
           justify-content: center
           margin-left: 5px
           margin-right: 5px
-          container-type: inline-size
           position: relative
       slots:
         default:
           - component: f7-block
             config:
               style:
-                '--f7-theme-color': var(--f7-text-color)
+                --f7-theme-color: var(--f7-text-color)
+                --scale-factor: min(1, calc(100cqw / 354px)
                 display: grid
                 grid-template-columns: repeat(3, 110px)
                 margin: 0
                 padding: 12px
                 place-items: center
-                '--scale-factor': min(1, calc(100cqw / 354px)
                 zoom: var(--scale-factor)
             slots:
               default:
@@ -156,8 +154,7 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsFrom(props.solarPowerItem) ? (themeOptions.dark === 'dark' ?
-                              'white' : 'black') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
+                            color: "=fn.flowsFrom(props.solarPowerItem) ? (themeOptions.dark === 'dark' ? 'white' : 'black') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-bottom: -10px
@@ -199,9 +196,7 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') :
-                              fn.flowsFrom(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') :
-                              (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
+                            color: "=fn.flowsTo(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : fn.flowsFrom(props.gridPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px
@@ -369,8 +364,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
-                                  fn.flowsTo(props.batteryPowerItem)"
+                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 && fn.flowsTo(props.batteryPowerItem)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -378,8 +372,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
-                                  fn.flowsTo(props.batteryPowerItem)"
+                                visible: "=#props.gridPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 && fn.flowsTo(props.batteryPowerItem)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -435,8 +428,7 @@ slots:
                                 stroke-width: 2
                                 tag: path
                                 vector-effect: non-scaling-stroke
-                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
-                                  fn.flowsTo(props.gridPowerItem)"
+                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 && fn.flowsTo(props.gridPowerItem)"
                             - component: f7-row
                               config:
                                 fill: rgba(100, 150, 200, 0.8)
@@ -444,8 +436,7 @@ slots:
                                 strokeWidth: 10
                                 tag: circle
                                 vectorEffect: non-scaling-stroke
-                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 &&
-                                  fn.flowsTo(props.gridPowerItem)"
+                                visible: "=#props.batteryPowerItem - #props.solarPowerItem + #props.loadPowerItem > 0 && fn.flowsTo(props.gridPowerItem)"
                               slots:
                                 default:
                                   - component: f7-row
@@ -477,10 +468,8 @@ slots:
                           action: analyzer
                           actionAnalyzerCoordSystem: time
                           actionAnalyzerItems: =[props.batteryLevelItem]
-                          iconColor: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'red' :
-                            'orange') : 'green'"
-                          iconF7: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'battery_0' :
-                            'battery_25') : 'battery_100'"
+                          iconColor: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'red' : 'orange') : 'green'"
+                          iconF7: "=#props.batteryLevelItem < 65 ? (#props.batteryLevelItem < 10 ? 'battery_0' : 'battery_25') : 'battery_100'"
                           iconSize: 30px
                           style:
                             font-size: 20px
@@ -500,9 +489,7 @@ slots:
                       - component: Label
                         config:
                           style:
-                            color: "=fn.flowsTo(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') :
-                              fn.flowsFrom(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') :
-                              (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
+                            color: "=fn.flowsTo(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : fn.flowsFrom(props.batteryPowerItem) ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                             font-size: 25px
                             font-weight: bold
                             margin-top: -10px

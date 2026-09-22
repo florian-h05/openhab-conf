@@ -116,16 +116,12 @@ props:
       context: action
       label: Action settings
       description: Action to perform when the widget is clicked on the left third
-timestamp: Sep 21, 2025, 2:41:12 PM
 component: oh-context
 config:
   constants: {}
   functions:
-    formatCurrency: "=(label, item1, item2) => label + ': ' + (item2 ?
-      (@item1).split(' ')[0] + ' | ' + (@item2).replace('EUR', '€') :
-      (@item1).replace('EUR', '€'))"
-    formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] +
-      ' | ' + @item2"
+    formatCurrency: "=(label, item1, item2) => label + ': ' + (item2 ? (@item1).split(' ')[0] + ' | ' + (@item2).replace('EUR', '€') : (@item1).replace('EUR', '€'))"
+    formatEnergy: "=(label, item1, item2) => label + ': ' + (@item1).split(' ')[0] + ' | ' + @item2"
   variable: {}
 slots:
   default:
@@ -134,26 +130,26 @@ slots:
         style:
           --f7-chip-bg-color: rgba(255, 255, 255, 0)
           --f7-chip-height: 28px
-          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
+          container-type: inline-size
           margin-left: 5px
           margin-right: 5px
-          container-type: inline-size
           position: relative
       slots:
         content:
           - component: f7-block
             config:
-              visible: "=props.title ? true : false"
               style:
-                width: 100%
                 display: flex
                 flex-direction: row
                 margin: -5px 0 10px 0
                 padding: 0
+                width: 100%
+              visible: "=props.title ? true : false"
             slots:
               default:
                 - component: f7-icon
@@ -171,9 +167,9 @@ slots:
           - component: f7-block
             config:
               style:
+                --scale-factor: min(1, calc(100cqw / 360px)
                 margin: "=props.title ? '0 0 0 -4px' : '-5px 0 0 -4px'"
                 padding: 0
-                '--scale-factor': min(1, calc(100cqw / 360px)
                 zoom: var(--scale-factor)
             slots:
               default:
@@ -186,9 +182,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 0
-                    text: =fn.formatEnergy(props.supplyLabel,
-                      props.supplyItemDay,
-                      props.supplyItemMonth)
+                    text: =fn.formatEnergy(props.supplyLabel, props.supplyItemDay, props.supplyItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -198,9 +192,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatEnergy(props.selfConsumptionLabel,
-                      props.selfConsumptionItemDay,
-                      props.selfConsumptionItemMonth)
+                    text: =fn.formatEnergy(props.selfConsumptionLabel, props.selfConsumptionItemDay, props.selfConsumptionItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -210,9 +202,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatEnergy(props.feedInLabel,
-                      props.feedInItemDay,
-                      props.feedInItemMonth)
+                    text: =fn.formatEnergy(props.feedInLabel, props.feedInItemDay, props.feedInItemMonth)
                 - component: f7-chip
                   config:
                     iconColor: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
@@ -222,9 +212,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.costLabel,
-                      props.costItemMonth,
-                      props.costItemTotal)
+                    text: =fn.formatCurrency(props.costLabel, props.costItemMonth, props.costItemTotal)
                     visible: "=props.costItemMonth ? true : false"
                 - component: f7-chip
                   config:
@@ -235,9 +223,7 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.savingsLabel,
-                      props.savingsItemMonth,
-                      props.savingsItemTotal)
+                    text: =fn.formatCurrency(props.savingsLabel, props.savingsItemMonth, props.savingsItemTotal)
                     visible: "=props.savingsItemMonth ? true : false"
                 - component: f7-chip
                   config:
@@ -248,18 +234,16 @@ slots:
                       font-size: 16px
                       margin-bottom: 0
                       margin-top: 10px
-                    text: =fn.formatCurrency(props.earningsLabel,
-                      props.earningsItemMonth,
-                      props.earningsItemTotal)
+                    text: =fn.formatCurrency(props.earningsLabel, props.earningsItemMonth, props.earningsItemTotal)
                     visible: "=props.earningsItemMonth ? true : false"
           - component: oh-link
             config:
               actionFeedback: Erledigt!
               actionPropsParameterGroup: widgetAction
               style:
-                position: absolute
-                top: 0
                 bottom: 0
                 left: 0
+                position: absolute
                 right: 0
+                top: 0
               visible: "=props.widget_action ? true : false"

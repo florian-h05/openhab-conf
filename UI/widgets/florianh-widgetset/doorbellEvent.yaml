@@ -29,7 +29,6 @@ props:
   parameterGroups:
     - name: widgetSettings
       label: Widget settings
-timestamp: Nov 29, 2025, 10:51:21 PM
 component: div
 config:
   style:
@@ -44,19 +43,16 @@ slots:
   default:
     - component: oh-image-card
       config:
-        footer: "=props.eventDescription ? props.eventDescription + ': ' +
-          items[props.item_eventTimestamp].displayState :
-          items[props.item_eventTimestamp].displayState"
+        footer: "=props.eventDescription ? props.eventDescription + ': ' + items[props.item_eventTimestamp].displayState : items[props.item_eventTimestamp].displayState"
         item: =props.item_eventImage
         lazy: true
         style:
-          border-radius: var(--f7-card-expandable-border-radius)
-          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
-          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
-          overflow: hidden
-          footer-font-size: 24px
           --view-area-height: calc(100dvh - var(--f7-navbar-height) - var(--f7-safe-area-top))
+          border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
+          box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
+          footer-font-size: 24px
           max-height: calc(var(--view-area-height) - 2*var(--f7-card-margin-vertical))
-          max-width: ='calc((' + screen.viewAreaHeight + 'px -
-            2*var(--f7-block-padding-vertical)) * (4/3))'
+          max-width: ='calc((' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'
+          overflow: hidden
           text-align: center

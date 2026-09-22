@@ -36,21 +36,21 @@ props:
       type: TEXT
       groupName: widgetSettings
     - default: Ready
-      description: "State value for Ready state"
+      description: State value for Ready state
       label: Ready State Value
       name: stateReady
       required: false
       type: TEXT
       groupName: widgetSettings
     - default: Run
-      description: "State value for Running state"
+      description: State value for Running state
       label: Running State Value
       name: stateRunning
       required: false
       type: TEXT
       groupName: widgetSettings
     - default: Finished
-      description: "State value for Finished state"
+      description: State value for Finished state
       label: Finished State Value
       name: stateFinished
       required: false
@@ -77,35 +77,35 @@ props:
       type: TEXT
       groupName: widgetSettings
     - default: start
-      description: "Command to start"
+      description: Command to start
       label: Start Command
       name: cmdStart
       required: false
       type: TEXT
       groupName: widgetSettings
     - default: pause
-      description: "Command to pause"
+      description: Command to pause
       label: Pause Command
       name: cmdPause
       required: false
       type: TEXT
       groupName: widgetSettings
     - default: resume
-      description: "Command to resume"
+      description: Command to resume
       label: Resume Command
       name: cmdResume
       required: false
       type: TEXT
       groupName: widgetSettings
     - default: abort
-      description: "Command to stop/abort"
+      description: Command to stop/abort
       label: Stop Command
       name: cmdStop
       required: false
       type: TEXT
       groupName: widgetSettings
     - context: item
-      description: 'Item for the remaining runtime (String or Number, e.g. "1:45" or "105")'
+      description: Item for the remaining runtime (String or Number, e.g. "1:45" or "105")
       label: Runtime Item
       name: itemRuntime
       required: false
@@ -210,9 +210,14 @@ props:
       label: Widget settings
     - name: localisation
       label: Localisation
-timestamp: Jun 25, 2026, 5:18:28 PM
 component: oh-context
 config:
+  functions:
+    isDoorOpen: =() => @@props.itemDoor === 'OPEN'
+    isFinished: =() => @@props.itemState === props.stateFinished
+    isPowerOn: =() => @@props.itemPower === 'ON'
+    isReady: =() => @@props.itemState === props.stateReady
+    isRunning: =() => @@props.itemState === props.stateRunning
   stylesheet: |
     @keyframes pulse-blue {
       0% { opacity: 0.3; rx: 18px; }
@@ -224,21 +229,15 @@ config:
       50% { opacity: 1; }
       100% { opacity: 0.4; }
     }
-  functions:
-    isPowerOn: "=() => @@props.itemPower === 'ON'"
-    isDoorOpen: "=() => @@props.itemDoor === 'OPEN'"
-    isRunning: "=() => @@props.itemState === props.stateRunning"
-    isFinished: "=() => @@props.itemState === props.stateFinished"
-    isReady: "=() => @@props.itemState === props.stateReady"
 slots:
   default:
     - component: f7-card
       config:
         style:
-          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           height: 120px
           margin-left: 5px
@@ -260,21 +259,21 @@ slots:
               default:
                 - component: Label
                   config:
-                    visible: "=props.header ? true : false"
                     style:
+                      color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
                       font-size: 22px
                       font-weight: 500
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                      color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
                     text: =props.header
+                    visible: "=props.header ? true : false"
                 - component: Label
                   config:
                     style:
+                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                       font-size: 16px
                       margin-top: -0.25em
-                      color: "=fn.isDoorOpen() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93')"
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
@@ -284,123 +283,123 @@ slots:
           - component: f7-block
             config:
               style:
+                align-items: center
                 display: flex
                 flex-direction: row
-                align-items: center
                 gap: 10px
                 left: 15px
+                margin: 0
+                padding: 0
                 position: absolute
                 top: 76px
                 width: calc(100% - 100px - 2 * var(--f7-block-padding-horizontal))
-                margin: 0
-                padding: 0
             slots:
               default:
                 # Power toggle button
                 - component: oh-button
                   config:
                     action: toggle
-                    actionItem: =props.itemPower
                     actionCommand: OFF
                     actionCommandAlt: ON
+                    actionItem: =props.itemPower
                     disabled: =fn.isRunning()
+                    iconColor: "=fn.isPowerOn() ? 'white' : (themeOptions.dark === 'dark' ? '#a1a1aa' : '#64748b')"
                     iconF7: power
                     iconSize: 20px
-                    iconColor: "=fn.isPowerOn() ? 'white' : (themeOptions.dark === 'dark' ? '#a1a1aa' : '#64748b')"
                     style:
+                      align-items: center
                       background: "=fn.isPowerOn() ? '#22c55e' : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
                       border-radius: 50%
-                      width: 32px
-                      height: 32px
-                      display: flex
-                      align-items: center
-                      justify-content: center
                       box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      display: flex
+                      height: 32px
+                      justify-content: center
                       padding: 0
+                      width: 32px
                 # Program Select dropdown
                 - component: oh-button
                   config:
                     action: options
                     actionItem: =props.itemProgram
                     actionOptions: =props.programOptions
-                    text: "=@props.itemProgram ? @props.itemProgram : props.textProgram"
                     disabled: =fn.isRunning()
                     style:
+                      align-items: center
                       background: "=themeOptions.dark === 'dark' ? '#2d2d30' : '#f0f0f5'"
-                      color: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
                       border-radius: 16px
-                      height: 32px
-                      padding-left: 10px
-                      padding-right: 10px
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      color: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                      display: flex
+                      flex: 1
                       font-size: 13px
                       font-weight: 500
-                      display: flex
-                      align-items: center
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
-                      flex: 1
+                      height: 32px
                       min-width: 0
-                    visible: "=props.itemProgram && fn.isPowerOn()"
+                      padding-left: 10px
+                      padding-right: 10px
+                    text: "=@props.itemProgram ? @props.itemProgram : props.textProgram"
+                    visible: =props.itemProgram && fn.isPowerOn()
                 # Start / Pause / Resume Button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.itemControl
                     actionCommand: "=fn.isRunning() ? props.cmdPause : ((@@props.itemState === 'PAUSED' || @@props.itemState === 'PAUSE') ? props.cmdResume : props.cmdStart)"
+                    actionItem: =props.itemControl
+                    iconColor: white
                     iconF7: "=fn.isRunning() ? 'pause_fill' : 'play_fill'"
                     iconSize: 16px
-                    iconColor: white
                     style:
+                      align-items: center
                       background: "=fn.isRunning() ? '#f97316' : '#0284c7'"
                       border-radius: 50%
-                      width: 32px
-                      height: 32px
-                      display: flex
-                      align-items: center
-                      justify-content: center
                       box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      display: flex
+                      height: 32px
+                      justify-content: center
                       padding: 0
-                    visible: "=props.itemControl && fn.isPowerOn() && !fn.isDoorOpen()"
+                      width: 32px
+                    visible: =props.itemControl && fn.isPowerOn() && !fn.isDoorOpen()
                 # Stop / Abort Button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.itemControl
                     actionCommand: =props.cmdStop
+                    actionItem: =props.itemControl
+                    iconColor: white
                     iconF7: stop_fill
                     iconSize: 16px
-                    iconColor: white
                     style:
+                      align-items: center
                       background: "#ef4444"
                       border-radius: 50%
-                      width: 32px
-                      height: 32px
-                      display: flex
-                      align-items: center
-                      justify-content: center
                       box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      display: flex
+                      height: 32px
+                      justify-content: center
                       padding: 0
-                    visible: "=props.itemControl && fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()"
+                      width: 32px
+                    visible: =props.itemControl && fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()
 
           # 4. Right side SVG Dishwasher
           - component: f7-block
             config:
               style:
+                height: 90px
+                margin: 0
+                padding: 0
                 position: absolute
                 right: 15px
                 top: 15px
                 width: 90px
-                height: 90px
-                margin: 0
-                padding: 0
             slots:
               default:
                 - component: f7-row
                   config:
+                    style:
+                      height: 100%
+                      width: 100%
                     tag: svg
                     viewBox: 0 0 100 100
-                    style:
-                      width: 100%
-                      height: 100%
                   slots:
                     default:
 
@@ -412,8 +411,8 @@ slots:
                               config:
                                 id: lightBeamGlow
                                 x1: 0
-                                y1: 0
                                 x2: 0
+                                y1: 0
                                 y2: 1
                               slots:
                                 default:
@@ -432,335 +431,330 @@ slots:
                       # Running state (Pulsing blue light projection)
                       - component: f7-row
                         config:
-                          tag: ellipse
                           cx: 50
                           cy: 94
-                          rx: 22
-                          ry: 2.5
                           fill: "#0284c7"
                           opacity: 0.7
+                          rx: 22
+                          ry: 2.5
                           style:
                             animation: pulse-blue 2s infinite
-                          visible: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()"
+                          tag: ellipse
+                          visible: =fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()
                       # Finished state (Solid green light projection)
                       - component: f7-row
                         config:
-                          tag: ellipse
                           cx: 50
                           cy: 94
-                          rx: 20
-                          ry: 2
                           fill: "#22c55e"
                           opacity: 0.6
-                          visible: "=fn.isPowerOn() && fn.isFinished() && !fn.isDoorOpen()"
+                          rx: 20
+                          ry: 2
+                          tag: ellipse
+                          visible: =fn.isPowerOn() && fn.isFinished() && !fn.isDoorOpen()
 
                       # Outer Cabinet Frame
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 10
-                          y: 5
-                          width: 80
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           height: 86
                           rx: 4
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 2
+                          tag: rect
+                          width: 80
+                          x: 10
+                          y: 5
 
                       # Control Panel Area
                       - component: f7-row
                         config:
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#f3f4f6' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#cbd5e1' : '#cbd5e1')"
+                          height: 15
                           tag: rect
+                          width: 76
                           x: 12
                           y: 7
-                          width: 76
-                          height: 15
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#f3f4f6' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#cbd5e1' : '#cbd5e1')"
 
                       # LED Display Screen
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 35
-                          y: 10
-                          width: 30
+                          fill: "#020617"
                           height: 9
                           rx: 1
-                          fill: "#020617"
                           stroke: "#1e293b"
                           stroke-width: 0.5
-
+                          tag: rect
+                          width: 30
+                          x: 35
+                          y: 10
                       # LED Display: Ready state message
                       - component: text
                         config:
+                          content: =props.textSvgReady
+                          fill: "#06b6d4"
+                          font-family: monospace
+                          font-size: 6
+                          font-weight: bold
+                          text-anchor: middle
+                          visible: =fn.isPowerOn() && fn.isReady() && !fn.isDoorOpen()
                           x: 50
                           y: 17
-                          font-family: monospace
-                          font-weight: bold
-                          font-size: 6
-                          fill: "#06b6d4"
-                          text-anchor: middle
-                          content: =props.textSvgReady
-                          visible: "=fn.isPowerOn() && fn.isReady() && !fn.isDoorOpen()"
-
                       # LED Display: Running state message (Remaining Runtime or "Wash")
                       - component: text
                         config:
+                          content: "=@@props.itemRuntime && @@props.itemRuntime !== 'NULL' && @@props.itemRuntime !== 'UNDEF' ? @props.itemRuntime : props.textSvgWash"
+                          fill: "#f43f5e"
+                          font-family: monospace
+                          font-size: 7
+                          font-weight: bold
+                          text-anchor: middle
+                          visible: =fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()
                           x: 50
                           y: 17.5
-                          font-family: monospace
-                          font-weight: bold
-                          font-size: 7
-                          fill: "#f43f5e"
-                          text-anchor: middle
-                          content: "=@@props.itemRuntime && @@props.itemRuntime !== 'NULL' && @@props.itemRuntime !== 'UNDEF' ? @props.itemRuntime : props.textSvgWash"
-                          visible: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen()"
-
                       # LED Display: Finished checkmark
                       - component: path
                         config:
                           d: M 46 14.5 L 49 17.5 L 54 12
                           fill: none
                           stroke: "#22c55e"
-                          stroke-width: 1.5
                           stroke-linecap: round
                           stroke-linejoin: round
-                          visible: "=fn.isPowerOn() && fn.isFinished() && !fn.isDoorOpen()"
+                          stroke-width: 1.5
+                          visible: =fn.isPowerOn() && fn.isFinished() && !fn.isDoorOpen()
 
                       # LED Display: Door Open message
                       - component: text
                         config:
+                          content: =props.textSvgOpen
+                          fill: "#f43f5e"
+                          font-family: monospace
+                          font-size: 6
+                          font-weight: bold
+                          text-anchor: middle
+                          visible: =fn.isDoorOpen() && fn.isPowerOn()
                           x: 50
                           y: 17
-                          font-family: monospace
-                          font-weight: bold
-                          font-size: 6
-                          fill: "#f43f5e"
-                          text-anchor: middle
-                          content: =props.textSvgOpen
-                          visible: "=fn.isDoorOpen() && fn.isPowerOn()"
-
                       # Power Indicator LED on panel
                       - component: circle
                         config:
                           cx: 20
                           cy: 14.5
-                          r: 1.5
                           fill: "=!fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568') : (fn.isRunning() ? '#22c55e' : '#06b6d4')"
+                          r: 1.5
                           style:
-                            filter: "=fn.isPowerOn() ? (fn.isRunning() ? 'drop-shadow(0 0 1.5px #22c55e)' : ((fn.isReady() || fn.isDoorOpen()) ? 'drop-shadow(0 0 1.5px #06b6d4)' : 'none')) : 'none'"
                             animation: "=fn.isPowerOn() ? (fn.isRunning() || fn.isReady() || fn.isDoorOpen() ? 'pulse-led 2s infinite' : 'none') : 'none'"
+                            filter: "=fn.isPowerOn() ? (fn.isRunning() ? 'drop-shadow(0 0 1.5px #22c55e)' : ((fn.isReady() || fn.isDoorOpen()) ? 'drop-shadow(0 0 1.5px #06b6d4)' : 'none')) : 'none'"
 
                       # Play/Pause LED on panel
                       - component: f7-row
                         config:
+                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568')"
+                          height: 4
+                          style:
+                            filter: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? 'drop-shadow(0 0 1.5px #f97316)' : 'none'"
                           tag: rect
+                          width: 1.5
                           x: 74
                           y: 12.5
-                          width: 1.5
-                          height: 4
-                          fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568')"
-                          style:
-                            filter: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? 'drop-shadow(0 0 1.5px #f97316)' : 'none'"
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 77
-                          y: 12.5
-                          width: 1.5
-                          height: 4
                           fill: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? '#f97316' : (themeOptions.dark === 'dark' ? '#9ca3af' : '#4a5568')"
+                          height: 4
                           style:
                             filter: "=fn.isPowerOn() && fn.isRunning() && !fn.isDoorOpen() ? 'drop-shadow(0 0 1.5px #f97316)' : 'none'"
+                          tag: rect
+                          width: 1.5
+                          x: 77
+                          y: 12.5
 
                       # Cabinet Interior Background (visible when door is open)
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 12
-                          y: 23
-                          width: 76
+                          fill: "#111827"
                           height: 66
                           rx: 2
-                          fill: "#111827"
-                          visible: "=fn.isDoorOpen()"
+                          tag: rect
+                          visible: =fn.isDoorOpen()
+                          width: 76
+                          x: 12
+                          y: 23
 
                       # Interior Light Beam 1 (when door is open and power is ON)
                       - component: polygon
                         config:
-                          points: 26,23 34,23 44,89 16,89
                           fill: url(#lightBeamGlow)
-                          visible: "=fn.isDoorOpen() && fn.isPowerOn()"
+                          points: 26,23 34,23 44,89 16,89
+                          visible: =fn.isDoorOpen() && fn.isPowerOn()
 
                       # Interior Light Beam 2 (when door is open and power is ON)
                       - component: polygon
                         config:
-                          points: 66,23 74,23 84,89 56,89
                           fill: url(#lightBeamGlow)
-                          visible: "=fn.isDoorOpen() && fn.isPowerOn()"
+                          points: 66,23 74,23 84,89 56,89
+                          visible: =fn.isDoorOpen() && fn.isPowerOn()
 
                       # Door Front Panel (Closed state)
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 12
-                          y: 23
-                          width: 76
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#f8fafc') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
                           height: 66
                           rx: 2
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#f8fafc') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 0.5
-                          visible: "=!fn.isDoorOpen()"
-
+                          tag: rect
+                          visible: =!fn.isDoorOpen()
+                          width: 76
+                          x: 12
+                          y: 23
                       # Door Handle
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 32
-                          y: 27
-                          width: 36
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           height: 4
                           rx: 1
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 0.5
-                          visible: "=!fn.isDoorOpen()"
+                          tag: rect
+                          visible: =!fn.isDoorOpen()
+                          width: 36
+                          x: 32
+                          y: 27
 
                       # Open Door Front Panel (perspective view)
                       - component: f7-row
                         config:
-                          tag: polygon
-                          points: 12,89 88,89 92,97 8,97
                           fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#ffffff' : '#f8fafc') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
+                          points: 12,89 88,89 92,97 8,97
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 0.5
-                          visible: "=fn.isDoorOpen()"
+                          tag: polygon
+                          visible: =fn.isDoorOpen()
 
                       # Open Door Handle (at the bottom/outer edge of open door)
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 30
-                          y: 95.5
-                          width: 40
+                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           height: 2
                           rx: 0.5
-                          fill: "=fn.isPowerOn() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#cbd5e1') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#94a3b8')"
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 0.5
-                          visible: "=fn.isDoorOpen()"
+                          tag: rect
+                          visible: =fn.isDoorOpen()
+                          width: 40
+                          x: 30
+                          y: 95.5
 
                       # Interior Rack Lines
                       - component: f7-row
                         config:
-                          tag: line
-                          x1: 22
-                          y1: 50
-                          x2: 78
-                          y2: 50
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-dasharray: 2,2
                           stroke-width: 0.8
-                          visible: "=fn.isDoorOpen()"
+                          tag: line
+                          visible: =fn.isDoorOpen()
+                          x1: 22
+                          x2: 78
+                          y1: 50
+                          y2: 50
                       - component: f7-row
                         config:
-                          tag: line
-                          x1: 22
-                          y1: 70
-                          x2: 78
-                          y2: 70
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-dasharray: 2,2
                           stroke-width: 0.8
-                          visible: "=fn.isDoorOpen()"
+                          tag: line
+                          visible: =fn.isDoorOpen()
+                          x1: 22
+                          x2: 78
+                          y1: 70
+                          y2: 70
 
                       # Rising Steam (Finished state only)
                       # Steam Path 1
                       - component: f7-row
                         config:
-                          tag: path
                           d: M 36 22 C 34 18, 38 15, 36 11 C 34 8, 38 5, 36 2
                           fill: none
+                          opacity: 0
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
-                          opacity: 0
-                          visible: "=fn.isPowerOn() && fn.isFinished()"
+                          tag: path
+                          visible: =fn.isPowerOn() && fn.isFinished()
                         slots:
                           default:
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: opacity
-                                values: "0;0.5;0"
-                                keyTimes: "0;0.5;1"
                                 dur: 2.5s
+                                keyTimes: 0;0.5;1
                                 repeatCount: indefinite
+                                tag: animate
+                                values: 0;0.5;0
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: dy
-                                from: 2
-                                to: -2
                                 dur: 2.5s
+                                from: 2
                                 repeatCount: indefinite
+                                tag: animate
+                                to: -2
                       # Steam Path 2
                       - component: f7-row
                         config:
-                          tag: path
                           d: M 50 22 C 48 18, 52 15, 50 11 C 48 8, 52 5, 50 2
                           fill: none
+                          opacity: 0
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
-                          opacity: 0
-                          visible: "=fn.isPowerOn() && fn.isFinished()"
+                          tag: path
+                          visible: =fn.isPowerOn() && fn.isFinished()
                         slots:
                           default:
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: opacity
-                                values: "0;0.5;0"
-                                keyTimes: "0;0.5;1"
-                                dur: 2.5s
                                 begin: 0.8s
+                                dur: 2.5s
+                                keyTimes: 0;0.5;1
                                 repeatCount: indefinite
+                                tag: animate
+                                values: 0;0.5;0
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: dy
-                                from: 2
-                                to: -2
-                                dur: 2.5s
                                 begin: 0.8s
+                                dur: 2.5s
+                                from: 2
                                 repeatCount: indefinite
+                                tag: animate
+                                to: -2
                       # Steam Path 3
                       - component: f7-row
                         config:
-                          tag: path
                           d: M 64 22 C 62 18, 66 15, 64 11 C 62 8, 66 5, 64 2
                           fill: none
+                          opacity: 0
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1'"
                           stroke-width: 1
-                          opacity: 0
-                          visible: "=fn.isPowerOn() && fn.isFinished()"
+                          tag: path
+                          visible: =fn.isPowerOn() && fn.isFinished()
                         slots:
                           default:
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: opacity
-                                values: "0;0.5;0"
-                                keyTimes: "0;0.5;1"
-                                dur: 2.5s
                                 begin: 1.6s
+                                dur: 2.5s
+                                keyTimes: 0;0.5;1
                                 repeatCount: indefinite
+                                tag: animate
+                                values: 0;0.5;0
                             - component: f7-row
                               config:
-                                tag: animate
                                 attributeName: dy
-                                from: 2
-                                to: -2
-                                dur: 2.5s
                                 begin: 1.6s
+                                dur: 2.5s
+                                from: 2
                                 repeatCount: indefinite
+                                tag: animate
+                                to: -2

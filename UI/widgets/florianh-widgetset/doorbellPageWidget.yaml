@@ -17,16 +17,14 @@ props:
       type: TEXT
       groupName: doorbellControl
     - context: item
-      description: String Item that controls the door/lock, must have
-        commandDescription metadata defined
+      description: String Item that controls the door/lock, must have commandDescription metadata defined
       label: Door/Lock Control
       name: item_doorControl
       required: true
       type: TEXT
       groupName: doorbellControl
     - context: item
-      description: Contact Item that signals whether the door is locked (CLOSED) or
-        unlocked (OPEN)
+      description: Contact Item that signals whether the door is locked (CLOSED) or unlocked (OPEN)
       label: Lock State
       name: item_lockState
       required: false
@@ -42,8 +40,7 @@ props:
       groupName: lockControl
       advanced: true
     - context: url
-      description: Webhook URL to send a HTTP GET request to to open the door
-        (alternative to the unlock door Item)
+      description: Webhook URL to send a HTTP GET request to to open the door (alternative to the unlock door Item)
       label: Lock Unlock Webhook URL
       name: url_lockUnlock
       required: false
@@ -92,17 +89,13 @@ props:
       required: true
       type: TEXT
       groupName: doorbellMotionState
-    - description: Full URL of the image providing the liveview (the image is updated
-        several times a second). Use the image if the MJPEG video stream is not
-        stable
+    - description: Full URL of the image providing the liveview (the image is updated several times a second). Use the image if the MJPEG video stream is not stable
       label: Live Image URL
       name: imageUrl
       required: true
       type: TEXT
       groupName: video
-    - description: Full URL of the WebRTC SIP websocket, e.g. 'wss://siphost:8089/ws'
-        or relative path, e.g. '/ws', for Android & iOS, you need wss (WebSocket
-        secured)
+    - description: Full URL of the WebRTC SIP websocket, e.g. 'wss://siphost:8089/ws' or relative path, e.g. '/ws', for Android & iOS, you need wss (WebSocket secured)
       label: WebSocket URL
       name: websocketUrl
       required: true
@@ -126,16 +119,14 @@ props:
       required: true
       type: TEXT
       groupName: sipClient
-    - description: Single SIP Address (phone number) for a single call target or a
-        comma-separated list of 'phoneNumber=name' for multiple call targets
+    - description: Single SIP Address (phone number) for a single call target or a comma-separated list of 'phoneNumber=name' for multiple call targets
       label: Phonebook
       name: phonebook
       required: false
       type: TEXT
       groupName: sipClient
     - context: item
-      description: String Item to publish the SIP connection state to the openHAB
-        server and make it accessible from rules etc.
+      description: String Item to publish the SIP connection state to the openHAB server and make it accessible from rules etc.
       label: SIP State Item
       name: item_sipState
       required: false
@@ -168,15 +159,12 @@ props:
     - name: doorbellMotionState
       label: Doorbell Motion State
       description: Configuration related to the doorbell's motion state
-timestamp: Nov 13, 2025, 11:31:22 PM
 component: oh-context
 config:
   constants: {}
   functions:
     imageLeft: =(width) => 'calc(calc(100% - ' + width + ') / 2)'
-    imageWidth: "=(portrait) => portrait
-      ? '100%'
-      : 'calc(calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'"
+    imageWidth: "=(portrait) => portrait ? '100%' : 'calc(calc(' + screen.viewAreaHeight + 'px - 2*var(--f7-block-padding-vertical)) * (4/3))'"
     isPortrait: =() => screen.viewAreaWidth <= (screen.viewAreaHeight * (4/3))
   variable: {}
 slots:
@@ -198,8 +186,8 @@ slots:
               lazy: false
               refreshInterval: 200
               style:
-                border-radius: var(--f7-card-expandable-border-radius)
                 border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+                border-radius: var(--f7-card-expandable-border-radius)
                 box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
                 margin-left: "=fn.isPortrait() ? '0' : fn.imageLeft(fn.imageWidth(false))"
                 width: =fn.imageWidth(fn.isPortrait())
@@ -207,23 +195,19 @@ slots:
           - component: f7-card
             config:
               style:
-                background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
+                --scale-ratio: ='min(1, calc(' + screen.viewAreaHeight + ' / (330 + 32)))'
                 backdrop-filter: blur(6px)
-                border-radius: var(--f7-card-expandable-border-radius)
+                background-color: "=themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)'"
                 border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+                border-radius: var(--f7-card-expandable-border-radius)
                 bottom: "=fn.isPortrait() ? '-10px' : ''"
                 box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
                 height: "=fn.isPortrait() ? '150px' : '330px'"
-                left: "=fn.isPortrait() 
-                  ? '-10px' 
-                  : (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360
-                    ? 'calc(' + fn.imageLeft(fn.imageHeight(false)) + ' - 175px)'
-                    : '-10px')"
+                left: "=fn.isPortrait() ? '-10px' : (screen.viewAreaWidth - (screen.viewAreaHeight * (4/3)) >= 360 ? 'calc(' + fn.imageLeft(fn.imageHeight(false)) + ' - 175px)' : '-10px')"
                 min-width: "=fn.isPortrait() ? '300px' : ''"
                 padding: 0px
                 position: absolute
                 top: "=fn.isPortrait() ? '' : '-10px'"
-                --scale-ratio: ='min(1, calc(' + screen.viewAreaHeight + ' / (330 + 32)))'
                 transform: scale(var(--scale-ratio))
                 transform-origin: top left
                 width: "=fn.isPortrait() ? '100%' : '150px'"
@@ -265,12 +249,8 @@ slots:
                                   eventDescription: Letztes Klingeln
                                   item_eventImage: =props.item_buttonLastPressedImage
                                   item_eventTimestamp: =props.item_buttonLastPressedTimestamp
-                                iconColor: "=items[props.item_doorbellPressed].state === 'ON'
-                                  ? (themeOptions.dark === 'dark' ? 'white'
-                                  : 'black') : 'gray'"
-                                iconF7: "=items[props.item_doorbellPressed].state === 'ON'
-                                  ? 'bell'
-                                  : 'bell_slash'"
+                                iconColor: "=items[props.item_doorbellPressed].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
+                                iconF7: "=items[props.item_doorbellPressed].state === 'ON' ? 'bell' : 'bell_slash'"
                                 iconSize: "=fn.isPortrait() ? '30' : '35'"
                                 style:
                                   --f7-button-height: "=fn.isPortrait() ? '30' : '35'"
@@ -283,9 +263,7 @@ slots:
                                   eventDescription: Letzte Bewegung
                                   item_eventImage: =props.item_lastMotionImage
                                   item_eventTimestamp: =props.item_lastMotionTimestamp
-                                iconColor: "=items[props.item_motion].state === 'ON'
-                                  ? (themeOptions.dark === 'dark' ? 'white' : 'black')
-                                  : 'gray'"
+                                iconColor: "=items[props.item_motion].state === 'ON' ? (themeOptions.dark === 'dark' ? 'white' : 'black') : 'gray'"
                                 iconF7: arrow_right_arrow_left
                                 iconSize: "=fn.isPortrait() ? '30' : '35'"
                                 style:
@@ -314,17 +292,10 @@ slots:
                             - component: oh-sipclient
                               config:
                                 disableRegister: true
-                                domain: =props.domain
-                                enableSIPDebug: =props.enableSIPDebug
                                 enableTones: false
                                 enableVideo: false
                                 hideCallerId: true
-                                iconSize: "=fn.isPortrait() ? '60' : '80'"
-                                password: =props.password
-                                phonebook: =props.phonebook
-                                sipStateItem: =props.item_sipState
-                                username: =props.username
-                                websocketUrl: =props.websocketUrl
+                                iconSize: "60"
                       - component: oh-button
                         config:
                           action: options

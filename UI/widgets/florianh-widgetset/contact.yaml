@@ -43,6 +43,7 @@ props:
       required: false
       type: TEXT
       groupName: widgetSettings
+      limitToOptions: true
       options:
         - label: Window
           value: window
@@ -52,7 +53,6 @@ props:
           value: frontdoor
         - label: Garage Door
           value: garage
-      limitToOptions: true
     - description: State value for CLOSED state (default CLOSED or 0)
       label: Closed State
       name: closedState
@@ -74,22 +74,21 @@ props:
       description: Action to perform when the widget is clicked
     - name: widgetSettings
       label: Widget settings
-timestamp: Jun 26, 2026, 12:00:00 PM
 component: oh-context
 config:
   functions:
     isClosed: "=() => !props.item || @@props.item === (props.closedState || 'CLOSED') || #props.item === Number(props.closedState || 0)"
-    isTilted: "=() => props.item && (@@props.item !== (props.closedState || 'CLOSED') && #props.item > Number(props.closedState || 0)) && (@@props.item !== (props.openState || 'OPEN') && #props.item < Number(props.openState || 1))"
     isOpen: "=() => props.item && (@@props.item === (props.openState || 'OPEN') || #props.item === Number(props.openState || 1))"
+    isTilted: "=() => props.item && (@@props.item !== (props.closedState || 'CLOSED') && #props.item > Number(props.closedState || 0)) && (@@props.item !== (props.openState || 'OPEN') && #props.item < Number(props.openState || 1))"
 slots:
   default:
     - component: f7-card
       config:
         style:
-          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           height: 120px
           margin-left: 5px
@@ -99,13 +98,13 @@ slots:
         content:
           - component: f7-block
             config:
-              visible: "=props.title || props.icon ? true : false"
               style:
                 display: flex
                 flex-direction: row
                 left: 16px
                 position: absolute
                 top: -5px
+              visible: "=props.title || props.icon ? true : false"
             slots:
               default:
                 - component: f7-icon
@@ -156,119 +155,118 @@ slots:
           - component: f7-block
             config:
               style:
+                height: 90px
+                margin: 0
+                padding: 0
                 position: absolute
                 right: 10px
                 top: 15px
                 width: 90px
-                height: 90px
-                margin: 0
-                padding: 0
             slots:
               default:
                 - component: f7-row
                   config:
+                    style:
+                      height: 100%
+                      width: 100%
                     tag: svg
                     viewBox: 0 0 100 100
-                    style:
-                      width: 100%
-                      height: 100%
                   slots:
                     default:
                       # 1. Window SVG
                       - component: g
                         config:
-                          visible: "=props.svgType === 'window' || !props.svgType"
+                          visible: =props.svgType === 'window' || !props.svgType
                         slots:
                           default:
-                            # Outer frame
                             - component: rect
                               config:
-                                x: 20
-                                y: 15
-                                width: 60
+                                fill: none
                                 height: 70
                                 rx: 1
-                                fill: none
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 2.5
+                                width: 60
+                                x: 20
+                                y: 15
                             # Middle divide line
                             - component: line
                               config:
-                                x1: 50
-                                y1: 15
-                                x2: 50
-                                y2: 85
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 2
+                                x1: 50
+                                x2: 50
+                                y1: 15
+                                y2: 85
                             # Left sash (tilt / Casement swing group)
                             - component: g
                               config:
                                 style:
-                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '22.5px 50px'"
                                   transform: "=fn.isTilted() ? 'scaleY(0.85) skewX(10deg)' : (fn.isOpen() ? 'scaleX(0.45) skewY(22deg)' : 'none')"
+                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '22.5px 50px'"
                                   transition: transform 0.5s ease-in-out
                               slots:
                                 default:
                                   # Left pane glass and frame
                                   - component: rect
                                     config:
-                                      x: 22.5
-                                      y: 17.5
-                                      width: 25
-                                      height: 65
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
+                                      height: 65
                                       stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
+                                      width: 25
+                                      x: 22.5
+                                      y: 17.5
                                   # Handle
                                   - component: rect
                                     config:
-                                      x: 43
-                                      y: 47
-                                      width: 2
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       height: 6
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       style:
-                                        transform-origin: 44px 50px
                                         transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(180deg)' : 'rotate(90deg)')"
+                                        transform-origin: 44px 50px
                                         transition: transform 0.5s ease-in-out
+                                      width: 2
+                                      x: 43
+                                      y: 47
                             # Right sash (tilt / Casement swing group)
                             - component: g
                               config:
                                 style:
-                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '77.5px 50px'"
                                   transform: "=fn.isTilted() ? 'scaleY(0.85) skewX(10deg)' : (fn.isOpen() ? 'scaleX(0.45) skewY(-22deg)' : 'none')"
+                                  transform-origin: "=fn.isTilted() ? '50% 82.5px' : '77.5px 50px'"
                                   transition: transform 0.5s ease-in-out
                               slots:
                                 default:
                                   # Right pane glass and frame
                                   - component: rect
                                     config:
-                                      x: 52.5
-                                      y: 17.5
-                                      width: 25
-                                      height: 65
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(14, 165, 233, 0.12)'"
+                                      height: 65
                                       stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
+                                      width: 25
+                                      x: 52.5
+                                      y: 17.5
                                   # Handle
                                   - component: rect
                                     config:
-                                      x: 55
-                                      y: 47
-                                      width: 2
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       height: 6
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       style:
-                                        transform-origin: 56px 50px
                                         transform: "=fn.isClosed() ? 'none' : (fn.isTilted() ? 'rotate(-180deg)' : 'rotate(-90deg)')"
+                                        transform-origin: 56px 50px
                                         transition: transform 0.5s ease-in-out
+                                      width: 2
+                                      x: 55
+                                      y: 47
 
                       # 2. Door SVG
                       - component: g
                         config:
-                          visible: "=props.svgType === 'door'"
+                          visible: =props.svgType === 'door'
                         slots:
                           default:
                             # Outer frame
@@ -282,34 +280,34 @@ slots:
                             - component: g
                               config:
                                 style:
-                                  transform-origin: 27px 50px
                                   transform: "=fn.isOpen() ? 'perspective(150px) rotateY(-60deg)' : 'none'"
+                                  transform-origin: 27px 50px
                                   transition: transform 0.5s ease-in-out
                               slots:
                                 default:
                                   - component: rect
                                     config:
-                                      x: 27
-                                      y: 16.5
-                                      width: 46
-                                      height: 67
                                       fill: "=themeOptions.dark === 'dark' ? '#0f172a' : '#f8fafc'"
+                                      height: 67
                                       stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1.5
+                                      width: 46
+                                      x: 27
+                                      y: 16.5
                                   # Door Handle
                                   - component: rect
                                     config:
-                                      x: 63
-                                      y: 48
-                                      width: 7
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       height: 2
                                       rx: 0.5
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
+                                      width: 7
+                                      x: 63
+                                      y: 48
 
                       # 3. Frontdoor SVG
                       - component: g
                         config:
-                          visible: "=props.svgType === 'frontdoor'"
+                          visible: =props.svgType === 'frontdoor'
                         slots:
                           default:
                             # Outer frame / thick casing
@@ -323,74 +321,74 @@ slots:
                             - component: g
                               config:
                                 style:
-                                  transform-origin: 24.5px 50px
                                   transform: "=fn.isOpen() ? 'perspective(150px) rotateY(-55deg)' : 'none'"
+                                  transform-origin: 24.5px 50px
                                   transition: transform 0.5s ease-in-out
                               slots:
                                 default:
                                   - component: rect
                                     config:
-                                      x: 24.5
-                                      y: 17
-                                      width: 51
-                                      height: 66
                                       fill: "=themeOptions.dark === 'dark' ? '#0f172a' : '#e2e8f0'"
+                                      height: 66
                                       stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 2
-                                  # Panel design
+                                      width: 51
+                                      x: 24.5
+                                      y: 17
+                                  # Panel design 
                                   - component: rect
                                     config:
-                                      x: 32
-                                      y: 25
-                                      width: 8
-                                      height: 50
                                       fill: "=themeOptions.dark === 'dark' ? 'rgba(56, 189, 248, 0.2)' : 'rgba(14, 165, 233, 0.2)'"
+                                      height: 50
                                       stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                       stroke-width: 1
+                                      width: 8
+                                      x: 32
+                                      y: 25
                                   # Long premium vertical pull bar handle
                                   - component: rect
                                     config:
-                                      x: 67
-                                      y: 35
-                                      width: 2
+                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
                                       height: 25
                                       rx: 1
-                                      fill: "=themeOptions.dark === 'dark' ? '#cbd5e1' : '#475569'"
+                                      width: 2
+                                      x: 67
+                                      y: 35
 
                       # 4. Garage Door SVG
                       - component: g
                         config:
-                          visible: "=props.svgType === 'garage'"
+                          visible: =props.svgType === 'garage'
                         slots:
                           default:
-                            # Linker Rahmen
+                            # Left Border
                             - component: line
                               config:
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
+                                stroke-width: 3
                                 x1: 5
-                                y1: 23.5
                                 x2: 5
-                                y2: 80
-                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
-                                stroke-width: 3
-                            # Oberer Rahmen
-                            - component: line
-                              config:
-                                x1: 5
-                                y1: 25
-                                x2: 95
-                                y2: 25
-                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
-                                stroke-width: 3
-                            # Rechter Rahmen
-                            - component: line
-                              config:
-                                x1: 95
                                 y1: 23.5
-                                x2: 95
                                 y2: 80
+                            # Upper Border
+                            - component: line
+                              config:
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 3
-                            # Animierte Sektionen-Gruppe
+                                x1: 5
+                                x2: 95
+                                y1: 25
+                                y2: 25
+                            # Right Border
+                            - component: line
+                              config:
+                                stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
+                                stroke-width: 3
+                                x1: 95
+                                x2: 95
+                                y1: 23.5
+                                y2: 80
+                            # Animated Segments
                             - component: g
                               config:
                                 style:
@@ -401,59 +399,59 @@ slots:
                                   # Segment 1 (Top)
                                   - component: rect
                                     config:
-                                      x: 8
-                                      y: 28
-                                      width: 84
-                                      height: 12
                                       fill: "#945e0f"
+                                      height: 12
+                                      rx: 1
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
-                                      rx: 1
                                       visible: =fn.isClosed()
+                                      width: 84
+                                      x: 8
+                                      y: 28
                                   # Segment 2
                                   - component: rect
                                     config:
-                                      x: 8
-                                      y: 41
-                                      width: 84
-                                      height: 12
                                       fill: "#945e0f"
+                                      height: 12
+                                      rx: 1
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
-                                      rx: 1
                                       visible: =fn.isClosed() || fn.isTilted()
+                                      width: 84
+                                      x: 8
+                                      y: 41
                                   # Segment 3
                                   - component: rect
                                     config:
-                                      x: 8
-                                      y: 54
-                                      width: 84
-                                      height: 12
                                       fill: "#945e0f"
+                                      height: 12
+                                      rx: 1
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
-                                      rx: 1
                                       visible: =fn.isClosed() || fn.isTilted()
+                                      width: 84
+                                      x: 8
+                                      y: 54
                                   # Segment 4 (Bottom)
                                   - component: rect
                                     config:
-                                      x: 8
-                                      y: 67
-                                      width: 84
-                                      height: 12
                                       fill: "#945e0f"
+                                      height: 12
+                                      rx: 1
                                       stroke: "=themeOptions.dark === 'dark' ? '#1c1c1e' : '#ffffff'"
                                       stroke-width: 1.5
-                                      rx: 1
-                                  # Zentrierter Torgriff ganz unten
+                                      width: 84
+                                      x: 8
+                                      y: 67
+                                  # Garage Door Handle
                                   - component: rect
                                     config:
+                                      fill: "#475569"
+                                      height: 2
+                                      rx: 0.5
+                                      width: 14
                                       x: 43
                                       y: 71
-                                      width: 14
-                                      height: 2
-                                      fill: "#475569"
-                                      rx: 0.5
           - component: oh-link
             config:
               actionPropsParameterGroup: widgetAction

@@ -102,9 +102,13 @@ props:
       label: Mode Commands
     - name: localisation
       label: Localisation
-timestamp: Jun 26, 2026, 2:00:00 AM
 component: oh-context
 config:
+  functions:
+    isAuto: "=() => props.item && (@@props.item === props.cmdAuto || #props.item === Number(props.cmdAuto))"
+    isOff: "=() => !props.item || (@@props.item !== props.cmdAuto && #props.item !== Number(props.cmdAuto) && @@props.item !== props.cmdS1 && #props.item !== Number(props.cmdS1) && @@props.item !== props.cmdS2 && #props.item !== Number(props.cmdS2))"
+    isS1: "=() => props.item && (@@props.item === props.cmdS1 || #props.item === Number(props.cmdS1))"
+    isS2: "=() => props.item && (@@props.item === props.cmdS2 || #props.item === Number(props.cmdS2))"
   stylesheet: |
     @keyframes spin {
       from { transform: rotate(0deg); }
@@ -115,20 +119,15 @@ config:
       50% { opacity: 1; }
       100% { opacity: 0.4; }
     }
-  functions:
-    isAuto: "=() => props.item && (@@props.item === props.cmdAuto || #props.item === Number(props.cmdAuto))"
-    isS1: "=() => props.item && (@@props.item === props.cmdS1 || #props.item === Number(props.cmdS1))"
-    isS2: "=() => props.item && (@@props.item === props.cmdS2 || #props.item === Number(props.cmdS2))"
-    isOff: "=() => !props.item || (@@props.item !== props.cmdAuto && #props.item !== Number(props.cmdAuto) && @@props.item !== props.cmdS1 && #props.item !== Number(props.cmdS1) && @@props.item !== props.cmdS2 && #props.item !== Number(props.cmdS2))"
 slots:
   default:
     - component: f7-card
       config:
         style:
-          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           backdrop-filter: blur(6px)
-          border-radius: var(--f7-card-expandable-border-radius)
+          background-color: "=props.bgcolor || (themeOptions.dark === 'dark' ? 'rgba(28, 28, 30, 0.85)' : 'rgba(255, 255, 255, 0.85)')"
           border: 1px solid var(--f7-card-border-color, rgba(0,0,0,0.06))
+          border-radius: var(--f7-card-expandable-border-radius)
           box-shadow: var(--f7-card-box-shadow, 0px 4px 12px rgba(0,0,0,0.05))
           height: 120px
           margin-left: 5px
@@ -143,29 +142,29 @@ slots:
                 display: flex
                 flex-direction: column
                 left: 17px
+                margin: 0
+                padding: 0
                 position: absolute
                 top: 12px
                 width: calc(100% - 130px)
-                margin: 0
-                padding: 0
             slots:
               default:
                 - component: Label
                   config:
                     style:
+                      color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
                       font-size: 22px
                       font-weight: 500
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
-                      color: "=themeOptions.dark === 'dark' ? 'white' : 'black'"
                     text: =props.header
                 - component: Label
                   config:
                     style:
+                      color: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93') : (themeOptions.dark === 'dark' ? '#30d158' : '#198754')"
                       font-size: 16px
                       margin-top: -0.25em
-                      color: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#aeaeb2' : '#8e8e93') : (themeOptions.dark === 'dark' ? '#30d158' : '#198754')"
                       overflow: hidden
                       text-overflow: ellipsis
                       white-space: nowrap
@@ -175,213 +174,213 @@ slots:
           - component: f7-block
             config:
               style:
+                align-items: center
                 display: flex
                 flex-direction: row
-                align-items: center
                 gap: 8px
                 left: 15px
+                margin: 0
+                padding: 0
                 position: absolute
                 top: 76px
                 width: calc(100% - 130px)
-                margin: 0
-                padding: 0
             slots:
               default:
                 # Auto button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item
                     actionCommand: =props.cmdAuto
-                    text: Auto
+                    actionItem: =props.item
                     style:
+                      align-items: center
                       background: "=fn.isAuto() ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
-                      color: "=fn.isAuto() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
-                      height: 32px
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      color: "=fn.isAuto() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+                      display: flex
+                      flex: 1
                       font-size: 13px
                       font-weight: 500
-                      display: flex
-                      align-items: center
+                      height: 32px
                       justify-content: center
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
-                      flex: 1
                       min-width: 0
                       padding: 0
+                    text: Auto
                 # S1 button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item
                     actionCommand: =props.cmdS1
-                    text: S1
+                    actionItem: =props.item
                     style:
+                      align-items: center
                       background: "=fn.isS1() ? (themeOptions.dark === 'dark' ? '#0a84ff' : '#007aff') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
-                      color: "=fn.isS1() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
-                      height: 32px
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      color: "=fn.isS1() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+                      display: flex
+                      flex: 1
                       font-size: 13px
                       font-weight: 500
-                      display: flex
-                      align-items: center
+                      height: 32px
                       justify-content: center
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
-                      flex: 1
                       min-width: 0
                       padding: 0
+                    text: S1
                 # S2 button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item
                     actionCommand: =props.cmdS2
-                    text: S2
+                    actionItem: =props.item
                     style:
+                      align-items: center
                       background: "=fn.isS2() ? (themeOptions.dark === 'dark' ? '#0a84ff' : '#007aff') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
-                      color: "=fn.isS2() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
-                      height: 32px
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      color: "=fn.isS2() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+                      display: flex
+                      flex: 1
                       font-size: 13px
                       font-weight: 500
-                      display: flex
-                      align-items: center
+                      height: 32px
                       justify-content: center
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
-                      flex: 1
                       min-width: 0
                       padding: 0
+                    text: S2
                 # Off button
                 - component: oh-button
                   config:
                     action: command
-                    actionItem: =props.item
                     actionCommand: =props.cmdOff
-                    text: =props.textButtonOff
+                    actionItem: =props.item
                     style:
+                      align-items: center
                       background: "=fn.isOff() ? (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f') : (themeOptions.dark === 'dark' ? '#2d2d30' : '#e2e8f0')"
-                      color: "=fn.isOff() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
                       border-radius: 16px
-                      height: 32px
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
+                      color: "=fn.isOff() ? 'white' : (themeOptions.dark === 'dark' ? 'white' : 'black')"
+                      display: flex
+                      flex: 1
                       font-size: 13px
                       font-weight: 500
-                      display: flex
-                      align-items: center
+                      height: 32px
                       justify-content: center
-                      box-shadow: 0 1px 3px rgba(0,0,0,0.15)
-                      flex: 1
                       min-width: 0
                       padding: 0
+                    text: =props.textButtonOff
 
           # 3. Right Side Animated Fan SVG
           - component: f7-block
             config:
               style:
+                height: 90px
+                margin: 0
+                padding: 0
                 position: absolute
                 right: 15px
                 top: 15px
                 width: 90px
-                height: 90px
-                margin: 0
-                padding: 0
             slots:
               default:
                 - component: f7-row
                   config:
+                    style:
+                      height: 100%
+                      width: 100%
                     tag: svg
                     viewBox: 0 0 100 100
-                    style:
-                      width: 100%
-                      height: 100%
                   slots:
                     default:
                       # Outer Cabinet / Square Casing
                       - component: f7-row
                         config:
-                          tag: rect
-                          x: 10
-                          y: 10
-                          width: 80
+                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
                           height: 80
                           rx: 12
-                          fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#9ca3af' : '#cbd5e1')"
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 2
+                          tag: rect
+                          width: 80
+                          x: 10
+                          y: 10
 
                       # Inner Circular Opening
                       - component: circle
                         config:
                           cx: 50
                           cy: 50
-                          r: 34
                           fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#0f172a' : '#ffffff') : (themeOptions.dark === 'dark' ? '#0f172a' : '#cbd5e1')"
+                          r: 34
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1.5
 
                       # Grill / Support Lines (behind the blades)
                       - component: line
                         config:
-                          x1: 26
-                          y1: 26
-                          x2: 74
-                          y2: 74
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1
+                          x1: 26
+                          x2: 74
+                          y1: 26
+                          y2: 74
                       - component: line
                         config:
-                          x1: 26
-                          y1: 74
-                          x2: 74
-                          y2: 26
                           stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                           stroke-width: 1
+                          x1: 26
+                          x2: 74
+                          y1: 74
+                          y2: 26
 
                       # Rotating Fan Blades Group
                       - component: f7-row
                         config:
-                          tag: g
                           style:
-                            transform-origin: 50px 50px
                             animation: "=fn.isS2() ? 'spin 0.6s linear infinite' : (fn.isS1() ? 'spin 1.5s linear infinite' : (fn.isAuto() ? 'spin 3.0s linear infinite' : 'none'))"
+                            transform-origin: 50px 50px
+                          tag: g
                         slots:
                           default:
                             # Blade 1 (Up)
                             - component: path
                               config:
-                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
+                                d: M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
                             # Blade 2 (Right)
                             - component: path
                               config:
-                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
-                                transform: rotate(90 50 50)
+                                d: M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
+                                transform: rotate(90 50 50)
                             # Blade 3 (Down)
                             - component: path
                               config:
-                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
-                                transform: rotate(180 50 50)
+                                d: M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
+                                transform: rotate(180 50 50)
                             # Blade 4 (Left)
                             - component: path
                               config:
-                                d: "M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50"
-                                transform: rotate(270 50 50)
+                                d: M 50 50 C 44 44, 42 32, 46 22 C 48 19, 52 19, 54 22 C 58 32, 56 44, 50 50
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#cbd5e1' : '#ffffff') : (themeOptions.dark === 'dark' ? '#64748b' : '#cbd5e1')"
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
+                                transform: rotate(270 50 50)
                             # Center Hub
                             - component: circle
                               config:
                                 cx: 50
                                 cy: 50
-                                r: 8
                                 fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#e5e7eb' : '#e2e8f0') : (themeOptions.dark === 'dark' ? '#94a3b8' : '#cbd5e1')"
+                                r: 8
                                 stroke: "=themeOptions.dark === 'dark' ? '#94a3b8' : '#475569'"
                                 stroke-width: 1
 
@@ -390,8 +389,8 @@ slots:
                         config:
                           cx: 22
                           cy: 22
-                          r: 3
                           fill: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? '#30d158' : '#198754') : (themeOptions.dark === 'dark' ? '#ff453a' : '#d32f2f')"
+                          r: 3
                           style:
-                            filter: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? 'drop-shadow(0 0 2.5px #30d158)' : 'drop-shadow(0 0 2.5px #198754)') : 'none'"
                             animation: "=fn.isAuto() ? 'pulse-led 2s infinite' : 'none'"
+                            filter: "=!fn.isOff() ? (themeOptions.dark === 'dark' ? 'drop-shadow(0 0 2.5px #30d158)' : 'drop-shadow(0 0 2.5px #198754)') : 'none'"
