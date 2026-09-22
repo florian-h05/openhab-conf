@@ -1,6 +1,11 @@
 # Local History for Visual Studio Code
 .history
 .idea
+
+# Build
+dist
+
+# JavaScript Scripting
 automation/js/package.json
 automation/js/package-lock.json
 automation/js/node_modules
