@@ -16,9 +16,11 @@
 - [`temperatureControl`](#temperaturecontrol)
 - [`weatherForecast`](#weatherforecast)
 
-You can add these widgets by opening `Developer Tools` > `Widgets`, clicking on the plus and pasting the content of the respective yaml file.
+The widgets of this widgetset are automatically bundled into a single YAML file and hosted on GitHub pages:
 
-Please keep in mind that some parts of the widgets are "hardcoded" in German, but this can be changed easily!
+<https://florian-h05.github.io/openhab-conf/florianh-widgetset.yaml>
+
+To install this widgetset, download the above file and put it into the `$OPENHAB_CONF/yaml` directory.
 
 *Note: This folder also contains some other widgets that are not documented here and no official parts of this widget set as they have very special functionality.*
 
